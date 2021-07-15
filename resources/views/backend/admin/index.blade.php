@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
                                 <div class="d-block d-lg-none text-center text-lg-start">
-                                    <img width="120" src="{{URL::asset('asset/images/logo.svg')}}" alt="logo">
+                                    <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
                                 </div>
                                 <div class="my-5 text-center text-lg-start">
                                     <h1 class="display-8">Sign In</h1>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col d-none d-lg-flex border-start align-items-center justify-content-between flex-column text-center">
                         <div class="logo">
-                            <img width="120" src="{{URL::asset('asset/images/logo.svg')}}" alt="logo">
+                            <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
                         </div>
                         <div>
                             <h3 class="fw-bold">Welcome to Vetra!</h3>
