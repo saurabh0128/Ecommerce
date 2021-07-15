@@ -9,13 +9,13 @@
     <title>Login - Vetra | E-Commerce HTML Admin Dashboard Template</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="../../assets/images/favicon.png"/>
+   <link rel="shortcut icon" href="{{URl::aseet(asset/images/favicon.png)}}"/>
 
     <!-- Themify icons -->
-    <link rel="stylesheet" href="../../dist/icons/themify-icons/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="{{URl::aseet(asset/icons/themify-icons/themify-icons.css)}}" type="text/css">
 
     <!-- Main style file -->
-    <link rel="stylesheet" href="../../dist/css/app.min.css" type="text/css">
+    <link rel="stylesheet" href="{{URl::aseet(asset/css/app.min.css)}}" type="text/css">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
                                 <div class="d-block d-lg-none text-center text-lg-start">
-                                    <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
+                                    <img width="120" src="{{URl::aseet(asset/images/logo.svg)}}" alt="logo">
                                 </div>
                                 <div class="my-5 text-center text-lg-start">
                                     <h1 class="display-8">Sign In</h1>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="col d-none d-lg-flex border-start align-items-center justify-content-between flex-column text-center">
                         <div class="logo">
-                            <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
+                            <img width="120" src="{{URl::aseet(asset/images/logo.svg)}}" alt="logo">
                         </div>
                         <div>
                             <h3 class="fw-bold">Welcome to Vetra!</h3>
@@ -98,10 +98,10 @@
 
 
 <!-- Bundle scripts -->
-<script src="../../libs/bundle.js"></script>
+<script src="{{URl::aseet(asset/bundle.js)}}"></script>
 
 <!-- Main Javascript file -->
-<script src="../../dist/js/app.min.js"></script>
+<script src="{{URl::aseet(asset/js/app.min.js)}}"></script>
 </body>
 
 <!-- Mirrored from vetra.laborasyon.com/demos/default/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 07:31:11 GMT -->
