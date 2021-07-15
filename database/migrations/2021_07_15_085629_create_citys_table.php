@@ -16,10 +16,11 @@ class CreateCitysTable extends Migration
         Schema::create('citys', function (Blueprint $table) {
             $table->id();
             $table->string('city_name',40);
-            $table->integer('state_id')->unsigned();
+            $table->unsignedInteger('state_id');
             $table->index('state_id');
-            $table->timestamps();
-            $table->foreign('state_id')->references->('id')->on('citys')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('state_id')->references('id')->on('states');
+            $table->timestamp('create_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
