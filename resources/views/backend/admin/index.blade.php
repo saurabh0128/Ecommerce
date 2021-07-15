@@ -98,10 +98,10 @@
 
 
 <!-- Bundle scripts -->
-<script src="{{URL::asset('asset/bundle.js')}}"></script>
+<script src="{{URL::asset('asset/js/bundle.js')}}"></script>
 
 <!-- Main Javascript file -->
-<script src="{{URL  ::asset('asset/js/app.min.js')}}"></script>
+<script src="{{URL::asset('asset/js/app.min.js')}}"></script>
 </body>
 
 <!-- Mirrored from vetra.laborasyon.com/demos/default/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 07:31:11 GMT -->
