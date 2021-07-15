@@ -38,7 +38,7 @@
                     <div class="col">
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
-                                <div class="d-block ">
+                                <div class="d-block center" >
                                     <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg " alt="logo">
                                 </div>
                                 <div class="my-5 text-center text-lg-start">
