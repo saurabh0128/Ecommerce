@@ -16,7 +16,7 @@ class CreateRollsTable extends Migration
         Schema::create('rolls', function (Blueprint $table) {
             $table->id();
             $table->string('roll_name',40);
-            $table->text('roll_desc');
+            $table->text('roll_desc')->nullable();
             $table->tinyInteger('is_active');
             $table->timestamp('create_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));

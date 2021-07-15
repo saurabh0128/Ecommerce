@@ -15,16 +15,16 @@ class CreateSellerInfoTable extends Migration
     {
         Schema::create('seller_infos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('gst_no',20);
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade');
+            $table->bigInteger('gst_no');
             $table->string('company_name',50);
             $table->text('address');
-            $table->foreignId('city_id')->constrained('citys');
+            $table->foreignId('city_id')->constrained('citys')->onUpdate('cascade');
             $table->string('bank_name',40);
             $table->string('account_no',30);
-            $table->string('ifsc_code',20);
+            $table->bigInteger('ifsc_code');
             $table->string('ac_holder_name',50);
-            $table->string('id_proof_no',40);
+            $table->bigInteger('id_proof_no');
             $table->string('id_proof',50);
             $table->tinyInteger('is_permisssion_sell');
             $table->timestamps();
