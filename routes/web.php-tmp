@@ -22,4 +22,4 @@ function () {
 		return view('welcome');
 	});
 
-Route::resource('/Admin', AdminController::class );
+Route::resource('/admin', AdminController::class );
