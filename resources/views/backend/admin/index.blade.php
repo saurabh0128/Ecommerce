@@ -39,7 +39,7 @@
                         <div class="row">
                             <div class="col-md-10 offset-md-1">
                                 <div class="d-block " >
-                                    <img width="120" src="https://vetra.laborasyon.com/assets/images/logo.svg " class="mx-auto d-block"  alt="logo">
+                                      <img width="150" src="https://vetra.laborasyon.com/assets/images/logo.svg " class="mx-auto d-block"  alt="logo">
                                 </div>
                                 <div class="my-5 text-center text-lg-start">
                                     <h1 class="display-8">Sign In</h1>
