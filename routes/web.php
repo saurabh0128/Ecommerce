@@ -20,4 +20,4 @@ Route::get('/', function () {
 });
 
 
-Route::resource('/Admin',[AdminController::class]);
+Route::resource('/Admin',AdminController::class);
