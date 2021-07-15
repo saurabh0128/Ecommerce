@@ -62,20 +62,18 @@
                                 <p class="text-center d-block d-lg-none mt-5 mt-lg-0">
                                     Don't have an account? <a href="#">Sign up</a>.
                                 </p>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a href="#">Privacy Policy</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#">Terms & Conditions</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col d-none d-lg-flex border-start align-items-center justify-content-between flex-column text-center">
-                        
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <a href="#">Privacy Policy</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#">Terms & Conditions</a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
             </div>
         </div>
