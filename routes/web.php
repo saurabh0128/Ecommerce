@@ -22,4 +22,5 @@ Route::get('/', function () {
 
 
 
+
 Route::resource('admin',AdminController::class);
