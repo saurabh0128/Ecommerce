@@ -14,7 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        echo "hello";
+        return view('Admin.Admin');
     }
 
     /**
