@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +20,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('/Admin',[LoginController::class]);
+Route::resource('/Admin',[AdminController::class]);

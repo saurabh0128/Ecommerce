@@ -2,7 +2,7 @@
 Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 <?php
 
-use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +22,4 @@ function () {
 		return view('welcome');
 	});
 
-Route::get('/Admin', [LoginController::class ]);
+Route::resource('/Admin', [AdminController::class ]);
