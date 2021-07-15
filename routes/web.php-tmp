@@ -22,4 +22,4 @@ function () {
 		return view('welcome');
 	});
 
-Route::get('/Admin', [LoginController::class , 'loginPage']);
+Route::get('/Admin', [LoginController::class ]);

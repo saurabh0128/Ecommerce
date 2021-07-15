@@ -20,4 +20,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('/Admin',[LoginController::class,'loginPage']);
+Route::get('/Admin',[LoginController::class]);
