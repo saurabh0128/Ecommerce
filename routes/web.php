@@ -34,4 +34,6 @@ Route::resource('user',Usercontroller::class);
 
 Route::resource('seller',SellerController::class);
 
+Route::resource('category',CategoryController::class);
+
 
