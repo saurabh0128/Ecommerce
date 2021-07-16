@@ -6,6 +6,10 @@ use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\Hash;
 
+use DB;
+
+use Carbon\carbon;
+
 class AdminSeeder extends Seeder
 {
     /**
@@ -21,7 +25,7 @@ class AdminSeeder extends Seeder
             'phone_no' => '8849032844',
             'email_id' => 'bhargav121@gmail.com',
             'password' => Hash::make('bhargav123'),
-            'profile_id' =>  file_get_contents('public/asset/images/carousel-1.jpg'),
+            'profile_img' =>  file_get_contents('public/asset/images/carousel-1.jpg'),
             'is_verified' => 0,
             'is_block' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

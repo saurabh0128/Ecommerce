@@ -6,7 +6,9 @@ use Illuminate\Database\Seeder;
 
 use Carbon\carbon;
 
-class backendRollSeeder extends Seeder
+use DB;
+
+class RollSeeder extends Seeder
 {
     /**
      * Run the database seeds.
