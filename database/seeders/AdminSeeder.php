@@ -6,9 +6,9 @@ use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\Hash;
 
-use DB;
-
 use Carbon\carbon;
+
+use App\Models\User;
 
 class AdminSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        User::create([
             'name' => 'bhargav',
             'user_name' => 'admin_bhargav',
             'phone_no' => '8849032844',
