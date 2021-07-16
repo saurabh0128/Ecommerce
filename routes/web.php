@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\AdminController;
 
 use App\Http\Controllers\admin\DashboardController;
 
+use App\Http\Controllers\admin\Usercontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,5 @@ Route::get('/', function () {
 Route::resource('admin',AdminController::class);
 
 Route::resource('dashboard',DashboardController::class);
+
+Route::resource('user',Usercontroller::class);
