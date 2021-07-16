@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -55,10 +53,12 @@ class AdminController extends Controller
 
         if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
         {
+
             $user =Auth()->user()->user_name;
     
-            return redirect()->route('dashboard.index');
+            return redirect()->route('admin.dashboard.index');
         }else{
+            
             return back()->with('error','This User Name or Password is incorrect. Try Again.');
         }
 

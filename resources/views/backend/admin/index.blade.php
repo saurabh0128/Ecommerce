@@ -9,13 +9,13 @@
     <title>Login - Vetra | E-Commerce HTML Admin Dashboard Template</title>
 
     <!-- Favicon -->
-   <link rel="shortcut icon" href="{{URL::asset('backend_asset/images/favicon.png')}}"/>
+   <link rel="shortcut icon" href="{{asset('backend_asset/images/favicon.png')}}"/>
 
     <!-- Themify icons -->
-    <link rel="stylesheet" href="{{URL::asset('backend_asset/icons/themify-icons/themify-icons.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('backend_asset/icons/themify-icons/themify-icons.css')}}" type="text/css">
 
     <!-- Main style file -->
-    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/app.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{asset('backend_asset/css/app.min.css')}}" type="text/css">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -45,7 +45,7 @@
                                     <h1 class="display-8">Sign In</h1>
                                     <p class="text-muted">Sign in to Vetra to continue</p>
                                 </div>
-                                <form class="mb-5" method="post" action="/admin">
+                                <form class="mb-5" method="post" action="{{ route('admin.login.store')}}">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="_method" value="post">
                                     <div class="mb-3 ">
@@ -91,10 +91,10 @@
 
 
 <!-- Bundle scripts -->
-<script src="{{URL::asset('backend_asset/js/bundle.js')}}"></script>
+<script src="{{asset('backend_asset/js/bundle.js')}}"></script>
 
 <!-- Main Javascript file -->
-<script src="{{URL::asset('backend_asset/js/app.min.js')}}"></script>
+<script src="{{asset('backend_asset/js/app.min.js')}}"></script>
 </body>
     @if(Session::get('error'))
         <script>
