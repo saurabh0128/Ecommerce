@@ -25,7 +25,7 @@ class AdminSeeder extends Seeder
             'phone_no' => '8849032844',
             'email_id' => 'bhargav121@gmail.com',
             'password' => Hash::make('bhargav123'),
-            'profile_img' =>  file_get_contents('public/asset/images/carousel-1.jpg'),
+            'profile_img' =>  'https://source.unsplash.com/random',
             'roll_id' => 1,
             'is_verified' => 0,
             'is_block' => 1,
