@@ -27,27 +27,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                 features to any HTML table. <a href="https://datatables.net/" target="_blank">Demo page</a>.
             </p>
 
-            <h4>Usage</h4>
-
-            <div class="card">
-                <div class="demo-code-preview">
-                    <pre><code class="language-html">&lt;
-!-- CSS --&gt;
-
-&lt;
-link rel="stylesheet" href="libs/datatable/datatables.min.css" type="text/css"&gt;
-
-
-&lt;
-!-- Javascript --&gt;
-
-&lt;
-script src="libs/datatable/datatables.min.js"&gt;
-&lt;
-/script&gt;
-</code></pre>
-                </div>
-            </div>
+            <h4>Seller</h4>
 
             <div class="card">
                 <div class="card-body">
@@ -532,109 +512,8 @@ script src="libs/datatable/datatables.min.js"&gt;
                         </tfoot>
                     </table>
                 </div>
-                <div class="demo-code-preview">
-                    <pre><code class="language-html">&lt;
-table id="datatable-example" class="table"&gt;
 
-  &lt;
-thead&gt;
-
-    &lt;
-tr&gt;
-
-      &lt;
-th&gt;
-Name&lt;
-/th&gt;
-
-      &lt;
-th&gt;
-Position&lt;
-/th&gt;
-
-      &lt;
-th&gt;
-Office&lt;
-/th&gt;
-
-      &lt;
-th&gt;
-Age&lt;
-/th&gt;
-
-      &lt;
-th&gt;
-Start date&lt;
-/th&gt;
-
-      &lt;
-th&gt;
-Salary&lt;
-/th&gt;
-
-    &lt;
-/tr&gt;
-
-  &lt;
-/thead&gt;
-
-  &lt;
-tbody&gt;
-
-    &lt;
-tr&gt;
-
-      &lt;
-td&gt;
-Tiger Nixon&lt;
-/td&gt;
-
-      &lt;
-td&gt;
-System Architect&lt;
-/td&gt;
-
-      &lt;
-td&gt;
-Edinburgh&lt;
-/td&gt;
-
-      &lt;
-td&gt;
-61&lt;
-/td&gt;
-
-      &lt;
-td&gt;
-2011/04/25&lt;
-/td&gt;
-
-      &lt;
-td&gt;
-$320,800&lt;
-/td&gt;
-
-    &lt;
-/tr&gt;
-
-    ...
-  &lt;
-/tbody&gt;
-
-&lt;
-/table&gt;
-</code></pre>
-                </div>
             </div>
-
-            <div class="card">
-                <div class="demo-code-preview">
-                    <pre><code class="language-js">$('#datatable-example').DataTable({
-    responsive: true
-});</code></pre>
-                </div>
-            </div>
-
         </div>
     </div>
 
