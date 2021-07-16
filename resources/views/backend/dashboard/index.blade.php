@@ -16,9 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 
     <!-- Bootstrap icons -->
-    <link rel="stylesheet" href="../../dist/icons/bootstrap-icons-1.4.0/bootstrap-icons.min.css" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_assets/icons/bootstrap-icons-1.4.0/bootstrap-icons.min.css')}}" type="text/css">
     <!-- Bootstrap Docs -->
-    <link rel="stylesheet" href="../../dist/css/bootstrap-docs.css" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_assets/css/bootstrap-docs.css')}}" type="text/css">
 
         <!-- Slick -->
     <link rel="stylesheet" href="../../libs/slick/slick.css" type="text/css">
