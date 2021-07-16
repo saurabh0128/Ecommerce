@@ -557,7 +557,7 @@
                 <a href="#" class="dropdown-item d-flex align-items-center" data-sidebar-target="#settings">
                     <i class="bi bi-gear dropdown-item-icon"></i> Settings
                 </a>
-                <a href="login.html" class="dropdown-item d-flex align-items-center text-danger"
+                <a href="" class="dropdown-item d-flex align-items-center text-danger"
                    target="_blank">
                     <i class="bi bi-box-arrow-right dropdown-item-icon"></i> Logout
                 </a>
@@ -566,7 +566,7 @@
         <ul>
             <li class="menu-divider">E-Commerce</li>
             <li>
-                <a  class="active"
+                <a 
                     href="index.html">
                     <span class="nav-link-icon">
                         <i class="bi bi-bar-chart"></i>
@@ -1148,7 +1148,7 @@
         <img width="100" src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
     </a>
     <!-- ./ Logo -->
-    <div class="page-title">Overview</div>
+    <div class="page-title"></div>
     <form class="search-form">
         <div class="input-group">
             <button class="btn btn-outline-light" type="button" id="button-addon1">
