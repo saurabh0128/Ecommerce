@@ -40,7 +40,8 @@ class AdminController extends Controller
     {
         
         $this->validate($request,[
-            'username' => 'required',
+            'username' => 'required|without_spaces|max:255',
+            'password' => 'required|min:8',
         ]);
     }
 
