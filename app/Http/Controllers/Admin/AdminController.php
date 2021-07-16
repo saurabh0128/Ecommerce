@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 
+use Illuminate\Support\Facades\Auth;
+
+
 use Illuminate\Validation\Rules\Password;
 
 
@@ -50,16 +53,13 @@ class AdminController extends Controller
                             ->mixedCase()
                             ->numbers()
                             ->symbols()
-                            ->uncompromised(),
                             ],
         ]);
 
 
-        if(Auth::attempt(['user_name' => $request->username , 'password' => $request->password]))
+        if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
         {
             return redirect('/dashboard');
-        }else{
-            alert('not Match');
         }
 
 
