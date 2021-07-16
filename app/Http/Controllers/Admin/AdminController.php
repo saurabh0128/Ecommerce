@@ -62,11 +62,11 @@ class AdminController extends Controller
         if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
         {
             $user =Auth()->user()->user_name;
-            dd($user);
+            
 
 
 
-           // return redirect('/dashboard');
+            return redirect('/dashboard');
         }else{
             return back()->with('error','This User Name or Password is incorrect. Try Again.');
         }
