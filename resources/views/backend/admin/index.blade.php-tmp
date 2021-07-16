@@ -47,18 +47,18 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                                     <h1 class="display-8">Sign In</h1>
                                     <p class="text-muted">Sign in to Vetra to continue</p>
                                 </div>
-                                <form class="mb-5">
+                                <form class="mb-5" method="post" action="/admin">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="_method" value="post">
                                     <div class="mb-3">
-                                        <input type="email" class="form-control" placeholder="Enter email" autofocus
-                                               required>
+                                        <input type="email" class="form-control" placeholder="Enter email" autofocus>
                                     </div>
                                     <div class="mb-3">
-                                        <input type="password" class="form-control" placeholder="Enter password"
-                                               required>
+                                        <input type="password" class="form-control" placeholder="Enter password">
                                     </div>
                                     <div class="text-center text-lg-start">
                                         <p class="small">Can't access your account? <a href="#">Reset your password now</a>.</p>
-                                        <button class="btn btn-primary">Sign In</button>
+                                        <button type="submit" class="btn btn-primary">Sign In</button>
                                     </div>
                                 </form>
                                 <p class="text-center d-block d-lg-none mt-5 mt-lg-0">
