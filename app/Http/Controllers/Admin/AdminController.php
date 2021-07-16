@@ -55,6 +55,14 @@ class AdminController extends Controller
         ]);
 
 
+        if(Auth::attempt(['user_name' => $request->username , 'password' => $request->password]))
+        {
+            return redirect('/dashboard');
+        }else{
+            alert('not Match');
+        }
+
+
     }
 
     /**
