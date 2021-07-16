@@ -21,6 +21,9 @@
     <!-- Bootstrap Docs -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/bootstrap-docs.css')}}" type="text/css">
 
+    <!-- Main style file -->
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/app.min.css')}}" type="text/css">
+
     @yield('css')
 
 
@@ -1919,20 +1922,11 @@
 <!-- Bundle scripts -->
 <script src="{{URL::asset('backend_asset/libs/bundle.js')}}"></script>
 
-<!-- Apex chart -->
-<script src="{{URL::asset('backend_asset/libs/charts/apex/apexcharts.min.js')}}"></script>
-
-<!-- Slick -->
-<script src="{{URL::asset('backend_asset/libs/slick/slick.min.js')}}"></script>
-
-
-
-@yield('js')
-
-
 
 <!-- Main Javascript file -->
 <script src="{{URL::asset('backend_asset/js/app.min.js')}}"></script>
+
+@yield('js')
 </body>
 
 <!-- Mirrored from vetra.laborasyon.com/demos/default/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 07:31:10 GMT -->
