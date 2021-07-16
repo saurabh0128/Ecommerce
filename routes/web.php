@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\DashboardController;
 
 use App\Http\Controllers\admin\Usercontroller;
 
+use App\Http\Controllers\admin\SellerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,5 +32,6 @@ Route::resource('dashboard',DashboardController::class);
 
 Route::resource('user',Usercontroller::class);
 
+Route::resource('seller',SellerController::class);
 
 
