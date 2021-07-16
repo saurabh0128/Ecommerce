@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 
+use Illuminate\Validation\Rules\Password;
+
 
 
 class AdminController extends Controller
@@ -52,7 +54,7 @@ class AdminController extends Controller
                             ],
         ]);
 
-        
+
     }
 
     /**
