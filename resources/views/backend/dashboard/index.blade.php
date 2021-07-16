@@ -9,22 +9,24 @@
     <title> Vetra | E-Commerce HTML Admin Dashboard Template  </title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{URL::asset('backend_assets/images/favicon.png')}}"/>
+    <link rel="shortcut icon" href="{{URL::asset('backend_asset/images/favicon.png')}}"/>
 
     <!-- Google fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com/">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
 
     <!-- Bootstrap icons -->
-    <link rel="stylesheet" href="{{URL::asset('backend_assets/icons/bootstrap-icons-1.4.0/bootstrap-icons.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/icons/bootstrap-icons-1.4.0/bootstrap-icons.min.css')}}" type="text/css">
     <!-- Bootstrap Docs -->
-    <link rel="stylesheet" href="{{URL::asset('backend_assets/css/bootstrap-docs.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/bootstrap-docs.css')}}" type="text/css">
 
         <!-- Slick -->
     <link rel="stylesheet" href="../../libs/slick/slick.css" type="text/css">
 
     <!-- Main style file -->
-    <link rel="stylesheet" href="../../dist/css/app.min.css" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/app.min.css')}}" type="text/css">
+
+
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -1915,19 +1917,19 @@
 <!-- ./ layout-wrapper -->
 
 <!-- Bundle scripts -->
-<script src="../../libs/bundle.js"></script>
+<script src="{{URL::asset('backend_asset/libs/bundle.js')}}"></script>
 
 <!-- Apex chart -->
-<script src="../../libs/charts/apex/apexcharts.min.js"></script>
+<script src="{{URL::asset('backend_asset/libs/charts/apex/apexcharts.min.js')}}"></script>
 
 <!-- Slick -->
-<script src="../../libs/slick/slick.min.js"></script>
+<script src="{{URL::asset('backend_asset/libs/slick/slick.min.js')}}"></script>
 
 <!-- Examples -->
-<script src="../../dist/js/examples/dashboard.js"></script>
+<script src="{{URL::asset('backend_asset/dist/js/examples/dashboard.js')}}"></script>
 
 <!-- Main Javascript file -->
-<script src="../../dist/js/app.min.js"></script>
+<script src="{{URL::asset('backend_asset/js/app.min.js')}}"></script>
 </body>
 
 <!-- Mirrored from vetra.laborasyon.com/demos/default/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 07:31:10 GMT -->
