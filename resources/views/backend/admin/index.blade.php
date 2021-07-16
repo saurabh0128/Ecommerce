@@ -49,10 +49,20 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="_method" value="post">
                                     <div class="mb-3">
-                                        <input type="email" class="form-control" placeholder="Enter email" autofocus value="{{ old('email') }}">
+                                        <input type="text" name="username" class="form-control" placeholder="Enter UserName" autofocus value="{{ old('email') }}">
+                                        @error('username')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div> 
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <input type="password" class="form-control" placeholder="Enter password">
+                                        <input type="password" name="password" class="form-control" placeholder="Enter password">
+                                        @error('password')
+                                            <div class="invalid-feedback">
+                                                {{$message}}
+                                            </div> 
+                                        @enderror
                                     </div>
                                     <div class="text-center text-lg-start">
                                         <p class="small">Can't access your account? <a href="#">Reset your password now</a>.</p>
