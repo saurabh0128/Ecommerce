@@ -59,7 +59,7 @@
                                     <div class="mb-3">
                                         <input type="password" name="password" class="form-control" placeholder="Enter password">
                                         @error('password')
-                                            <div class="invalid-feedback">
+                                            <div class="text-primary">
                                                 {{$message}}
                                             </div> 
                                         @enderror
