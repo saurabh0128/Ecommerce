@@ -48,10 +48,10 @@
                                 <form class="mb-5" method="post" action="/admin">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="_method" value="post">
-                                    <div class="mb-3">
-                                        <input type="text" name="username" class="form-control" placeholder="Enter UserName" autofocus value="{{ old('email') }}">
+                                    <div class="mb-3 ">
+                                        <input type="text" name="username" class="form-control" placeholder="Enter UserName" autofocus value="{{ old('username') }}">
                                         @error('username')
-                                            <div class="invalid-feedback">
+                                            <div class="text-primary">
                                                 {{$message}}
                                             </div> 
                                         @enderror
