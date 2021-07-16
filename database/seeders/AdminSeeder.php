@@ -26,6 +26,7 @@ class AdminSeeder extends Seeder
             'email_id' => 'bhargav121@gmail.com',
             'password' => Hash::make('bhargav123'),
             'profile_img' =>  file_get_contents('public/asset/images/carousel-1.jpg'),
+            'roll_id' => 1,
             'is_verified' => 0,
             'is_block' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
