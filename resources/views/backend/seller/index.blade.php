@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/dataTable/datatables.min.css')}}" type="text/css">
 
     <!-- Prism -->
-    <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/prism/prism.css'}}" type="text/css">
-@section
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/prism/prism.css')}}" type="text/css">
+@endsection
 
 @section('content')
     <!-- content -->

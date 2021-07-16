@@ -1,21 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Validation\Rules\Password;
-
-use Session;
-
-
-
-
-
-class AdminController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('backend.admin.index');
+        //
     }
 
     /**
@@ -45,30 +35,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $this->validate($request,[
-            'username' => 'required|alpha_dash|max:255',
-            'password' =>   [
-                            'required',
-                            'string',
-                            Password::min( 8 )
-                            ->mixedCase()
-                            ->numbers()
-                            ->symbols()
-                            ],
-        ]);
-
-
-        if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
-        {
-            $user =Auth()->user()->user_name;
-    
-            return redirect()->route('dashboard.index');
-        }else{
-            return back()->with('error','This User Name or Password is incorrect. Try Again.');
-        }
-
-
+        //
     }
 
     /**
