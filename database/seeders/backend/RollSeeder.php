@@ -19,7 +19,7 @@ class backendRollSeeder extends Seeder
             'roll_name' => "Admin",
             'roll_desc' => "I am Admin",
             'is_active' => 0,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),           
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
 
         ]);
