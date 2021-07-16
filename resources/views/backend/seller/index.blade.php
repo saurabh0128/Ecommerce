@@ -18,13 +18,7 @@
         
     <div class="row">
         <div class="col-lg-12 bd-content">
-
-            <p class="lead">
-                DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool,
-                built upon the foundations of progressive enhancement, that adds all of these advanced
-                features to any HTML table. <a href="https://datatables.net/" target="_blank">Demo page</a>.
-            </p>
-
+        	
             <h4>Seller</h4>
 
             <div class="card">
