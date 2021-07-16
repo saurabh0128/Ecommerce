@@ -63,7 +63,7 @@ class AdminController extends Controller
         {
             return redirect('/dashboard');
         }else{
-            return back()->with(Session::set('error','This User Name or Password is incorrect. Try Again.'));
+            return back()->with('error','This User Name or Password is incorrect. Try Again.');
         }
 
 
