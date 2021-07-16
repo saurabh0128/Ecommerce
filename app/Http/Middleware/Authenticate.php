@@ -4,11 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use Closure;
-
-use App\Models\User;
 
 class Authenticate extends Middleware
 {
@@ -24,13 +20,5 @@ class Authenticate extends Middleware
             return route('login');
         }
     }
-    public function handle(Request $request,closure $next)
-    {
-        if(Auth::check())
-        {
-            return $next($request);
-        }else{
-            throw new HttpException(404);
-        }
-    }
+   
 }

@@ -63,7 +63,7 @@ class AdminController extends Controller
         {
             $user =Auth()->user()->user_name;
     
-            return redirect('/dashboard');
+            return route('dashboard.index');
         }else{
             return back()->with('error','This User Name or Password is incorrect. Try Again.');
         }
