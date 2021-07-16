@@ -27,6 +27,10 @@ Route::get('/', function () {
 
 Route::resource('admin',AdminController::class);
 
+Route::group(['auth'],function(){
+
 Route::resource('dashboard',DashboardController::class);
 
 Route::resource('user',Usercontroller::class);
+});
+
