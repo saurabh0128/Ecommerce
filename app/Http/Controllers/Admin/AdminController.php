@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Validation\Rules\Password;
 
+use App\Models\User;
 
 
 class AdminController extends Controller
@@ -62,6 +63,8 @@ class AdminController extends Controller
         if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
         {
             return redirect('/dashboard');
+        }else{
+            return back()->with(Session::set('error','This User Name or Password is incorrect. Try Again.'));
         }
 
 
