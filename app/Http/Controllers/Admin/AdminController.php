@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Validation\Rules\Password;
 
+use Session;
+
 use App\Models\User;
 
 
