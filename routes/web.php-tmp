@@ -6,10 +6,11 @@ use App\Http\Controllers\admin\AdminController;
 
 use App\Http\Controllers\admin\DashboardController;
 
+use App\Http\Controllers\admin\SellerController;
+
 use App\Http\Controllers\admin\Usercontroller;
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +32,5 @@ Route::resource('admin', AdminController::class );
 Route::resource('dashboard', DashboardController::class );
 
 Route::resource('user', Usercontroller::class );
+
+Route::resource('seller', SellerController::class );
