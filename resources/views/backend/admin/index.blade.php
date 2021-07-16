@@ -9,13 +9,13 @@
     <title>Login - Vetra | E-Commerce HTML Admin Dashboard Template</title>
 
     <!-- Favicon -->
-   <link rel="shortcut icon" href="{{URL::asset('asset/images/favicon.png')}}"/>
+   <link rel="shortcut icon" href="{{URL::asset('backend_asset/images/favicon.png')}}"/>
 
     <!-- Themify icons -->
-    <link rel="stylesheet" href="{{URL::asset('asset/icons/themify-icons/themify-icons.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/icons/themify-icons/themify-icons.css')}}" type="text/css">
 
     <!-- Main style file -->
-    <link rel="stylesheet" href="{{URL::asset('asset/css/app.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/app.min.css')}}" type="text/css">
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -91,10 +91,10 @@
 
 
 <!-- Bundle scripts -->
-<script src="{{URL::asset('asset/js/bundle.js')}}"></script>
+<script src="{{URL::asset('backend_asset/js/bundle.js')}}"></script>
 
 <!-- Main Javascript file -->
-<script src="{{URL::asset('asset/js/app.min.js')}}"></script>
+<script src="{{URL::asset('backend_asset/js/app.min.js')}}"></script>
 </body>
 
 <!-- Mirrored from vetra.laborasyon.com/demos/default/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 15 Jul 2021 07:31:11 GMT -->

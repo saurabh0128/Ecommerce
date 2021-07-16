@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\admin\AdminController;
 
+use App\Http\Controllers\admin\DashboardController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +25,5 @@ Route::get('/', function () {
 
 
 Route::resource('admin',AdminController::class);
+
+Route::resource('dashboard',DashboardController::class);
