@@ -26,12 +26,12 @@ Route::get('/', function () {
 
 
 
-Route::resource('admin',AdminController::class);
+Route::resource('/backend/login',AdminController::class);
 
-Route::resource('dashboard',DashboardController::class);
+Route::resource('/backend/dashboard',DashboardController::class);
 
-Route::resource('user',Usercontroller::class);
+Route::resource('/backend/user',Usercontroller::class);
 
-Route::resource('seller',SellerController::class);
+Route::resource('/backend/seller',SellerController::class);
 
 
