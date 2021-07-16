@@ -41,8 +41,18 @@ class AdminController extends Controller
         
         $this->validate($request,[
             'username' => 'required|alpha_dash|max:255',
-            'password' => 'required|min:8',
+            'password' =>   [
+                            'required',
+                            'string',
+                            Password::min( 8 )
+                            ->mixedCase()
+                            ->numbers()
+                            ->symbols()
+                            ->uncompromised(),
+                            ],
         ]);
+
+        
     }
 
     /**
