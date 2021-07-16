@@ -35,7 +35,9 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        echo "hello";
+        $validated = $request->validate([
+            'user_name' => 'required',
+        ]);
     }
 
     /**

@@ -49,7 +49,7 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="_method" value="post">
                                     <div class="mb-3">
-                                        <input type="email" class="form-control" placeholder="Enter email" autofocus>
+                                        <input type="email" class="form-control" placeholder="Enter email" autofocus value="{{ old('email') }}">
                                     </div>
                                     <div class="mb-3">
                                         <input type="password" class="form-control" placeholder="Enter password">

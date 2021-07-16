@@ -33,7 +33,9 @@ class AdminController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		echo "hello";
+		$validated = $request->validate([
+				'user_name' => 'required',
+			]);
 	}
 
 	/**
