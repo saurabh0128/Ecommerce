@@ -15,8 +15,8 @@ class CreateSellerCategorysTable extends Migration
     {
         Schema::create('seller_categorys', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('category_id')->constrained('categorys');
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade');
+            $table->foreignId('category_id')->constrained('categorys')->onUpdate('cascade');
             $table->timestamps();
         });
     }

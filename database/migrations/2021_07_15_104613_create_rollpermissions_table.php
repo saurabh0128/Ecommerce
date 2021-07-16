@@ -15,8 +15,8 @@ class CreateRollpermissionsTable extends Migration
     {
         Schema::create('roll_permissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('roll_id')->constrained('rolls');
-            $table->foreignId('permission_id')->constrained('permissions');
+            $table->foreignId('roll_id')->constrained('rolls')->onUpdate('cascade');
+            $table->foreignId('permission_id')->constrained('permissions')->onUpdate('cascade');
             $table->timestamps();
         });
     }
