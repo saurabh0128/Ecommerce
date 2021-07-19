@@ -1,19 +1,11 @@
 <?php
-namespace App\Http\Controllers\Admin;
+
+namespace App\Http\Controllers\admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Validation\Rules\Password;
-
-use Session;
-
-
-
-
-
-class AdminController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('backend.admin.index');
+        return view('backend.coupon.index');
     }
 
     /**
@@ -43,26 +35,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $this->validate($request,[
-            'username' => 'required',
-            'password' => 'required',
-                            
-        ]);
-
-
-        if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
-        {
-
-            //$user =Auth()->user()->user_name;
-    
-            return redirect()->route('admin.dashboard.index');
-        }else{
-            
-            return back()->with('error','This User Name or Password is incorrect. Try Again.');
-        }
-
-
+        //
     }
 
     /**
