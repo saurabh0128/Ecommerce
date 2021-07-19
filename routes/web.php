@@ -5,6 +5,11 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\Usercontroller;
 use App\Http\Controllers\admin\SellerController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\CityController;
+use App\Http\Controllers\admin\StateController;
+use App\Http\Controllers\admin\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +35,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('user',Usercontroller::class);
         Route::resource('seller',SellerController::class);
         Route::resource('category',CategoryController::class);
+        Route::resource('product',ProductController::class);
+        Route::resource('order',OrderController::class);
+        Route::resource('city',CityController::class);
+        Route::resource('state',StateController::class);
+        Route::resource('rating',RatingController::class);
 
     });
 

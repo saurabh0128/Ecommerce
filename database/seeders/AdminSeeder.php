@@ -21,10 +21,10 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name' => 'bhargav',
-            'user_name' => 'admin_bhargav',
+            'user_name' => 'admin@123',
             'phone_no' => '8849032844',
             'email_id' => 'bhargav121@gmail.com',
-            'password' => Hash::make('Bhargav@123'),
+            'password' => Hash::make('Admin@123'),
             'profile_img' =>  'https://source.unsplash.com/random',
             'roll_id' => 1,
             'is_verified' => 0,
