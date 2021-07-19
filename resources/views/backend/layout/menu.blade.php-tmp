@@ -1,3 +1,5 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 <!-- menu -->
 <div class="menu">
     <div class="menu-header">
@@ -39,7 +41,7 @@
         <ul>
             <li class="menu-divider">E-Commerce</li>
             <li>
-                <a 
+                <a
                     href="{{route('admin.dashboard.index')}}">
                     <span class="nav-link-icon">
                         <i class="bi bi-bar-chart"></i>
@@ -54,7 +56,7 @@
                     </span>
                     <span>Orders</span>
                 </a>
-                
+
             </li>
             <li>
                 <a href="{{route('admin.product.index')}}">
@@ -70,7 +72,7 @@
                         <i class="bi bi-person-circle"></i>
                     </span>
                     <span>Users</span>
-                </a>   
+                </a>
             </li>
             <li>
                 <a href="{{route('admin.category.index')}}">
@@ -128,7 +130,7 @@
                     <span>City</span>
                 </a>
             </li>
-           
+
         </ul>
     </div>
 </div>
