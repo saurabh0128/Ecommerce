@@ -9,4 +9,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use HasFactory;
+
+    protected $filable = [
+        'name',
+        'user_name',
+        'phone_no',
+        'email_id',
+        'password',
+        'roll_id'
+    ];
 }

@@ -66,10 +66,6 @@
     <script src="{{URL::asset('backend_asset/js/examples/datatable.js')}}"></script>
 
 
-    <script>
-    	$('#datatable-example').DataTable({
-		    responsive: true
-		});
-    </script>
+   
 
 @endsection

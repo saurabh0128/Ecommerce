@@ -10,13 +10,11 @@ use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\CityController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\RatingController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\RollController;
 use App\Http\Controllers\admin\SellerPaymentController;
-=======
 use App\Http\Controllers\admin\CouponController;
->>>>>>> Stashed changes
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,8 +49,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('roll',RollController::class);
         Route::resource('sellerpayment',sellerPaymentController::class);
         Route::resource('coupon', CouponController::class);
-
-
     });
 
 });
