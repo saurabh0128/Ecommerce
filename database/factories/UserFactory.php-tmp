@@ -4,7 +4,6 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 namespace Database\Factories;
 
-use App\Models\Roll;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -25,7 +24,7 @@ class UserFactory extends Factory {
 	 * @return array
 	 */
 	public function definition() {
-		$roll = Roll::all()->pluck('id')->toArray();
+
 		return [
 			'name'        => $this->faker->name,
 			'user_name'   => $this->faker->name,

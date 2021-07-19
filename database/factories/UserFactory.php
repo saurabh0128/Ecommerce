@@ -25,7 +25,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $roll = Roll::all()->pluck('id')->toArray();
+        
         return [
             'name' => $this->faker->name,
             'user_name' => $this->faker->name,
