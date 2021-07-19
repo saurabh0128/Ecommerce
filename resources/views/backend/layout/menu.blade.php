@@ -89,7 +89,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.roll.index')}}">
+                <a href="{{route('admin.role.index')}}">
                     <span class="nav-link-icon">
                         <i class="bi bi-person-badge"></i>
                     </span>

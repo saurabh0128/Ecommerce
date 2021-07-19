@@ -13,12 +13,18 @@
 @endsection
 
 @section('content')
-    <!-- content -->
-    <div class="content ">
+
+<!-- content -->
+<div class="content ">
         
     <div class="row">
         <div class="col-lg-12 bd-content">
-            <h4>Roll Detail</h4>
+            <div class="p-3">    
+                <h4 class="d-inline" >Roll Detail</h4>
+                <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#newTaskModal" >
+                    <i class="bi bi-plus-circle"></i> Add Roll
+                </button>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <table id="datatable-example" class="table">
@@ -507,8 +513,37 @@
         </div>
     </div>
 
+</div>
+<!-- ./ content -->
+
+    <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Roll</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off">
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Roll Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="role_name"  class="form-control" value="{{ old('role_name') }}" >
+                            </div>
+                        </div>
+                        
+                    
+                        <div class="mb-3 row">
+                            <div class="col-sm-12 text-center ">
+                                <button type="submit" class="btn btn-primary" id="AddRoleBtn" >Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- ./ content -->
+
 
 @endsection
 
@@ -522,6 +557,25 @@
 
     <!-- Prism -->
     <script src="{{URL::asset('backend_asset/libs/prism/prism.js')}}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script >
+        $('#AddRoleBtn').click(function(){
+            
+            var roll_name = $('#roll_name').val();
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('admin.role.store') }}',
+                data:{'roll_name':roll_name,'_token':'{{ csrf_token() }}' },
+                datatype:'json',
+                success:function(response){
+                    alert(response);
+                }
+            });
+        });
+    </script>
 
 @endsection
 
