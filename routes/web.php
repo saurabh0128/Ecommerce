@@ -10,6 +10,9 @@ use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\CityController;
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\RatingController;
+use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\RollController;
+use App\Http\Controllers\admin\SellerPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +43,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('city',CityController::class);
         Route::resource('state',StateController::class);
         Route::resource('rating',RatingController::class);
+        Route::resource('permission',PermissionController::class);
+        Route::resource('roll',RollController::class);
+        Route::resource('sellerpayment',sellerPaymentController::class);
 
     });
 
