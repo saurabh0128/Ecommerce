@@ -16,6 +16,7 @@ class User extends Authenticatable
         'phone_no',
         'email_id',
         'password',
-        'roll_id'
+        'profile_img',
+        'user_status'
     ];
 }

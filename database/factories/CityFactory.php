@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Roll;
+use App\Models\City;
+use App\Models\State;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
-
-
-class RollFactory extends Factory
+    
+class CityFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Roll::class;
+    protected $model = City::class;
 
     /**
      * Define the model's default state.
@@ -23,11 +23,10 @@ class RollFactory extends Factory
      */
     public function definition()
     {
-        $str = ["Admin","Seller","User"];
+        $state = State::all()->pluck('id')->toArray();
         return [
-            'roll_name' => Arr::random($str),
-            'roll_desc' => $this->faker->text,
-            'is_active' => rand(0, 1)
+            'city_name' => $this->faker->name,
+            'state_id' => Arr::random($state)
         ];
     }
 }

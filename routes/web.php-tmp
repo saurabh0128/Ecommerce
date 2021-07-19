@@ -4,6 +4,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\CityController;
+use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PermissionController;
@@ -49,7 +50,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 				Route::resource('permission', PermissionController::class );
 				Route::resource('roll', RollController::class );
 				Route::resource('sellerpayment', sellerPaymentController::class );
-
+				Route::resource('coupon', CouponController::class );
 			});
 
 	});
