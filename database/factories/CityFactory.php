@@ -24,8 +24,9 @@ class CityFactory extends Factory
     public function definition()
     {
         $state = State::all()->pluck('id')->toArray();
+        $city_name = ["Surat","Pune","Jaipur","Lucknow","Kanpur","Nagpur","Indore","Thane","Bhopal","Visakhapatnam","Patna","Vadodara","Ghaziabad"];
         return [
-            'city_name' => $this->faker->name,
+            'city_name' => Arr::random($city_name), 
             'state_id' => Arr::random($state)
         ];
     }

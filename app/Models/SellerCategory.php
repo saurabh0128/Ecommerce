@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class SellerCategory extends Model
 {
     use HasFactory;
 
+    protected $table = "seller_categorys";
     protected $filable = [
-        'name',
-        'guard_name',
+        'user_id',
+        'category_id',
     ];
 }

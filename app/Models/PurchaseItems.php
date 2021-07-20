@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class PurchaseItems extends Model
 {
     use HasFactory;
 
     protected $filable = [
-        'name',
-        'guard_name',
+        'purchase_id',
+        'product_id',
+        'product_name',
+        'product_desc',
+        'qty',
+        'price',
     ];
 }

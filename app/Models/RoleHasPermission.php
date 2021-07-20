@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class RoleHasPermission extends Model
 {
     use HasFactory;
 
     protected $filable = [
-        'name',
-        'guard_name',
+        'permission_id',
+        'role_id',
     ];
 }

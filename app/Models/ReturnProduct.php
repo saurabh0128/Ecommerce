@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class ReturnProduct extends Model
 {
     use HasFactory;
 
     protected $filable = [
-        'name',
-        'guard_name',
+        'purchase_id',
+        'is_return',
+        'is_refunded',
     ];
 }
