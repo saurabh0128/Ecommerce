@@ -4,18 +4,16 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 namespace Database\Factories;
 
-use App\Models\City;
-use App\Models\State;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Arr;
 
-class CityFactory extends Factory {
+class RoleFactory extends Factory {
 	/**
 	 * The name of the factory's corresponding model.
 	 *
 	 * @var string
 	 */
-	protected $model = City::class ;
+	protected $model = Role::class ;
 
 	/**
 	 * Define the model's default state.
@@ -23,11 +21,9 @@ class CityFactory extends Factory {
 	 * @return array
 	 */
 	public function definition() {
-		$state     = State::all()->pluck('id')->toArray();
-		$city_name = ["Surat", "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara", "Ghaziabad"];
 		return [
-			'city_name' => Arr::random($city_name),
-			'state_id'  => Arr::random($state)
+			'name'       => $this->faker->name,
+			'guard_name' => $this->faker->name,
 		];
 	}
 }

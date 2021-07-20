@@ -7,6 +7,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class purchases extends Model {
+class Role extends Model {
 	use HasFactory;
+
+	protected $filable = [
+		'name',
+		'guard_name',
+	];
 }
