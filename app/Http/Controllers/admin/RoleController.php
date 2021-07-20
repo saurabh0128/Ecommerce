@@ -7,13 +7,9 @@ use Illuminate\Http\Request;
 
 use Validator;
 
-<<<<<<< HEAD
 
 use App\Models\Role as roll;
 
-=======
-use App\Models\Role as roll;
->>>>>>> parent of 02bd292 (stash change completed)
 
 use Spatie\Permission\Models\Role;
 
@@ -50,13 +46,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-<<<<<<< HEAD
 
             "role_name" => "required|unique:roles,name"
 
-=======
-            "role_name" => "required|unique:roles,name"
->>>>>>> parent of 02bd292 (stash change completed)
         ]);
 
         if($validator->fails())
