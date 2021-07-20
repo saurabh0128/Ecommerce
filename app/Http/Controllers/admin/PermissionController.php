@@ -5,6 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Spatie\Permission\Models\Permission;
+
+
+
+use Validator;
+
 class PermissionController extends Controller
 {
     /**
@@ -35,7 +41,21 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // insert permission code
+        $AddPermissionValidator = Validator::make($request->all(),[
+            'permission_name' => 'required|unique:permissions,name'
+        ]);
+
+        if($AddPermissionValidator->fails())
+        {
+            return Response()->json(["error"=>$AddPermissionValidator->errors()->all()]);
+        }
+
+        Permission::create(['name'=>$request->permission_name]);
+
+        return Response()->json(["success"=>"Data Inserted Successfully"]);
+
     }
 
     /**

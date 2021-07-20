@@ -54,7 +54,9 @@
     </div>
 
 </div>
+<!-- ./ content -->
 
+    <!-- Add Role Model -->
     <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -63,18 +65,18 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form autocomplete="off">
+                    <form autocomplete="off" id="AddRoleForm" >
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Role Name</label>
                             <div class="col-sm-9">
-                                <input type="text" id="role_name"  class="form-control" >
+                                <input type="text" id="role_name" autofocus  class="form-control" >
                             </div>
                         </div>
                         
                     
                         <div class="mb-3 row">
                             <div class="col-sm-12 text-center ">
-                                <button type="button" class="btn btn-primary" id="AddRoleBtn" >Add</button>
+                                <button type="submit" class="btn btn-primary" id="AddRoleBtn" >Add</button>
                             </div>
                         </div>
                     </form>
@@ -82,8 +84,10 @@
             </div>
         </div>
     </div>
+    <!--/ Add Role Model -->
 
 
+    <!-- Edit Role Model -->
     <div class="modal fade" id="EditRoleModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -100,7 +104,7 @@
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Role Name</label>
                             <div class="col-sm-9">
-                                <input type="text" id="edit_role_name"  class="form-control" >
+                                <input type="text" id="edit_role_name"  class="form-control" autofocus>
                             </div>
                         </div>
                         
@@ -114,10 +118,9 @@
             </div>
         </div>
     </div>
+    <!-- /Edit Role Model -->
 
 
-
-<!-- ./ content -->
 
 
 
@@ -129,7 +132,7 @@
     <script src="{{URL::asset('backend_asset/libs/dataTable/datatables.min.js')}}"></script>
 
     <!-- Examples -->
-    <!--<script src="{{URL::asset('backend_asset/js/examples/datatable.js')}}"></script>-->
+    {{-- <script src="{{URL::asset('backend_asset/js/examples/datatable.js')}}"></script> --}}
 
     <!-- Prism -->
     <script src="{{URL::asset('backend_asset/libs/prism/prism.js')}}"></script>
@@ -137,7 +140,7 @@
 
     
 
-    <script >
+    <script type="text/javascript" >
 
 
         //toaster options
@@ -193,7 +196,10 @@
 
 
         //Add role click function for add form modal and store data into database using ajax and give a success and error resposne 
-        $('#AddRoleBtn').click(function(){            
+        $('#AddRoleForm').submit(function(e){
+
+            e.preventDefault();
+
             var role_name = $('#role_name').val();
 
             $.ajax({
