@@ -7,11 +7,9 @@ use Illuminate\Http\Request;
 
 use Validator;
 
-<<<<<<< Updated upstream
+
 use App\Models\Role as roll;
-=======
-use App\Models\Roll;
->>>>>>> Stashed changes
+
 
 use Spatie\Permission\Models\Role;
 
@@ -48,11 +46,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-<<<<<<< Updated upstream
+
             "role_name" => "required|unique:roles,name"
-=======
-            "role_name" => "required"
->>>>>>> Stashed changes
+
         ]);
 
         if($validator->fails())
