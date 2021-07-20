@@ -64,7 +64,15 @@
                 </div>
                 <div class="modal-body">
 
+<<<<<<< Updated upstream
                     
+=======
+                    <div class="alert alert-danger" role="alert" id="role_error" hidden>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert" id="role_success" hidden>
+                    </div>
+>>>>>>> Stashed changes
 
                     <form autocomplete="off">
                         <div class="mb-3 row">
@@ -110,7 +118,11 @@
                     
                         <div class="mb-3 row">
                             <div class="col-sm-12 text-center ">
+<<<<<<< Updated upstream
                                 <button type="submit" class="btn btn-primary" id="EditRoleBtn" >Update</button>
+=======
+                                <button type="button" class="btn btn-primary" id="AddRoleBtn" >Add</button>
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </form>
@@ -142,6 +154,7 @@
     
 
     <script >
+<<<<<<< Updated upstream
 
         //toaster options
         toastr.options = {
@@ -197,6 +210,10 @@
 
         //Add role click function for add form modal and store data into database using ajax and give a success and error resposne 
         $('#AddRoleBtn').click(function(){            
+=======
+        $('#AddRoleBtn').click(function(){
+            
+>>>>>>> Stashed changes
             var role_name = $('#role_name').val();
 
             $.ajax({
@@ -207,6 +224,7 @@
                 success:function(response){
                    if(response.error) 
                    {     
+<<<<<<< Updated upstream
 
                         //toastr for error message
                         toastr["error"](response.error);
@@ -218,6 +236,15 @@
                         $('#role_name').val("");
                         toastr["success"](response.success);
                         $('#datatable-example').DataTable().draw(false)
+=======
+                        $('#role_error').attr('hidden',false);
+                        $('#role_error').html(response.error);
+                   }
+                   else
+                   { 
+                        $('#role_success').attr('hidden',false);
+                        $('#role_success').html(response.success);
+>>>>>>> Stashed changes
                    }
                 }
             });
