@@ -5,6 +5,14 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Validator;
+
+use App\Models\Role as roll;
+
+use Spatie\Permission\Models\Role;
+
+
+
 class RoleController extends Controller
 {
     /**
@@ -35,7 +43,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            "role_name" => "required|unique:roles,name"
+        ]);
+
+        if($validator->fails())
+        {
+            return Response()->json(["error"=>$validator->errors()->all()]);
+        }
+
+        Role::create(['name'=>$request->role_name ]);
+
+        return Response()->json(["success"=>"Data Inserted Successfully"]);
+
     }
 
     /**
@@ -69,7 +89,21 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $EditValidator = Validator::make($request->all(),[
+
+            "role_name" => 'required|unique:roles,name,'.$id
+        ]);
+
+        if($EditValidator->fails())
+        {
+            return Response()->json(["error"=>$EditValidator->errors()->all()]);
+        }
+
+        $role = roll::where('id','=',$id)->first();
+        $role->name = $request->role_name;
+        $role->save();
+
+        return Response()->json(['success'=>'Data Updated Successfully']);
     }
 
     /**
@@ -80,6 +114,70 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        roll::where('id','=',$id)->delete();
+    }
+
+    //it is used for pass data from database  to a datatable
+    public function ajax(Request $request)
+    {
+        if ( $request->ajax() || $request->mode= 'datatable') {
+           $draw = $request->get('draw');
+           $start = $request->get("start");
+           $rowperpage = $request->get("length"); 
+
+
+             $columnIndex_arr = $request->get('order');
+             $columnName_arr = $request->get('columns');
+             $order_arr = $request->get('order');
+             $search_arr = $request->get('search');
+
+             $columnIndex = $columnIndex_arr[0]['column']; // Column index
+             $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+             $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+             $searchValue = $search_arr['value']; // Search value
+
+             // Total records
+             $totalRecords = roll::select('count(*) as allcount')->count();
+             $totalRecordswithFilter = roll::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+
+             // Fetch records
+             $records = roll::orderBy($columnName,$columnSortOrder)
+               ->where('roles.name', 'like', '%' .$searchValue . '%')
+               ->select('roles.*')
+               ->skip($start)
+               ->take($rowperpage)
+               ->get();
+
+             $data_arr = array();
+
+             //for a counter 
+             $count = 1;
+
+             foreach($records as $record){
+                $id = $record->id;
+                $name = $record->name;
+                $guard_name = $record->guard_name;
+
+                $data_arr[] = array(
+                  "id" => $count,
+                  "name" => $name,
+                  "guard_name" => $guard_name,
+                  "action" => '<button type="button" id="EditBtn" editurl="'.route('admin.role.update',$id).'"
+                   editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                );
+                $count++;
+             }
+
+             $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordswithFilter,
+                "aaData" => $data_arr
+             );
+
+             echo json_encode($response);
+             exit;
+               
+        }
     }
 }

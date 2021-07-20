@@ -48,6 +48,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('rating',RatingController::class);
         Route::resource('permission',PermissionController::class);
         Route::resource('role',RoleController::class);
+        Route::post('role/ajax',[RoleController::class,'ajax'])->name('role.ajax');
         Route::resource('sellerpayment',sellerPaymentController::class);
         Route::resource('coupon', CouponController::class);
     });
