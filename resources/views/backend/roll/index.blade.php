@@ -64,7 +64,11 @@
                 </div>
                 <div class="modal-body">
 
+<<<<<<< HEAD
 
+=======
+                    
+>>>>>>> parent of 02bd292 (stash change completed)
 
                     <form autocomplete="off">
                         <div class="mb-3 row">
@@ -141,7 +145,10 @@
     
 
     <script >
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 02bd292 (stash change completed)
 
         //toaster options
         toastr.options = {
@@ -207,7 +214,10 @@
                 success:function(response){
                    if(response.error) 
                    {     
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 02bd292 (stash change completed)
 
                         //toastr for error message
                         toastr["error"](response.error);
