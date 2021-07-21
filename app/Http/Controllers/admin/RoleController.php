@@ -124,7 +124,8 @@ class RoleController extends Controller
     //it is used for pass data from database  to a datatable
     public function ajax(Request $request)
     {
-        if ( $request->ajax() || $request->mode= 'datatable') {
+        
+        if ( $request->ajax() || $request->mode == 'datatable') {
            $draw = $request->get('draw');
            $start = $request->get("start");
            $rowperpage = $request->get("length"); 
@@ -143,6 +144,7 @@ class RoleController extends Controller
              // Total records
              $totalRecords = roll::select('count(*) as allcount')->count();
              $totalRecordswithFilter = roll::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+
 
              // Fetch records
              $records = roll::orderBy($columnName,$columnSortOrder)

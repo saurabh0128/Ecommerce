@@ -15,6 +15,7 @@
 
 @section('content')
 
+
 <!-- content -->
 <div class="content ">
         
@@ -245,7 +246,9 @@
             }
 
             toastr["info"]("Are you sure you want to delete record? <br /><br /><button type='button' id='cnf_del_btn' class='btn btn-light btn-sm'>Yes</button>")
-            
+                
+
+                    
 
 
             $('#cnf_del_btn').click(function(){
