@@ -32,7 +32,7 @@
                         <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Role Name</th>
                             <th>Guard Name</th>
                             <th>Action</th>
                         </tr>
@@ -41,7 +41,7 @@
                         <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Role Name</th>
                             <th>Guard Name</th>
                             <th>Action</th>
                         </tr>
@@ -177,7 +177,7 @@
                 },
                 columns: [
                     {data: 'id', name: 'DT_RowIndex'},
-                    {data: 'name', name: 'name'},
+                    {data: 'name', name: 'role name'},
                     {data: 'guard_name', name: 'guard_name'},
                     {
                         data: 'action', 
@@ -252,7 +252,7 @@
 
                 $.ajax({
                     type:'post',
-                    url:'{{ route('admin.role.destroy','')}}'+"/"+id,
+                    url:'{{ route('admin.role.destroy','')}}'+'/'+id,
                     data:{'_token':'{{ csrf_token() }}','_method':'Delete'},
                     datatype:'json',
                     success:function(resposnse)

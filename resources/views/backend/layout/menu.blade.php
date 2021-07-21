@@ -93,7 +93,7 @@
                     <span class="nav-link-icon">
                         <i class="bi bi-person-badge"></i>
                     </span>
-                    <span>Roll</span>
+                    <span>Role</span>
                 </a>
             </li>
             <li>

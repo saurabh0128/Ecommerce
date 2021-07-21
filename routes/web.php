@@ -41,12 +41,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('user',Usercontroller::class);
         Route::resource('seller',SellerController::class);
         Route::resource('category',CategoryController::class);
+        Route::post('category/ajax',[CategoryController::class,'ajax'])->name('category.ajax');
         Route::resource('product',ProductController::class);
         Route::resource('order',OrderController::class);
         Route::resource('city',CityController::class);
         Route::resource('state',StateController::class);
         Route::resource('rating',RatingController::class);
         Route::resource('permission',PermissionController::class);
+        Route::post('permission/ajax',[PermissionController::class,'ajax'])->name('permission.ajax');
         Route::resource('role',RoleController::class);
         Route::post('role/ajax',[RoleController::class,'ajax'])->name('role.ajax');
         Route::resource('sellerpayment',sellerPaymentController::class);
