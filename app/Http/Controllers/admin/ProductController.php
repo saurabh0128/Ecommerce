@@ -10,8 +10,10 @@ use App\Models\User;
 
 use App\Models\Product;
 
+
 use Validator;
 
+use DB;
 
 class ProductController extends Controller
 {
@@ -94,7 +96,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        // DB::enableQueryLog();
+        $productdata = Product::where('id','=',$id)->first();
+        // dd($productdata);
+        return view('backend.product.show',compact('productdata'));
     }
 
     /**
@@ -128,11 +133,15 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::where('id','=',$id)->delete();
     }
 
     public function ajax(Request $request)
     {
+
+       // $sk = Product::with('category')->first();
+       // dd($sk);
+
         if($request->ajax()|| $request->mode == 'datatable'){
 
             $draw = $request->get('draw');
@@ -154,14 +163,24 @@ class ProductController extends Controller
              $totalRecords = Product::select('count(*) as allcount')->count();
              $totalRecordswithFilter = Product::select('count(*) as allcount')->where('product_name', 'like', '%' .$searchValue . '%')->count();
 
+             // DB::enableQueryLog();
              // Fetch records
-             $records = Product::orderBy($columnName,$columnSortOrder)
+             $records = Product::with('category')->orderBy($columnName,$columnSortOrder)
                ->where('Products.product_name', 'like', '%' .$searchValue . '%')
                ->select('Products.*')
                ->skip($start)
                ->take($rowperpage)
                ->get();
+            // dd(DB::getQueryLog());
 
+
+              //for a where condition on  a  categoryname 
+             //   array('category' => function($query){
+             //       $query->where('Categorys.category_name','like','%123%'); 
+             // })
+
+
+                // dd($records->toArray()); 
              $data_arr = array();
 
              //for a counter 
@@ -172,7 +191,7 @@ class ProductController extends Controller
                 $product_name = $record->product_name;
                 $product_img = $record->product_img;
                 $price = $record->special_price;
-                $category = $record->category_id;
+                $category = $record->category->category_name;
                 $stock = $record->stock;
 
                 $data_arr[] = array(
@@ -182,8 +201,7 @@ class ProductController extends Controller
                   "category" =>$category,
                   "price" => $price,
                   "stock" => $stock,
-                  "action" => '<button type="button" id="EditBtn" editurl="'.route('admin.category.update',$id).'"
-                   editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => '<a href="'.route('admin.product.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <button type="button" id="EditBtn" editurl="'.route('admin.category.update',$id).'"  editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
                 );
                 $count++;
              }
