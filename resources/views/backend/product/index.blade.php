@@ -10,6 +10,9 @@
 
     <!-- Prism -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/prism/prism.css')}}" type="text/css">
+
+    <!-- toaster css -->
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/toastr.css')}}" type="text/css">
 @endsection
 
 @section('content')
@@ -29,26 +32,28 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <table id="datatable-example" class="table">
+                    <table id="ProductDatatable" class="table">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Id</th>
+                            <th>Product Name</th>
+                            <th>Product Image</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>stock</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                    
                         <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Id</th>
+                            <th>Product Name</th>
+                            <th>Product Image</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>stock</th>
+                            <th>Action</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -68,14 +73,70 @@
 
 @section('js')
 
- <!-- Datatable -->
+    <!-- Datatable -->
     <script src="{{URL::asset('backend_asset/libs/dataTable/datatables.min.js')}}"></script>
-
-    <!-- Examples -->
-    <script src="{{URL::asset('backend_asset/js/examples/datatable.js')}}"></script>
 
     <!-- Prism -->
     <script src="{{URL::asset('backend_asset/libs/prism/prism.js')}}"></script>
+
+    <!-- toaster js -->
+    <script src="{{URL::asset('backend_asset/js/toastr.min.js')}}"></script>
+
+    <script type="text/javascript" charset="utf-8" async defer>
+
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+       @if(Session::get('success'))      
+            toastr["success"]("{{Session::get('success')}}")
+       @endif
+
+
+       $(document).ready(function(){
+            //To display Product Details
+            $('#ProductDatatable').DataTable({ 
+                processing: true,
+                serverSide: true,
+                ajax:{
+                    type:'post',
+                    url:'{{ route('admin.product.ajax')}}',
+                    data:{'_token':'{{ csrf_token() }}','data':'datatable'}
+                },
+                columns:[
+                    {data:'id',name:'DT_RowIndex'},
+                    {data:"product name"},
+                    {data:"product image"},
+                    {data:"category"},
+                    {data:"price"},
+                    {data:"stock"},
+                    {
+                        data:'action',
+                        name:'action',
+                        searchable:true,
+                        orderable:true
+                    }
+                ]
+            });
+       })
+
+
+    </script>
+    
 
 @endsection
 

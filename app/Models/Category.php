@@ -12,6 +12,5 @@ class Category extends Model
     protected $table = "categorys";
     protected $filable = [
         'category_name'
-
     ];
 }

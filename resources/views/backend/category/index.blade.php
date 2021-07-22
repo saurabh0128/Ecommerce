@@ -11,7 +11,7 @@
     <!-- Prism -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/prism/prism.css')}}" type="text/css">
 
-    <!-- toaster js -->
+    <!-- toaster css -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/toastr.css')}}" type="text/css">
 @endsection
 

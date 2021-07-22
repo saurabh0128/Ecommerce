@@ -44,6 +44,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('category',CategoryController::class);
         Route::post('category/ajax',[CategoryController::class,'ajax'])->name('category.ajax');
         Route::resource('product',ProductController::class);
+        Route::post('product/ajax',[ProductController::class,'ajax'])->name('product.ajax');
         Route::resource('order',OrderController::class);
         Route::resource('city',CityController::class);
         Route::resource('state',StateController::class);
