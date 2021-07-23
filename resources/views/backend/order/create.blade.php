@@ -1,34 +1,102 @@
 @extends('backend.layout.app')
 
 @section('title')
-Add Product
+Add Order
 @endsection
+
 
 @section('css')
 	<link rel="stylesheet" href="{{ asset('backend_asset/libs/select2/css/select2.min.css')}}" type="text/css">
 @endsection
 
-
 @section('content')
-
 
 <div class="card m-3 ">
 	<div class="card-body">	
-		<div class="card-title text-center">Add Product Form </div>
+		<div class="card-title text-center">Add Order Form </div>
 		<form id="AddProduct" method="post"  action="{{ route('admin.product.store') }}" enctype="multipart/form-data" >
 
 			@csrf
+
+
 			<div class="row">
 				<div class="col-1"></div>	
-			    <div class="mb-3 col-10 ">
-			    	<label for="product_name" class="form-label">Product Name* </label>
-			    	<input type="text" class="form-control" id="product_name" name="product_name" value="{{ old('product_name') }}" autofocus  >
-			    	@error('product_name')
+				<div class="mb-3 col-10 ">
+			    	<label for="user" class="form-label">User*</label>
+			    	<select name="user" name="user" id="user" class="select2-example" >
+			    		<option value="">Please select user</option>
+			    		@foreach($user as $user_detail)
+			    			<option value="{{ $user_detail->id }}">{{ $user_detail->user_name }}</option>
+			    		@endforeach
+			    	</select>
+			    	@error('user')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
 			    <div class="col-1"></div>
 			</div>
+
+			<div class="row">
+				<div class="col-1"></div>	
+			    <div class="mb-3 col-10 ">
+			    	<label for="customer_name" class="form-label">Customer Name* </label>
+			    	<input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ old('customer_name') }}" autofocus  >
+			    	@error('customer_name')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-1"></div>	
+				<div class="mb-3 col-10 ">
+			    	<label for="deliveryAddress" class="form-label">Delivery Address*</label>
+			    	<select name="deliveryAddress" name="deliveryAddress" id="deliveryAddress" class="select2-example" >
+			    		<option value="">Please select Delivery Address</option>
+			 	    </select>
+			    	@error('deliveryAddress')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+
+			<div class="row">
+				<div class="col-1"></div>	
+				<div class="mb-3 col-10 ">
+			    	<label for="billingAddress" class="form-label">Billing Address*</label>
+			    	<select name="billingAddress" name="billingAddress" id="billingAddress" class="select2-example" >
+			    		<option value="">Please select Billing Address</option>
+			 	    </select>
+			    	@error('deliveryAddress')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    <div class="col-1"></div>
+			</div>	
+
+			<div class="row">
+				<div class="col-1"></div>	
+				<div class="mb-3 col-10 ">
+			    	<label for="Coupon" class="form-label">Coupon *</label>
+			    	<select name="Coupon" name="Coupon" id="Coupon" class="select2-example" >
+			    		<option value="">Please select coupan</option>
+			    		@foreach($coupon as $coupon_detail)
+			    			<option value="{{ $coupon_detail->id }}">{{ $coupon_detail->coupon_name }}</option>
+			    		@endforeach
+			    	</select>
+			    	@error('coupan')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+
+
+
+
 			
 			<div class="row">
 				<div class="col-1"></div>	
@@ -81,9 +149,9 @@ Add Product
 			    	<label for="Category" class="form-label">Category Name*</label>
 			    	<select name="Category" name="Category" class="select2-example" >
 			    		<option value="">Please select Category</option>
-			    		@foreach($categorys as $category_detail)
+			    		{{-- @foreach($categorys as $category_detail)
 			    			<option value="{{ $category_detail->id }}">{{ $category_detail->category_name }}</option>
-			    		@endforeach
+			    		@endforeach --}}
 			    	</select>
 			    	@error('Category')
 			    		<p class="text-danger">{{ $message }}</p>
@@ -94,9 +162,9 @@ Add Product
 			    	<label for="Seller" class="form-label">Seller Name*</label>
 			    	<select name="Seller" name="Seller" class="select2-example" >
 			    		<option value="">Please select Seller</option>
-			    	@foreach($sellers as $seller_detail)	
+			    	{{-- @foreach($sellers as $seller_detail)	
 			    		<option value="{{ $seller_detail->id }}">{{ $seller_detail->name }}</option>
-			    	@endforeach	
+			    	@endforeach	 --}}
 			    	</select>
 			    	@error('Seller')
 			    		<p class="text-danger">{{ $message }}</p>
@@ -185,14 +253,28 @@ Add Product
 
 @endsection
 
-
 @section('js')
-
-<script src="{{asset('backend_asset/libs/select2/js/select2.min.js')}}"></script>
+	<script src="{{asset('backend_asset/libs/select2/js/select2.min.js')}}"></script>
 
 	<script type="text/javascript" charset="utf-8" >
 		$('.select2-example').select2({
 		});
-	</script>
+		
+		$(document).on('change','#user',function(){
 
+			var id = $(this).val();
+
+			$.ajax({
+				type:'post',
+				url:'{{ route('admin.order.ajax') }}',
+				data:{'_token':'{{ csrf_token() }}','mode':'user_address_change','id':id},
+				datatype:'json',
+				success:function(response)
+				{
+					$('#deliveryAddress').html(response);
+					$('#billingAddress').html(response);
+				}
+			})
+		});
+	</script>
 @endsection

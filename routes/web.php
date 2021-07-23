@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('product',ProductController::class);
         Route::post('product/ajax',[ProductController::class,'ajax'])->name('product.ajax');
         Route::resource('order',OrderController::class);
+        Route::post('order/ajax',[OrderController::class,'ajax'])->name('order.ajax');
         Route::resource('city',CityController::class);
         Route::resource('state',StateController::class);
         Route::resource('rating',RatingController::class);
@@ -56,6 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('role/ajax',[RoleController::class,'ajax'])->name('role.ajax');
         Route::resource('sellerpayment',sellerPaymentController::class);
         Route::resource('coupon', CouponController::class);
+        Route::post('coupon/ajax',[CouponController::class,'ajax'])->name('coupon.ajax');
     });
 
 });

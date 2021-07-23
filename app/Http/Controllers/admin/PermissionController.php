@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Permission as Permissions;
 
 use Spatie\Permission\Models\Permission;
-
+use Illuminate\Database\QueryException;
 
 
 use Validator;
@@ -114,7 +114,12 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        Permissions::where('id','=',$id)->delete();
+        try {
+            Permissions::where('id','=',$id)->delete();
+        } catch (Exception $e) {
+             return Response()->json(["error"=> 'You cannot delete a Permission directly , First delete a related records ']);
+        }
+        
     }
 
 
