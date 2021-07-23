@@ -112,7 +112,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
          $validator = Validator::make($request->all(),[
-            "edit_name" => "required|min:2|alpha|unique:users,name,".$id,
+            "edit_name" => "required|min:2|unique:users,name,".$id,
             "edit_user_name" => "required|min:2|alpha_dash|unique:users,user_name,".$id,
             "edit_phone_no" => "required|numeric|digits:10",
             "edit_email_id" => "required|email|unique:users,email_id,".$id,
@@ -180,8 +180,8 @@ class UserController extends Controller
                 $searchValue = $search_arr['value']; // Search value
 
                 // Total records
-                $totalRecords = User::select('count(*) as allcount')->count();
-                $totalRecordswithFilter = User::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+                $totalRecords = User::where('user_status','=','0')->select('count(*) as allcount')->count();
+                $totalRecordswithFilter = User::where('user_status','=','0')->select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
 
                  // Fetch records
                 $records = User::orderBy($columnName,$columnSortOrder)

@@ -156,8 +156,13 @@
                     },
                     datatype:'json',
                     success:function(response){
-                        toastr["success"]("Record Deleted Successfully");
-                        $('#ProductDatatable').DataTable().draw(false);
+                        if(response.error){
+                            toastr["error"](response.error);
+                        }
+                        else{
+                            toastr["success"]("Record Deleted Successfully");
+                            $('#ProductDatatable').DataTable().draw(false);
+                        }
                     }
                 });
             });

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\User;
 
+use Illuminate\Database\QueryException;
+
 use App\Models\Product;
 
 
@@ -97,9 +99,9 @@ class ProductController extends Controller
     public function show($id)
     {
         // DB::enableQueryLog();
-        $productdata = Product::where('id','=',$id)->first();
-        // dd($productdata);
-        return view('backend.product.show',compact('productdata'));
+        $product = Product::with(['category','user'])->where('id','=',$id)->firstOrFail();
+        // dd($product);
+        return view('backend.product.show',compact('product'));
     }
 
     /**
@@ -110,7 +112,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $product = Product::where('id','=',$id)->firstOrFail();
+        $categorys = Category::all();
+        $sellers = User::where('user_status','=',1)->get();
+        return view('backend.product.edit',compact('categorys','sellers','product'));
     }
 
     /**
@@ -122,7 +128,49 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+
+        $request->validate([
+            "product_name" => "required|min:2|max:200",
+            "current_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",
+            "special_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",
+            "product_desc" =>  "required",
+            "product_sort_desc" =>  "required",
+            "Category" => "required",
+            "Seller" => "required",
+            "product_image" => "image|max:2048",
+            "stock" => "required|numeric",
+            "is_display" => "required",
+            "is_avilable" => "required"
+        ],
+        [
+            "regex"=>"Only number and decimal allowed"
+        ]);
+
+        $product = Product::where('id','=',$id)->first();
+
+        if($request->hasFile('product_image'))
+        {
+            $onlyImgName = pathinfo($request->product_image->getClientOriginalName(),PATHINFO_FILENAME);
+            $imgExtension = $request->product_image->getClientOriginalExtension(); 
+            $imgName = $onlyImgName."-".time().".".$imgExtension;
+            $request->product_image->move(public_path('backend_asset/product_images'),$imgName);
+            $product->product_img = $imgName;
+        }    
+
+        $product->product_name = $request->product_name;
+        $product->product_desc = $request->product_desc;
+        $product->product_sort_desc = $request->product_sort_desc;
+        $product->current_price = $request->current_price;
+        $product->special_price = $request->special_price;
+        $product->category_id = $request->Category;
+        $product->user_id = $request->Seller;
+        $product->is_display = $request->is_display;
+        $product->is_avilable = $request->is_avilable;
+        $product->stock = $request->stock;
+        $product->save();
+
+        return redirect()->route('admin.product.index')->with("success","Data Updated Successfully");
     }
 
     /**
@@ -133,7 +181,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::where('id','=',$id)->delete();
+        try {
+            Product::where('id','=',$id)->delete();
+        } catch (QueryException $e) {
+             return Response()->json(["error"=> 'You cannot delete a Product directly , First delete a related records ']);
+        }
     }
 
     public function ajax(Request $request)
@@ -201,7 +253,7 @@ class ProductController extends Controller
                   "category" =>$category,
                   "price" => $price,
                   "stock" => $stock,
-                  "action" => '<a href="'.route('admin.product.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <button type="button" id="EditBtn" editurl="'.route('admin.category.update',$id).'"  editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => '<a href="'.route('admin.product.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <a href="'.route('admin.product.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
                 );
                 $count++;
              }

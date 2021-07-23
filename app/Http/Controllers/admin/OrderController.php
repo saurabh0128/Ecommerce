@@ -1,9 +1,14 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use App\Models\User;
+use App\Models\Coupone;
+
+use App\Models\UserAddress;
 
 class OrderController extends Controller
 {
@@ -24,7 +29,10 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $user = User::where('user_status','=',0)->get();
+        $coupon = Coupone::all();
+
+        return view('backend.order.create',compact('user','coupon'));
     }
 
     /**
@@ -81,5 +89,22 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function ajax(Request $request)
+    {
+        if($request->ajax() && $request->mode == 'user_address_change')
+        {
+          $userAddresses = UserAddress::where('user_id',$request->id)->get();
+
+          $str = "";
+
+          foreach($userAddresses as $userAddress )
+          {
+              $str .= "<option value='".$userAddress->id."'>". $userAddress->address_line_1.$userAddress->address_line_2."</option>";
+          }
+          echo $str;
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Database\QueryException;
+
 use App\Models\Category;
 
 use Validator;
@@ -117,7 +119,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::where('id','=',$id)->delete();
+        try {
+            Category::where('id','=',$id)->delete();
+        } catch (QueryException $e) {
+            return Response()->json(["error"=> 'You cannot delete a Category directly , First delete a related records ']);
+        }
     }
 
     public function ajax(Request $request){

@@ -1,4 +1,4 @@
-@extends('backend.layout.app')
+@extends('backend.layout.app') 
 
 @section('title')
     Pemission
@@ -226,8 +226,14 @@
                 data:{'_token':'{{ csrf_token() }}','_method':'delete'},
                 datatype:'json',
                 success:function(resposne){
-                    toastr["success"]("Record Deleted Successfully");
-                     $('#PermissionDatatable').DataTable().draw(false);
+                    if(resposne.error)
+                    {
+                        toastr["error"](response.error);
+                    }
+                    else{
+                        toastr["success"]("Record Deleted Successfully");
+                         $('#PermissionDatatable').DataTable().draw(false);
+                    }
                 }
             })
            }); 
