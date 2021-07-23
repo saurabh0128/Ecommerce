@@ -18,8 +18,8 @@ Add Product
 
 <div class="card m-3 ">
 	<div class="card-body">
-		<div class="card-title text-center">Add Seller Form </div>
-		<form id="AddProduct" method="post"  action="{{ route('admin.seller.store') }}" enctype="multipart/form-data" >
+		<div class="card-title text-center">Edit Seller Form </div>
+		<form id="AddProduct" method="post"  action="" enctype="multipart/form-data" >
 
 			@csrf
 			<div class="row">
@@ -89,9 +89,9 @@ Add Product
 			    	<label for="state" class="form-label">State Name*</label>
 			    	<select id="state" name="state" class="select2-example" >
 			    		<option value="">Please select State</option>
-			    			@foreach($state as $value)
-			    			<option value="{{$value->id}}">{{$value->StateName}}</option>
-			    			@endforeach
+			    		@foreach($statedata as $state)
+			    			<option value="{{$state->id}}">{{$state->StateName}}</option>
+			    		@endforeach
 			    	</select>
 			    	@error('state')
 			    		<p class="text-danger">{{ $message }}</p>
@@ -272,35 +272,8 @@ Add Product
 	$(document).ready(function(){
 
 
-		$('#state').change(function(){
-			var id = $('#state').val();
-
-			$.ajax({
-				type:'post',
-				url:'{{ route('admin.seller.ajax')}}',
-				data:{'state_id':id,'_token':'{{csrf_token()}}','mode':'chek_state'},
-				datatype:'text',
-				success:function(response)
-				{
-
-					$('#city').html(response);
-				}
-
-
-			});
-
-
-		});
-		$('#proof').change(function(){
-			var id =$('#proof').val();
-
-			if($id == 0)
-			{
-
-			}
-
-		})
 	});
+
 </script>
 
 @endsection

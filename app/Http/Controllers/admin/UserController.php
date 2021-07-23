@@ -112,7 +112,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
          $validator = Validator::make($request->all(),[
-            "edit_name" => "required|min:2|alpha|unique:users,name,".$id,
+            "name" => "required|min:2|regex:/^[\pL\s]+$/u|unique:users,name,".$id,
             "edit_user_name" => "required|min:2|alpha_dash|unique:users,user_name,".$id,
             "edit_phone_no" => "required|numeric|digits:10",
             "edit_email_id" => "required|email|unique:users,email_id,".$id,

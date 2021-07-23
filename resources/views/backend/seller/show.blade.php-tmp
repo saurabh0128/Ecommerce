@@ -19,14 +19,14 @@ Add Product
 <div class="card m-3 ">
 	<div class="card-body">
 		<div class="card-title text-center">Add Product Form </div>
-			@foreach($sellerdata as $user)
+		<!-- 	@foreach($sellerdata as $user) -->
 			<div class="row">
 				<div class="col-2">
 					<label for="product_name" class="form-label">User Profile</label>
 				</div>
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-8 ">
-			    	<img src="{{asset('/backend_asset/user_img/'.$user->profile_img)}}" alt="">
+			    	<img src="{{asset('/backend_asset/user_img/'.$user->profile_img)}}" height="150" width="150" alt="">
 			    </div>
 			    <div class="col-1"></div>
 			</div>
@@ -173,7 +173,7 @@ Add Product
 
 
 
-			@endforeach
+		<!-- 	@endforeach -->
 
 
 

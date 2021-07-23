@@ -93,7 +93,14 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     }
+
+        @if(Session::get('success'))
+            toastr['success']('{{Session::get('success')}}');
+        @endif
+
     $(document).ready(function(){
+
+
         $('#datatable-seller').DataTable({
             processing:true,
             serverSide:true,
@@ -154,6 +161,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
     }
 
 </script>
+
 
 @endsection
 

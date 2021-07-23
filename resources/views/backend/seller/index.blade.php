@@ -91,7 +91,14 @@
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     }
+
+        @if(Session::get('success'))
+            toastr['success']('{{Session::get('success')}}');
+        @endif
+
     $(document).ready(function(){
+
+
         $('#datatable-seller').DataTable({
             processing:true,
             serverSide:true,
@@ -152,6 +159,7 @@
     }   
 
 </script>
+
 
 @endsection
 

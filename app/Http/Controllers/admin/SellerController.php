@@ -8,6 +8,8 @@ use APP\Models\User;
 use App\Models\SellerInfos;
 use App\Models\State;
 use App\Models\City;
+use Validator;
+use Illuminate\Support\Facades\Hash;
 
 class SellerController extends Controller
 {
@@ -40,7 +42,91 @@ class SellerController extends Controller
      */
     public function store(Request $request)
     {
-        echo "hello";
+        if($request->proof == 0)
+        {
+            $request->validate([
+                'name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'user_name' => 'required|alpha_dash|min:2|max:100',
+                'contect_on' => 'required|numeric|digits:10',
+                'user_profile' => 'required|image|max:2048',
+                'companie_name' => 'required|min:2|max:100',
+                'address' => 'required|min:2|max:200',
+                'state' => 'required',
+                'city' => 'required',
+                'email_id'=> 'email|unique:users,email_id',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required|same:password',
+                'bank_name' => 'required|min:3|regex:/^[\pL\s]+$/u',
+                'account_no' => 'required|numeric|digits:16|unique:seller_infos,account_no',
+                'ifsc_code' => 'required|regex:/^[A-Za-z]{4}\d{7}$/',
+                'account_holder_name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'id_proof_no' => 'required|digits:12|unique:seller_infos,id_proof_no',
+                'id_proof' => 'required|image|max:2048',
+                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/'
+            ]);
+        }else{
+            
+            $request->validate([
+                'name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'user_name' => 'required|alpha_dash|min:2|max:100',
+                'contect_on' => 'required|numeric|digits:10',
+                'user_profile' => 'required|image|max:2048',
+                'companie_name' => 'required|min:2|max:100',
+                'address' => 'required|min:2|max:200',
+                'state' => 'required',
+                'city' => 'required',
+                'email_id'=> 'email|unique:users,email_id',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required|same:password',
+                'bank_name' => 'required|min:3|regex:/^[\pL\s]+$/u',
+                'account_no' => 'required|numeric|digits:16|unique:seller_infos,account_no',
+                'ifsc_code' => 'required|regex:/^[A-Za-z]{4}\d{7}$/',
+                'account_holder_name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'id_proof_no' => 'required|regex:/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/|unique:seller_infos,id_proof_no',
+                'id_proof' => 'required|image|max:2048',
+                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/'
+            ]);
+        }
+       
+        $user_data = new User;
+        $seller_data = new SellerInfos;
+        
+        $onlyImgName = pathinfo($request->user_profile->getClientOriginalName(),PATHINFO_FILENAME);
+        $imageExt = $request->user_profile->getClientOriginalExtension();
+        $imageName = $onlyImgName."-".time().".".$imageExt;
+        $request->user_profile->move(public_path('/backend_asset/user_img/'),$imageName);        
+
+        $user_data->name=$request->name;
+        $user_data->user_name=$request->user_name;
+        $user_data->phone_no=$request->contect_on;
+        $user_data->email_id=$request->email_id;
+        $user_data->password=Hash::make($request->password);
+        $user_data->profile_img=$imageName;
+        $user_data->user_status=1;
+
+        $user_data->save();
+
+        $onlyImgName = pathinfo($request->id_proof->getClientOriginalName(),PATHINFO_FILENAME);
+        $imageExt = $request->id_proof->getClientOriginalExtension();
+        $imageNameSeller = $onlyImgName."-".time().".".$imageExt;
+        $request->id_proof->move(public_path('/backend_asset/seller_img/'),$imageNameSeller);
+
+        $seller_data->user_id = $user_data->id;
+        $seller_data->gst_no = $request->gst_no;
+        $seller_data->company_name = $request->companie_name;
+        $seller_data->address = $request->address;
+        $seller_data->city_id =$request->city;
+        $seller_data->bank_name = $request->bank_name;
+        $seller_data->account_no = $request->account_no;
+        $seller_data->ifsc_code = $request->ifsc_code;
+        $seller_data->ac_holder_name = $request->account_holder_name;
+        $seller_data->id_proof_no = $request->id_proof_no;
+        $seller_data->id_proof = $imageNameSeller;
+        $seller_data->is_permisssion_sell = $request->is_permission_sell;
+
+        $seller_data->save();
+
+        return redirect()->route('admin.seller.index')->with('success','Seller Inserted SuccessFully');
     }
 
     /**
@@ -64,7 +150,11 @@ class SellerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sellerdata = User::with('seller_infos')->where('id','=',$id)->get();
+        $citydata= City::all();
+        $statedata= State::all();
+
+        return view('backend.seller.edit',compact('sellerdata','citydata','statedata'));
     }
 
     /**
@@ -100,7 +190,7 @@ class SellerController extends Controller
     }
     public function ajax(Request $request){
 
-        if($request->ajax() && $request->mode == "datatabel"){
+        if($request->ajax() && $request->mode == "datatable"){
 
          $draw = $request->get('draw');
             $start = $request->get("start");
@@ -145,8 +235,7 @@ class SellerController extends Controller
                       "user_name" => $user_name,
                       "email_id" => $email_id,
                       "profile_img" =>'<img src="'.asset('/backend_asset/user_img/'.$profile_img).'" alt="product image" height="100" width="100" >',
-                      "action" => '<a href="'.route('admin.seller.show',$id).'"><button type="button" id="ViewBtn" viewurl="'.route('admin.seller.show',$id).'" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button></a> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
-                       editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
+                      "action" => '<a href="'.route('admin.seller.show',$id).'"><button type="button" id="ViewBtn" viewurl="'.route('admin.seller.show',$id).'" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button></a> <a href="'.route('admin.seller.edit',$id).'"><button type="button" id="EditBtn" editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );
                     $count++;
                 }
@@ -162,12 +251,16 @@ class SellerController extends Controller
                 exit;
         }elseif($request->ajax() && $request->mode == "chek_state")
         {
-            $city_data = City::where('state_id','=',$request->id)->get();
+            $city_data = City::where('state_id','=',$request->state_id)->get();
 
+
+           
+            $str = "";   
             foreach($city_data as $value)
             {
-                echo "<option value=".$value->id.">".$value->city_name."</option>";
+                $str .= "<option value=".$value->id.">".$value->city_name."</option>";
             }
+            echo $str;
         }
     }
 }
