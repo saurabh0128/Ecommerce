@@ -35,7 +35,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                         <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Role Name</th>
                             <th>Guard Name</th>
                             <th>Action</th>
                         </tr>
@@ -44,7 +44,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                         <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Role Name</th>
                             <th>Guard Name</th>
                             <th>Action</th>
                         </tr>
@@ -180,7 +180,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                 },
                 columns: [
                     {data: 'id', name: 'DT_RowIndex'},
-                    {data: 'name', name: 'name'},
+                    {data: 'name', name: 'role name'},
                     {data: 'guard_name', name: 'guard_name'},
                     {
                         data: 'action',
@@ -257,7 +257,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
                 $.ajax({
                     type:'post',
-                    url:'{{ route('admin.role.destroy','')}}'+"/"+id,
+                    url:'{{ route('admin.role.destroy','')}}'+'/'+id,
                     data:{'_token':'{{ csrf_token() }}','_method':'Delete'},
                     datatype:'json',
                     success:function(resposnse)

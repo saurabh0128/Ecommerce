@@ -106,7 +106,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
     </div>
     <!--/ View User Detail Model -->
 
-     <!-- Add User Model -->
+    <!-- Add User Model -->
     <div class="modal fade" id="AddUser" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -180,6 +180,89 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         </div>
     </div>
     <!--/ Add User Model -->
+
+
+    <!-- Edit User Model -->
+    <div class="modal fade" id="EditModalUser" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">User Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"> </button>
+                </div>
+                <div class="modal-body">
+                    <form  id="EditFormUsers" accept-charset="utf-8" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_method" value="put">
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Uploaded Profile img</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 ">
+                                <img  src="" id="edituserimg" alt="" height="150" width="150">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Profile img</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 ">
+                                <input type="file" id="edit_user_img" name="edit_profile_img" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 ">
+                                <input type="text" id="edit_name"  name="edit_name" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">UserName</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                <input type="text" id="edit_user_name"  name="edit_user_name" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                <input type="password" id="edit_password"  name="edit_password"class="form-control" >
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                <input type="password" id="edit_c_password"  name="edit_c_password"class="form-control" >
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Contect Number</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                 <input type="text" id="edit_user_contect"  name="edit_phone_no"  class="form-control" >
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Email Id</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                <input type="text" id="edit_user_email"   name="edit_email_id" class="form-control" >
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <div class="col-sm-12 text-center ">
+                                <button type="submit" class="btn btn-primary" id="AddUserBtn" >Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Edit User Model -->
 
 
 @endsection
@@ -272,7 +355,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             contentType: false,
             cache: false,
             processData: false,
-            datatype:'script',
+            datatype:'json',
             success:function(response)
             {
 
@@ -315,7 +398,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                 success:function(response)
                 {
                     toastr["success"]("Record Deleted Successfully");
-                    $('#datatable-user').DataTable().draw(false)
+                    $('#datatable-user').DataTable().draw(false);
                 }
 
 
@@ -325,6 +408,54 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         });
 
     }
+
+    // Function For Edit Modal
+    $(document).on('click','#EditBtn',function(){
+        var editdata = jQuery.parseJSON($(this).attr('editdata'));
+        var editurl = $(this).attr('editurl');
+        $('#EditFormUsers').attr('action',editurl);
+        var showimgurl = "{{url::to('/')}}/backend_asset/user_img/"+editdata.profile_img;
+
+        $('#edit_name').val(editdata.name);
+        $('#edit_user_email').val(editdata.email_id);
+        $('#edit_user_contect').val(editdata.phone_no);
+        $('#edit_user_name').val(editdata.user_name);
+        $('#edituserimg').attr('src',showimgurl);
+
+
+        $('#EditModalUser').modal('show');
+    });
+
+    //Function For Edit model Insert ajax
+    $('#EditFormUsers').submit(function(e){
+        e.preventDefault();
+
+        var editurl = $(this).attr('action');
+
+        $.ajax({
+            type:'post',
+            url:editurl,
+            data:new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success:function(response)
+            {
+                if(response.error)
+                {
+                    //toastr for error message
+                    toastr["error"](response.error);
+                }else {
+                    $('#EditModalUser').modal('hide');
+                    toastr["success"](response.success);
+                    $('#datatable-user').DataTable().draw(false);
+                }
+            }
+
+        });
+
+
+    });
 
 
 </script>

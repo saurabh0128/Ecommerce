@@ -56,10 +56,12 @@ class UserController extends Controller
             return Response()->json(['error'=>$validator->errors()->all()]);
         }else{
             // for img upload 
-            $filename = $request->profile_img;
-            $file_ext = $filename->getClientOriginalExtension();
-            $file_db_name = time().rand(111,999).'.'.$file_ext;
-            $filename->move(base_path()."/public/backend_asset/user_img/",$file_db_name);
+            $onlyImgName = pathinfo($request->profile_img->getClientOriginalName(),PATHINFO_FILENAME);
+            $imageExt = $request->profile_img->getClientOriginalExtension();
+            $imageName = $onlyImgName."-".time().".".$imageExt;
+            $request->profile_img->move(public_path('/backend_asset/user_img/'),$imageName); 
+            
+          
 
             $user = new User;
 
@@ -67,7 +69,7 @@ class UserController extends Controller
             $user->user_name = $request->user_name;
             $user->phone_no = $request->phone_no;
             $user->email_id = $request->email_id;
-            $user->profile_img = $file_db_name;
+            $user->profile_img = $imageName;
             $user->password = Hash::make($request->password);
             $user->user_status = 0;
 
@@ -109,7 +111,43 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validator = Validator::make($request->all(),[
+            "edit_name" => "required|min:2|alpha|unique:users,name,".$id,
+            "edit_user_name" => "required|min:2|alpha_dash|unique:users,user_name,".$id,
+            "edit_phone_no" => "required|numeric|digits:10",
+            "edit_email_id" => "required|email|unique:users,email_id,".$id,
+            "edit_profile_img" => "image|mimes:jpeg,jpg,png|max:2048",
+            "edit_c_password" => "same:edit_password"
+        ]);
+
+        if($validator->fails())
+        {
+            return Response()->json(["error"=>$validator->errors()->all()]);
+        }
+        $user = User::where('id','=',$id)->first();
+
+        if($request->hasFile('edit_profile_img'))
+        {
+            $onlyImgName = pathinfo($request->edit_profile_img->getClientOriginalName(),PATHINFO_FILENAME);
+            $imageExt = $request->edit_profile_img->getClientOriginalExtension();
+            $imageName = $onlyImgName."-".time().".".$imageExt;
+            $request->edit_profile_img->move(public_path('/backend_asset/user_img/'),$imageName);
+            $user->profile_img = $imageName;
+        }
+        if($request->edit_password != null)
+        {
+            $user->password = Hash::make($request->edit_c_password);
+        }
+        $user->name = $request->edit_name;
+        $user->user_name = $request->edit_user_name;
+        $user->email_id = $request->edit_email_id;
+        $user->phone_no = $request->edit_phone_no;
+       
+        $user->save();
+
+        return Response()->json(["success" => 'Data Updated Successfully']);
+
+
     }
 
     /**
@@ -147,7 +185,7 @@ class UserController extends Controller
 
                  // Fetch records
                 $records = User::orderBy($columnName,$columnSortOrder)
-                ->where('users.name', 'like', '%' .$searchValue . '%')
+                ->where('users.user_name', 'like', '%' .$searchValue . '%')
                 ->where('user_status','=','0')
                 ->select('users.*')
                 ->skip($start)
@@ -170,7 +208,7 @@ class UserController extends Controller
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
-                      "profile_img" => $profile_img,
+                      "profile_img" =>'<img src="'.asset('/backend_asset/user_img/'.$profile_img).'" alt="product image" height="100" width="100" >',
                       "action" => '<button type="button" id="ViewBtn" viewurl="'.route('admin.user.show',$id).'" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
                        editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );

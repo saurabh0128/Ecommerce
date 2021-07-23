@@ -16,4 +16,8 @@ class City extends Model
         'state_id'
 
     ];
+    public function sellerinfos()
+    {
+        return $this->hasMany(SellerInfos::class,'city_id');
+    }
 }

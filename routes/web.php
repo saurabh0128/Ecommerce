@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('user',Usercontroller::class);
         Route::post('user/ajax',[Usercontroller::class,'ajax'])->name('user.ajax');
         Route::resource('seller',SellerController::class);
+        Route::post('seller/ajax',[SellerController::class,'ajax'])->name('seller.ajax');
         Route::resource('category',CategoryController::class);
         Route::post('category/ajax',[CategoryController::class,'ajax'])->name('category.ajax');
         Route::resource('product',ProductController::class);

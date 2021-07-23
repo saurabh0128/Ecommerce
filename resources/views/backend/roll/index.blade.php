@@ -264,7 +264,7 @@
                         toastr["success"]("Record Deleted Successfully");
                         $('#datatable-example').DataTable().draw(false)
                     }
-                });
+                });     
             });    
         }
         

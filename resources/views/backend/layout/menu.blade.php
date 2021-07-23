@@ -73,6 +73,14 @@
                 </a>   
             </li>
             <li>
+                <a href="{{route('admin.seller.index')}}">
+                    <span class="nav-link-icon">
+                       <i class="bi bi-shop-window"></i>
+                    </span>
+                    <span>Seller</span>
+                </a>   
+            </li>
+            <li>
                 <a href="{{route('admin.category.index')}}">
                     <span class="nav-link-icon">
                         <i class="bi bi-file-earmark-text"></i>

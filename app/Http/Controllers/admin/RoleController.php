@@ -47,7 +47,7 @@ class RoleController extends Controller
     {
         $validator = Validator::make($request->all(),[
 
-            "role_name" => "required|min:3|max:100|unique:roles,name"
+            "role_name" => "required|unique:roles,name"
 
         ]);
 
@@ -95,7 +95,7 @@ class RoleController extends Controller
     {
         $EditValidator = Validator::make($request->all(),[
 
-            "role_name" => 'required|min:3|max:100|unique:roles,name,'.$id
+            "role_name" => 'required|unique:roles,name,'.$id
         ]);
 
         if($EditValidator->fails())
@@ -183,7 +183,7 @@ class RoleController extends Controller
 
              echo json_encode($response);
              exit;
-                   
+               
         }
     }
 }

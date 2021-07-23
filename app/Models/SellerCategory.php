@@ -14,4 +14,8 @@ class SellerCategory extends Model
         'user_id',
         'category_id',
     ];
+    function seller_categorys()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

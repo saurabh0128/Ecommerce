@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class SellerInfos extends Model
 {
@@ -23,4 +24,12 @@ class SellerInfos extends Model
         'id_proof',
         'is_permisssion_sell',
     ];
+    public function users()
+    {
+       return $this->belongsTo(User::class,'user_id');
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_id');
+    }
 }
