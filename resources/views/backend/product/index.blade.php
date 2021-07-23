@@ -108,6 +108,7 @@
 
 
        $(document).ready(function(){
+
             //To display Product Details
             $('#ProductDatatable').DataTable({ 
                 processing: true,
@@ -133,6 +134,34 @@
                 ]
             });
        })
+
+       function DeleteFunc(id){
+
+            //For remove a progressbar and set a closebutton
+            toastr.options = {
+                "progressBar":false,
+                "closeButton":true,
+            }
+
+            //confirmation toaster
+            toastr["info"]("Are you sure you want to Delete Record?<br /><br /><button id='cnf_del_btn'  type='button' class='btn btn-light btn-sm'>Yes</button>");
+
+           $('#cnf_del_btn').click(function(){
+                $.ajax({
+                    type:'post',
+                    url:'{{ route('admin.product.destroy','')}}'+'/'+id,
+                    data:{
+                        '_token':'{{ csrf_token() }}',
+                        '_method':'delete'
+                    },
+                    datatype:'json',
+                    success:function(response){
+                        toastr["success"]("Record Deleted Successfully");
+                        $('#ProductDatatable').DataTable().draw(false);
+                    }
+                });
+            });
+       }
 
 
     </script>

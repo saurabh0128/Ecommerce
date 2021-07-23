@@ -13,4 +13,10 @@ class Category extends Model
     protected $filable = [
         'category_name'
     ];
+
+
+    public function product()
+    {
+        return $this->hasMany(Product::class,'category_id');      
+    }
 }
