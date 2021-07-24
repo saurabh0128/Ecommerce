@@ -115,7 +115,7 @@ Coupons
                     ajax:{
                         type:'post',
                         url:'{{ route('admin.coupon.ajax')}}',
-                        data:{'_token':'{{ csrf_token() }}','data':'datatable','mode':'datatable'}
+                        data:{'_token':'{{ csrf_token() }}','mode':'datatable'}
                     },
                     columns:[
                         {data:'id',name:'DT_RowIndex'},

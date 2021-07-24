@@ -48,4 +48,8 @@ class User extends Authenticatable
         return $this->hasMany(Purchase::class,'user_id');
     }
 
+    public function userAddress(){
+        return $this->hasMany(userAddress::class,'user_id');
+    }
+
 }

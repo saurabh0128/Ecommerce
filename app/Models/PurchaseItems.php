@@ -17,4 +17,9 @@ class PurchaseItems extends Model
         'qty',
         'price',
     ];
+
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class,'purchase_id');
+    }
 }

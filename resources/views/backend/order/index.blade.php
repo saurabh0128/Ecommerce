@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 
-@section('title')
+@section('title') 
     Order
 @endsection
 
@@ -10,6 +10,10 @@
 
     <!-- Prism -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/prism/prism.css')}}" type="text/css">
+
+    <!-- toaster css -->
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/toastr.css')}}" type="text/css">
+
 @endsection
 
 @section('content')
@@ -30,26 +34,26 @@
 
             <div class="card">
                 <div class="card-body">
-                    <table id="datatable-example" class="table">
+                    <table id="OrderDatatable" class="table">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Id</th>
+                            <th>user name</th>
+                            <th>customer name</th>
+                            <th>Total Amount</th>
+                            <th>Is Payed</th>
+                            <th>action</th>
                         </tr>
                         </thead>
                     
                         <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Id</th>
+                            <th>user name</th>
+                            <th>customer name</th>
+                            <th>Total Amount</th>
+                            <th>Is Payed</th>
+                            <th>action</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -69,11 +73,91 @@
  <!-- Datatable -->
     <script src="{{URL::asset('backend_asset/libs/dataTable/datatables.min.js')}}"></script>
 
-    <!-- Examples -->
-    <script src="{{URL::asset('backend_asset/js/examples/datatable.js')}}"></script>
-
     <!-- Prism -->
     <script src="{{URL::asset('backend_asset/libs/prism/prism.js')}}"></script>
+
+    <!-- toaster js -->
+    <script src="{{URL::asset('backend_asset/js/toastr.min.js')}}"></script>
+
+    <script  type="text/javascript">
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        @if(Session::get('success'))      
+            toastr["success"]("{{Session::get('success')}}")
+        @endif
+        
+                var table = $('#OrderDatatable').DataTable({ 
+                    processing: true,
+                    serverSide: true,
+                    ajax:{
+                        type:'post',
+                        url:'{{ route('admin.order.ajax')}}',
+                        data:{'_token':'{{ csrf_token() }}','mode':'datatable'}
+                    },
+                    columns:[
+                        {data:'id',name:'DT_RowIndex'},
+                        {data:"user name"},
+                        {data:"customer name"},
+                        {data:"total amt"},
+                        {data:'is payed'},
+                        {
+                            data:'action',
+                            name:'action',
+                            searchable:true,
+                            orderable:true
+                        }
+                    ]
+                });
+
+            function DeleteFunc(id)
+            {
+                 toastr.options = {
+                "progressBar":false,
+                "closeButton":true,
+                }
+            
+                //confirmation toaster
+                toastr["info"]("Are you sure you want to Delete Record?<br /><br /><button id='cnf_del_btn'  type='button' class='btn btn-light btn-sm'>Yes</button>");
+
+                $('#cnf_del_btn').click(function(){
+                    $.ajax({
+                        type:'post',
+                        url:'{{ route('admin.order.destroy','') }}'+'/'+id,
+                        data:{
+                            '_token':'{{ csrf_token() }}',
+                            '_method':'delete'
+                        },
+                        datatype:'json',
+                        success:function(response){
+                            if(response.error)
+                            {
+                                toastr["error"](response.error)
+                            }
+                            else{
+                                toastr["success"]('Record Deleted Successfully');
+                                table.ajax.reload();
+                            }
+                        }
+                    });
+                });    
+            }   
+    </script>
 
 @endsection
 

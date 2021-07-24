@@ -20,4 +20,9 @@ class Coupone extends Model
         'end_date',
         'total_uses'
     ];
+
+    public function purchase()
+    {
+        return $this->hasMany(purchase::class,'coupon_id');
+    }
 }

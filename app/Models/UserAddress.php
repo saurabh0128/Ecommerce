@@ -16,7 +16,20 @@ class UserAddress extends Model
         'landmark',
         'pincode',
         'city_id',
-         
-
     ];
+
+    public function purchase()
+    {
+        return $this->hasMany(Purchase::class,'user_address_id');
+    }
+
+    public function purchase_bill()
+    {
+        return $this->hasMany(Purchase::class,'billing_address_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

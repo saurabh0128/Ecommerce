@@ -30,4 +30,24 @@ class Purchase extends Model
     {
        return $this->belongsTo(User::class,'user_id');     
     }
+
+    public function user_address()
+    {
+        return $this->belongsTo(UserAddress::class,'user_address_id'); 
+    }
+
+    public function billing_address()
+    {
+        return $this->belongsTo(UserAddress::class,'billing_address_id'); 
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupone::class,'coupon_id'); 
+    }
+
+    public function purchase_item()
+    {
+        return $this->hasMany(PurchaseItems::class,'purchase_id');
+    }
 }
