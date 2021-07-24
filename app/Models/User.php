@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\SellerInfos;
+use App\Models\UserAddress;
 
 class User extends Authenticatable
 {
@@ -26,6 +27,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(SellerInfos::class,'user_id');
     }
+   /* public function useraddress()
+    {
+        return $this->hasMany(UserAddress::class,'user_id');
+    }*/
+   
    /* public static function boot()
     {
         parent::boot();
@@ -49,7 +55,7 @@ class User extends Authenticatable
     }
 
     public function userAddress(){
-        return $this->hasMany(userAddress::class,'user_id');
+        return $this->hasMany(UserAddress::class,'user_id');
     }
 
 }

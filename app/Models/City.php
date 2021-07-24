@@ -20,4 +20,8 @@ class City extends Model
     {
         return $this->hasMany(SellerInfos::class,'city_id');
     }
+    public function userAddress()
+    {
+        return $this->hasMany(UserAddress::class,'city_id');
+    }
 }

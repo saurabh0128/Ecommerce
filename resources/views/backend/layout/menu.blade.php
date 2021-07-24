@@ -1,7 +1,7 @@
 <!-- menu -->
 <div class="menu">
     <div class="menu-header">
-        <a href="index.html" class="menu-header-logo">
+        <a href="{{route('admin.dashboard.index')}}" class="menu-header-logo">
             <img src="https://vetra.laborasyon.com/assets/images/logo.svg" alt="logo">
         </a>
         <a href="index.html" class="btn btn-sm menu-close-btn">
@@ -16,8 +16,8 @@
                          class="rounded-circle" alt="image">
                 </div>
                 <div>
-                    <div class="fw-bold">Timotheus Bendan</div>
-                    <small class="text-muted">Sales Manager</small>
+                    <div class="fw-bold">{{auth()->user()->user_name}}</div>
+                   
                 </div>
             </a>
             <div class="dropdown-menu dropdown-menu-end">
@@ -30,9 +30,8 @@
                 <a href="#" class="dropdown-item d-flex align-items-center" data-sidebar-target="#settings">
                     <i class="bi bi-gear dropdown-item-icon"></i> Settings
                 </a>
-                <a href="" class="dropdown-item d-flex align-items-center text-danger"
-                   target="_blank">
-                    <i class="bi bi-box-arrow-right dropdown-item-icon"></i> Logout
+                <a href="{{route('admin.logout')}}" class="dropdown-item d-flex align-items-center text-danger">
+                   <i class="bi bi-box-arrow-right dropdown-item-icon"></i> Logout
                 </a>
             </div>
         </div>
@@ -105,6 +104,14 @@
                 </a>
             </li>
             <li>
+                <a href="{{route('admin.coupon.index')}}">
+                    <span class="nav-link-icon">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                    </span>
+                    <span>Coupon</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{route('admin.permission.index')}}">
                     <span class="nav-link-icon">
                         <i class="bi bi-lock"></i>
@@ -115,28 +122,33 @@
             <li>
                 <a href="{{route('admin.rating.index')}}">
                     <span class="nav-link-icon">
-                        <i class="bi bi-heart"></i>
+                        <i class="bi bi-star-half"></i>
                     </span>
                     <span>Rating & Review</span>
                 </a>
             </li>
+           
+           
             <li>
-                <a href="{{route('admin.state.index')}}">
+                <a href="#">
                     <span class="nav-link-icon">
                         <i class="bi bi-geo-alt-fill"></i>
                     </span>
-                    <span>State</span>
+                    <span>Location</span>
                 </a>
+                <ul>
+                    <li>
+                        <a href="{{route('admin.state.index')}}">
+                            <span>State</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('admin.city.index')}}">
+                            <span>City</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li>
-                <a href="customers.html">
-                    <span class="nav-link-icon">
-                       <i class="bi bi-geo-alt-fill"></i>
-                    </span>
-                    <span>City</span>
-                </a>
-            </li>
-           
         </ul>
     </div>
 </div>

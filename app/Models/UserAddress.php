@@ -18,6 +18,7 @@ class UserAddress extends Model
         'city_id',
     ];
 
+
     public function purchase()
     {
         return $this->hasMany(Purchase::class,'user_address_id');
@@ -28,8 +29,14 @@ class UserAddress extends Model
         return $this->hasMany(Purchase::class,'billing_address_id');
     }
 
+
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
     }
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_id');
+    }
+
 }

@@ -273,7 +273,7 @@ Add Product
 
 
 		$('#state').change(function(){
-			var id = $('#state').val();
+				var id = $('#state').val();
 
 			$.ajax({
 				type:'post',

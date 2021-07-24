@@ -5,6 +5,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\State;
 use Illuminate\Http\Request;
 
 class StateController extends Controller {
@@ -75,5 +76,61 @@ class StateController extends Controller {
 	 */
 	public function destroy($id) {
 		//
+	}
+	public function ajax(Request $request) {
+		$draw       = $request->get('draw');
+		$start      = $request->get("start");
+		$rowperpage = $request->get("length");
+
+		$columnIndex_arr = $request->get('order');
+		$columnName_arr  = $request->get('columns');
+		$order_arr       = $request->get('order');
+		$search_arr      = $request->get('search');
+
+		$columnIndex     = $columnIndex_arr[0]['column'];// Column index
+		$columnName      = $columnName_arr[$columnIndex]['data'];// Column name
+		$columnSortOrder = $order_arr[0]['dir'];// asc or desc
+		$searchValue     = $search_arr['value'];// Search value
+
+		// Total records
+		$totalRecords           = State::select('count(*) as allcount')->count();
+		$totalRecordswithFilter = State::select('count(*) as allcount')->where('StateName', 'like', '%'.$searchValue.'%')->count();
+
+		// Fetch records
+		$records = State::orderBy($columnName, $columnSortOrder)
+		->where('States.StateName', 'like', '%'.$searchValue.'%')
+		->select('States.*')
+		->skip($start)
+		->take($rowperpage)
+		->get();
+
+		$data_arr = array();
+
+		//for a counter
+		$count = 1;
+		// dd($records);
+
+		foreach ($records as $record) {
+
+			$id        = $record->id;
+			$StateName = $record->StateName;
+
+			$data_arr[] = array(
+				"id"        => $count,
+				"StateName" => $StateName,
+
+			);
+			$count++;
+		}
+
+		$response = array(
+			"draw"                 => intval($draw),
+			"iTotalRecords"        => $totalRecords,
+			"iTotalDisplayRecords" => $totalRecordswithFilter,
+			"aaData"               => $data_arr
+		);
+
+		echo json_encode($response);
+		exit;
 	}
 }

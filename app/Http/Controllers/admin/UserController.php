@@ -8,7 +8,8 @@ use App\Models\User;
 use Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
-
+use App\Models\UserAddress;
+use App\Models\City;
 
 class UserController extends Controller
 {
@@ -88,7 +89,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        echo "hello";
+        $UserData = User::with('userAddress')->where('id',$id)->get(); 
+       // dd($UserData);
+        return view('backend.user.show',compact('UserData'));
     }
 
     /**
@@ -117,6 +120,7 @@ class UserController extends Controller
             "edit_phone_no" => "required|numeric|digits:10",
             "edit_email_id" => "required|email|unique:users,email_id,".$id,
             "edit_profile_img" => "image|mimes:jpeg,jpg,png|max:2048",
+            "edit_password" => "min:8|nullable",
             "edit_c_password" => "same:edit_password"
         ]);
 
@@ -162,7 +166,7 @@ class UserController extends Controller
     }
     public function ajax(Request $request)
     {
-       
+      
         if($request->ajax() || $request->model == 'datatable')
         {
             $draw = $request->get('draw');
@@ -187,6 +191,7 @@ class UserController extends Controller
                 $records = User::orderBy($columnName,$columnSortOrder)
                 ->where('users.user_name', 'like', '%' .$searchValue . '%')
                 ->where('user_status','=','0')
+               // ->select('user_addresses.*')
                 ->select('users.*')
                 ->skip($start)
                 ->take($rowperpage)
@@ -196,20 +201,26 @@ class UserController extends Controller
 
                 //for a counter 
                 $count = 1;
-
+               // dd($records);
+              
                 foreach($records as $record){
 
                     $id = $record->id;
                     $user_name = $record->user_name;
                     $email_id = $record->email_id;
                     $profile_img = $record->profile_img;
-                   
+                   /* $address_line_1 = $record->address_line_1;
+                    $address_line_2 = $record->address_line_2;
+                    $landmark = $record->landmark;
+                    $pincode = $record->pincode;
+                    $city_name = $record->city_name;*/
+
                     $data_arr[] = array(
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
                       "profile_img" =>'<img src="'.asset('/backend_asset/user_img/'.$profile_img).'" alt="product image" height="100" width="100" >',
-                      "action" => '<button type="button" id="ViewBtn" viewurl="'.route('admin.user.show',$id).'" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
+                      "action" => '<a href="'.route('admin.user.show',$id).'"><button type="button" id="ViewBtn" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button></a> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
                        editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );
                     $count++;

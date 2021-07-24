@@ -17,14 +17,14 @@ Add Product
 <div class="card m-3 ">
 	<div class="card-body">	
 		<div class="card-title text-center">Edit Seller Form </div>
-		<form id="AddProduct" method="post"  action="" enctype="multipart/form-data" >
-
+		<form id="AddProduct" method="post"  action="{{route('admin.seller.update',$sellerdata->id)}}" enctype="multipart/form-data" >
+			@method('put')
 			@csrf
 			<div class="row">
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-10 ">
 			    	<label for="name" class="form-label">Name*</label>
-			    	<input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" autofocus  >
+			    	<input type="text" class="form-control" id="name" name="name" value="{{ old('name',$sellerdata->name) }}" autofocus  >
 			    	@error('name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -35,7 +35,8 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="user_name" class="form-label">UserName*</label>
-			    	<input type="text" class="form-control" id="user_name" name="user_name" value="{{ old('user_name') }}" autofocus  >
+			    	<input type="text" class="form-control" id="user_name" name="user_name" 
+			    	value="{{ old('user_name',$sellerdata->user_name) }}" autofocus  >
 			    	@error('user_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -43,7 +44,7 @@ Add Product
 			
 			    <div class="mb-3 col-5 ">
 			    	<label for="contect_no" class="form-label">Contectn No*</label>
-			    	<input type="text" class="form-control" id="contect_no" name="contect_on" value="{{ old('contect_on') }}" autofocus  >
+			    	<input type="text" class="form-control" id="contect_no" name="contect_on" value="{{ old('contect_on',$sellerdata->phone_no	) }}" autofocus  >
 			    	@error('contect_on')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -63,7 +64,7 @@ Add Product
 
 			    <div class="mb-3 col-5">
 			    	<label for="companie_name" class="form-label">Companie Name*</label>
-			    	<input type="text" class="form-control" id="companie_name" name="companie_name" value="{{ old('companie_name') }}" autofocus  >
+			    	<input type="text" class="form-control" id="companie_name" name="companie_name" value="{{ old('companie_name',$sellerdata->seller_infos->company_name) }}" autofocus  >
 			    	@error('companie_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -74,7 +75,7 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-10 ">
 			    	<label for="address" class="form-label">Address*</label>
-			    	<textarea class="form-control" id="address" name="address">{{old('address')}}</textarea>
+			    	<textarea class="form-control" id="address" name="address">{{old('address',$sellerdata->seller_infos->address)}}</textarea>
 			    	@error('address')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -88,7 +89,7 @@ Add Product
 			    	<select id="state" name="state" class="select2-example" >
 			    		<option value="">Please select State</option>
 			    		@foreach($statedata as $state)	
-			    			<option value="{{$state->id}}">{{$state->StateName}}</option>
+			    			<option value="{{$state->id}}" @if($citydata->state_id == $state->id) selected @endif>{{$state->StateName}}</option>
 			    		@endforeach
 			    	</select>
 			    	@error('state')
@@ -100,9 +101,9 @@ Add Product
 			    	<label for="city" class="form-label">City Name*</label>
 			    	<select id="city" name="city" class="select2-example" >
 			    		<option value="">Please select City</option>
-			    	
-			    			<option value=""></option>
-			    		
+			    		@foreach($allcitydata as $city)
+			    			<option value="{{$city->id}}" @if($citydata->id == $city->id) selected @endif>{{$city->city_name}}</option>
+			    		@endforeach
 			    	</select>
 			    	@error('city')
 			    		<p class="text-danger">{{ $message }}</p>
@@ -114,12 +115,12 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="email_id" class="form-label">Email Id*</label>
-			    	<input type="text" class="form-control" id="email_id" name="email_id" value="{{ old('email_id') }}" autofocus  >
+			    	<input type="text" class="form-control" id="email_id" name="email_id" value="{{ old('email_id',$sellerdata->email_id) }}" autofocus  >
 			    	@error('email_id')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-					
+						
 			    <div class="mb-3 col-5 ">
 			    	<label for="password" class="form-label">Password*</label>
 			    	<input type="password" class="form-control" id="password" name="password" autofocus  >
@@ -142,7 +143,7 @@ Add Product
 
 			     <div class="mb-3 col-5 ">
 			    	<label for="bank_name" class="form-label">bank Name*</label>
-			    	<input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name') }}" autofocus >
+			    	<input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name',$sellerdata->seller_infos->bank_name) }}" autofocus >
 			    	@error('bank_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -154,14 +155,14 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="account_no" class="form-label">Account No*</label>
-			    	<input type="text" class="form-control" id="account_no" name="account_no" value="{{ old('account_no') }}" autofocus>
+			    	<input type="text" class="form-control" id="account_no" name="account_no" value="{{ old('account_no',$sellerdata->seller_infos->account_no) }}" autofocus>
 			    	@error('account_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
 			    <div class="mb-3 col-5 ">
 			    	<label for="ifsc_code" class="form-label">Ifsc Code*</label>
-			    	<input type="text" class="form-control" id="ifsc_code" name="ifsc_code" value="{{ old('ifsc_code') }}" autofocus>
+			    	<input type="text" class="form-control" id="ifsc_code" name="ifsc_code" value="{{ old('ifsc_code',$sellerdata->seller_infos->ifsc_code) }}" autofocus>
 			    	@error('ifsc_code')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -172,7 +173,7 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="account_holder_name" class="form-label">Account Holedr Name*</label>
-			    	<input type="text" class="form-control" id="account_holder_name" name="account_holder_name"  value="{{ old('account_holder_name') }}" autofocus>
+			    	<input type="text" class="form-control" id="account_holder_name" name="account_holder_name"  value="{{ old('account_holder_name',$sellerdata->seller_infos->ac_holder_name) }}" autofocus>
 			    	@error('account_holder_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -181,8 +182,8 @@ Add Product
 			    <div class="mb-3 col-5 ">
 			    	<label for="proof" class="form-label">Id proof Name*</label>
 			    	<select id="proof" name="proof" class="select2-example" >
-			    			<option value="0">Adhar Card</option>
-			    			<option value="1">PanCard</option>
+			    			<option value="0" @if($proof_name == 0) selected @endif>Adhar Card</option>
+			    			<option value="1" @if($proof_name == 1) selected @endif>PanCard</option>
 			    			
 			    	</select>
 			    	@error('proof')
@@ -197,7 +198,7 @@ Add Product
 				<div class="col-1"></div>
 				<div class="mb-3 col-5 ">
 			    	<label for="id_proof_no" class="form-label">Id Proof No*</label>
-			    	<input type="text" class="form-control" id="id_proof_no" name="id_proof_no"  value="{{ old('id_proof_no') }}" autofocus >
+			    	<input type="text" class="form-control" id="id_proof_no" name="id_proof_no"  value="{{ old('id_proof_no',$sellerdata->seller_infos->id_proof_no) }}" autofocus >
 			    	@error('id_proof_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -215,7 +216,7 @@ Add Product
 				<div class="col-1"></div>
 				<div class="mb-3 col-5 ">
 			    	<label for="gst_no" class="form-label">Gst No*</label>
-			    	<input type="text" class="form-control" id="gst_no" name="gst_no"   value="{{ old('gst_no') }}" autofocus>
+			    	<input type="text" class="form-control" id="gst_no" name="gst_no"   value="{{ old('gst_no',$sellerdata->seller_infos->gst_no) }}" autofocus>
 			    	@error('gst_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -223,14 +224,15 @@ Add Product
 			    <div class="mb-3 col-5 ">
 				    	<label  for="is_display" class=" d-block form-label">Is Permission Sell?*</label>
 			    	<div class="form-check form-check-inline " >	
-				    	<input class="form-check-input" type="radio"  id="is_permission_sell_yes" name="is_permission_sell" value="0" >
+				    	<input class="form-check-input" type="radio" @if($sellerdata->seller_infos->is_permisssion_sell == 1 )
+				    	checked  @endif id="is_permission_sell_yes" name="is_permission_sell" value="1" >
 				    	<label class="form-check-label" for="is_permission_sell_yes">
 						    Yes
 						</label>
 			    	</div>
 
 				    <div class="form-check form-check-inline ">
-				    	<input class="form-check-input" type="radio" checked id="is_permission_sell_no" name="is_permission_sell" value="1" >
+				    	<input class="form-check-input" type="radio" @if($sellerdata->seller_infos->is_permisssion_sell == 0 )checked  @endif id="is_permission_sell_no" name="is_permission_sell" value="0" >
 				    	<label class="form-check-label" for="is_permission_sell_no">
 						    No
 						</label>
@@ -268,7 +270,21 @@ Add Product
 <script>
 
 	$(document).ready(function(){
+		$('#state').change(function(){
+			var id = $('#state').val();
+			$.ajax({
+				type:'post',
+				url:'{{ route('admin.seller.ajax')}}',
+				data:{'state_id':id,'_token':'{{csrf_token()}}','mode':'chek_state'},
+				datatype:'text',
+				success:function(response)
+				{
+					$('#city').html(response);
+				}
 
+			});
+
+		});
 	
 	});
 	

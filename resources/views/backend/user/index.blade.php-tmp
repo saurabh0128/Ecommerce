@@ -22,7 +22,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
     <div class="row">
         <div class="col-lg-12 bd-content">
             <div class="p-3">
-                <h4 class="d-inline" >Roll Detail</h4>
+                <h4 class="d-inline" >User Detail</h4>
                 <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#AddUser" >
                     <i class="bi bi-plus-circle"></i> Add User
                 </button>
@@ -47,7 +47,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                                 <th>Profile Img</th>
                                 <th>Action</th>
                             </tr>
-                            </tfoot>
+                        </tfoot>
                     </table>
             </div>
         </div>
@@ -79,11 +79,39 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                                 <p id="Name"></p>
                             </div>
                         </div>
-                        <div class="mb-3 row">
+                        <div class="mb-3 row" id="new_address">
                             <label class="col-sm-3 col-form-label">UserName</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8 col-form-label">
                                 <p id="UserName"></p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Address Line 1</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 col-form-label">
+                                <p id="AddressLine1"></p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Address Line 2</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 col-form-label">
+                                <p id="AddressLine2"></p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Landmark</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 col-form-label">
+                                <p id="Landmark"></p>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Pincode</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8 col-form-label">
+                                <p id="Pincode"></p>
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -212,7 +240,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                             <label class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8 ">
-                                <input type="text" id="edit_name"  name="name" class="form-control" >
+                                <input type="text" id="edit_name"  name="edit_name" class="form-control" >
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -347,7 +375,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         });
 
     });
-        $(document).on('click','#ViewBtn',function(){
+       /* $(document).on('click','#ViewBtn',function(){
 
             $('#ViewUserDetail').modal('show');
            // var viewdata = jQuery.parseJSON($(this).attr('editdata'));
@@ -360,9 +388,22 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             $('#UserContect').html(viewdata.phone_no);
             $('#UserName').html(viewdata.user_name);
             $('#Name').html(viewdata.name);
+            $('#AddressLine1').html(viewdata.useraddress[0].address_line_1);
+            $('#AddressLine2').html(viewdata.useraddress[0].address_line_2);
+            $('#Landmark').html(viewdata.useraddress[0].landmark);
+            $('#Pincode').html(viewdata.useraddress[0].pincode);
 
+            new_address
+            var len = ($(viewdata.useraddress).length);
+            for(var i=0;i<len;i++)
+            {
+                $("#new_address").append("");
 
-        });
+            }
+
+        });*/
+
+    // add new user ajax
     $('#AddUsers').submit(function(e){
 
         e.preventDefault();

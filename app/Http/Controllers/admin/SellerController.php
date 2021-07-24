@@ -141,7 +141,7 @@ class SellerController extends Controller
        
         return view('backend.seller.show',compact('sellerdata'));
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
@@ -150,11 +150,18 @@ class SellerController extends Controller
      */
     public function edit($id)
     {
-        $sellerdata = User::with('seller_infos')->where('id','=',$id)->get();
-        $citydata= City::all();
+        $sellerdata = User::with('seller_infos')->where('id','=',$id)->firstOrFail();
+        $citydata= City::find($sellerdata->seller_infos->city_id);
         $statedata= State::all();
+        $allcitydata = city::all();
 
-        return view('backend.seller.edit',compact('sellerdata','citydata','statedata'));
+        if(strlen($sellerdata->seller_infos->id_proof_no) == 12){
+            $proof_name = 0;
+        }else{
+            $proof_name = 1;
+        }
+    
+        return view('backend.seller.edit',compact('sellerdata','citydata','statedata','allcitydata','proof_name'));
     }
 
     /**
@@ -166,7 +173,95 @@ class SellerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
+
+        if($request->proof == 0)
+        {
+
+            $request->validate([
+                'name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'user_name' => 'required|alpha_dash|min:2|max:100',
+                'contect_on' => 'required|numeric|digits:10',
+                'user_profile' => 'required|image|max:2048',
+                'companie_name' => 'required|min:2|max:100',
+                'address' => 'required|min:2|max:200',
+                'state' => 'required',
+                'city' => 'required',
+                'email_id'=> 'email|unique:users,email_id,'.$id,
+                'password'=> 'min:8|nullable',
+                'confirm_password' => 'same:password',
+                'bank_name' => 'required|min:3|regex:/^[\pL\s]+$/u',
+                'account_no' => 'required|numeric|digits:16|unique:seller_infos,account_no,'.$id.',user_id',
+                'ifsc_code' => 'required|regex:/^[A-Za-z]{4}\d{7}$/',
+                'account_holder_name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'id_proof_no' => 'required|digits:12|unique:seller_infos,id_proof_no,'.$id.',user_id',
+                'id_proof' => 'required|image|max:2048',
+                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/'
+            ]);
+        }else{
+            
+            $request->validate([
+                'name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'user_name' => 'required|alpha_dash|min:2|max:100',
+                'contect_on' => 'required|numeric|digits:10',
+                'user_profile' => 'required|image|max:2048',
+                'companie_name' => 'required|min:2|max:100',
+                'address' => 'required|min:2|max:200',
+                'state' => 'required',
+                'city' => 'required',
+                'email_id'=> 'email|unique:users,email_id,'.$id,
+                'password'=> 'min:8|nullable',
+                'confirm_password' => 'same:password',
+                'bank_name' => 'required|min:3|regex:/^[\pL\s]+$/u',
+                'account_no' => 'required|numeric|digits:16|unique:seller_infos,account_no,'.$id.',user_id',
+                'ifsc_code' => 'required|regex:/^[A-Za-z]{4}\d{7}$/',
+                'account_holder_name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
+                'id_proof_no' => 
+                'required|regex:/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/|unique:seller_infos,id_proof_no,'.$id.',user_id',
+                'id_proof' => 'required|image|max:2048',
+                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/'
+            ]);
+        }
+
+        $user_data = new User;
+        $seller_data = new SellerInfos;
+        
+        $onlyImgName = pathinfo($request->user_profile->getClientOriginalName(),PATHINFO_FILENAME);
+        $imageExt = $request->user_profile->getClientOriginalExtension();
+        $imageName = $onlyImgName."-".time().".".$imageExt;
+        $request->user_profile->move(public_path('/backend_asset/user_img/'),$imageName);        
+
+        $user_data->name=$request->name;
+        $user_data->user_name=$request->user_name;
+        $user_data->phone_no=$request->contect_on;
+        $user_data->email_id=$request->email_id;
+        $user_data->password=Hash::make($request->password);
+        $user_data->profile_img=$imageName;
+        $user_data->user_status=1;
+
+        $user_data->save();
+
+        $onlyImgName = pathinfo($request->id_proof->getClientOriginalName(),PATHINFO_FILENAME);
+        $imageExt = $request->id_proof->getClientOriginalExtension();
+        $imageNameSeller = $onlyImgName."-".time().".".$imageExt;
+        $request->id_proof->move(public_path('/backend_asset/seller_img/'),$imageNameSeller);
+
+        $seller_data->user_id = $user_data->id;
+        $seller_data->gst_no = $request->gst_no;
+        $seller_data->company_name = $request->companie_name;
+        $seller_data->address = $request->address;
+        $seller_data->city_id =$request->city;
+        $seller_data->bank_name = $request->bank_name;
+        $seller_data->account_no = $request->account_no;
+        $seller_data->ifsc_code = $request->ifsc_code;
+        $seller_data->ac_holder_name = $request->account_holder_name;
+        $seller_data->id_proof_no = $request->id_proof_no;
+        $seller_data->id_proof = $imageNameSeller;
+        $seller_data->is_permisssion_sell = $request->is_permission_sell;
+
+        $seller_data->save();
+
+        return redirect()->route('admin.seller.index')->with('success','Seller Inserted SuccessFully');
     }
 
     /**
@@ -262,5 +357,7 @@ class SellerController extends Controller
             }
             echo $str;
         }
+
+
     }
 }

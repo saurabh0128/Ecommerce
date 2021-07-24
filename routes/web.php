@@ -35,6 +35,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('login',AdminController::class);
+    Route::get('logout',[AdminController::class,'logout'])->name('logout');
     Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('dashboard',DashboardController::class);
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('order/ajax',[OrderController::class,'ajax'])->name('order.ajax');
         Route::resource('city',CityController::class);
         Route::resource('state',StateController::class);
+        Route::post('state/ajax',[StateController::class,'ajax'])->name('state.ajax');
         Route::resource('rating',RatingController::class);
         Route::resource('permission',PermissionController::class);
         Route::post('permission/ajax',[PermissionController::class,'ajax'])->name('permission.ajax');
