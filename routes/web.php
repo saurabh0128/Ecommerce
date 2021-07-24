@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('order',OrderController::class);
         Route::post('order/ajax',[OrderController::class,'ajax'])->name('order.ajax');
         Route::resource('city',CityController::class);
+        Route::post('city/ajax',[CityController::class,'ajax'])->name('city.ajax');
         Route::resource('state',StateController::class);
         Route::post('state/ajax',[StateController::class,'ajax'])->name('state.ajax');
         Route::resource('rating',RatingController::class);

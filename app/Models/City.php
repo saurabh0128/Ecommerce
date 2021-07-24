@@ -20,8 +20,9 @@ class City extends Model
     {
         return $this->hasMany(SellerInfos::class,'city_id');
     }
-    public function userAddress()
+
+    public function state()
     {
-        return $this->hasMany(UserAddress::class,'city_id');
+        return $this->belongsTo(State::class,'state_id');   
     }
 }
