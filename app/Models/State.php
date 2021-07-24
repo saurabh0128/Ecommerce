@@ -12,4 +12,9 @@ class State extends Model
     protected $filable=[
         'StateName'
     ];
+
+    public function city()
+    {
+       return $this->hasMany(City::class,'state_id');     
+    }
 }
