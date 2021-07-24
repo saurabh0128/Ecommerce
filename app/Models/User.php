@@ -36,13 +36,16 @@ class User extends Authenticatable
         });
     }
    */ 
+
     public function product()
     {
         return $this->hasMany(Product::class,'user_id');      
     }
 
+
     public function purchase()
     {
         return $this->hasMany(Purchase::class,'user_id');
     }
+
 }

@@ -17,8 +17,8 @@ Edit coupon
 <div class="card m-3 ">
 	<div class="card-body">	
 		<div class="card-title text-center">Edit Coupon Form </div>
-		<form id="AddCoupon" method="post"  action="{{ route('admin.coupon.store') }}"  >
-
+		<form id="AddCoupon" method="post"  action="{{ route('admin.coupon.update',$coupon->id)}}"  >
+			@method('PUT')
 			@csrf
 			<div class="row">
 				<div class="col-1"></div>	
@@ -60,7 +60,7 @@ Edit coupon
 			    	<label for="discount_type" class="form-label">Discount type*</label>
 			    	<select name="discount_type" id="discount_type" class="form-select" >
 			    		<option value="">Please select discount type</option>
-			    		<option  @if(old('discount_type',$coupon->discount_type) == "percentage") selected @endif value="Percentage">Percentage</option>
+			    		<option  @if(old('discount_type',$coupon->discount_type) == "Percentage") selected @endif value="Percentage">Percentage</option>
 			    		<option  @if(old('discount_type',$coupon->discount_type) == "Rupees") selected @endif value="Rupees">Rupees</option>
 			    	</select>
 			    	@error('discount_type')
@@ -118,7 +118,7 @@ Edit coupon
 			<div class="row">
 				<div class="col-1"></div>	
 			    <div class="col-10 text-center ">
-			    	<button type="submit" class="btn btn-primary">Submit</button>
+			    	<button type="submit" class="btn btn-primary">Update</button>
 			    </div>
 			    <div class="col-1"></div>
 			</div>

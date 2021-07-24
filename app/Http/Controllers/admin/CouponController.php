@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Validation\Rule;
+
 use App\Models\Coupone;
 
 use Illuminate\Database\QueryException;
@@ -62,7 +64,7 @@ class CouponController extends Controller
         $coupon->discount_type = $request->discount_type;
         $coupon->start_date = Carbon::parse($request->start_date)->format(env('APP_DATE_FORMAT'));
         $coupon->end_date = Carbon::parse($request->end_date)->format(env('APP_DATE_FORMAT'));
-        if(isset($coupon->total_uses))
+        if(isset($request->total_uses))
         {
             $coupon->total_uses = $request->total_uses;
         } 
@@ -79,7 +81,8 @@ class CouponController extends Controller
      */
     public function show($id)
     {
-        return view('backend.coupan.show');
+        $coupon = Coupone::where('id',$id)->firstOrFail();
+        return view('backend.coupon.show',compact('coupon'));
     }
 
     /**
@@ -104,7 +107,35 @@ class CouponController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($id);
+         $request->validate([    
+            "coupon_code" => "required|min:3|max:100|unique:coupons,coupon_code,".$id,
+            "coupon_detail"=>"required|min:5|max:500",
+            "coupon_discount"=>"required|regex:/^\d+(\.\d{1,2})?$/",
+            "discount_type"=>"required",
+            "coupon_type"=>"required",
+            "total_uses"=>"digits_between:0,7",
+            "start_date"=>"required",
+            "end_date"=>"required"
+        ],[
+            "regex"=>"only digit allowed"
+        ]);
+
+        $coupon = Coupone::find($id);
+        $coupon->coupon_code = $request->coupon_code;
+        $coupon->coupon_details = $request->coupon_detail;
+        $coupon->coupon_discount = $request->coupon_discount;
+        $coupon->coupon_type = $request->coupon_type;
+        $coupon->discount_type = $request->discount_type;
+        $coupon->start_date = Carbon::parse($request->start_date)->format(env('APP_DATE_FORMAT'));
+        $coupon->end_date = Carbon::parse($request->end_date)->format(env('APP_DATE_FORMAT'));
+        if(isset($request->total_uses))
+        {
+            $coupon->total_uses = $request->total_uses;
+        } 
+        $coupon->save();
+
+        return redirect()->route('admin.coupon.index')->with('success','Data Updated Successfully');
     }
 
     /**

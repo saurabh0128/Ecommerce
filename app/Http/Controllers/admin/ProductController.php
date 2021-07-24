@@ -128,8 +128,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-
         $request->validate([
             "product_name" => "required|min:2|max:200",
             "current_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",

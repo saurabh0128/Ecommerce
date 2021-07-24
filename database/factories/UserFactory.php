@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'user_name' => $this->faker->name,
             'phone_no' => $this->faker->numerify('##########'),
             'email_id' => $this->faker->email,
-            'password' => bcrypt(Str::random(8)),
+            'password' => bcrypt('Saurabh@123'),
             'profile_img' => Str::slug($this->faker->name),
             'user_status' => rand(0,1),
         ];
