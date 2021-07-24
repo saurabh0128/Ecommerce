@@ -1,5 +1,3 @@
-
-Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 @extends('backend.layout.app')
 
 @section('title')
@@ -17,13 +15,13 @@ Add Product
 
 
 <div class="card m-3 ">
-	<div class="card-body">
-		<div class="card-title text-center">Add Seller Form </div>
-		<form id="AddProduct" method="post"  action="{{ route('admin.seller.store') }}" enctype="multipart/form-data" >
+	<div class="card-body">	
+		<div class="card-title text-center">Edit Seller Form </div>
+		<form id="AddProduct" method="post"  action="" enctype="multipart/form-data" >
 
 			@csrf
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-10 ">
 			    	<label for="name" class="form-label">Name*</label>
 			    	<input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" autofocus  >
@@ -34,15 +32,15 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="user_name" class="form-label">UserName*</label>
 			    	<input type="text" class="form-control" id="user_name" name="user_name" value="{{ old('user_name') }}" autofocus  >
 			    	@error('user_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
-			    </div>
-
+			    </div>   
+			
 			    <div class="mb-3 col-5 ">
 			    	<label for="contect_no" class="form-label">Contectn No*</label>
 			    	<input type="text" class="form-control" id="contect_no" name="contect_on" value="{{ old('contect_on') }}" autofocus  >
@@ -54,7 +52,7 @@ Add Product
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
-
+					
 			    <div class="mb-3 col-5 ">
 			    	<label for="contect_no" class="form-label">User profile*</label>
 			    	<input type="file" class="form-control" id="user_profile" name="user_profile"  value="{{ old('user_profile') }}" autofocus>
@@ -73,7 +71,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-10 ">
 			    	<label for="address" class="form-label">Address*</label>
 			    	<textarea class="form-control" id="address" name="address">{{old('address')}}</textarea>
@@ -89,22 +87,22 @@ Add Product
 			    	<label for="state" class="form-label">State Name*</label>
 			    	<select id="state" name="state" class="select2-example" >
 			    		<option value="">Please select State</option>
-			    			@foreach($state as $value)
-			    			<option value="{{$value->id}}">{{$value->StateName}}</option>
-			    			@endforeach
+			    		@foreach($statedata as $state)	
+			    			<option value="{{$state->id}}">{{$state->StateName}}</option>
+			    		@endforeach
 			    	</select>
 			    	@error('state')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-
+			   
 			    <div class="mb-3 col-5 ">
 			    	<label for="city" class="form-label">City Name*</label>
 			    	<select id="city" name="city" class="select2-example" >
 			    		<option value="">Please select City</option>
-
+			    	
 			    			<option value=""></option>
-
+			    		
 			    	</select>
 			    	@error('city')
 			    		<p class="text-danger">{{ $message }}</p>
@@ -113,7 +111,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="email_id" class="form-label">Email Id*</label>
 			    	<input type="text" class="form-control" id="email_id" name="email_id" value="{{ old('email_id') }}" autofocus  >
@@ -121,7 +119,7 @@ Add Product
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-
+					
 			    <div class="mb-3 col-5 ">
 			    	<label for="password" class="form-label">Password*</label>
 			    	<input type="password" class="form-control" id="password" name="password" autofocus  >
@@ -132,8 +130,8 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
-
+				<div class="col-1"></div>	
+		
 			    <div class="mb-3 col-5 ">
 			    	<label for="confirm_passpword" class="form-label">Confirm Password*</label>
 			    	<input type="password" class="form-control" id="confirm_password" name="confirm_password"  autofocus >
@@ -150,10 +148,10 @@ Add Product
 			    	@enderror
 			    </div>
 
-			    <div class="col-1"></div>
+			    <div class="col-1"></div>	
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="account_no" class="form-label">Account No*</label>
 			    	<input type="text" class="form-control" id="account_no" name="account_no" value="{{ old('account_no') }}" autofocus>
@@ -168,10 +166,10 @@ Add Product
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-			    <div class="col-1"></div>
+			    <div class="col-1"></div>	
 			</div>
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="account_holder_name" class="form-label">Account Holedr Name*</label>
 			    	<input type="text" class="form-control" id="account_holder_name" name="account_holder_name"  value="{{ old('account_holder_name') }}" autofocus>
@@ -185,14 +183,14 @@ Add Product
 			    	<select id="proof" name="proof" class="select2-example" >
 			    			<option value="0">Adhar Card</option>
 			    			<option value="1">PanCard</option>
-
+			    			
 			    	</select>
 			    	@error('proof')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-
-			    <div class="col-1"></div>
+			    
+			    <div class="col-1"></div>	
 			</div>
 			<div class="row">
 
@@ -203,7 +201,7 @@ Add Product
 			    	@error('id_proof_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
-			    </div>
+			    </div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="id_proof" class="form-label">Id Proof*</label>
 			    	<input type="file" class="form-control" id="id_proof" name="id_proof" >
@@ -211,7 +209,7 @@ Add Product
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-			    <div class="col-1"></div>
+			    <div class="col-1"></div>	
 			</div>
 			<div class="row">
 				<div class="col-1"></div>
@@ -224,7 +222,7 @@ Add Product
 			    </div>
 			    <div class="mb-3 col-5 ">
 				    	<label  for="is_display" class=" d-block form-label">Is Permission Sell?*</label>
-			    	<div class="form-check form-check-inline " >
+			    	<div class="form-check form-check-inline " >	
 				    	<input class="form-check-input" type="radio"  id="is_permission_sell_yes" name="is_permission_sell" value="0" >
 				    	<label class="form-check-label" for="is_permission_sell_yes">
 						    Yes
@@ -241,11 +239,11 @@ Add Product
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 				</div>
-			    <div class="col-1"></div>
+			    <div class="col-1"></div>	
 			</div>
-
+		
 			<div class="row">
-				<div class="col-1"></div>
+				<div class="col-1"></div>	
 			    <div class="col-10 text-center ">
 			    	<button type="submit" class="btn btn-primary">Submit</button>
 			    </div>
@@ -271,36 +269,9 @@ Add Product
 
 	$(document).ready(function(){
 
-
-		$('#state').change(function(){
-			var id = $('#state').val();
-
-			$.ajax({
-				type:'post',
-				url:'{{ route('admin.seller.ajax')}}',
-				data:{'state_id':id,'_token':'{{csrf_token()}}','mode':'chek_state'},
-				datatype:'text',
-				success:function(response)
-				{
-
-					$('#city').html(response);
-				}
-
-
-			});
-
-
-		});
-		$('#proof').change(function(){
-			var id =$('#proof').val();
-
-			if($id == 0)
-			{
-
-			}
-
-		})
+	
 	});
+	
 </script>
 
 @endsection

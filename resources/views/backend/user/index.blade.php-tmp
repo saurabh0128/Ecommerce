@@ -61,7 +61,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">User Detail</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"> </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close_view"  aria-label="Close"> </button>
                 </div>
                 <div class="modal-body">
 
@@ -188,7 +188,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">User Detail</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"> </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close_edit"  aria-label="Close"> </button>
                 </div>
                 <div class="modal-body">
                     <form  id="EditFormUsers" accept-charset="utf-8" enctype="multipart/form-data">
@@ -212,7 +212,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                             <label class="col-sm-3 col-form-label">Name</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8 ">
-                                <input type="text" id="edit_name"  name="edit_name" class="form-control" >
+                                <input type="text" id="edit_name"  name="name" class="form-control" >
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -231,7 +231,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label class="col-sm-3 col-form-label">Password</label>
+                            <label class="col-sm-3 col-form-label">Confirm Password</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8">
                                 <input type="password" id="edit_c_password"  name="edit_c_password"class="form-control" >
@@ -304,6 +304,26 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 
     $(document).ready(function(){
+
+        $('.btn-close').click(function(){
+
+            $('#name').val("");
+            $('#user_name').val("");
+            $('#password').val("");
+            $('#c_password').val("");
+            $('#user_contect').val("");
+            $('#user_email').val("");
+            $('#user_img').val("");
+
+        });
+        $('#btn_close_edit').click(function(){
+
+            $('#edit_user_img').val("");
+            $('#edit_password').val("");
+            $('#edit_c_password').val("");
+
+        });
+
         $('#datatable-user').DataTable({
             processing:true,
             serverSide:true,

@@ -43,8 +43,8 @@ Add Product
 			
 			    <div class="mb-3 col-5 ">
 			    	<label for="contect_no" class="form-label">Contectn No*</label>
-			    	<input type="text" class="form-control" id="contect_no" name="contect_on" value="{{ old('contect_no') }}" autofocus  >
-			    	@error('contect_no')
+			    	<input type="text" class="form-control" id="contect_no" name="contect_on" value="{{ old('contect_on') }}" autofocus  >
+			    	@error('contect_on')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
@@ -55,7 +55,7 @@ Add Product
 					
 			    <div class="mb-3 col-5 ">
 			    	<label for="contect_no" class="form-label">User profile*</label>
-			    	<input type="file" class="form-control" id="contect_no" name="user_profile" >
+			    	<input type="file" class="form-control" id="user_profile" name="user_profile"  value="{{ old('user_profile') }}" autofocus>
 			    	@error('user_profile')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -96,13 +96,12 @@ Add Product
 			    	@enderror
 			    </div>
 			   
-
 			    <div class="mb-3 col-5 ">
 			    	<label for="city" class="form-label">City Name*</label>
 			    	<select id="city" name="city" class="select2-example" >
 			    		<option value="">Please select City</option>
 			    	
-			    			<option value="">s</option>
+			    			<option value=""></option>
 			    		
 			    	</select>
 			    	@error('city')
@@ -123,7 +122,7 @@ Add Product
 					
 			    <div class="mb-3 col-5 ">
 			    	<label for="password" class="form-label">Password*</label>
-			    	<input type="password" class="form-control" id="password" name="password" value="{{ old('passsword') }}" autofocus  >
+			    	<input type="password" class="form-control" id="password" name="password" autofocus  >
 			    	@error('password')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -134,17 +133,17 @@ Add Product
 				<div class="col-1"></div>	
 		
 			    <div class="mb-3 col-5 ">
-			    	<label for="gst_no" class="form-label">Gst No*</label>
-			    	<input type="text" class="form-control" id="gst_no" name="gst_no" >
-			    	@error('gst_no')
+			    	<label for="confirm_passpword" class="form-label">Confirm Password*</label>
+			    	<input type="password" class="form-control" id="confirm_password" name="confirm_password"  autofocus >
+			    	@error('confirm_password')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
 
 			     <div class="mb-3 col-5 ">
-			    	<label for="back_name" class="form-label">Back Name*</label>
-			    	<input type="text" class="form-control" id="back_name" name="back_name" >
-			    	@error('back_name')
+			    	<label for="bank_name" class="form-label">bank Name*</label>
+			    	<input type="text" class="form-control" id="bank_name" name="bank_name" value="{{ old('bank_name') }}" autofocus >
+			    	@error('bank_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
@@ -155,15 +154,15 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="account_no" class="form-label">Account No*</label>
-			    	<input type="text" class="form-control" id="account_no" name="account_no" >
+			    	<input type="text" class="form-control" id="account_no" name="account_no" value="{{ old('account_no') }}" autofocus>
 			    	@error('account_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
 			    <div class="mb-3 col-5 ">
-			    	<label for="ifc_code" class="form-label">Ifc Code*</label>
-			    	<input type="text" class="form-control" id="ifc_code" name="ifc_code" >
-			    	@error('ifc_code')
+			    	<label for="ifsc_code" class="form-label">Ifsc Code*</label>
+			    	<input type="text" class="form-control" id="ifsc_code" name="ifsc_code" value="{{ old('ifsc_code') }}" autofocus>
+			    	@error('ifsc_code')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
@@ -172,31 +171,56 @@ Add Product
 			<div class="row">
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
-			    	<label for="account_holedr_name" class="form-label">Account Holedr Name*</label>
-			    	<input type="text" class="form-control" id="account_holedr_name" name="account_holedr_name" >
-			    	@error('account_holedr_name')
+			    	<label for="account_holder_name" class="form-label">Account Holedr Name*</label>
+			    	<input type="text" class="form-control" id="account_holder_name" name="account_holder_name"  value="{{ old('account_holder_name') }}" autofocus>
+			    	@error('account_holder_name')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
+
 			    <div class="mb-3 col-5 ">
+			    	<label for="proof" class="form-label">Id proof Name*</label>
+			    	<select id="proof" name="proof" class="select2-example" >
+			    			<option value="0">Adhar Card</option>
+			    			<option value="1">PanCard</option>
+			    			
+			    	</select>
+			    	@error('proof')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    
+			    <div class="col-1"></div>	
+			</div>
+			<div class="row">
+
+				<div class="col-1"></div>
+				<div class="mb-3 col-5 ">
 			    	<label for="id_proof_no" class="form-label">Id Proof No*</label>
-			    	<input type="text" class="form-control" id="id_proof_no" name="id_proof_no" >
+			    	<input type="text" class="form-control" id="id_proof_no" name="id_proof_no"  value="{{ old('id_proof_no') }}" autofocus >
 			    	@error('id_proof_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
-			    </div>
-			    <div class="col-1"></div>	
-			</div>
-			<div class="row">
-				<div class="col-1"></div>	
+			    </div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="id_proof" class="form-label">Id Proof*</label>
-			    	<input type="text" class="form-control" id="id_proof" name="id_proof" >
+			    	<input type="file" class="form-control" id="id_proof" name="id_proof" >
 			    	@error('id_proof')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-			    <div class="mb-3 col-5  ">
+			    <div class="col-1"></div>	
+			</div>
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="mb-3 col-5 ">
+			    	<label for="gst_no" class="form-label">Gst No*</label>
+			    	<input type="text" class="form-control" id="gst_no" name="gst_no"   value="{{ old('gst_no') }}" autofocus>
+			    	@error('gst_no')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    <div class="mb-3 col-5 ">
 				    	<label  for="is_display" class=" d-block form-label">Is Permission Sell?*</label>
 			    	<div class="form-check form-check-inline " >	
 				    	<input class="form-check-input" type="radio"  id="is_permission_sell_yes" name="is_permission_sell" value="0" >
@@ -206,7 +230,7 @@ Add Product
 			    	</div>
 
 				    <div class="form-check form-check-inline ">
-				    	<input class="form-check-input" type="radio"  id="is_permission_sell_no" name="is_permission_sell" value="1" >
+				    	<input class="form-check-input" type="radio" checked id="is_permission_sell_no" name="is_permission_sell" value="1" >
 				    	<label class="form-check-label" for="is_permission_sell_no">
 						    No
 						</label>
@@ -247,8 +271,8 @@ Add Product
 
 
 		$('#state').change(function(){
-			var id = $(this).val();
-			
+			var id = $('#state').val();
+				
 			$.ajax({
 				type:'post',
 				url:'{{ route('admin.seller.ajax')}}',
@@ -256,6 +280,7 @@ Add Product
 				datatype:'text',
 				success:function(response)
 				{
+					
 					$('#city').html(response);
 				}
 
@@ -264,6 +289,15 @@ Add Product
 	
 
 		});
+		$('#proof').change(function(){
+			var id =$('#proof').val();
+
+			if($id == 0)
+			{
+
+			}
+			
+		})
 	});
 </script>
 
