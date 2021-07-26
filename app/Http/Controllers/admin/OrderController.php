@@ -55,7 +55,7 @@ class OrderController extends Controller
             "deliveryAddress"=>"required",
             "billingAddress" =>"required",
             "product"=> "required",
-            "qty"=>'required|numeric|min:1|digits_between:1,6',
+            "qty"=>'required|numeric|max:10',
             "is_payed"=>"required",
             "payment_mode"=>"required",
             "transaction_no"=>"numeric|nullable|min:3|max:30"
@@ -79,7 +79,7 @@ class OrderController extends Controller
             $purchase->coupon_id = $request->coupon;
         }
         $purchase->shipping_amt = 0;
-        $purchase->total_amt = $products->special_price * $request->qty;
+        $purchase->total_amt = isset($products->special_price)?$products->special_price:$products->current_price * $request->qty;
         $purchase->is_payed = $request->is_payed;
         $purchase->payment_mode = $request->payment_mode;
         if(isset($request->transaction_no))
@@ -101,7 +101,7 @@ class OrderController extends Controller
         $purchase_item->product_desc = $products->product_desc;
         // echo $request->qty;
         $purchase_item->qty = $request->qty;
-        $purchase_item->price = $products->special_price;
+        $purchase_item->price = isset($products->special_price)?$products->special_price:$products->current_price;
         $purchase_item->save();
         return redirect()->route('admin.order.index')->with('success','Data Inserted Successfully');
     }

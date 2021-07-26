@@ -90,7 +90,7 @@ Add Order
 			    	@error('coupon')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
-			    </div>
+			    </div> 
 			    <div class="col-1"></div>
 			</div>
 
@@ -114,7 +114,7 @@ Add Order
 
 			    <div class="mb-3 col-5 ">
 			    	<label for="qty" class="form-label">Qty*</label>
-			    	<input type="text" class="form-control" id="qty" name="qty" value="{{ old('qty') }}"  >
+			    	<input type="number" class="form-control" id="qty" name="qty" value="{{ old('qty') }}"  >
 			    	@error('qty')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror

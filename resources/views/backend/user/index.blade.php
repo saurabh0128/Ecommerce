@@ -184,14 +184,14 @@
                             <label class="col-sm-3 col-form-label">Contect Number</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8">
-                                 <input type="text" id="user_contect"  name="phone_no"  class="form-control" >
+                                 <input type="number" id="user_contect"  name="phone_no"  class="form-control" >
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Email Id</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8">
-                                <input type="text" id="user_email"   name="email_id" class="form-control" >
+                                <input type="email" id="user_email"   name="email_id" class="form-control" >
                             </div>
                         </div>
                         

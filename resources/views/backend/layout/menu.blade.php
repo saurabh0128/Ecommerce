@@ -87,14 +87,7 @@
                     <span>Category</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('admin.sellerpayment.index')}}">
-                    <span class="nav-link-icon">
-                        <i class="bi bi-receipt"></i>
-                    </span>
-                    <span>Seller Payment</span>
-                </a>
-            </li>
+            
             <li>
                 <a href="{{route('admin.role.index')}}">
                     <span class="nav-link-icon">

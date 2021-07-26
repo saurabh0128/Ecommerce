@@ -15,4 +15,12 @@ class RatingReview extends Model
         'review',
         'is_display'
     ];
+
+    public function product(){
+        return $this->belongsTo(Product::class,'product_id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
 }

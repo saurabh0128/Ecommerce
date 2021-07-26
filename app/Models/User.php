@@ -10,9 +10,11 @@ use App\Models\UserAddress;
 use App\Models\Category;
 use App\Models\SellerCategory;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory,HasRoles;
 
     protected $filable = [
         'name',
@@ -62,6 +64,10 @@ class User extends Authenticatable
     public function category()
     {
         return $this->belongsToMany(Category::class,'Seller_Categorys','user_id','category_id');
+    }
+
+    public function rating_review(){
+        return $this->hasMany(RatingReview::class,'user_id');
     }
 
 }

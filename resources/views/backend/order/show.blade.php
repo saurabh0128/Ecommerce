@@ -286,6 +286,18 @@
 		    <div class="col-1"></div>
 		</div>
 
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-2">
+				<label for="product_image" class="form-label  ">City Name</label>
+			</div>	
+			<div class="col-1">:</div>
+		    <div class="mb-3 col-7 ">
+		    	 <p>{{$order->user_address->city->city_name }}</p>  
+		    </div>
+		    <div class="col-1"></div>
+		</div>
+
 
 
 		<div class="row">
@@ -332,6 +344,18 @@
 			<div class="col-1">:</div>
 		    <div class="mb-3 col-7 ">
 		    	 <p>{{$order->billing_address->pincode }}</p> 
+		    </div>
+		    <div class="col-1"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-2">
+				<label for="product_image" class="form-label  ">City Name</label>
+			</div>	
+			<div class="col-1">:</div>
+		    <div class="mb-3 col-7 ">
+		    	 <p>{{$order->user_address->city->city_name }}</p>  
 		    </div>
 		    <div class="col-1"></div>
 		</div>

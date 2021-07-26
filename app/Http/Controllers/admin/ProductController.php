@@ -52,8 +52,8 @@ class ProductController extends Controller
     {
         $request->validate([
             "product_name" => "required|min:2|max:200",
-            "current_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",
-            "special_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",
+            "current_price" => "required|max:10",
+            "special_price" => "nullable|max:10",
             "product_desc" =>  "required",
             "product_sort_desc" =>  "required",
             "Category" => "required",
@@ -130,8 +130,8 @@ class ProductController extends Controller
     {
         $request->validate([
             "product_name" => "required|min:2|max:200",
-            "current_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",
-            "special_price" => "required|regex:/^\d+(\.\d{1,2})?$/|max:8",
+            "current_price" => "required|max:10",
+            "special_price" => "nullable|max:10",
             "product_desc" =>  "required",
             "product_sort_desc" =>  "required",
             "Category" => "required",
