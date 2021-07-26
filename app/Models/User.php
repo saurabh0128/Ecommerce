@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\SellerInfos;
 use App\Models\UserAddress;
+use App\Models\Category;
+use App\Models\SellerCategory;
 
 class User extends Authenticatable
 {
@@ -56,6 +58,10 @@ class User extends Authenticatable
 
     public function userAddress(){
         return $this->hasMany(UserAddress::class,'user_id');
+    }
+    public function category()
+    {
+        return $this->belongsToMany(Category::class,'Seller_Categorys','user_id','category_id');
     }
 
 }

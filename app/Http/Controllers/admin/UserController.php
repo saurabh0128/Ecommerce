@@ -45,13 +45,14 @@ class UserController extends Controller
         $validator = Validator::make($request->all(),[
             "name" => "required|min:2|alpha",
             "user_name" => "required|min:2|alpha_dash|unique:users,user_name",
-            "phone_no" => "required|numeric|digits:10",
+            "phone_no" => "required|numeric|digits:10|unique:users,phone_no",
             "email_id" => "required|email|unique:users,email_id",
             "profile_img" => "image|mimes:jpeg,jpg,png",
             "password" => "required|min:8",
             "c_password" => "required|same:password"
         ]);
 
+        
         if($validator->fails())
         {
             return Response()->json(['error'=>$validator->errors()->all()]);
@@ -117,7 +118,7 @@ class UserController extends Controller
          $validator = Validator::make($request->all(),[
             "edit_name" => "required|min:2|unique:users,name,".$id,
             "edit_user_name" => "required|min:2|alpha_dash|unique:users,user_name,".$id,
-            "edit_phone_no" => "required|numeric|digits:10",
+            "edit_phone_no" => "required|numeric|digits:10|unique:users,phone_no".$id,
             "edit_email_id" => "required|email|unique:users,email_id,".$id,
             "edit_profile_img" => "image|mimes:jpeg,jpg,png|max:2048",
             "edit_password" => "min:8|nullable",

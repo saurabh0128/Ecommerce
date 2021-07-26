@@ -115,7 +115,7 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="email_id" class="form-label">Email Id*</label>
-			    	<input type="text" class="form-control" id="email_id" name="email_id" value="{{ old('email_id',$sellerdata->email_id) }}" autofocus  >
+			    	<input type="email" class="form-control" id="email_id" name="email_id" value="{{ old('email_id',$sellerdata->email_id) }}" autofocus  >
 			    	@error('email_id')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -155,7 +155,7 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="account_no" class="form-label">Account No*</label>
-			    	<input type="text" class="form-control" id="account_no" name="account_no" value="{{ old('account_no',$sellerdata->seller_infos->account_no) }}" autofocus>
+			    	<input type="number" class="form-control" id="account_no" name="account_no" value="{{ old('account_no',$sellerdata->seller_infos->account_no) }}" autofocus>
 			    	@error('account_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -179,9 +179,21 @@ Add Product
 			    	@enderror
 			    </div>
 
-			    <div class="mb-3 col-5 ">
+				<div class="mb-3 col-5 ">
+			    	<label for="gst_no" class="form-label">Gst No*</label>
+			    	<input type="text" class="form-control" id="gst_no" name="gst_no" @if($sellerdata->seller_infos->is_permisssion_sell == 1) disabled @endif  value="{{ old('gst_no',$sellerdata->seller_infos->gst_no) }}" autofocus>
+			    	@error('gst_no')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			  	<input type="hidden" class="form-control" id="gst_no" name="gst_no" value="{{ old('gst_no',$sellerdata->seller_infos->gst_no) }}">
+			    <div class="col-1"></div>	
+			</div>
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="mb-3 col-5 ">
 			    	<label for="proof" class="form-label">Id proof Name*</label>
-			    	<select id="proof" name="proof" class="select2-example" >
+			    	<select id="proof" name="proof" class="select2-example" @if($sellerdata->seller_infos->is_permisssion_sell == 1) disabled @endif>
 			    			<option value="0" @if($proof_name == 0) selected @endif>Adhar Card</option>
 			    			<option value="1" @if($proof_name == 1) selected @endif>PanCard</option>
 			    			
@@ -191,36 +203,26 @@ Add Product
 			    	@enderror
 			    </div>
 			    
-			    <div class="col-1"></div>	
-			</div>
-			<div class="row">
-
-				<div class="col-1"></div>
 				<div class="mb-3 col-5 ">
 			    	<label for="id_proof_no" class="form-label">Id Proof No*</label>
-			    	<input type="text" class="form-control" id="id_proof_no" name="id_proof_no"  value="{{ old('id_proof_no',$sellerdata->seller_infos->id_proof_no) }}" autofocus >
+			    	<input type="text" class="form-control" id="id_proof_no" name="id_proof_no"  value="{{ old('id_proof_no',$sellerdata->seller_infos->id_proof_no) }}"  @if($sellerdata->seller_infos->is_permisssion_sell == 1) disabled @endif autofocus >
 			    	@error('id_proof_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
-			    </div>	
+			    </div>
+			    <input type="hidden" class="form-control" id="id_proof_no" name="id_proof_no" 
+			     value="{{ old('id_proof_no',$sellerdata->seller_infos->id_proof_no) }}" >
+			</div>
+			<div class="row">
+				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="id_proof" class="form-label">Id Proof*</label>
-			    	<input type="file" class="form-control" id="id_proof" name="id_proof" >
+			    	<input type="file" class="form-control" id="id_proof"  name="id_proof"   @if($sellerdata->seller_infos->is_permisssion_sell == 1) disabled @endif >
 			    	@error('id_proof')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-			    <div class="col-1"></div>	
-			</div>
-			<div class="row">
-				<div class="col-1"></div>
-				<div class="mb-3 col-5 ">
-			    	<label for="gst_no" class="form-label">Gst No*</label>
-			    	<input type="text" class="form-control" id="gst_no" name="gst_no"   value="{{ old('gst_no',$sellerdata->seller_infos->gst_no) }}" autofocus>
-			    	@error('gst_no')
-			    		<p class="text-danger">{{ $message }}</p>
-			    	@enderror
-			    </div>
+
 			    <div class="mb-3 col-5 ">
 				    	<label  for="is_display" class=" d-block form-label">Is Permission Sell?*</label>
 			    	<div class="form-check form-check-inline " >	
@@ -244,6 +246,21 @@ Add Product
 			    <div class="col-1"></div>	
 			</div>
 		
+			<div class="row">
+				<div class="col-1"></div>
+				
+			    <div class="mb-3 col-5 ">
+					<div class="mb-3 col-5 ">
+			    	<label for="product_image" class="form-label d-block ">Proof Image</label>
+			    	<hr>
+			    	<div class="text-center">	
+			    		<img src="{{asset('/backend_asset/user_img/'.$sellerdata->profile_img)}}" height="150" width="230" alt="Proof Image" name="product_image" class="" >
+			    	</div>
+			    	</div>
+				</div>
+			    <div class="col-1"></div>	
+			</div>
+
 			<div class="row">
 				<div class="col-1"></div>	
 			    <div class="col-10 text-center ">

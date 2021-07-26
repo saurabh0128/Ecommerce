@@ -17,7 +17,7 @@ class CreateCitysTable extends Migration
             $table->id();
             $table->string('city_name',40);
             $table->foreignId('state_id')->constrained('states')->onUpdate('cascade');
-            $table->timestamp('create_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }

@@ -55,7 +55,7 @@ class OrderController extends Controller
             "deliveryAddress"=>"required",
             "billingAddress" =>"required",
             "product"=> "required",
-            "qty"=>'required|numeric|min:1|max:6',
+            "qty"=>'required|numeric|min:1|digits_between:1,6',
             "is_payed"=>"required",
             "payment_mode"=>"required",
             "transaction_no"=>"numeric|nullable|min:3|max:30"

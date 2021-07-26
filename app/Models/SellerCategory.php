@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
 
 class SellerCategory extends Model
 {
@@ -14,8 +15,12 @@ class SellerCategory extends Model
         'user_id',
         'category_id',
     ];
-    function seller_categorys()
+    public function users()
     {
         return $this->belongsTo(User::class,'user_id');
     }
+   /* public function category()
+    {
+        return $this->hasMany(Category::class,'category_id');
+    }*/
 }

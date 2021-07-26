@@ -17,8 +17,9 @@ Add Product
 <div class="card m-3 ">
 	<div class="card-body">	
 		<div class="card-title text-center">Add Product Form </div>
-		<!-- 	@foreach($sellerdata as $user) -->
+			<!-- @foreach($sellerdata as $user) -->
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">User Profile</label>
 				</div>	
@@ -29,6 +30,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Name</label>
 				</div>	
@@ -39,6 +41,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">UserName</label>
 				</div>	
@@ -49,6 +52,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Address</label>
 				</div>	
@@ -59,6 +63,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Contect Us</label>
 				</div>	
@@ -69,6 +74,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Email Id</label>
 				</div>	
@@ -79,6 +85,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Company Name</label>
 				</div>	
@@ -89,6 +96,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Gst Number</label>
 				</div>	
@@ -99,6 +107,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Bank Name</label>
 				</div>	
@@ -109,6 +118,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Account Number</label>
 				</div>	
@@ -119,6 +129,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Account Holder Name</label>
 				</div>	
@@ -129,6 +140,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Ifsc Code</label>
 				</div>	
@@ -139,6 +151,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Id Proof Number</label>
 				</div>	
@@ -149,6 +162,7 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
 					<label for="product_name" class="form-label">Id Proof</label>
 				</div>	
@@ -159,16 +173,38 @@ Add Product
 			    <div class="col-1"></div>
 			</div>
 			<div class="row">
+				<div class="col-1"></div>
 				<div class="col-2">
-					<label for="product_name" class="form-label">Id Proof</label>
-				</div>	
+					<label for="product_name" class="form-label">City Name</label>
+				</div>	 
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-8 ">
 			    	<lable>{{$user->seller_infos->city->city_name}}</lable>
 			    </div>
 			    <div class="col-1"></div>
 			</div>
-			
+			@if(count($user->category)>0)
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-10">
+					<p class="fs-5 mb-0">Category Name</p>
+					<hr class="my-4">
+				</div>
+			</div>
+			@for($i=0;$i < count($user->category);$i++)
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-2">
+					<label for="product_name" class="form-label">Name</label>
+				</div>	
+				<div class="col-1">:</div>
+			    <div class="mb-3 col-8 ">
+			    	<lable>{{$user->category[$i]->category_name}}</lable>
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+			@endfor
+			@endif
 
 
 		<!-- 	@endforeach -->

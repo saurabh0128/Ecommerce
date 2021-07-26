@@ -13,6 +13,13 @@ class Category extends Model {
 	protected $table   = "categorys";
 	protected $filable = [
 		'category_name'
-
 	];
+
+	public function product() {
+		return $this->hasMany(Product::class , 'category_id');
+	}
+	public function users() {
+		return $this->belongsToMany(User::class );
+	}
+
 }

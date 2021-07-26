@@ -94,6 +94,7 @@
 
         @if(Session::get('success'))
             toastr['success']('{{Session::get('success')}}');
+      
         @endif
 
     $(document).ready(function(){
