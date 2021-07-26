@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 
-
+ 
 @section('title')
 Coupons
 @endsection
@@ -32,7 +32,7 @@ Coupons
                 <h4 class="d-inline" >Coupon Detail</h4>
                 <a href="{{route('admin.coupon.create')}}" >
                     <button class="btn btn-primary btn-icon d-inline float-end"  >
-                            <i class="bi bi-plus-circle"></i> Add Product
+                            <i class="bi bi-plus-circle"></i> Add coupon
                     </button>
                 </a>
             </div>

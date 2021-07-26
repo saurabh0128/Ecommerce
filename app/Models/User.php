@@ -8,9 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\SellerInfos;
 use App\Models\UserAddress;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory,HasRoles;
 
     protected $filable = [
         'name',
@@ -56,6 +58,10 @@ class User extends Authenticatable
 
     public function userAddress(){
         return $this->hasMany(UserAddress::class,'user_id');
+    }
+
+    public function rating_review(){
+        return $this->hasMany(RatingReview::class,'user_id');
     }
 
 }

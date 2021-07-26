@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\UserAddress;
 use App\Models\City;
 
+use Illuminate\Support\Facades\Auth;
+
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 class UserController extends Controller
 {
 
@@ -47,7 +52,7 @@ class UserController extends Controller
             "user_name" => "required|min:2|alpha_dash|unique:users,user_name",
             "phone_no" => "required|numeric|digits:10",
             "email_id" => "required|email|unique:users,email_id",
-            "profile_img" => "image|mimes:jpeg,jpg,png",
+            "profile_img" => "image",
             "password" => "required|min:8",
             "c_password" => "required|same:password"
         ]);
@@ -90,6 +95,11 @@ class UserController extends Controller
     public function show($id)
     {
         $UserData = User::with('userAddress')->where('id',$id)->get(); 
+
+        $user = Auth::user();
+
+         $user->givePermissionTo('view order');
+        // Permission::create('')
        // dd($UserData);
         return view('backend.user.show',compact('UserData'));
     }

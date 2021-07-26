@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('state',StateController::class);
         Route::post('state/ajax',[StateController::class,'ajax'])->name('state.ajax');
         Route::resource('rating',RatingController::class);
+        Route::post('rating/ajax',[RatingController::class,'ajax'])->name('rating.ajax');
         Route::resource('permission',PermissionController::class);
         Route::post('permission/ajax',[PermissionController::class,'ajax'])->name('permission.ajax');
         Route::resource('role',RoleController::class);

@@ -34,7 +34,7 @@ Add Product
 				<div class="col-1"></div>	
 			    <div class="mb-3 col-5 ">
 			    	<label for="current_price" class="form-label">Current Price*</label>
-			    	<input type="text" class="form-control" id="current_price" name="current_price" value="{{ old('current_price') }}"  >
+			    	<input type="number" class="form-control" id="current_price" name="current_price" step="any"  value="{{ old('current_price') }}"  >
 			    	@error('current_price')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
@@ -42,7 +42,7 @@ Add Product
 			   
 			    <div class="mb-3 col-5 ">
 			    	<label for="special_price" class="form-label">Special Price*</label>
-			    	<input type="text" class="form-control" id="special_price" name="special_price" value="{{ old('special_price') }}" >
+			    	<input type="number" class="form-control" id="special_price" name="special_price" step="any" value="{{ old('special_price') }}" >
 			    	@error('special_price')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
