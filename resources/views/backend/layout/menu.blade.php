@@ -96,14 +96,7 @@
                     <span>Role</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('admin.coupon.index')}}">
-                    <span class="nav-link-icon">
-                    <i class="bi bi-layout-sidebar-inset"></i>
-                    </span>
-                    <span>Coupon</span>
-                </a>
-            </li>
+           
             <li>
                 <a href="{{route('admin.permission.index')}}">
                     <span class="nav-link-icon">
@@ -112,6 +105,16 @@
                     <span>Permission</span>
                 </a>
             </li>
+            
+            <li>
+                <a href="{{route('admin.coupon.index')}}">
+                    <span class="nav-link-icon">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                    </span>
+                    <span>Coupon</span>
+                </a>
+            </li>
+
             <li>
                 <a href="{{route('admin.rating.index')}}">
                     <span class="nav-link-icon">
