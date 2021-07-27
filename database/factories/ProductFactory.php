@@ -38,6 +38,7 @@ class ProductFactory extends Factory
             'is_display' => rand(0,1),
             'is_avilable' => rand(0,1),
             'stock' => rand(1,1000),
+            'product_sort_desc' => $this->faker->text,
         ];
     }
 }

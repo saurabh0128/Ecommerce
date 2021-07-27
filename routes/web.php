@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('login',AdminController::class);
     Route::get('logout',[AdminController::class,'logout'])->name('logout');
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => ['auth','role:admin']], function () {
 
         Route::resource('dashboard',DashboardController::class);
         Route::resource('user',Usercontroller::class);
