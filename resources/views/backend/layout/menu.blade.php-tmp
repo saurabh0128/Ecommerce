@@ -89,20 +89,30 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                     <span>Category</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('admin.sellerpayment.index')}}">
-                    <span class="nav-link-icon">
-                        <i class="bi bi-receipt"></i>
-                    </span>
-                    <span>Seller Payment</span>
-                </a>
-            </li>
+
             <li>
                 <a href="{{route('admin.role.index')}}">
                     <span class="nav-link-icon">
                         <i class="bi bi-person-badge"></i>
                     </span>
                     <span>Role</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{route('admin.permission.index')}}">
+                    <span class="nav-link-icon">
+                        <i class="bi bi-lock"></i>
+                    </span>
+                    <span>Permission</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.rolepermission.index')}}">
+                    <span class="nav-link-icon">
+                        <i class="bi bi-shield-shaded"></i>
+                    </span>
+                    <span>RolePermission</span>
                 </a>
             </li>
             <li>
@@ -113,14 +123,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                     <span>Coupon</span>
                 </a>
             </li>
-            <li>
-                <a href="{{route('admin.permission.index')}}">
-                    <span class="nav-link-icon">
-                        <i class="bi bi-lock"></i>
-                    </span>
-                    <span>Permission</span>
-                </a>
-            </li>
+
             <li>
                 <a href="{{route('admin.rating.index')}}">
                     <span class="nav-link-icon">

@@ -194,8 +194,21 @@
                                 <input type="email" id="user_email"   name="email_id" class="form-control" >
                             </div>
                         </div>
+                        <div class="md-3 row"> 
+                            <label class="col-sm-3 col-form-label">Role*</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                <select id="role" name="role" class="form-control">
+                                    <option value="">Select One Option</option>
+                                    @foreach($roledata as $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                         
-                        <div class="mb-3 row">
+                        <div class="mb-3 mt-3 row">
                             <div class="col-sm-12 text-center ">
                                 <button type="submit" class="btn btn-primary" id="AddUserBtn" >Add</button>
                             </div>
@@ -213,7 +226,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">User Detail</h5>
+                    <h5 class="modal-title">Edit User Detail</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close_edit"  aria-label="Close"> </button>
                 </div>
                 <div class="modal-body">
@@ -277,8 +290,20 @@
                                 <input type="text" id="edit_user_email"   name="edit_email_id" class="form-control" >
                             </div>
                         </div>
+                         <div class="md-3 row"> 
+                            <label class="col-sm-3 col-form-label">Role*</label>
+                            <div class="col-sm-1 col-form-label">:</div>
+                            <div class="col-sm-8">
+                                <select id="role" name="role" class="form-control">
+                                    <option value="">Select Role Option</option>
+                                    @foreach($roledata as $value)
+                                    <option value="{{$value->name}}">{{$value->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         
-                        <div class="mb-3 row">
+                        <div class="mb-3 mt-3 row">
                             <div class="col-sm-12 text-center ">
                                 <button type="submit" class="btn btn-primary" id="AddUserBtn" >Add</button>
                             </div>

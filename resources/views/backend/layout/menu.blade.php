@@ -105,7 +105,14 @@
                     <span>Permission</span>
                 </a>
             </li>
-            
+            <li>
+                <a href="{{route('admin.rolepermission.index')}}">
+                    <span class="nav-link-icon">
+                        <i class="bi bi-shield-shaded"></i>
+                    </span>
+                    <span>RolePermission</span>
+                </a>
+            </li>
             <li>
                 <a href="{{route('admin.coupon.index')}}">
                     <span class="nav-link-icon">

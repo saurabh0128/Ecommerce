@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\RatingController;
 use App\Http\Controllers\admin\RoleController;
+use App\Http\Controllers\admin\RolePermissionsController;
 use App\Http\Controllers\admin\SellerController;
 use App\Http\Controllers\admin\SellerPaymentController;
 use App\Http\Controllers\admin\StateController;
@@ -63,6 +64,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 				Route::resource('sellerpayment', sellerPaymentController::class );
 				Route::resource('coupon', CouponController::class );
 				Route::post('coupon/ajax', [CouponController::class , 'ajax'])->name('coupon.ajax');
+				Route::resource('rolepermission', RolePermissionsController::class );
+				Route::post('rolepermission/ajax', [RolePermissionsController::class , 'ajax'])->name('rolepermission.ajax');
 			});
 
 	});

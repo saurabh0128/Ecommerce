@@ -55,7 +55,8 @@ class AdminController extends Controller
         if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
         {
 
-            //$user =Auth()->user()->user_name;
+            // $user =Auth()->user();
+            // $user->assignRole('admin');
     
             return redirect()->route('admin.dashboard.index');
         }else{

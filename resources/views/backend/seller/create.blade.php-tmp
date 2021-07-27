@@ -243,6 +243,22 @@ Add Product
 				</div>
 			    <div class="col-1"></div>
 			</div>
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="mb-3 col-5 ">
+			    	<label for="role" class="form-label">Role</label>
+			    	<select id="role" name="role" class="select2-example" >
+			    			<option value="role">Select Role Option</option>
+			    			@foreach($roledata as $value)
+			    			<option value="{{$value->name}}">{{$value->name}}</option>
+			    			@endforeach
+			    	</select>
+			    	@error('role')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
+			    <dov class="col-1"></dov>
+			</div>
 
 			<div class="row">
 				<div class="col-1"></div>

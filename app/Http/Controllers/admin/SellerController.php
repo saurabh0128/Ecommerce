@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\admin;
 
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\SellerCategory;
+use App\Models\Category;
 use APP\Models\User;
 use App\Models\SellerInfos;
 use App\Models\State;
 use App\Models\City;
+use App\Models\Role;
 use Validator;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Category;
-use App\Models\SellerCategory;
 
 
 class SellerController extends Controller
@@ -34,7 +35,8 @@ class SellerController extends Controller
     public function create()
     {
         $state=State::all();
-        return view('backend.seller.create',compact('state'));
+        $roledata = Role::all();
+        return view('backend.seller.create',compact('state','roledata'));
     }
 
     /**
@@ -45,6 +47,7 @@ class SellerController extends Controller
      */
     public function store(Request $request)
     {
+       
         if($request->proof == 0)
         {
             $request->validate([
@@ -65,7 +68,8 @@ class SellerController extends Controller
                 'account_holder_name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
                 'id_proof_no' => 'required|digits:12|unique:seller_infos,id_proof_no',
                 'id_proof' => 'image|max:2048',
-                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/'
+                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+                'Role' => 'required'
             ]);
         }else{
             
@@ -87,9 +91,11 @@ class SellerController extends Controller
                 'account_holder_name' => 'required|min:2|max:100|regex:/^[\pL\s]+$/u',
                 'id_proof_no' => 'required|regex:/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/|unique:seller_infos,id_proof_no',
                 'id_proof' => 'image|max:2048',
-                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/'
+                'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
+                'role' => 'required'
             ]);
         }
+
        
         $user_data = new User;
         $seller_data = new SellerInfos;
@@ -108,6 +114,8 @@ class SellerController extends Controller
         $user_data->user_status=1;
 
         $user_data->save();
+
+        $user_data->assignRole($request->role);
 
         $onlyImgName = pathinfo($request->id_proof->getClientOriginalName(),PATHINFO_FILENAME);
         $imageExt = $request->id_proof->getClientOriginalExtension();

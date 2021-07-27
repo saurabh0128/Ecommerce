@@ -1,3 +1,5 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 @extends('backend.layout.app')
 
 @section('title')
@@ -7,13 +9,13 @@
 
 @section('css')
     <!-- Slick -->
-    <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/slick/slick.css')}}" type="text/css">  
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/slick/slick.css')}}" type="text/css">
 @endsection
 
 
 @section('content')
     <!-- content -->
-    
+
     <div class="content ">
         <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col-lg-7 col-md-12">

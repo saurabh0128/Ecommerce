@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
-use App\Models\UserAddress;
-use App\Models\City;
-
 use Illuminate\Support\Facades\Auth;
-
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use App\Models\UserAddress;
+use App\Models\City;
+use App\Models\User;
+use Validator;
 
 class UserController extends Controller
 {
@@ -26,7 +24,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('backend.user.index');
+        $roledata = Role::all();
+       
+
+        return view('backend.user.index',compact('roledata'));
     }
 
     /**
@@ -54,7 +55,8 @@ class UserController extends Controller
             "email_id" => "required|email|unique:users,email_id",
             "profile_img" => "image",
             "password" => "required|min:8",
-            "c_password" => "required|same:password"
+            "c_password" => "required|same:password",
+            "role" => "required"
         ]);
 
         
@@ -68,8 +70,6 @@ class UserController extends Controller
             $imageName = $onlyImgName."-".time().".".$imageExt;
             $request->profile_img->move(public_path('/backend_asset/user_img/'),$imageName); 
             
-          
-
             $user = new User;
 
             $user->name = $request->name;
@@ -81,9 +81,9 @@ class UserController extends Controller
             $user->user_status = 0;
 
             $user->save();
-
-             return Response()->json(["success"=>"Data Inserted Successfully"]);
-
+            $user->assignRole($request->role);
+             
+            return Response()->json(["success"=>"Data Inserted Successfully"]);
         }
     }
 
@@ -99,7 +99,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-         $user->givePermissionTo('view order');
+        // $user->givePermissionTo('view order');
         // Permission::create('')
        // dd($UserData);
         return view('backend.user.show',compact('UserData'));
@@ -125,14 +125,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
          $validator = Validator::make($request->all(),[
             "edit_name" => "required|min:2|unique:users,name,".$id,
             "edit_user_name" => "required|min:2|alpha_dash|unique:users,user_name,".$id,
-            "edit_phone_no" => "required|numeric|digits:10|unique:users,phone_no".$id,
+            "edit_phone_no" => "required|numeric|digits:10|unique:users,phone_no,".$id,
             "edit_email_id" => "required|email|unique:users,email_id,".$id,
             "edit_profile_img" => "image|mimes:jpeg,jpg,png|max:2048",
             "edit_password" => "min:8|nullable",
-            "edit_c_password" => "same:edit_password"
+            "edit_c_password" => "same:edit_password",
+            "role" => "required"
         ]);
 
         if($validator->fails())
@@ -157,8 +159,9 @@ class UserController extends Controller
         $user->user_name = $request->edit_user_name;
         $user->email_id = $request->edit_email_id;
         $user->phone_no = $request->edit_phone_no;
-       
+        
         $user->save();
+        $user->syncRoles($request->role);
 
         return Response()->json(["success" => 'Data Updated Successfully']);
 
