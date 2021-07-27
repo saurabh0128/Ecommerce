@@ -24,6 +24,9 @@
     <!-- Main style file -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/app.min.css')}}" type="text/css">
 
+    <!-- Main style file -->
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/style.css')}}" type="text/css">
+
     @yield('css')
 
 
