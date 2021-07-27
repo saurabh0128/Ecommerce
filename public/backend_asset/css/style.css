@@ -1,0 +1,13 @@
+
+.permission-label{
+    max-width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+span.badge.badge-info {
+    background-color: #ff6e40;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}

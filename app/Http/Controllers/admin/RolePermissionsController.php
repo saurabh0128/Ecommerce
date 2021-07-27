@@ -9,6 +9,8 @@ use Spatie\Permission\Models\Permission;
 
 use App\Models\RoleHasPermission;
 
+use App\Models\Role as roles;
+
 
 use Validator;
 
@@ -133,12 +135,13 @@ class RolePermissionsController extends Controller
              $totalRecordswithFilter = Role::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
 
              // Fetch records
-             $records = RoleHasPermission::with('role,permission')->orderBy($columnName,$columnSortOrder)
-               ->where('roles.role_name', 'like', '%' .$searchValue . '%')
+             $records = roles::with('permission')
                ->select('roles.*')
                ->skip($start)
                ->take($rowperpage)
                ->get();
+
+            // dd($records); 
 
              $data_arr = array();
 
@@ -146,19 +149,31 @@ class RolePermissionsController extends Controller
              $count = 1;
 
              foreach($records as $record){
+              
                 $id = $record->id;
-                $name = $record->category_name;
-                $guard_name = $record->guard_name;
-
-                $data_arr[] = array(
-                  "id" => $count,
-                  "name" => $name,
-                  "guard_name" => $guard_name,
-                  "action" => '<button type="button" id="EditBtn" editurl="'.route('admin.category.update',$id).'"
-                   editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
-                );
+                $name = $record->name;
+                $permission_name ="<div class='permission-label'>";
+                foreach($record->permission as $permission)
+                {
+                    $permission_name .=  '<span class="badge badge-info "  >'.$permission->name.'</span>' ;
+                } 
+                
+                $permission_name .="</div>";
+                // $guard_name = $record->guard_name;
+                
+                if(count($record->permission) != 0 )
+                {
+                    $data_arr[] = array(
+                      "id" => $count,
+                      "name" => $name,
+                      "permission name" => $permission_name,
+                      "action" => '<button type="button" class="btn btn-sm btn-info EditBtn "  editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"   >edit</button>'
+                    );
+                }
+                
                 $count++;
-             }
+               } 
+             
 
              $response = array(
                 "draw" => intval($draw),

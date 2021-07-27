@@ -42,7 +42,7 @@ Role Permission
                             <th>Id</th>
                             <th>Role Name</th>
                             <th>Permission Name</th>
-                            <th>Action</th>
+                            <th>Action </th>
                         </tr>
                         </thead>
                    
@@ -108,7 +108,50 @@ Role Permission
         </div>
     </div>
 
-    <!--/ Add RolePermission Model -->	
+    <!--/ Add RolePermission Model -->
+
+    <!-- Edit RolePermission Model -->
+    <div class="modal fade" id="EditRolePermissionModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Role Permission</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off" id="EditRolePermissionForm" >
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Role</label>
+                            <div class="col-sm-9">
+                                <select class="form-select" name="editrole" id="editrole"  aria-label="Please Select Role">
+                                
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">Permission</label>
+                            <div class="col-sm-9">
+                                <select class="select2-example" name="Editpermission" id="Editpermission" multiple >
+                                    @foreach($Permissions as $Permission)
+                                        <option value="{{ $Permission->name }}">{{ $Permission->name }} </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    
+                        <div class="mb-3 row">
+                            <div class="col-sm-12 text-center ">
+                                <button type="submit" class="btn btn-primary" >Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/ Edit RolePermission Model -->  	
 
 
 @endsection
@@ -151,39 +194,10 @@ Role Permission
 		});
 
 
-		$('#AddRolePermissionForm').submit(function(e){
-			e.preventDefault();
-
-			var role = $('#role').val();
-			var Permission = $('#permission').val();
-
-			$.ajax({
-				type:'post',
-				url:'{{ route('admin.rolepermission.store')}}',
-				data:{'_token':'{{csrf_token()}}','role':role,'permission':Permission },
-				datatype:'json',
-				success:function(response){
-					if(response.error){
-						let Errorstring =""
-                        for(let i=0;i<$(response.error).length;i++)
-                        {
-                            Errorstring += response.error[i]+"<br>";
-                        }
-                        toastr["error"](Errorstring);
-					}
-					else{
-
-						$('#newRolePermissionModal').modal('toggle');
-                      
-						toastr["success"](response.success);
-					}
-				}
-			});
-		});
-
+		
 
             //To display Role Permission Details
-            $('#RolePermissionDatatable').DataTable({ 
+          var table = $('#RolePermissionDatatable').DataTable({ 
                 processing: true,
                 serverSide: true,
                 ajax:{
@@ -194,6 +208,7 @@ Role Permission
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
                     {data:'name', name:'name'},
+                    {data:'permission name', name:'name'},
                     {
                         data:'action',
                         name:'action',
@@ -202,8 +217,55 @@ Role Permission
                     }
                 ]
             });
-       
 
+             $('#btn_close').click(function(){
+                $('.select2-selection__choice').remove();
+             });
+
+
+            $('#AddRolePermissionForm').submit(function(e){
+            e.preventDefault();
+
+                var role = $('#role').val();
+                var Permission = $('#permission').val();
+
+                $.ajax({
+                    type:'post',
+                    url:'{{ route('admin.rolepermission.store')}}',
+                    data:{'_token':'{{csrf_token()}}','role':role,'permission':Permission },
+                    datatype:'json',
+                    success:function(response){
+                        if(response.error){
+                            let Errorstring =""
+                            for(let i=0;i<$(response.error).length;i++)
+                            {
+                                Errorstring += response.error[i]+"<br>";
+                            }
+                            toastr["error"](Errorstring);
+                        }
+                        else{
+                            $('.select2-selection__choice').remove();
+                            $('#newRolePermissionModal').modal('toggle');
+                            table.ajax.reload()
+                            toastr["success"](response.success);
+                        }
+                    }
+                });
+            });
+
+       
+            $(document).on('click','.EditBtn',function(){
+                $('#EditRolePermissionModal').modal('show');
+                var editdata = jQuery.parseJSON($(this).attr('editdata'));
+
+                // $('.editrole select ').val(editdata.id).change();
+
+                $('#editrole').html('<option  value="'+ editdata.id +'">'+ editdata.name +'</option>')
+                $('#editrole').attr('disabled');
+
+                $('#Editpermission').find('option[value="Add Product"]').attr('selected','selected');
+               
+            })
 
 	</script>		
 
