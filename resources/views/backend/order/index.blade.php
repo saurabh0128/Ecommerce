@@ -1,4 +1,4 @@
-@extends('backend.layout.app')
+@extends('backend.layout.app') 
  
 @section('title') 
     Order
@@ -112,14 +112,13 @@
                     },
                     columns:[
                         {data:'id',name:'DT_RowIndex'},
-                        {data:"user name"},
-                        {data:"customer name"},
-                        {data:"total amt"},
-                        {data:'is payed'},
+                        {data:"user_id"},
+                        {data:"customer_name"},
+                        {data:"total_amt"},
+                        {data:'is_payed'},
                         {
                             data:'action',
                             name:'action',
-                            searchable:false,
                             orderable:false
                         }
                     ]

@@ -17,6 +17,8 @@ Role Permission
 
     <!-- CSS -->
 	<link rel="stylesheet" href="{{asset('backend_asset/libs/select2/css/select2.min.css')}}" type="text/css">
+
+    
 @endsection
 
 @section('content')

@@ -194,9 +194,10 @@ class OrderController extends Controller
 
              // DB::enableQueryLog();
              // Fetch records
-             $records = Purchase::with('user')->orderBy($columnName,$columnSortOrder)
+             $records = Purchase::with('user')
+               ->orderBy($columnName,$columnSortOrder)
                ->where('purchases.customer_name', 'like', '%' .$searchValue . '%')
-               ->select('purchases.*')
+               ->select('purchases.*')  
                ->skip($start)
                ->take($rowperpage)
                ->get();
@@ -220,10 +221,10 @@ class OrderController extends Controller
 
                 $data_arr[] = array(
                   "id" => $count,
-                  "user name" => $user_name,
-                  "customer name" =>$customer_name,
-                  "total amt" =>$total_amt,
-                  "is payed" => $is_payed == 0 ? 'no':'yes',
+                  "user_id" => $user_name,
+                  "customer_name" =>$customer_name,
+                  "total_amt" =>$total_amt,
+                  "is_payed" => $is_payed == 0 ? 'no':'yes',
                   "action" => '<a href="'.route('admin.order.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
                 );
                 $count++;
