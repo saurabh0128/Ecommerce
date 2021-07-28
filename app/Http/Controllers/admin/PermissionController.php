@@ -156,6 +156,9 @@ class PermissionController extends Controller
 
              $data_arr = array();
 
+            // foreach($records as $record){
+            //     echo $record->name;
+            // }
              //for a counter 
              $count = 1;
 

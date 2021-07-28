@@ -23,6 +23,7 @@
             </a>
         </div>
     </form>
+    @can('view notification')
     <div class="header-bar ms-auto">
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item">
@@ -32,6 +33,7 @@
             </li>
         </ul>
     </div>
+    @endcan
     <!-- Header mobile buttons -->
     <div class="header-mobile-buttons">
         <a href="#" class="search-bar-btn">
