@@ -221,7 +221,7 @@ Add Product
 			    	<select name="role" name="role" class="select2-example" >
 			    		<option value="">Please select role</option>
 			    		@foreach($roles as $role)
-			    			<option value="{{ $role->name }}" @if($SellerRole[0] == $role->name ) selected @endif >  {{ $role->name }}</option>
+			    			<option value="{{ $role->name }}"@if(isset($SellerRole[0])) @if($SellerRole[0] == $role->name ) selected @endif @endif >  {{ $role->name }}</option>
 			    		@endforeach
 			    	</select>
 			    </div>
@@ -259,13 +259,14 @@ Add Product
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
 			    </div>
-				
+			
+
 			    <div class="mb-3 col-5 ">
-					<div class="mb-3 col-5 ">
 			    	<label for="product_image" class="form-label d-block ">Proof Image</label>
 			    	<hr>
+					<div class="mb-3 col-5 ">
 			    	<div class="text-center">	
-			    		<img src="{{asset('/backend_asset/user_img/'.$sellerdata->profile_img)}}" height="150" width="230" alt="Proof Image" name="product_image" class="" >
+			    		<img src="{{asset_img($sellerdata->profile_img,'user_img')}}" height="150" width="230" alt="Proof Image" name="product_image" class="" >
 			    	</div>
 			    	</div>
 				</div>

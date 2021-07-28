@@ -294,7 +294,7 @@
                             <label class="col-sm-3 col-form-label">Role*</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8">
-                                <select id="role" name="role" class="form-control">
+                                <select id="role_edit" name="role_edit" class="form-control">
                                     <option value="">Select Role Option</option>
                                     @foreach($roledata as $value)
                                     <option value="{{$value->name}}">{{$value->name}}</option>
@@ -305,7 +305,7 @@
                         
                         <div class="mb-3 mt-3 row">
                             <div class="col-sm-12 text-center ">
-                                <button type="submit" class="btn btn-primary" id="AddUserBtn" >Add</button>
+                                <button type="submit" class="btn btn-primary" id="EditUserBtn" >Add</button>
                             </div>
                         </div>
                     </form>
@@ -498,14 +498,17 @@
         var editdata = jQuery.parseJSON($(this).attr('editdata'));
         var editurl = $(this).attr('editurl');
         $('#EditFormUsers').attr('action',editurl);
-        var showimgurl = "{{url::to('/')}}/backend_asset/user_img/"+editdata.profile_img;
+       
+        var showimgurl = $(this).attr('img_url'); 
+
+        console.log(showimgurl);
 
         $('#edit_name').val(editdata.name);
         $('#edit_user_email').val(editdata.email_id);
         $('#edit_user_contect').val(editdata.phone_no);
         $('#edit_user_name').val(editdata.user_name);
         $('#edituserimg').attr('src',showimgurl);
-
+        $('#role_edit').val(editdata.roles[0].name);
 
         $('#EditModalUser').modal('show');
     });

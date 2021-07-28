@@ -115,7 +115,7 @@ Add Product
 			    	<label for="product_image" class="form-label d-block ">Product Image</label>
 			    	<hr>
 			    	<div class="text-center">	
-			    		<img src="{{asset('backend_asset/product_images/'.$product->product_img)}}" height="150" width="230" alt="Product Image" name="product_image" class="" >
+			    		<img src="{{asset_img($product->product_img,'product_images')}}" height="150" width="230" alt="Product Image" name="product_image" class="" >
 			    	</div>
 			    </div>
 

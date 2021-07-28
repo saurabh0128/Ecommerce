@@ -12,11 +12,9 @@ Add Product
 
 
 @section('content')
-
-
 <div class="card m-3 ">
 	<div class="card-body">	
-		<div class="card-title text-center">Add Product Form </div>
+		<div class="card-title text-center">Add Seller Form </div>
 			<!-- @foreach($sellerdata as $user) -->
 			<div class="row">
 				<div class="col-1"></div>
@@ -25,7 +23,7 @@ Add Product
 				</div>	
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-8 ">
-			    	<img src="{{asset('/backend_asset/user_img/'.$user->profile_img)}}" height="150" width="150" alt="">
+			    	<img src="{{asset_img($user->profile_img,'user_img')}}" height="150" width="150" alt="">
 			    </div>
 			    <div class="col-1"></div>
 			</div>
@@ -51,6 +49,18 @@ Add Product
 			    </div>
 			    <div class="col-1"></div>
 			</div>
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-2">
+					<label for="product_name" class="form-label">Role Name</label>
+				</div>	
+				<div class="col-1">:</div>
+			    <div class="mb-3 col-7 ">
+			    	<lable>{{$role_name}}</lable>
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+
 			<div class="row">
 				<div class="col-1"></div>
 				<div class="col-2">

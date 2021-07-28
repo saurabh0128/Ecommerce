@@ -145,7 +145,7 @@ class RatingController extends Controller
                       "id" => $count,
                       "avrage rating" => '<div class="product_rating" data-rating="'.$avrage_rating.'" > </div>',
                       "product_id" =>$product_name,
-                      "product image"=> '<img src="'.asset('/backend_asset/product_images/'.$product_img).'" alt="product image" height="100" width="100" >'
+                      "product image"=> '<img src="'.asset_img($product_img,'product_images').'" alt="product image" height="100" width="100" >'
                     );
                     $count++;
                }   

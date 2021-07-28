@@ -12,7 +12,7 @@
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center" data-bs-toggle="dropdown">
                 <div class="avatar me-3">
-                    <img src="{{URL::asset('backend_asset/images/user/man_avatar3.jpg')}}"
+                    <img src="{{asset_img(auth()->user()->profile_img,'user_img')}}"
                          class="rounded-circle" alt="image">
                 </div>
                 <div>

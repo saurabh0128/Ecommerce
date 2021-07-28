@@ -22,7 +22,7 @@ Product Details
 			</div>	
 			<div class="col-1">:</div>
 		    <div class="mb-3 col-7 ">
-		    	 <img src="{{asset('backend_asset/product_images/'.$product->product_img)}}" alt="product images" width="200" height="150" name="product_image" >  
+		    	 <img src="{{asset_img($product->product_img,'product_images')}}" alt="product images" width="200" height="150" name="product_image" >  
 		    </div>
 		    <div class="col-1"></div>
 		</div>

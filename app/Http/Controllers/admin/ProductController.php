@@ -247,7 +247,7 @@ class ProductController extends Controller
                 $data_arr[] = array(
                   "id" => $count,
                   "product_name" => $product_name,
-                  "product image"=>  '<img src="'.asset('/backend_asset/product_images/'.$product_img).'" alt="product image" height="100" width="100" >' ,
+                  "product image"=>  '<img src="'.asset_img($product_img,'product_images').'" alt="product image" height="100" width="100" >' ,
                   "category_id" =>$category,
                   "current_price" => $price,
                   "stock" => $stock,

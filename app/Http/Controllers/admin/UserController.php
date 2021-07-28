@@ -98,11 +98,13 @@ class UserController extends Controller
         $UserData = User::with('userAddress')->where('id',$id)->get(); 
 
         $user = Auth::user();
-
+        $user_id = User::find($id);
+        $role = $user_id->getRoleNames();
+        $role_name = isset($role[0])?$role[0]:'-';
         // $user->givePermissionTo('view order');
         // Permission::create('')
        // dd($UserData);
-        return view('backend.user.show',compact('UserData'));
+        return view('backend.user.show',compact('UserData','role_name'));
     }
 
     /**
@@ -228,14 +230,15 @@ class UserController extends Controller
                     $landmark = $record->landmark;
                     $pincode = $record->pincode;
                     $city_name = $record->city_name;*/
+                    $role = $record->getAllPermissions();
 
                     $data_arr[] = array(
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
-                      "profile_img" =>'<img src="'.asset('/backend_asset/user_img/'.$profile_img).'" alt="product image" height="100" width="100" >',
-                      "action" => '<a href="'.route('admin.user.show',$id).'"><button type="button" id="ViewBtn" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button></a> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
-                       editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
+                      "profile_img" =>'<img src="'.asset_img($profile_img,'user_img').'" alt="product image" height="100" width="100" >',
+                      "action" => '<a href="'.route('admin.user.show',$id).'"><button type="button" id="ViewBtn" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" >View</button></a> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
+                       editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" img_url="'.asset_img($profile_img,'user_img').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );
                     $count++;
                 }
