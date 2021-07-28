@@ -20,17 +20,14 @@ class AdminSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'bhargav',
-            'user_name' => 'admin@123',
-            'phone_no' => '8849032844',
-            'email_id' => 'bhargav121@gmail.com',
-            'password' => Hash::make('Admin@123'),
-            'profile_img' =>  'https://source.unsplash.com/random',
-            'roll_id' => 1,
-            'is_verified' => 0,
-            'is_block' => 1,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            "id" => 1,
+            "name" => "SuperAdmin",
+            "user_name"=> "superadmin",
+            "phone_no" => 8878459696,
+            "email_id" => "admin@admin.com",
+            "password" => Hash::make('secret'),
+            "profile_img" => "https://dummyimage.com/300",
+            "user_status" => 2
         ]);
     }
 }
