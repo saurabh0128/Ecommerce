@@ -1,7 +1,7 @@
 @extends('backend.layout.app')
 
 @section('title')
-    City 
+    City  
 @endsection
 
 @section('css')
@@ -71,8 +71,8 @@
                     },
                     columns:[
                         {data:'id',name:'DT_RowIndex'},
-                        {data:"city name"},
-                        {data:"state name"}
+                        {data:"city_name"},
+                        {data:"state_id"}
                     ]
                 });
     </script>   

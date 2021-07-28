@@ -49,7 +49,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         $request->validate([
             "product_name" => "required|min:2|max:200",
             "current_price" => "required|max:10",
@@ -240,16 +240,16 @@ class ProductController extends Controller
                 $id = $record->id;
                 $product_name = $record->product_name;
                 $product_img = $record->product_img;
-                $price = $record->special_price;
+                $price = $record->current_price;
                 $category = $record->category->category_name;
                 $stock = $record->stock;
 
                 $data_arr[] = array(
                   "id" => $count,
-                  "product name" => $product_name,
+                  "product_name" => $product_name,
                   "product image"=>  '<img src="'.asset('/backend_asset/product_images/'.$product_img).'" alt="product image" height="100" width="100" >' ,
-                  "category" =>$category,
-                  "price" => $price,
+                  "category_id" =>$category,
+                  "current_price" => $price,
                   "stock" => $stock,
                   "action" => '<a href="'.route('admin.product.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <a href="'.route('admin.product.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
                 );

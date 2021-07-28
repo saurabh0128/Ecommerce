@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
@@ -134,8 +134,8 @@ class CityController extends Controller
 
                 $data_arr[] = array(
                   "id" => $count,
-                  "city name" => $city_name,
-                  "state name"=> $state_name 
+                  "city_name" => $city_name,
+                  "state_id"=> $state_name 
                 );
                 $count++;
              }

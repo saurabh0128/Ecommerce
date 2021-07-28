@@ -120,10 +120,10 @@
                 },
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
-                    {data:"product name"},
+                    {data:"product_name"},
                     {data:"product image",orderable:false},
-                    {data:"category"},
-                    {data:"price"},
+                    {data:"category_id"},
+                    {data:"current_price"},
                     {data:"stock"},
                     {
                         data:'action',

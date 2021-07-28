@@ -1,5 +1,5 @@
 <?php
- 
+  
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
@@ -144,7 +144,7 @@ class RatingController extends Controller
                     $data_arr[] = array(
                       "id" => $count,
                       "avrage rating" => '<div class="product_rating" data-rating="'.$avrage_rating.'" > </div>',
-                      "product name" =>$product_name,
+                      "product_id" =>$product_name,
                       "product image"=> '<img src="'.asset('/backend_asset/product_images/'.$product_img).'" alt="product image" height="100" width="100" >'
                     );
                     $count++;

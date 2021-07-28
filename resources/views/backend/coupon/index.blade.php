@@ -1,4 +1,4 @@
-@extends('backend.layout.app')
+@extends('backend.layout.app') 
 
  
 @section('title')
@@ -119,10 +119,10 @@ Coupons
                     },
                     columns:[
                         {data:'id',name:'DT_RowIndex'},
-                        {data:"coupon code"},
-                        {data:"coupon discount"},
-                        {data:"discount type"},
-                        {data:"coupon type"},
+                        {data:"coupon_code"},
+                        {data:"coupon_discount"},
+                        {data:"discount_type"},
+                        {data:"coupon_type"},
                         {
                             data:'action',
                             name:'action',

@@ -1,5 +1,5 @@
 @extends('backend.layout.app')
-
+ 
 @section('title')
     Rating And Review
 @endsection
@@ -79,8 +79,8 @@
                 },
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
-                    {data:"avrage rating"},
-                    {data:"product name"},
+                    {data:"avrage rating",orderable:false},
+                    {data:"product_id"},
                     {data:"product image", orderable: false}
                 ],
                 "drawCallback":function(settings, json){

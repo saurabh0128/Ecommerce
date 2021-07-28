@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
@@ -210,10 +210,10 @@ class CouponController extends Controller
 
                 $data_arr[] = array(
                   "id" => $count,
-                  "coupon code" => $coupon_code,
-                  "coupon discount" =>$coupon_discount,
-                  "discount type"=>$discount_type,
-                  "coupon type"=>$coupon_type,
+                  "coupon_code" => $coupon_code,
+                  "coupon_discount" =>$coupon_discount,
+                  "discount_type"=>$discount_type,
+                  "coupon_type"=>$coupon_type,
                   "action" => '<a href="'.route('admin.coupon.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <a href="'.route('admin.coupon.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
                 );
                 $count++;

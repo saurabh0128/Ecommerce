@@ -15,8 +15,8 @@ Add Product
 
 
 <div class="card m-3 ">
-	<div class="card-body">	
-		<div class="card-title text-center">Edit Seller Form </div>
+	<div class="card-body">	 
+		<div class="card-title text-center">Edit Seller Form   </div>
 		<form id="AddProduct" method="post"  action="{{route('admin.seller.update',$sellerdata->id)}}" enctype="multipart/form-data" >
 			@method('put')
 			@csrf
@@ -185,8 +185,8 @@ Add Product
 			    	@error('gst_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
+			  		<input type="hidden" class="form-control" id="hidden_gst_no" name="gst_no" value="{{ old('gst_no',$sellerdata->seller_infos->gst_no) }}">
 			    </div>
-			  	<input type="hidden" class="form-control" id="gst_no" name="gst_no" value="{{ old('gst_no',$sellerdata->seller_infos->gst_no) }}">
 			    <div class="col-1"></div>	
 			</div>
 			<div class="row">
@@ -209,18 +209,21 @@ Add Product
 			    	@error('id_proof_no')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror
+				    <input type="hidden" class="form-control" id="hidden_id_proof_no" name="id_proof_no" 
+				     value="{{ old('id_proof_no',$sellerdata->seller_infos->id_proof_no) }}" >
 			    </div>
-			    <input type="hidden" class="form-control" id="id_proof_no" name="id_proof_no" 
-			     value="{{ old('id_proof_no',$sellerdata->seller_infos->id_proof_no) }}" >
 			</div>
 			<div class="row">
 				<div class="col-1"></div>	
-			    <div class="mb-3 col-5 ">
-			    	<label for="id_proof" class="form-label">Id Proof*</label>
-			    	<input type="file" class="form-control" id="id_proof"  name="id_proof"   @if($sellerdata->seller_infos->is_permisssion_sell == 1) disabled @endif >
-			    	@error('id_proof')
-			    		<p class="text-danger">{{ $message }}</p>
-			    	@enderror
+			   
+			    <div class="mb-3 col-5">
+			    	<label for="role" class="form-label">role Name*</label>
+			    	<select name="role" name="role" class="select2-example" >
+			    		<option value="">Please select role</option>
+			    		@foreach($roles as $role)
+			    			<option value="{{ $role->name }}" @if($SellerRole[0] == $role->name ) selected @endif >  {{ $role->name }}</option>
+			    		@endforeach
+			    	</select>
 			    </div>
 
 			    <div class="mb-3 col-5 ">
@@ -248,6 +251,14 @@ Add Product
 		
 			<div class="row">
 				<div class="col-1"></div>
+
+				<div class="mb-3 col-5 ">
+			    	<label for="id_proof" class="form-label">Id Proof*</label>
+			    	<input type="file" class="form-control" id="id_proof"  name="id_proof"   @if($sellerdata->seller_infos->is_permisssion_sell == 1) disabled @endif >
+			    	@error('id_proof')
+			    		<p class="text-danger">{{ $message }}</p>
+			    	@enderror
+			    </div>
 				
 			    <div class="mb-3 col-5 ">
 					<div class="mb-3 col-5 ">

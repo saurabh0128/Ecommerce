@@ -137,7 +137,7 @@ class SellerController extends Controller
 
         $seller_data->save();
 
-        return redirect()->route('admin.seller.index')->with('success','Seller Inserted SuccessFully');
+        return redirect()->route('admin.seller.index')->with('success','Data Inserted SuccessFully');
     }
 
     /**
@@ -161,6 +161,8 @@ class SellerController extends Controller
      */
     public function edit($id)
     {
+
+
         $sellerdata = User::with('seller_infos')->where('id','=',$id)->firstOrFail();
         $citydata= City::find($sellerdata->seller_infos->city_id);
         $statedata= State::all();
@@ -171,8 +173,13 @@ class SellerController extends Controller
         }else{
             $proof_name = 1;
         }
+        // $seller = User::find($id);
+        // $sellerdata->assignRole('seller');
+        $SellerRole=  $sellerdata->getRoleNames();
+
+        $roles = Role::all();
     
-        return view('backend.seller.edit',compact('sellerdata','citydata','statedata','allcitydata','proof_name'));
+        return view('backend.seller.edit',compact('sellerdata','citydata','statedata','allcitydata','proof_name','roles','SellerRole'));
     }
 
     /**
@@ -261,6 +268,8 @@ class SellerController extends Controller
 
         $user_data->save();
 
+        $user_data->syncRoles($request->role);
+
         if($request->hasFile('id_proof'))
         {
             $onlyImgName = pathinfo($request->id_proof->getClientOriginalName(),PATHINFO_FILENAME);
@@ -285,7 +294,7 @@ class SellerController extends Controller
 
         $seller_data->save();
 
-        return redirect()->route('admin.seller.index')->with('success','Seller Updated SuccessFully');
+        return redirect()->route('admin.seller.index')->with('success','Data Updated SuccessFully');
     }
 
     /**
@@ -327,7 +336,7 @@ class SellerController extends Controller
 
                 // Total records
                 $totalRecords = User::select('count(*) as allcount')->count();
-                $totalRecordswithFilter = User::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+                $totalRecordswithFilter = User::where('user_status','=','1')->select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
 
                  // Fetch records
                 $records = User::orderBy($columnName,$columnSortOrder)

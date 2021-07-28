@@ -167,7 +167,7 @@
                 },
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
-                    {data:'name', name:'name'},
+                    {data:'category_name', name:'name'},
                     {
                         data:'action',
                         name:'action',

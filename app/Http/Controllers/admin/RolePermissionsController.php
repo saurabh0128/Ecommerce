@@ -97,7 +97,23 @@ class RolePermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $EditRolePermissionvalidator = Validator::make($request->all(),[
+            "role" => "required",
+            // "permission" => "required"
+        ]);
+
+        if($EditRolePermissionvalidator->fails())
+        {
+            return Response()->json(["error" => $EditRolePermissionvalidator->errors()->all() ]);
+        }       
+
+        $role = role::findById($request->role);
+
+        
+            $role->syncPermissions($request->permission);
+
+
+        return Response()->json(["success" => "data Updated successfully" ]);
     }
 
     /**
@@ -136,6 +152,8 @@ class RolePermissionsController extends Controller
 
              // Fetch records
              $records = roles::with('permission')
+               ->orderBy($columnName,$columnSortOrder)
+               ->where('roles.name', 'like', '%' .$searchValue . '%')
                ->select('roles.*')
                ->skip($start)
                ->take($rowperpage)

@@ -1,6 +1,6 @@
 @extends('backend.layout.app')
 
-@section('title')
+@section('title') 
 Role Permission
 @endsection
 
@@ -122,6 +122,7 @@ Role Permission
                 </div>
                 <div class="modal-body">
                     <form autocomplete="off" id="EditRolePermissionForm" >
+
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Role</label>
                             <div class="col-sm-9">
@@ -209,8 +210,8 @@ Role Permission
                 },
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
-                    {data:'name', name:'name'},
-                    {data:'permission name', name:'name'},
+                    {data:'name'},
+                    {data:'permission name', name:'name',orderable:false},
                     {
                         data:'action',
                         name:'action',
@@ -221,7 +222,7 @@ Role Permission
             });
 
              $('#btn_close').click(function(){
-                $('.select2-selection__choice').remove();
+                 $(".select2-example").val(null).trigger("change");
              });
 
 
@@ -246,13 +247,46 @@ Role Permission
                             toastr["error"](Errorstring);
                         }
                         else{
-                            $('.select2-selection__choice').remove();
+                            $(".select2-example").val(null).trigger("change");
                             $('#newRolePermissionModal').modal('toggle');
                             table.ajax.reload()
                             toastr["success"](response.success);
                         }
                     }
                 });
+            });
+
+
+            $('#EditRolePermissionForm').submit(function(e){
+                e.preventDefault();
+
+                var role = $('#editrole').val();
+                var Permission = $('#Editpermission').val();
+
+                $.ajax({
+                    type:'post',
+                    url:'{{ route('admin.rolepermission.update','')}}'+'/'+role,
+                    data:{'_token':'{{csrf_token()}}','role':role,'permission':Permission,'_method':'put' },
+                    datatype:'json',
+                    success:function(response){
+                        if(response.error){
+                            let Errorstring =""
+                            for(let i=0;i<$(response.error).length;i++)
+                            {
+                                Errorstring += response.error[i]+"<br>";
+                            }
+                            toastr["error"](Errorstring);
+                        }
+                        else{
+                            $(".select2-example").val(null).trigger("change");
+                            $('#EditRolePermissionModal').modal('toggle');
+                            table.ajax.reload()
+                            toastr["success"](response.success);
+                        }
+                    }
+                });
+
+
             });
 
        
@@ -265,9 +299,16 @@ Role Permission
                 $('#editrole').html('<option  value="'+ editdata.id +'">'+ editdata.name +'</option>')
                 $('#editrole').attr('disabled');
 
-                $('#Editpermission').find('option[value="Add Product"]').attr('selected','selected');
-               
-            })
+                let permissionArray = [];
+
+                for(let i=0;i<$(editdata.permission).length;i++)
+                {
+                     permissionArray.push(editdata.permission[i].name);
+                }
+
+                 $('#Editpermission').val(permissionArray);
+                 $('#Editpermission').trigger('change');
+            });
 
 	</script>		
 
