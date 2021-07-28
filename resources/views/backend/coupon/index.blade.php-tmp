@@ -2,12 +2,14 @@
 Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 @extends('backend.layout.app')
 
+
 @section('title')
-    Order
+Coupons
 @endsection
 
+
 @section('css')
-    <!-- DataTable -->
+	<!-- DataTable -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/libs/dataTable/datatables.min.css')}}" type="text/css">
 
     <!-- Prism -->
@@ -18,44 +20,46 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 @endsection
 
+
 @section('content')
-    <!-- content -->
+
+
+ <!-- content -->
     <div class="content ">
 
     <div class="row">
         <div class="col-lg-12 bd-content">
 
             <div class="p-3">
-                <h4 class="d-inline" >Order Detail</h4>
-                <a href="{{route('admin.order.create')}}" >
-                        <button class="btn btn-primary btn-icon d-inline float-end"  >
-                                <i class="bi bi-plus-circle"></i> Add Order
-                        </button>
+                <h4 class="d-inline" >Coupon Detail</h4>
+                <a href="{{route('admin.coupon.create')}}" >
+                    <button class="btn btn-primary btn-icon d-inline float-end"  >
+                            <i class="bi bi-plus-circle"></i> Add coupon
+                    </button>
                 </a>
             </div>
 
             <div class="card">
                 <div class="card-body">
-                    <table id="OrderDatatable" class="table">
+                    <table id="CouponDatatable" class="table">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>user name</th>
-                            <th>customer name</th>
-                            <th>Total Amount</th>
-                            <th>Is Payed</th>
-                            <th>action</th>
+                            <th>id</th>
+                            <th>coupon code</th>
+                            <th>coupon discount</th>
+                            <th>discount type</th>
+                            <th>coupon type</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
-
                         <tfoot>
                         <tr>
-                            <th>Id</th>
-                            <th>user name</th>
-                            <th>customer name</th>
-                            <th>Total Amount</th>
-                            <th>Is Payed</th>
-                            <th>action</th>
+                            <th>id</th>
+                            <th>coupon code</th>
+                            <th>coupon discount</th>
+                            <th>discount type</th>
+                            <th>coupon type</th>
+                            <th>Action</th>
                         </tr>
                         </tfoot>
                     </table>
@@ -70,9 +74,9 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 @endsection
 
-@section('js')
 
- <!-- Datatable -->
+@section('js')
+	<!-- Datatable -->
     <script src="{{URL::asset('backend_asset/libs/dataTable/datatables.min.js')}}"></script>
 
     <!-- Prism -->
@@ -81,8 +85,9 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
     <!-- toaster js -->
     <script src="{{URL::asset('backend_asset/js/toastr.min.js')}}"></script>
 
-    <script  type="text/javascript">
-        toastr.options = {
+    <script  type="text/javascript" >
+
+         toastr.options = {
           "closeButton": true,
           "debug": false,
           "newestOnTop": false,
@@ -104,20 +109,22 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             toastr["success"]("{{Session::get('success')}}")
         @endif
 
-                var table = $('#OrderDatatable').DataTable({
+
+                //To display Product Details
+               var table = $('#CouponDatatable').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax:{
                         type:'post',
-                        url:'{{ route('admin.order.ajax')}}',
+                        url:'{{ route('admin.coupon.ajax')}}',
                         data:{'_token':'{{ csrf_token() }}','mode':'datatable'}
                     },
                     columns:[
                         {data:'id',name:'DT_RowIndex'},
-                        {data:"user name"},
-                        {data:"customer name"},
-                        {data:"total amt"},
-                        {data:'is payed'},
+                        {data:"coupon code"},
+                        {data:"coupon discount"},
+                        {data:"discount type"},
+                        {data:"coupon type"},
                         {
                             data:'action',
                             name:'action',
@@ -127,26 +134,30 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                     ]
                 });
 
+
             function DeleteFunc(id)
             {
-                 toastr.options = {
+                //For remove a progressbar and set a closebutton
+            toastr.options = {
                 "progressBar":false,
                 "closeButton":true,
-                }
+            }
 
-                //confirmation toaster
-                toastr["info"]("Are you sure you want to Delete Record?<br /><br /><button id='cnf_del_btn'  type='button' class='btn btn-light btn-sm'>Yes</button>");
+            //confirmation toaster
+            toastr["info"]("Are you sure you want to Delete Record?<br /><br /><button id='cnf_del_btn'  type='button' class='btn btn-light btn-sm'>Yes</button>");
 
-                $('#cnf_del_btn').click(function(){
+
+               $('#cnf_del_btn').click(function(){
                     $.ajax({
                         type:'post',
-                        url:'{{ route('admin.order.destroy','') }}'+'/'+id,
+                        url:'{{ route('admin.coupon.destroy','')}}'+'/'+id,
                         data:{
                             '_token':'{{ csrf_token() }}',
                             '_method':'delete'
                         },
                         datatype:'json',
                         success:function(response){
+
                             if(response.error)
                             {
                                 toastr["error"](response.error)
@@ -156,10 +167,9 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                                 table.ajax.reload();
                             }
                         }
-                    });
-                });
+                    })
+               })
             }
     </script>
 
 @endsection
-

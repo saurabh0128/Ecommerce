@@ -112,12 +112,12 @@
                     {data: 'id', name: 'DT_RowIndex'},
                     {data: 'user_name', name: 'user_name'},
                     {data: 'email_id', name: 'email_id'},
-                    {data: 'profile_img', name: 'profile_img'},
+                    {data: 'profile_img', name: 'profile_img',orderable:false},
                     {
                         data: 'action', 
                         name: 'action', 
-                        orderable: true, 
-                        searchable: true
+                        orderable: false, 
+                        searchable: false
                     },
                 ]   
         });

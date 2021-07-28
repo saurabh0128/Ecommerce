@@ -81,7 +81,7 @@
                     {data:'id',name:'DT_RowIndex'},
                     {data:"avrage rating"},
                     {data:"product name"},
-                    {data:"product image"}
+                    {data:"product image", orderable: false}
                 ],
                 "drawCallback":function(settings, json){
                      $(".product_rating").starRating({

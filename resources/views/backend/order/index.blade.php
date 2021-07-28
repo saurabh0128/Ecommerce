@@ -119,8 +119,8 @@
                         {
                             data:'action',
                             name:'action',
-                            searchable:true,
-                            orderable:true
+                            searchable:false,
+                            orderable:false
                         }
                     ]
                 });

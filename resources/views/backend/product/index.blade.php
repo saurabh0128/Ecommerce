@@ -121,15 +121,15 @@
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
                     {data:"product name"},
-                    {data:"product image"},
+                    {data:"product image",orderable:false},
                     {data:"category"},
                     {data:"price"},
                     {data:"stock"},
                     {
                         data:'action',
                         name:'action',
-                        searchable:true,
-                        orderable:true
+                        searchable:false,
+                        orderable:false
                     }
                 ]
             });
