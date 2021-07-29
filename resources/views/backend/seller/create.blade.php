@@ -305,15 +305,7 @@ Add Product
 	
 
 		});
-		$('#proof').change(function(){
-			var id =$('#proof').val();
-
-			if($id == 0)
-			{
-
-			}
-			
-		})
+		
 	});
 </script>
 

@@ -14,7 +14,7 @@ Add Product
 @section('content')
 <div class="card m-3 ">
 	<div class="card-body">	
-		<div class="card-title text-center">Add Seller Form </div>
+		<div class="card-title text-center">View Seller Detail</div>
 			<!-- @foreach($sellerdata as $user) -->
 			<div class="row">
 				<div class="col-1"></div>
@@ -23,7 +23,7 @@ Add Product
 				</div>	
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-8 ">
-			    	<img src="{{asset_img($user->profile_img,'seller_img')}}" height="150" width="150" alt="">
+			    	<img src="{{asset_img($user->profile_img,'user_img')}}" height="150" width="150" alt="">
 			    </div>
 			    <div class="col-1"></div>
 			</div>
@@ -179,6 +179,17 @@ Add Product
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-8 ">
 			    	<lable>{{$user->seller_infos->id_proof}}</lable>
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-2">
+					<label for="product_name" class="form-label">Id Proof Photo</label>
+				</div>	
+				<div class="col-1">:</div>
+			    <div class="mb-3 col-8 ">
+			    	<img src="{{asset_img($user->seller_infos->id_proof,'seller_img')}}" height="150" width="150" alt="">
 			    </div>
 			    <div class="col-1"></div>
 			</div>

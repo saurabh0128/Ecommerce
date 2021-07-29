@@ -25,6 +25,7 @@ Add Product
 				</div>	
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-7 ">
+			    	<hr>
 			    	<img src="{{asset_img($data->profile_img,'user_img')}}" height="150" width="150" alt="User Profile Not Found">
 			    </div>
 			    <div class="col-1"></div>

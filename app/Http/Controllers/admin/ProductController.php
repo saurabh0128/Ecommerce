@@ -4,17 +4,12 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\Category;
 use App\Models\User;
-
 use Illuminate\Database\QueryException;
-
 use App\Models\Product;
-
-
 use Validator;
-
+use Image;
 use DB;
 
 class ProductController extends Controller
@@ -128,7 +123,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+       /* $request->validate([
             "product_name" => "required|min:2|max:200",
             "current_price" => "required|max:10",
             "special_price" => "nullable|max:10",
@@ -144,7 +139,7 @@ class ProductController extends Controller
         [
             "regex"=>"Only number and decimal allowed"
         ]);
-
+*/
         $product = Product::where('id','=',$id)->first();
 
         if($request->hasFile('product_image'))
@@ -152,8 +147,13 @@ class ProductController extends Controller
             $onlyImgName = pathinfo($request->product_image->getClientOriginalName(),PATHINFO_FILENAME);
             $imgExtension = $request->product_image->getClientOriginalExtension(); 
             $imgName = $onlyImgName."-".time().".".$imgExtension;
-            $request->product_image->move(public_path('backend_asset/product_images'),$imgName);
+            $request->product_image->move(public_path('backend_asset/product_images/'),$imgName);
             $product->product_img = $imgName;
+
+            // for thumbnail create and save 
+            $img = Image::make(public_path('/backend_asset/product_images/'.$imgName));
+            $img->resize(150,150);
+            $img->save(public_path().'/backend_asset/thumbnail/product_images/'.$imgName);
         }    
 
         $product->product_name = $request->product_name;
@@ -247,7 +247,7 @@ class ProductController extends Controller
                 $data_arr[] = array(
                   "id" => $count,
                   "product_name" => $product_name,
-                  "product image"=>  '<img src="'.asset_img($product_img,'product_images').'" alt="product image" height="100" width="100" >' ,
+                  "product image"=>  '<img src="'.asset_img($product_img,'/thumbnail/product_images').'" alt="product image" height="100" width="100" >' ,
                   "category_id" =>$category,
                   "current_price" => $price,
                   "stock" => $stock,

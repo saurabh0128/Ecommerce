@@ -1,0 +1,22 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
+<?php
+
+return [
+
+	/*
+	|--------------------------------------------------------------------------
+	| Image Driver
+	|--------------------------------------------------------------------------
+	|
+	| Intervention Image supports "GD Library" and "Imagick" to process images
+	| internally. You may choose one of them according to your PHP
+	| configuration. By default PHP's "GD Library" implementation is used.
+	|
+	| Supported: "gd", "imagick"
+	|
+	 */
+
+	'driver' => 'gd'
+
+];

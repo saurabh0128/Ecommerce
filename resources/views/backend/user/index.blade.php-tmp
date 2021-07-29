@@ -139,7 +139,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">User Detail</h5>
+                    <h5 class="modal-title">Add New User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"> </button>
                 </div>
                 <div class="modal-body">
@@ -292,11 +292,12 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                                 <input type="text" id="edit_user_email"   name="edit_email_id" class="form-control" >
                             </div>
                         </div>
+                        @if($roledata)
                          <div class="md-3 row">
                             <label class="col-sm-3 col-form-label">Role*</label>
                             <div class="col-sm-1 col-form-label">:</div>
                             <div class="col-sm-8">
-                                <select id="role" name="role" class="form-control">
+                                <select id="role_edit" name="role_edit" class="form-control">
                                     <option value="">Select Role Option</option>
                                     @foreach($roledata as $value)
                                     <option value="{{$value->name}}">{{$value->name}}</option>
@@ -304,10 +305,11 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
                                 </select>
                             </div>
                         </div>
+                        @endif
 
                         <div class="mb-3 mt-3 row">
                             <div class="col-sm-12 text-center ">
-                                <button type="submit" class="btn btn-primary" id="AddUserBtn" >Add</button>
+                                <button type="submit" class="btn btn-primary" id="EditUserBtn" >Add</button>
                             </div>
                         </div>
                     </form>
@@ -500,14 +502,20 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         var editdata = jQuery.parseJSON($(this).attr('editdata'));
         var editurl = $(this).attr('editurl');
         $('#EditFormUsers').attr('action',editurl);
-        var showimgurl = "{{url::to('/')}}/backend_asset/user_img/"+editdata.profile_img;
+
+        var showimgurl = $(this).attr('img_url');
+
+        console.log(showimgurl);
 
         $('#edit_name').val(editdata.name);
         $('#edit_user_email').val(editdata.email_id);
         $('#edit_user_contect').val(editdata.phone_no);
         $('#edit_user_name').val(editdata.user_name);
         $('#edituserimg').attr('src',showimgurl);
-
+        if(editdata.roles != '')
+        {
+            $('#role_edit').val(editdata.roles[0].name);
+        }
 
         $('#EditModalUser').modal('show');
     });

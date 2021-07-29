@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\OrderController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\RatingController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\RolePermissionsController;
@@ -38,7 +39,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 		Route::resource('login', AdminController::class );
 		Route::get('logout', [AdminController::class , 'logout'])->name('logout');
-		Route::group(['middleware' => ['auth', 'role:admin']], function () {
+		Route::group(['middleware' => ['auth', 'role:admin|SuperAdmin']], function () {
 
 				Route::resource('dashboard', DashboardController::class );
 				Route::resource('user', Usercontroller::class );
@@ -66,6 +67,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 				Route::post('coupon/ajax', [CouponController::class , 'ajax'])->name('coupon.ajax');
 				Route::resource('rolepermission', RolePermissionsController::class );
 				Route::post('rolepermission/ajax', [RolePermissionsController::class , 'ajax'])->name('rolepermission.ajax');
+				Route::resource('profile', ProfileController::class );
 			});
 
 	});

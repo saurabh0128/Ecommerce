@@ -137,7 +137,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">User Detail</h5>
+                    <h5 class="modal-title">Add New User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" id="btn_close"  aria-label="Close"> </button>
                 </div>
                 <div class="modal-body">
@@ -290,6 +290,7 @@
                                 <input type="text" id="edit_user_email"   name="edit_email_id" class="form-control" >
                             </div>
                         </div>
+                        @if($roledata)
                          <div class="md-3 row"> 
                             <label class="col-sm-3 col-form-label">Role*</label>
                             <div class="col-sm-1 col-form-label">:</div>
@@ -302,7 +303,8 @@
                                 </select>
                             </div>
                         </div>
-                        
+                        @endif
+
                         <div class="mb-3 mt-3 row">
                             <div class="col-sm-12 text-center ">
                                 <button type="submit" class="btn btn-primary" id="EditUserBtn" >Add</button>
@@ -508,7 +510,10 @@
         $('#edit_user_contect').val(editdata.phone_no);
         $('#edit_user_name').val(editdata.user_name);
         $('#edituserimg').attr('src',showimgurl);
-        $('#role_edit').val(editdata.roles[0].name);
+        if(editdata.roles != '')
+        {
+            $('#role_edit').val(editdata.roles[0].name);
+        }
 
         $('#EditModalUser').modal('show');
     });

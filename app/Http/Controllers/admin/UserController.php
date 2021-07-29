@@ -13,6 +13,8 @@ use App\Models\UserAddress;
 use App\Models\City;
 use App\Models\User;
 use Validator;
+use Image;
+
 
 class UserController extends Controller
 {
@@ -48,6 +50,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(),[
             "name" => "required|min:2|alpha",
             "user_name" => "required|min:2|alpha_dash|unique:users,user_name",
@@ -64,19 +67,25 @@ class UserController extends Controller
         {
             return Response()->json(['error'=>$validator->errors()->all()]);
         }else{
+            $user = new User;
+            
             // for img upload 
             $onlyImgName = pathinfo($request->profile_img->getClientOriginalName(),PATHINFO_FILENAME);
             $imageExt = $request->profile_img->getClientOriginalExtension();
             $imageName = $onlyImgName."-".time().".".$imageExt;
             $request->profile_img->move(public_path('/backend_asset/user_img/'),$imageName); 
-            
-            $user = new User;
+            $user->profile_img = $imageName;
+    
+            // for thumbnail create and save 
+            $img = Image::make(public_path('/backend_asset/user_img/'.$imageName));
+            $img->resize(150,150);
+            $img->save(public_path().'/backend_asset/thumbnail/user_img/'.$imageName);
+
 
             $user->name = $request->name;
             $user->user_name = $request->user_name;
             $user->phone_no = $request->phone_no;
             $user->email_id = $request->email_id;
-            $user->profile_img = $imageName;
             $user->password = Hash::make($request->password);
             $user->user_status = 0;
 
@@ -136,7 +145,7 @@ class UserController extends Controller
             "edit_profile_img" => "image|mimes:jpeg,jpg,png|max:2048",
             "edit_password" => "min:8|nullable",
             "edit_c_password" => "same:edit_password",
-            "role" => "required"
+            "role_edit" => "required"
         ]);
 
         if($validator->fails())
@@ -152,6 +161,11 @@ class UserController extends Controller
             $imageName = $onlyImgName."-".time().".".$imageExt;
             $request->edit_profile_img->move(public_path('/backend_asset/user_img/'),$imageName);
             $user->profile_img = $imageName;
+
+            // for thumbnail create and save 
+            $img = Image::make(public_path('/backend_asset/user_img/'.$imageName));
+            $img->resize(150,150);
+            $img->save(public_path().'/backend_asset/thumbnail/user_img/'.$imageName);
         }
         if($request->edit_password != null)
         {
@@ -163,7 +177,7 @@ class UserController extends Controller
         $user->phone_no = $request->edit_phone_no;
         
         $user->save();
-        $user->syncRoles($request->role);
+        $user->syncRoles($request->role_edit);
 
         return Response()->json(["success" => 'Data Updated Successfully']);
 
@@ -236,7 +250,7 @@ class UserController extends Controller
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
-                      "profile_img" =>'<img src="'.asset_img($profile_img,'user_img').'" alt="product image" height="100" width="100" >',
+                      "profile_img" =>'<img src="'.asset_img($profile_img,'/thumbnail/user_img').'" alt="product image" height="100" width="100" >',
                       "action" => '<a href="'.route('admin.user.show',$id).'"><button type="button" id="ViewBtn" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" >View</button></a> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
                        editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" img_url="'.asset_img($profile_img,'user_img').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );

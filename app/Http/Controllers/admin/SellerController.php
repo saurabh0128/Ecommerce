@@ -13,6 +13,7 @@ use App\Models\State;
 use App\Models\City;
 use App\Models\Role;
 use Validator;
+use Image;
 
 
 class SellerController extends Controller
@@ -69,7 +70,7 @@ class SellerController extends Controller
                 'id_proof_no' => 'required|digits:12|unique:seller_infos,id_proof_no',
                 'id_proof' => 'image|max:2048',
                 'gst_no' => 'required|regex:/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/',
-                'Role' => 'required'
+                'role' => 'required'
             ]);
         }else{
             
@@ -95,32 +96,45 @@ class SellerController extends Controller
                 'role' => 'required'
             ]);
         }
-
        
         $user_data = new User;
         $seller_data = new SellerInfos;
         
+        // for seller profile images
         $onlyImgName = pathinfo($request->user_profile->getClientOriginalName(),PATHINFO_FILENAME);
         $imageExt = $request->user_profile->getClientOriginalExtension();
         $imageName = $onlyImgName."-".time().".".$imageExt;
-        $request->user_profile->move(public_path('/backend_asset/user_img/'),$imageName);        
+        $request->user_profile->move(public_path('/backend_asset/seller_img/'),$imageName);        
+        $user_data->profile_img=$imageName;
+
+        // for thumbnail create and save 
+        $img = Image::make(public_path('/backend_asset/seller_img/'.$imageName));
+        $img->resize(150,150);
+        $img->save(public_path().'/backend_asset/thumbnail/seller_img/'.$imageName);
 
         $user_data->name=$request->name;
         $user_data->user_name=$request->user_name;
         $user_data->phone_no=$request->contect_on;
         $user_data->email_id=$request->email_id;
         $user_data->password=Hash::make($request->password);
-        $user_data->profile_img=$imageName;
         $user_data->user_status=1;
 
         $user_data->save();
 
         $user_data->assignRole($request->role);
 
+        // for seller ID Proof images
         $onlyImgName = pathinfo($request->id_proof->getClientOriginalName(),PATHINFO_FILENAME);
         $imageExt = $request->id_proof->getClientOriginalExtension();
         $imageNameSeller = $onlyImgName."-".time().".".$imageExt;
         $request->id_proof->move(public_path('/backend_asset/seller_img/'),$imageNameSeller);
+        $seller_data->id_proof = $imageNameSeller;
+
+        // for thumbnail create and save 
+        $img = Image::make(public_path('/backend_asset/seller_img/'.$imageNameSeller));
+        $img->resize(150,150);
+        $img->save(public_path().'/backend_asset/thumbnail/seller_img/'.$imageNameSeller);
+
 
         $seller_data->user_id = $user_data->id;
         $seller_data->gst_no = $request->gst_no;
@@ -132,7 +146,6 @@ class SellerController extends Controller
         $seller_data->ifsc_code = $request->ifsc_code;
         $seller_data->ac_holder_name = $request->account_holder_name;
         $seller_data->id_proof_no = $request->id_proof_no;
-        $seller_data->id_proof = $imageNameSeller;
         $seller_data->is_permisssion_sell = $request->is_permission_sell;
 
         $seller_data->save();
@@ -257,8 +270,13 @@ class SellerController extends Controller
             $onlyImgName = pathinfo($request->user_profile->getClientOriginalName(),PATHINFO_FILENAME);
             $imageExt = $request->user_profile->getClientOriginalExtension();
             $imageName = $onlyImgName."-".time().".".$imageExt;
-            $request->user_profile->move(public_path('/backend_asset/user_img/'),$imageName);
-            $user_data->profile_img=$imageName;        
+            $request->user_profile->move(public_path('/backend_asset/seller_img/'),$imageName);
+            $user_data->profile_img=$imageName;
+
+            // for thumbnail create and save 
+            $img = Image::make(public_path('/backend_asset/seller_img/'.$imageName));
+            $img->resize(150,150);
+            $img->save(public_path().'/backend_asset/thumbnail/seller_img/'.$imageName);        
         }
 
         $user_data->name=$request->name;
@@ -280,6 +298,11 @@ class SellerController extends Controller
             $imageNameSeller = $onlyImgName."-".time().".".$imageExt;
             $request->id_proof->move(public_path('/backend_asset/seller_img/'),$imageNameSeller);
             $seller_data->id_proof = $imageNameSeller;
+
+            // for thumbnail create and save 
+            $img = Image::make(public_path('/backend_asset/seller_img/'.$imageNameSeller));
+            $img->resize(150,150);
+            $img->save(public_path().'/backend_asset/thumbnail/seller_img/'.$imageNameSeller); 
         }
 
         
@@ -365,7 +388,7 @@ class SellerController extends Controller
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
-                      "profile_img" =>'<img src="'.asset_img($profile_img,'seller_img').'" alt="product image" height="100" width="100" >',
+                      "profile_img" =>'<img src="'.asset_img($profile_img,'/thumbnail/seller_img').'" alt="product image" height="100" width="100" >',
                       "action" => '<a href="'.route('admin.seller.show',$id).'"><button type="button" id="ViewBtn" viewurl="'.route('admin.seller.show',$id).'" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button></a> <a href="'.route('admin.seller.edit',$id).'"><button type="button" id="EditBtn" editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );
                     $count++;

@@ -27,7 +27,8 @@ Add Product
 				</div>
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-7 ">
-			    	<img src="{{asset('/backend_asset/user_img/'.$data->profile_img)}}" height="150" width="150" alt="User Profile Not Found">
+			    	<hr>
+			    	<img src="{{asset_img($data->profile_img,'user_img')}}" height="150" width="150" alt="User Profile Not Found">
 			    </div>
 			    <div class="col-1"></div>
 			</div>
@@ -53,6 +54,19 @@ Add Product
 			    </div>
 			    <div class="col-1"></div>
 			</div>
+
+			<div class="row">
+				<div class="col-1"></div>
+				<div class="col-2">
+					<label for="product_name" class="form-label">Role Name</label>
+				</div>
+				<div class="col-1">:</div>
+			    <div class="mb-3 col-7 ">
+			    	<lable>{{$role_name}}</lable>
+			    </div>
+			    <div class="col-1"></div>
+			</div>
+
 
 			<div class="row">
 				<div class="col-1"></div>
