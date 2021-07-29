@@ -34,15 +34,19 @@
         </div>
         <ul>
             <li class="menu-divider">E-Commerce</li>
+            @can('View Dashboard')
             <li>
-                <a 
-                    href="{{route('admin.dashboard.index')}}">
+                <a href="{{route('admin.dashboard.index')}}">
                     <span class="nav-link-icon">
                         <i class="bi bi-bar-chart"></i>
                     </span>
                     <span>Dashboard</span>
                 </a>
             </li>
+            @endcan
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Orders')
             <li>
                 <a href="{{ route('admin.order.index')}}">
                     <span class="nav-link-icon">
@@ -50,8 +54,12 @@
                     </span>
                     <span>Orders</span>
                 </a>
-                
             </li>
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Products')
             <li>
                 <a href="{{route('admin.product.index')}}">
                     <span class="nav-link-icon">
@@ -60,6 +68,11 @@
                     <span>Products</span>
                 </a>
             </li>
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Users')
             <li>
                 <a href="{{route('admin.user.index')}}">
                     <span class="nav-link-icon">
@@ -68,6 +81,12 @@
                     <span>Users</span>
                 </a>   
             </li>
+            @endcan
+            @endhasanyrole
+
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Sellers')
             <li>
                 <a href="{{route('admin.seller.index')}}">
                     <span class="nav-link-icon">
@@ -76,6 +95,12 @@
                     <span>Seller</span>
                 </a>   
             </li>
+            @endcan
+            @endhasanyrole
+
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Categories')
             <li>
                 <a href="{{route('admin.category.index')}}">
                     <span class="nav-link-icon">
@@ -84,7 +109,11 @@
                     <span>Category</span>
                 </a>
             </li>
-            
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')    
+            @can('View Roles')
             <li>
                 <a href="{{route('admin.role.index')}}">
                     <span class="nav-link-icon">
@@ -93,7 +122,11 @@
                     <span>Role</span>
                 </a>
             </li>
-           
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Permissions')
             <li>
                 <a href="{{route('admin.permission.index')}}">
                     <span class="nav-link-icon">
@@ -102,6 +135,11 @@
                     <span>Permission</span>
                 </a>
             </li>
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Role Permissions')
             <li>
                 <a href="{{route('admin.rolepermission.index')}}">
                     <span class="nav-link-icon">
@@ -110,6 +148,11 @@
                     <span>RolePermission</span>
                 </a>
             </li>
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Coupons')
             <li>
                 <a href="{{route('admin.coupon.index')}}">
                     <span class="nav-link-icon">
@@ -118,7 +161,11 @@
                     <span>Coupon</span>
                 </a>
             </li>
+            @endcan
+            @endhasanyrole
 
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Rating Reviews')
             <li>
                 <a href="{{route('admin.rating.index')}}">
                     <span class="nav-link-icon">
@@ -127,8 +174,11 @@
                     <span>Rating & Review</span>
                 </a>
             </li>
+            @endcan
+            @endhasanyrole
            
-           
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Locations')
             <li>
                 <a href="#">
                     <span class="nav-link-icon">
@@ -149,6 +199,8 @@
                     </li>
                 </ul>
             </li>
+            @endcan
+            @endhasanyrole
         </ul>
     </div>
 </div>

@@ -61,7 +61,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('permission/ajax',[PermissionController::class,'ajax'])->name('permission.ajax');
         Route::resource('role',RoleController::class);
         Route::post('role/ajax',[RoleController::class,'ajax'])->name('role.ajax');
-        Route::resource('sellerpayment',sellerPaymentController::class);
         Route::resource('coupon', CouponController::class);
         Route::post('coupon/ajax',[CouponController::class,'ajax'])->name('coupon.ajax');
         Route::resource('rolepermission',RolePermissionsController::class);

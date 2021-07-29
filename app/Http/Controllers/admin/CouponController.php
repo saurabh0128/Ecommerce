@@ -15,6 +15,16 @@ use Carbon\carbon;
 
 class CouponController extends Controller
 {
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Coupons',['only'=>['index']]);
+        $this->middleware('permission:Add Coupons',['only'=>['create']]);
+        $this->middleware('permission:Edit Coupons',['only'=>['edit']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -208,13 +218,26 @@ class CouponController extends Controller
                 $end_date = $record->end_date;
                 $total_uses = $record->total_uses;
 
+
+                $action ='<a href="'.route('admin.coupon.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a> ';
+                if(Auth()->user()->can('Edit Coupons'))
+                {
+                    $action .= '<a href="'.route('admin.coupon.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> ';
+                }
+
+                if(Auth()->user()->can('Delete Coupons'))
+                {
+                    $action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> ';
+                }
+
+
                 $data_arr[] = array(
                   "id" => $count,
                   "coupon_code" => $coupon_code,
                   "coupon_discount" =>$coupon_discount,
                   "discount_type"=>$discount_type,
                   "coupon_type"=>$coupon_type,
-                  "action" => '<a href="'.route('admin.coupon.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <a href="'.route('admin.coupon.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => $action
                 );
                 $count++;
              }

@@ -31,10 +31,11 @@ Role Permission
             <div class="p-3">
                 <h4 class="d-inline" >Role Permission Detail</h4>
                
+                @can('Add Role Permissions')
                 <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#newRolePermissionModal"   >
                         <i class="bi bi-plus-circle"></i> Add Role Permission
                 </button>
-                
+                @endcan
             </div>
             <div class="card">
                 <div class="card-body">

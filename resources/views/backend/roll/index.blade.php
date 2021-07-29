@@ -23,9 +23,11 @@
         <div class="col-lg-12 bd-content">
             <div class="p-3">    
                 <h4 class="d-inline" >Role Detail</h4>
+                @can('Add Roles')
                 <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#newTaskModal" >
                     <i class="bi bi-plus-circle"></i> Add Role
                 </button>
+                @endcan
             </div>
             <div class="card">
                 <div class="card-body">

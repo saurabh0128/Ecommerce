@@ -11,6 +11,13 @@ use DB;
 
 class RatingController extends Controller
 {
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Rating Reviews',['only'=>['index']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

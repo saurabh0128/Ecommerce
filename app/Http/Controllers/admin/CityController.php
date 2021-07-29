@@ -10,6 +10,11 @@ use App\Models\City;
 
 class CityController extends Controller
 {
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Locations',['only'=>['index']]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\admin;
 
@@ -15,6 +15,14 @@ use Validator;
 
 class PermissionController extends Controller
 {
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Permissions',['only'=>['index']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -167,12 +175,24 @@ class PermissionController extends Controller
                 $name = $record->name;
                 $guard_name = $record->guard_name;
 
+                $action ="";
+
+                if(Auth()->user()->can('Edit Permissions'))
+                {
+                    $action .= '<button type="button" id="EditBtn" editurl="'.route('admin.permission.update',$id).'"
+                   editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> ';
+                }
+
+                if(Auth()->user()->can('Delete Permissions'))
+                {
+                    $action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> ';
+                }
+
                 $data_arr[] = array(
                   "id" => $count,
                   "name" => $name,
                   "guard_name" => $guard_name,
-                  "action" => '<button type="button" id="EditBtn" editurl="'.route('admin.permission.update',$id).'"
-                   editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => $action
                 );
                 $count++;
              }

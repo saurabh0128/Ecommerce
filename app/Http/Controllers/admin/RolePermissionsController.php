@@ -17,6 +17,13 @@ use Validator;
 
 class RolePermissionsController extends Controller
 {
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Role Permissions',['only'=>['index']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -178,6 +185,13 @@ class RolePermissionsController extends Controller
                 
                 $permission_name .="</div>";
                 // $guard_name = $record->guard_name;
+
+                $action ="";
+
+                if(Auth()->user()->can('Edit Role Permissions'))
+                {
+                    $action = '<button type="button" class="btn btn-sm btn-info EditBtn "  editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"   >edit</button> ';
+                }
                 
                 if(count($record->permission) != 0 )
                 {
@@ -185,11 +199,12 @@ class RolePermissionsController extends Controller
                       "id" => $count,
                       "name" => $name,
                       "permission name" => $permission_name,
-                      "action" => '<button type="button" class="btn btn-sm btn-info EditBtn "  editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"   >edit</button>'
+                      "action" => $action
                     );
+                    $count++;
                 }
                 
-                $count++;
+                
                } 
              
 

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Dashboard',['only'=>['index']]);
+    }
     /**
      * Display a listing of the resource.
      *
