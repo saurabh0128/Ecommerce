@@ -23,7 +23,7 @@ Add Product
 				</div>	
 				<div class="col-1">:</div>
 			    <div class="mb-3 col-8 ">
-			    	<img src="{{asset_img($user->profile_img,'user_img')}}" height="150" width="150" alt="">
+			    	<img src="{{asset_img($user->profile_img,'seller_img')}}" height="150" width="150" alt="">
 			    </div>
 			    <div class="col-1"></div>
 			</div>

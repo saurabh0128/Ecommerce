@@ -365,7 +365,7 @@ class SellerController extends Controller
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
-                      "profile_img" =>'<img src="'.asset_img($profile_img,'user_img').'" alt="product image" height="100" width="100" >',
+                      "profile_img" =>'<img src="'.asset_img($profile_img,'seller_img').'" alt="product image" height="100" width="100" >',
                       "action" => '<a href="'.route('admin.seller.show',$id).'"><button type="button" id="ViewBtn" viewurl="'.route('admin.seller.show',$id).'" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'">View</button></a> <a href="'.route('admin.seller.edit',$id).'"><button type="button" id="EditBtn" editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
                     );
                     $count++;
