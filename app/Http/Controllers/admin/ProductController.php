@@ -1,10 +1,10 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\User;
 
@@ -19,6 +19,17 @@ use DB;
 
 class ProductController extends Controller
 {
+
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Products',['only'=>['index']]);
+        $this->middleware('permission:Add Products' , ['only'=>['create']]);
+        $this->middleware('permission:Edit Products',['only'=>['edit']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -244,6 +255,18 @@ class ProductController extends Controller
                 $category = $record->category->category_name;
                 $stock = $record->stock;
 
+                $action =  '<a href="'.route('admin.product.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a> ';
+
+                if(Auth()->user()->can('Edit Products'))
+                {
+                    $action .='<a href="'.route('admin.product.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> ';
+                }
+
+                if(Auth()->user()->can('Delete Products'))
+                {
+                    $action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> ';
+                }
+
                 $data_arr[] = array(
                   "id" => $count,
                   "product_name" => $product_name,
@@ -251,7 +274,7 @@ class ProductController extends Controller
                   "category_id" =>$category,
                   "current_price" => $price,
                   "stock" => $stock,
-                  "action" => '<a href="'.route('admin.product.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <a href="'.route('admin.product.edit',$id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => $action
                 );
                 $count++;
              }

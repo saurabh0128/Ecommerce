@@ -25,11 +25,13 @@
             
             <div class="p-3">
                 <h4 class="d-inline" >Order Detail</h4>
+                @can('Add Orders')
                 <a href="{{route('admin.order.create')}}" >
                         <button class="btn btn-primary btn-icon d-inline float-end"  >
                                 <i class="bi bi-plus-circle"></i> Add Order
                         </button>
                 </a>
+                @endcan
             </div>
 
             <div class="card">

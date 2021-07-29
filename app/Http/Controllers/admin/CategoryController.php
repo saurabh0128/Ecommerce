@@ -4,7 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
 use App\Models\Category;
@@ -14,6 +14,13 @@ use Validator;
 
 class CategoryController extends Controller
 {
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Categories',['only'=>['index']]);
+    }
+
     /**
      * Show all Category Data
      * Display a listing of the resource.
@@ -166,11 +173,23 @@ class CategoryController extends Controller
                 $id = $record->id;
                 $name = $record->category_name;
 
+                $action ="";
+
+                if(Auth()->user()->can('Edit Categories'))
+                {
+                    $action .= '<button type="button" id="EditBtn" editurl="'.route('admin.category.update',$id).'"           editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> ';
+                }
+
+                if(Auth()->user()->can('Delete Categories'))
+                {
+                    $action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> ';
+                }
+
+
                 $data_arr[] = array(
                   "id" => $count,
                   "category_name" => $name,
-                  "action" => '<button type="button" id="EditBtn" editurl="'.route('admin.category.update',$id).'"
-                   editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'"  class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => $action
                 );
                 $count++;
              }

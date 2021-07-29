@@ -24,9 +24,11 @@
             
         <div class="p-3">
             <h4 class="d-inline" >Category Detail</h4>    
+            @can('Add Categories')
             <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#newCategoryModal" >
                         <i class="bi bi-plus-circle"></i> Add Category
             </button>
+            @endcan
         </div>
 
             <div class="card">

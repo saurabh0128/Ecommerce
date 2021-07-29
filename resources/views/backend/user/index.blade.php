@@ -1,4 +1,4 @@
-@extends('backend.layout.app')
+@extends('backend.layout.app') 
 
 @section('title')
 	Users
@@ -21,9 +21,11 @@
         <div class="col-lg-12 bd-content">
             <div class="p-3">    
                 <h4 class="d-inline" >User Detail</h4>
+                @can('Add Users')
                 <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#AddUser" >
                     <i class="bi bi-plus-circle"></i> Add User
                 </button>
+                @endcan
             </div>
         <div class="card">
             <div class="card-body">

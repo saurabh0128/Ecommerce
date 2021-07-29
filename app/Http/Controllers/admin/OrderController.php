@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 namespace App\Http\Controllers\admin;
 
@@ -14,10 +14,22 @@ use App\Models\UserAddress;
 
 use Illuminate\Database\QueryException;
 
+use Illuminate\Support\Facades\Auth;
+
 use Carbon\carbon;
 
 class OrderController extends Controller
 {
+
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Orders',['only'=>['index']]);
+        $this->middleware('permission:Add Orders' , ['only'=>['create']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -218,6 +230,12 @@ class OrderController extends Controller
                 $customer_name = $record->customer_name;
                 $total_amt = $record->total_amt;
                 $is_payed = $record->is_payed;
+                $action = '<a href="'.route('admin.order.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  ';
+
+                if(Auth()->user()->can('Delete Orders'))
+                {
+                    $action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>';
+                }
 
                 $data_arr[] = array(
                   "id" => $count,
@@ -225,7 +243,7 @@ class OrderController extends Controller
                   "customer_name" =>$customer_name,
                   "total_amt" =>$total_amt,
                   "is_payed" => $is_payed == 0 ? 'no':'yes',
-                  "action" => '<a href="'.route('admin.order.show',$id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+                  "action" => $action
                 );
                 $count++;
              }

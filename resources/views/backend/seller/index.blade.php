@@ -20,11 +20,13 @@
         <div class="col-lg-12 bd-content">
         	<div class="p-3">    
                 <h4 class="d-inline" >Seller Details</h4>
+                @can('Add Sellers')
                 <a href="{{route('admin.seller.create')}}">
                 <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#AddUser" >
                     <i class="bi bi-plus-circle"></i> Add Seller
                 </button>
                 </a>
+                @endcan
             </div>
             <div class="card">
                 <div class="card-body">

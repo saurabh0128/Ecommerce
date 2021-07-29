@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\admin;
 
@@ -16,6 +16,14 @@ use Validator;
 
 class UserController extends Controller
 {
+
+
+    //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Users',['only'=>['index']]);
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -225,20 +233,26 @@ class UserController extends Controller
                     $user_name = $record->user_name;
                     $email_id = $record->email_id;
                     $profile_img = $record->profile_img;
-                   /* $address_line_1 = $record->address_line_1;
-                    $address_line_2 = $record->address_line_2;
-                    $landmark = $record->landmark;
-                    $pincode = $record->pincode;
-                    $city_name = $record->city_name;*/
                     $role = $record->getAllPermissions();
+                    $action = '<a href="'.route('admin.user.show',$id).'"><button type="button" id="ViewBtn" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" >View</button></a> ';
+
+                    if(Auth()->user()->can('Edit Users'))
+                    {
+                        $action .= '<button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
+                       editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" img_url="'.asset_img($profile_img,'user_img').'" class="btn btn-sm btn-info" >Edit</button> ';
+                    }
+
+                    if(Auth()->user()->can('Delete Users'))
+                    {
+                        $action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> ';
+                    }
 
                     $data_arr[] = array(
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
                       "profile_img" =>'<img src="'.asset_img($profile_img,'user_img').'" alt="product image" height="100" width="100" >',
-                      "action" => '<a href="'.route('admin.user.show',$id).'"><button type="button" id="ViewBtn" class="btn btn-sm btn-warning" viewdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" >View</button></a> <button type="button" id="EditBtn" editurl="'.route('admin.user.update',$id).'"
-                       editdata="'.htmlspecialchars($record,ENT_QUOTES,'UTF-8').'" img_url="'.asset_img($profile_img,'user_img').'" class="btn btn-sm btn-info" >Edit</button> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> '
+                      "action" => $action
                     );
                     $count++;
                 }

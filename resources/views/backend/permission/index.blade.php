@@ -1,5 +1,5 @@
 @extends('backend.layout.app') 
-
+ 
 @section('title')
     Pemission
 @endsection
@@ -21,9 +21,11 @@
         <div class="col-lg-12 bd-content">
             <div class="p-3">
                 <h4 class="d-inline" >Permission Detail</h4>
+                @can('Add Permissions')
                 <button class="btn btn-primary btn-icon d-inline float-end" data-bs-toggle="modal" data-bs-target="#newPermissionModal" >
                         <i class="bi bi-plus-circle"></i> Add Permission
                 </button>
+                @endcan
             </div>
             <div class="card">
                 <div class="card-body">
