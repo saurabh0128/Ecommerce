@@ -1,3 +1,5 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 <!-- notifications sidebar -->
 <div class="sidebar" id="notifications">
     <div class="sidebar-header d-block align-items-end">
@@ -25,16 +27,16 @@
                 <div class="tab-pane-body">
                     <ul class="list-group list-group-flush">
                         <li class="px-0 list-group-item">
-                            
+
                             <p class="mb-0 fw-bold text-success d-flex justify-content-between">
-                               
+
                             </p>
                             <span class="text-muted small">
                                 <i class="bi bi-clock me-1"></i> Today
                             </span>
                             @endforeach
                         </li>
-                        
+
                     </ul>
                 </div>
                 <div class="tab-pane-footer">
@@ -153,7 +155,7 @@
                     </a>
                 </div>
             </div>
-           
+
             <div class="tab-pane" id="alerts">
                 <div class="tab-pane-body">
                     <ul class="list-group list-group-flush">

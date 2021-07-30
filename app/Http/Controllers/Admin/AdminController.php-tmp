@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Validation\Rules\Password;
@@ -99,4 +100,5 @@ class AdminController extends Controller {
 		Auth::logout();
 		return view('backend.admin.index');
 	}
+
 }

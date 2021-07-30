@@ -14,9 +14,16 @@ use App\Http\Controllers\admin\RatingController;
 use App\Http\Controllers\admin\RoleController;
 use App\Http\Controllers\admin\RolePermissionsController;
 use App\Http\Controllers\admin\SellerController;
-use App\Http\Controllers\admin\SellerPaymentController;
+
 use App\Http\Controllers\admin\StateController;
 use App\Http\Controllers\admin\Usercontroller;
+use App\Models\User;
+
+//for notification
+use App\Notifications\TaskComplete;
+use Illuminate\Support\Facades\Notification;
+;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +39,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',
 function () {
+		//for nitification
+		$User = User::find(1);
+		$notif = "right msg";
+		/*User::find(4)->notify(new TaskComplete);*/
+		Notification::send($User, new TaskComplete($notif));
 		return view('welcome');
 	});
 
@@ -39,7 +51,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 		Route::resource('login', AdminController::class );
 		Route::get('logout', [AdminController::class , 'logout'])->name('logout');
+		Route::get('logout', [AdminController::class , 'logout'])->name('logout');
+
 		Route::group(['middleware' => ['auth', 'role:admin|SuperAdmin']], function () {
+
+				Route::get('send_notification', [NotificationController::class , 'sendnoti']);
 
 				Route::resource('dashboard', DashboardController::class );
 				Route::resource('user', Usercontroller::class );
@@ -62,7 +78,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 				Route::post('permission/ajax', [PermissionController::class , 'ajax'])->name('permission.ajax');
 				Route::resource('role', RoleController::class );
 				Route::post('role/ajax', [RoleController::class , 'ajax'])->name('role.ajax');
-				Route::resource('sellerpayment', sellerPaymentController::class );
 				Route::resource('coupon', CouponController::class );
 				Route::post('coupon/ajax', [CouponController::class , 'ajax'])->name('coupon.ajax');
 				Route::resource('rolepermission', RolePermissionsController::class );
