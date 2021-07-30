@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::group(['middleware' => ['auth','role:admin|SuperAdmin']], function () {
 
         Route::resource('dashboard',DashboardController::class);
+        Route::post('dashboard/ajax',[DashboardController::class,'ajax'])->name('dashboard.ajax');
         Route::resource('user',Usercontroller::class);
         Route::post('user/ajax',[Usercontroller::class,'ajax'])->name('user.ajax');
         Route::resource('seller',SellerController::class);

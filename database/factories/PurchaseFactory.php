@@ -43,8 +43,8 @@ class PurchaseFactory extends Factory
             'transaction_no' => $this->faker->numerify('##############'),
             'purchase_date' => Carbon::parse(now())->format(env('APP_DATE_FORMAT')),
             'delivery_date' => Carbon::parse(now())->format(env('APP_DATE_FORMAT')),
-            'delivery_status' => $this->faker->text,
-            'purchase_status' => $this->faker->text
+            'delivery_status' => $this->faker->name,
+            'purchase_status' => $this->faker->name
         ];
     }
 }

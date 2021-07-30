@@ -50,4 +50,9 @@ class Purchase extends Model
     {
         return $this->hasMany(PurchaseItems::class,'purchase_id');
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(Self::class);
+    }
 }

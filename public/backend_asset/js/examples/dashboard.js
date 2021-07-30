@@ -193,88 +193,85 @@ $(function () {
 
     customerRating();
 
-    function salesChart() {
-        if ($('#sales-chart').length) {
-            const options = {
-                series: [
-                    {
-                        name: "Sales",
-                        data: [65, 60, 62, 69, 71, 65, 68, 67, 60, 61, 59, 64]
-                    },
-                    {
-                        name: 'Orders',
-                        data: [78, 75, 73, 78, 75, 73, 77, 74, 75, 77, 71, 75]
-                    }
-                ],
-                theme: {
-                    mode: $('body').hasClass('dark') ? 'dark' : 'light',
-                },
-                chart: {
-                    height: 350,
-                    type: 'line',
-                    foreColor: colors.chartTextColor,
-                    zoom: {
-                        enabled: false
-                    },
-                    toolbar: {
-                        show: false
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                colors: [colors.primary, colors.success],
-                stroke: {
-                    width: 4,
-                    curve: 'smooth',
-                },
-                legend: {
-                    show: false
-                },
-                markers: {
-                    size: 0,
-                    hover: {
-                        sizeOffset: 6
-                    }
-                },
-                xaxis: {
-                    categories: ['01 May', '02 May', '03 May', '04 May', '05 May', '06 May', '07 May', '08 May', '09 May', '10 May', '11 May', '12 May'],
-                },
-                tooltip: {
-                    y: [
-                        {
-                            title: {
-                                formatter: function (val) {
-                                    return val
-                                }
-                            }
-                        },
-                        {
-                            title: {
-                                formatter: function (val) {
-                                    return val
-                                }
-                            }
-                        },
-                        {
-                            title: {
-                                formatter: function (val) {
-                                    return val;
-                                }
-                            }
-                        }
-                    ]
-                },
-                grid: {
-                    borderColor: colors.chartBorderColor,
-                }
-            };
+    // function salesChart() {
+    //     if ($('#sales-chart').length) {
+    //         const options = {
+    //             series: [
+                    
+    //                 {
+    //                     name: 'Orders',
+    //                     data: [78, 75, 73, 78, 75, 73, 77, 74, 75, 77, 71, 75]
+    //                 }
+    //             ],
+    //             theme: {
+    //                 mode: $('body').hasClass('dark') ? 'dark' : 'light',
+    //             },
+    //             chart: {
+    //                 height: 350,
+    //                 type: 'line',
+    //                 foreColor: colors.chartTextColor,
+    //                 zoom: {
+    //                     enabled: false
+    //                 },
+    //                 toolbar: {
+    //                     show: false
+    //                 }
+    //             },
+    //             dataLabels: {
+    //                 enabled: false
+    //             },
+    //             colors: [colors.primary, colors.success],
+    //             stroke: {
+    //                 width: 4,
+    //                 curve: 'smooth',
+    //             },
+    //             legend: {
+    //                 show: false
+    //             },
+    //             markers: {
+    //                 size: 0,
+    //                 hover: {
+    //                     sizeOffset: 6
+    //                 }
+    //             },
+    //             xaxis: {
+    //                 categories: ['01 May', '02 May', '03 May', '04 May', '05 May', '06 May', '07 May', '08 May', '09 May', '10 May', '11 May', '12 May'],
+    //             },
+    //             tooltip: {
+    //                 y: [
+    //                     {
+    //                         title: {
+    //                             formatter: function (val) {
+    //                                 return val
+    //                             }
+    //                         }
+    //                     },
+    //                     {
+    //                         title: {
+    //                             formatter: function (val) {
+    //                                 return val
+    //                             }
+    //                         }
+    //                     },
+    //                     {
+    //                         title: {
+    //                             formatter: function (val) {
+    //                                 return val;
+    //                             }
+    //                         }
+    //                     }
+    //                 ]
+    //             },
+    //             grid: {
+    //                 borderColor: colors.chartBorderColor,
+    //             }
+    //         };
 
-            new ApexCharts(document.querySelector("#sales-chart"), options).render();
-        }
-    }
+    //         new ApexCharts(document.querySelector("#sales-chart"), options).render();
+    //     }
+    // }
 
-    salesChart();
+    // salesChart();
 
     function salesChannels() {
         if ($('#sales-channels').length) {
