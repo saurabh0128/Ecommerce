@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::get('send_notification', [NotificationController::class,'sendnoti']);
 
         Route::resource('dashboard',DashboardController::class);
+        Route::post('dashboard/ajax',[DashboardController::class,'ajax'])->name('dashboard.ajax');
         Route::resource('user',Usercontroller::class);
         Route::post('user/ajax',[Usercontroller::class,'ajax'])->name('user.ajax');
         Route::resource('seller',SellerController::class);

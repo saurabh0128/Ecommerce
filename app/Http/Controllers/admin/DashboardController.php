@@ -5,6 +5,12 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Purchase;
+
+use DB;
+
+
+
 class DashboardController extends Controller
 {
     
@@ -20,7 +26,21 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard.index');
+
+        $orders = Purchase::selectraw("DATE_FORMAT(`created_at`, '%M-%Y') as date ")->groupBy('date')->get();
+
+        $monthArray = array();
+
+        
+        foreach($orders as $order)
+        {
+            array_push($monthArray,$order->date);
+        }
+         // $months = array_unique($months);
+
+        // dd($monthArray);
+
+        return view('backend.dashboard.index',compact('monthArray'));
     }
 
     /**
@@ -87,5 +107,22 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ajax(Request $request)
+    {
+        //convert string into array like july-2020 to july as 0 or 2020 to 1
+        $month_year=explode('-',$request->month_year);
+        if($request->ajax() && $request->chart_type == 'order chart')
+        {
+            //get order details date as x and y as total order for a chart and get data as per select month and year
+            $order = Purchase::withCount('purchases')->select(DB::raw('DATE_FORMAT(`created_at`,"%d %M %Y") as x'),DB::raw('Count(*) as y '))
+            ->groupBy('x')
+            ->whereYear('created_at',$month_year[1])
+            ->whereMonth('created_at',date('m',strtotime($month_year[0])))
+            ->get();
+            
+            return Response()->json(['order' => $order ]);
+        }
     }
 }

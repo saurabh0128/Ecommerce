@@ -20,7 +20,7 @@
             <div class="card widget h-100">
                 <div class="card-header d-flex">
                     <h6 class="card-title">
-                        Sales Chart
+                        Sales Chart 
                         <a href="#" class="bi bi-question-circle ms-1 small" data-bs-toggle="tooltip"
                            title="Daily orders and sales"></a>
                     </h6>
@@ -41,33 +41,31 @@
                     <div class="d-md-flex align-items-center mb-3">
                         <div class="d-flex align-items-center">
                             <div class="display-7 me-3">
-                                <i class="bi bi-bag-check me-2 text-success"></i> $10.552,40
+                                <i class="bi bi-bag-check me-2 text-success t_order" ></i> 
                             </div>
                             <span class="text-success">
                                 <i class="bi bi-arrow-up me-1 small"></i>8.30%
                             </span>
                         </div>
                         <div class="d-flex gap-4 align-items-center ms-auto mt-3 mt-lg-0">
-                            <select class="form-select">
-                                <optgroup label="2020">
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                </optgroup>
-                                <optgroup label="2021">
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May" selected>May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="August">August</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
-                                </optgroup>
+                            <select class="form-select" id="month_select" >
+                                  
+                                   <optgroup label="{{ date('Y',strtotime("-1 year")) }}">
+                                   @foreach($monthArray as $month)
+                                      @if( date('Y',strtotime("-1 year")) == date('Y',strtotime($month)))  
+                                       <option value="{{$month}}">{{ date('F',strtotime($month)) }}</option> 
+                                      @endif 
+                                   @endforeach 
+                                   </optgroup>
+
+                                   <optgroup label="{{ date('Y') }}">
+                                   @foreach($monthArray as $month)
+                                      @if( date('Y') == date('Y',strtotime($month)))  
+                                       <option value="{{$month}}">{{ date('F',strtotime($month)) }}</option> 
+                                      @endif 
+                                   @endforeach 
+                                   </optgroup>
+
                             </select>
                         </div>
                     </div>
@@ -75,12 +73,9 @@
                     <div class="d-flex justify-content-center gap-4 align-items-center ms-auto mt-3 mt-lg-0">
                         <div>
                             <i class="bi bi-circle-fill mr-2 text-primary me-1 small"></i>
-                            <span>Sales</span>
-                        </div>
-                        <div>
-                            <i class="bi bi-circle-fill mr-2 text-success me-1 small"></i>
                             <span>Order</span>
                         </div>
+                       
                     </div>
                 </div>
             </div>
@@ -664,7 +659,142 @@
 <!-- Slick -->
 <script src="{{URL::asset('backend_asset/libs/slick/slick.min.js')}}"></script>
 
-
 <!-- Examples -->
 <script src="{{URL::asset('backend_asset/js/examples/dashboard.js')}}"></script>
+
+<script  type="text/javascript">
+
+
+    // Dashboard chart colors
+    const body_styles = window.getComputedStyle(document.body);
+    const colors = {
+        primary: $.trim(body_styles.getPropertyValue('--bs-primary')),
+        secondary: $.trim(body_styles.getPropertyValue('--bs-secondary')),
+        info: $.trim(body_styles.getPropertyValue('--bs-info')),
+        success: $.trim(body_styles.getPropertyValue('--bs-success')),
+        danger: $.trim(body_styles.getPropertyValue('--bs-danger')),
+        warning: $.trim(body_styles.getPropertyValue('--bs-warning')),
+        light: $.trim(body_styles.getPropertyValue('--bs-light')),
+        dark: $.trim(body_styles.getPropertyValue('--bs-dark')),
+        blue: $.trim(body_styles.getPropertyValue('--bs-blue')),
+        indigo: $.trim(body_styles.getPropertyValue('--bs-indigo')),
+        purple: $.trim(body_styles.getPropertyValue('--bs-purple')),
+        pink: $.trim(body_styles.getPropertyValue('--bs-pink')),
+        red: $.trim(body_styles.getPropertyValue('--bs-red')),
+        orange: $.trim(body_styles.getPropertyValue('--bs-orange')),
+        yellow: $.trim(body_styles.getPropertyValue('--bs-yellow')),
+        green: $.trim(body_styles.getPropertyValue('--bs-green')),
+        teal: $.trim(body_styles.getPropertyValue('--bs-teal')),
+        cyan: $.trim(body_styles.getPropertyValue('--bs-cyan')),
+        chartTextColor: $('body').hasClass('dark') ? '#6c6c6c' : '#b8b8b8',
+        chartBorderColor: $('body').hasClass('dark') ? '#444444' : '#ededed',
+    };
+
+
+        //To Create a Apex Order chart
+        const options = {
+                   series: [
+                        
+                        {
+                            name: 'Orders',
+                            data:  []
+                        }
+                    ],
+                    theme: {
+                        mode: $('body').hasClass('dark') ? 'dark' : 'light',
+                    },
+                    chart: {
+                        height: 350,
+                        type: 'line',
+                        foreColor: colors.chartTextColor,
+                        zoom: {
+                            enabled: false
+                        },
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    colors: [colors.primary, colors.success],
+                    stroke: {
+                        width: 4,
+                        curve: 'smooth',
+                    },
+                    legend: {
+                        show: false
+                    },
+                    markers: {
+                        size: 0,
+                        hover: {
+                            sizeOffset: 6
+                        }
+                    },
+                    xaxis: {
+                        categories: [],
+                    },
+                    tooltip: {
+                        y: [
+                            {
+                                title: {
+                                    formatter: function (val) {
+                                        return val
+                                    }
+                                }
+                            },
+                            {
+                                title: {
+                                    formatter: function (val) {
+                                        return val
+                                    }
+                                }
+                            },
+                            {
+                                title: {
+                                    formatter: function (val) {
+                                        return val;
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    grid: {
+                        borderColor: colors.chartBorderColor,
+                    }
+                };
+
+             var orderchart = new ApexCharts(document.querySelector("#sales-chart"), options);
+             orderchart.render();
+             window.dispatchEvent(new Event('resize'));
+
+
+        //Select the first Option When Page Load
+          $(document).ready(function(){
+             $('#month_select').trigger('change');
+          });      
+
+          //Run the function when select option changed
+        $('#month_select').on('change',function(){            
+            var month_year = $(this).val();  
+            OrderChart(month_year);  
+        });   
+
+        // call ajax for take data from database to display chart
+        function OrderChart(month_year){
+            $.ajax({
+                type:'post',
+                url:'{{route('admin.dashboard.ajax')}}',
+                data:{'_token':'{{ csrf_token() }}','month_year':month_year,'chart_type':'order chart'},
+                datatype:'json',
+                success:function(response){
+                    orderchart.updateSeries([{
+                        data: response.order
+                    }]);
+                     
+                }
+            });
+        }
+</script>                       
+
 @endsection
