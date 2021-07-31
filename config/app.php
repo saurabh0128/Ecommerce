@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        /*Illuminate\Notifications\NotificationServiceProvider::class,*/
         /*
          * Package Service Providers...
          */
@@ -230,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        /*'Notification' => Illuminate\Support\Facades\Notification::class,*/
     ],
 
 ];

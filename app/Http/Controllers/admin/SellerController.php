@@ -411,9 +411,7 @@ class SellerController extends Controller
                       "id" => $count,
                       "user_name" => $user_name,
                       "email_id" => $email_id,
-
                       "profile_img" =>'<img src="'.asset_img($profile_img,'/thumbnail/seller_img').'" alt="product image" height="100" width="100" >',
-                      
                       "action" => $action
 
                     );

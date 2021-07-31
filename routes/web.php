@@ -17,7 +17,10 @@ use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\RolePermissionsController;
 use App\Http\Controllers\admin\ProfileController;
 
-
+//for notification 
+use App\Models\User;
+use Illuminate\Support\Facades\Notification;;
+use App\Notifications\TaskComplete;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +34,11 @@ use App\Http\Controllers\admin\ProfileController;
 */
 
 Route::get('/', function () {
+    //for nitification 
+    $User = User::find(1);
+    $notif = "right msg";
+    /*User::find(4)->notify(new TaskComplete);*/
+    Notification::send($User,new TaskComplete($notif));
     return view('welcome');
 });
 
@@ -38,7 +46,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     Route::resource('login',AdminController::class);
     Route::get('logout',[AdminController::class,'logout'])->name('logout');
+    Route::get('logout',[AdminController::class,'logout'])->name('logout');
+
+   
     Route::group(['middleware' => ['auth','role:admin|SuperAdmin']], function () {
+
+        Route::get('send_notification', [NotificationController::class,'sendnoti']);
 
         Route::resource('dashboard',DashboardController::class);
         Route::post('dashboard/ajax',[DashboardController::class,'ajax'])->name('dashboard.ajax');
@@ -70,6 +83,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     });
 
 });
+
 
 Route::group([
     'name' => 'user.',

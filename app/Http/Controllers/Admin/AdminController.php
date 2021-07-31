@@ -9,6 +9,8 @@ use Illuminate\Validation\Rules\Password;
 
 use Session;
 
+use Illuminate\Notifications\Notifiable;
+
 
 
 
@@ -116,4 +118,5 @@ class AdminController extends Controller
         Auth::logout();
         return view('backend.admin.index');
     }
+   
 }

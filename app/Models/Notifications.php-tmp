@@ -1,0 +1,20 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Notifications extends Model {
+	use HasFactory;
+
+	protected $filable = [
+		'type',
+		'notifiable_type',
+		'notifiable_id',
+		'data',
+		'read_at'
+	];
+}

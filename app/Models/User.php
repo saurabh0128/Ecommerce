@@ -12,9 +12,12 @@ use App\Models\SellerCategory;
 
 use Spatie\Permission\Traits\HasRoles;
 
+use Illuminate\Notifications\Notifiable;
+
 class User extends Authenticatable
 {
     use HasFactory,HasRoles;
+    use Notifiable;
 
     protected $filable = [
         'name',
