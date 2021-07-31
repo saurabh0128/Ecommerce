@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Purchase;
 
+use App\Models\role;
+
 use DB;
 
 
@@ -113,16 +115,34 @@ class DashboardController extends Controller
     {
         //convert string into array like july-2020 to july as 0 or 2020 to 1
         $month_year=explode('-',$request->month_year);
+
+       
+
+
         if($request->ajax() && $request->chart_type == 'order chart')
         {
             //get order details date as x and y as total order for a chart and get data as per select month and year
-            $order = Purchase::withCount('purchases')->select(DB::raw('DATE_FORMAT(`created_at`,"%d %M %Y") as x'),DB::raw('Count(*) as y '))
+
+             // DB::enableQueryLog();
+            $order = Purchase::select(DB::raw('DATE_FORMAT(`created_at`,"%d %M %Y") as x'),DB::raw('Count(*) as y '))
             ->groupBy('x')
             ->whereYear('created_at',$month_year[1])
-            ->whereMonth('created_at',date('m',strtotime($month_year[0])))
+            ->whereMonth('created_at',$month_year[0])
             ->get();
-            
+            // dd(DB::getQueryLog());
+            // dd($order);
             return Response()->json(['order' => $order ]);
+        }
+        
+        elseif($request->ajax() && $request->chart_type == 'user chart')
+        {
+                $users = role::select('roles.name')
+                ->withCount('user')
+                ->where('name','!=','SuperAdmin')
+                ->get(); 
+
+                return Response()->json(['user'=>$users]);
+
         }
     }
 }

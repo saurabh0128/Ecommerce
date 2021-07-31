@@ -41,11 +41,9 @@
                     <div class="d-md-flex align-items-center mb-3">
                         <div class="d-flex align-items-center">
                             <div class="display-7 me-3">
-                                <i class="bi bi-bag-check me-2 text-success t_order" ></i> 
+                                <i class="bi bi-bag-check me-2 text-success t_order" > </i> 
                             </div>
-                            <span class="text-success">
-                                <i class="bi bi-arrow-up me-1 small"></i>8.30%
-                            </span>
+                            
                         </div>
                         <div class="d-flex gap-4 align-items-center ms-auto mt-3 mt-lg-0">
                             <select class="form-select" id="month_select" >
@@ -53,7 +51,7 @@
                                    <optgroup label="{{ date('Y',strtotime("-1 year")) }}">
                                    @foreach($monthArray as $month)
                                       @if( date('Y',strtotime("-1 year")) == date('Y',strtotime($month)))  
-                                       <option value="{{$month}}">{{ date('F',strtotime($month)) }}</option> 
+                                       <option value="{{date('m-Y',strtotime($month))}}">{{ date('F',strtotime($month)) }}</option> 
                                       @endif 
                                    @endforeach 
                                    </optgroup>
@@ -61,7 +59,7 @@
                                    <optgroup label="{{ date('Y') }}">
                                    @foreach($monthArray as $month)
                                       @if( date('Y') == date('Y',strtotime($month)))  
-                                       <option value="{{$month}}">{{ date('F',strtotime($month)) }}</option> 
+                                       <option value="{{date('m-Y',strtotime($month))}}">{{ date('F',strtotime($month)) }}</option> 
                                       @endif 
                                    @endforeach 
                                    </optgroup>
@@ -102,44 +100,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="sales-channels"></div>
-                    <div class="row text-center mb-5 mt-4">
-                        <div class="col-4">
-                            <div class="display-7">48%</div>
-                            <div class="text-success my-2 small">
-                                <i class="bi bi-arrow-up me-1 small"></i>30.50%
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <i class="bi bi-circle-fill text-orange me-2 small"></i>
-                                <span class="text-muted">Social Media</span>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="display-7">30%</div>
-                            <div class="text-danger my-2 small">
-                                <i class="bi bi-arrow-down me-1 small"></i>15.20%
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <i class="bi bi-circle-fill text-cyan me-2 small"></i>
-                                <span class="text-muted">Google</span>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="display-7">22%</div>
-                            <div class="text-success my-2 small">
-                                <i class="bi bi-arrow-up me-1 small"></i>1.80%
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <i class="bi bi-circle-fill text-indigo me-2 small"></i>
-                                <span class="text-muted">Email</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-outline-primary btn-icon">
-                            <i class="bi bi-download"></i> Download Report
-                        </button>
-                    </div>
+                    <div id="user-chart"></div>
                 </div>
             </div>
         </div>
@@ -656,11 +617,14 @@
 <!-- Apex chart -->
 <script src="{{URL::asset('backend_asset/libs/charts/apex/apexcharts.min.js')}}"></script>
 
+
+
+
 <!-- Slick -->
 <script src="{{URL::asset('backend_asset/libs/slick/slick.min.js')}}"></script>
 
-<!-- Examples -->
-<script src="{{URL::asset('backend_asset/js/examples/dashboard.js')}}"></script>
+{{-- <!-- Examples -->
+<script src="{{URL::asset('backend_asset/js/examples/dashboard.js')}}"></script> --}}
 
 <script  type="text/javascript">
 
@@ -692,7 +656,7 @@
 
 
         //To Create a Apex Order chart
-        const options = {
+        const OrderChaerOptions = {
                    series: [
                         
                         {
@@ -764,14 +728,49 @@
                     }
                 };
 
-             var orderchart = new ApexCharts(document.querySelector("#sales-chart"), options);
+             var orderchart = new ApexCharts(document.querySelector("#sales-chart"), OrderChaerOptions);
              orderchart.render();
              window.dispatchEvent(new Event('resize'));
+
+
+
+
+
+            const UserChartoptions = {
+                series: [],
+                chart: {
+                    id: 'mychart',
+                    height: 250,
+                    type: 'donut',
+                    offsetY: 0
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '40%',
+                        }
+                    }
+                },
+                stroke: {
+                    show: false,
+                    width: 0
+                },
+                colors: [colors.orange, colors.cyan, colors.indigo],
+                labels: ['admin','Customers','seller'],
+                legend: {
+                    show: false
+                }
+            }
+
+            var UserChart = new ApexCharts(document.querySelector('#user-chart'), UserChartoptions)
+            UserChart.render();
+
 
 
         //Select the first Option When Page Load
           $(document).ready(function(){
              $('#month_select').trigger('change');
+             UserChartAjax();
           });      
 
           //Run the function when select option changed
@@ -791,10 +790,35 @@
                     orderchart.updateSeries([{
                         data: response.order
                     }]);
-                     
+                    
+                    let sum = 0;
+                    $.each(response.order,function(key,value){
+                        sum += value.y;
+                    }); 
+                    $('.t_order').html(sum);
                 }
             });
         }
+
+        function UserChartAjax(){
+            $.ajax({
+                type:'post',
+                url:'{{route('admin.dashboard.ajax')}}',
+                data:{'_token':'{{ csrf_token() }}','chart_type':'user chart'},
+                datatype:'json',
+                success:function(response){
+                    // console.log(response.user);
+                    console.log(response.user);
+                    let arr = [];
+                    $.each(response.user,function(key,value){
+                        arr.push(value.user_count);
+                    });
+
+                    UserChart.updateSeries(arr);
+                }
+            });
+        }
+
 </script>                       
 
 @endsection
