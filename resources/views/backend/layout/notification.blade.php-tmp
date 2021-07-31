@@ -1,6 +1,6 @@
 
 Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
-<!-- notifications sidebar -->
+notifications sidebar -->
 <div class="sidebar" id="notifications">
     <div class="sidebar-header d-block align-items-end">
         <div class="align-items-center d-flex justify-content-between py-4">
@@ -21,27 +21,20 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             </li>
         </ul>
     </div>
+
     <div class="sidebar-content">
         <div class="tab-content">
              <div class="tab-pane active" id="notes">
                 <div class="tab-pane-body">
                     <ul class="list-group list-group-flush">
-                        <li class="px-0 list-group-item">
-
-                            <p class="mb-0 fw-bold text-success d-flex justify-content-between">
-
-                            </p>
-                            <span class="text-muted small">
-                                <i class="bi bi-clock me-1"></i> Today
-                            </span>
-                            @endforeach
-                        </li>
+                        <!-- all Notification view in li tag -->
+                        <li class="px-0 list-group-item" id="all-noti"></li>
 
                     </ul>
                 </div>
                 <div class="tab-pane-footer">
-                    <a href="#" class="btn btn-primary btn-block">
-                        <i class="bi bi-plus me-2"></i> Add Notes
+                     <a href="#" class="btn btn-success" id="read-all">
+                        <i class="bi bi-check2 me-2"></i> Make All Read
                     </a>
                 </div>
             </div>
@@ -241,4 +234,4 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
         </div>
     </div>
 </div>
-<!-- ./ notifications sidebar -->
+<!-- ./ notifications sidebar

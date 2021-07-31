@@ -20,7 +20,7 @@ use App\Http\Controllers\admin\ProfileController;
 //for notification 
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;;
-use App\Notifications\TaskComplete;
+use App\Notifications\AdminNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +35,10 @@ use App\Notifications\TaskComplete;
 
 Route::get('/', function () {
     //for nitification 
-    $User = User::find(1);
-    $notif = "right msg";
+    //$User = User::find(1);
+    $notif = "my secound msg";
     /*User::find(4)->notify(new TaskComplete);*/
-    Notification::send($User,new TaskComplete($notif));
+    Notification::send(auth()->user(),new AdminNotification($notif));
     return view('welcome');
 });
 

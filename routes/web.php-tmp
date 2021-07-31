@@ -20,7 +20,7 @@ use App\Http\Controllers\admin\Usercontroller;
 use App\Models\User;
 
 //for notification
-use App\Notifications\TaskComplete;
+use App\Notifications\AdminNotification;
 use Illuminate\Support\Facades\Notification;
 ;
 
@@ -40,10 +40,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',
 function () {
 		//for nitification
-		$User = User::find(1);
-		$notif = "right msg";
+		//$User = User::find(1);
+		$notif = "my secound msg";
 		/*User::find(4)->notify(new TaskComplete);*/
-		Notification::send($User, new TaskComplete($notif));
+		Notification::send(auth()->user(), new AdminNotification($notif));
 		return view('welcome');
 	});
 
@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 				Route::get('send_notification', [NotificationController::class , 'sendnoti']);
 
 				Route::resource('dashboard', DashboardController::class );
+				Route::post('dashboard/ajax', [DashboardController::class , 'ajax'])->name('dashboard.ajax');
 				Route::resource('user', Usercontroller::class );
 				Route::post('user/ajax', [Usercontroller::class , 'ajax'])->name('user.ajax');
 				Route::resource('seller', SellerController::class );

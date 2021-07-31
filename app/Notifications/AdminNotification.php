@@ -7,7 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskComplete extends Notification
+
+class AdminNotification extends Notification
 {
     use Queueable;
 
@@ -55,7 +56,7 @@ class TaskComplete extends Notification
     public function toArray($notifiable)
     {
         return [
-            "name" => $this->notif
+             $this->notif
         ];
     }
 }
