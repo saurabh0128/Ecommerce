@@ -73,4 +73,8 @@ class User extends Authenticatable
         return $this->hasMany(RatingReview::class,'user_id');
     }
 
+    public function role()
+    {
+        return $this->belongsToMany(role::class,'model_has_roles','model_id','role_id');
+    }
 }

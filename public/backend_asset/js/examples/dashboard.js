@@ -273,36 +273,36 @@ $(function () {
 
     // salesChart();
 
-    function salesChannels() {
-        if ($('#sales-channels').length) {
-            const options = {
-                chart: {
-                    height: 250,
-                    type: 'donut',
-                    offsetY: 0
-                },
-                plotOptions: {
-                    pie: {
-                        donut: {
-                            size: '40%',
-                        }
-                    }
-                },
-                stroke: {
-                    show: false,
-                    width: 0
-                },
-                colors: [colors.orange, colors.cyan, colors.indigo],
-                series: [48, 30, 22],
-                labels: ['Social Media', 'Google', 'Email'],
-                legend: {
-                    show: false
-                }
-            }
+    // function salesChannels() {
+    //     if ($('#sales-channels').length) {
+    //         const options = {
+    //             chart: {
+    //                 height: 250,
+    //                 type: 'donut',
+    //                 offsetY: 0
+    //             },
+    //             plotOptions: {
+    //                 pie: {
+    //                     donut: {
+    //                         size: '40%',
+    //                     }
+    //                 }
+    //             },
+    //             stroke: {
+    //                 show: false,
+    //                 width: 0
+    //             },
+    //             colors: [colors.orange, colors.cyan, colors.indigo],
+    //             series: [48, 30, 22],
+    //             labels: ['Social Media', 'Google', 'Email'],
+    //             legend: {
+    //                 show: false
+    //             }
+    //         }
 
-            new ApexCharts(document.querySelector('#sales-channels'), options).render();
-        }
-    }
+    //         new ApexCharts(document.querySelector('#sales-channels'), options).render();
+    //     }
+    // }
 
     salesChannels();
 
