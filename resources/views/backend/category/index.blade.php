@@ -1,4 +1,4 @@
-@extends('backend.layout.app')
+@extends('backend.layout.app') 
 
 @section('title')
     Category
@@ -13,6 +13,9 @@
 
     <!-- toaster css -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/toastr.css')}}" type="text/css">
+
+    <link rel="stylesheet" href="{{ asset('backend_asset/libs/select2/css/select2.min.css')}}" type="text/css">
+
 @endsection
 
 @section('content')
@@ -38,6 +41,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Category Name</th>
+                            <th>Parent Category Name</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -46,6 +50,7 @@
                         <tr>
                             <th>Id</th>
                             <th>Category Name</th>
+                            <th>Parent Category Name</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -69,8 +74,20 @@
                 </div>
                 <div class="modal-body">
                     <form autocomplete="off" id="AddCategoryForm" >
+
+                        <div class="mb-3 row ">
+                            <label for="Category" class="col-sm-3 form-label">Parent Category</label>
+                            <div class="col-sm-9" >
+                                <select id="Category" name="Category" class="select2-example" >
+                                    <option value="">Please select Category</option>
+                                    @foreach($Categorys as $category_detail)
+                                        <option value="{{ $category_detail->id }}">{{ $category_detail->category_name }}</option>
+                                    @endforeach 
+                                </select>
+                            </div>
+                        </div>
                         <div class="mb-3 row">
-                            <label class="col-sm-3 col-form-label">Category Name</label>
+                            <label class="col-sm-3 form-label">Category Name</label>
                             <div class="col-sm-9">
                                 <input type="text" id="category_name" class="form-control"   >
                             </div>
@@ -100,6 +117,17 @@
                 </div>
                 <div class="modal-body">
                     <form autocomplete="off" id="EditCategoryForm" >
+                        <div class="mb-3 row ">
+                            <label for="Category" class="col-sm-3 form-label">Parent Category</label>
+                            <div class="col-sm-9" >
+                                <select id="EditCategory" name="EditCategory" class="select2-example" >
+                                    <option value="">Please select Category</option>
+                                    @foreach($Categorys as $category_detail)
+                                        <option value="{{ $category_detail->id }}">{{ $category_detail->category_name }}</option>
+                                    @endforeach 
+                                </select>
+                            </div>
+                        </div>
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Category Name</label>
                             <div class="col-sm-9">
@@ -134,6 +162,8 @@
     <!-- toaster js -->
     <script src="{{URL::asset('backend_asset/js/toastr.min.js')}}"></script>
 
+    <script src="{{asset('backend_asset/libs/select2/js/select2.min.js')}}"></script>
+
 
     <script type="text/javascript">
 
@@ -156,6 +186,10 @@
           "hideMethod": "fadeOut"
         }
 
+        $('.select2-example').select2({
+        });
+
+
         $(document).ready(function(){
 
             //To display category Details
@@ -170,6 +204,7 @@
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
                     {data:'category_name', name:'name'},
+                    {data:'Parent_Category_Name'},
                     {
                         data:'action',
                         name:'action',
@@ -185,12 +220,14 @@
             e.preventDefault();
 
             var category_name = $('#category_name').val();
+            var Category = $('#Category').val();
             $.ajax({
                 type:'post',
                 url:'{{ route('admin.category.store') }}',
                 data:{
                     '_token':'{{ csrf_token() }}',
-                    'category_name':category_name
+                    'category_name':category_name,
+                    'Category':Category
                 },
                 datatype:'json',
                 success:function(response){
@@ -212,6 +249,17 @@
                         $('#category_name').val("");
                         toastr["success"](response.success);
                         $('#CategoryDatatable').DataTable().draw(false);
+
+
+                       if(response.text)
+                       {
+                            var option1 = new Option(response.text,response.id,false,false);
+                            $('#Category').append(option1).trigger('change');
+                            var option2 = new Option(response.text,response.id,false,false);
+                            $('#EditCategory').append(option2).trigger('change');
+                            $('#EditCategory').val(null).trigger('change');
+                       }     
+                        
                     }
                 }
             })    
@@ -260,6 +308,8 @@
             var Editdata = jQuery.parseJSON($(this).attr('editdata'));
             $('#edit_category_name').val(Editdata.category_name);
             $('#EditCategoryForm').attr('action',Editurl);
+            $('#EditCategory').val(Editdata.parent_category_id)
+            $('#EditCategory').trigger('change');
             $('#EditCategoryModal').modal('show');
         });
 
@@ -269,13 +319,16 @@
 
             var Updateurl = $(this).attr('action');
             var category_name = $('#edit_category_name').val();
+            var edit_category = $('#EditCategory').val();
+
             $.ajax({
                 type:'post',
                 url:Updateurl,
                 data:{
                     '_token':'{{ csrf_token() }}',
                     '_method':'put',
-                    'category_name':category_name
+                    'category_name':category_name,
+                    'edit_category':edit_category
                 },
                 datatype:'json',
                 success:function(response){

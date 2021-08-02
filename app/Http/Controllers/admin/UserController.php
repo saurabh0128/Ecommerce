@@ -161,7 +161,7 @@ class UserController extends Controller
             return Response()->json(["error"=>$validator->errors()->all()]);
         }
         $user = User::where('id','=',$id)->first();
-
+ 
         if($request->hasFile('edit_profile_img'))
         {
             $onlyImgName = pathinfo($request->edit_profile_img->getClientOriginalName(),PATHINFO_FILENAME);

@@ -24,4 +24,13 @@ class Category extends Model
         return $this->belongsToMany(User::class);   
     }
 
+    public function Parent_Category()
+    {
+        return $this->belongsTo(self::class,'parent_category_id');
+    }
+
+    public function sub_category()
+    {
+        return $this->hasMany(self::class,'parent_category_id');
+    }
 }

@@ -25,11 +25,10 @@ class RatingReviewFactory extends Factory
      */
     public function definition()
     {
-        $purchase_id = Purchase::all()->pluck('id')->toArray(); 
+        // $purchase_id = Purchase::all()->pluck('id')->toArray(); 
         $product_id = Product::all()->pluck('id')->toArray();
         $user_id = User::all()->pluck('id')->toArray();
         return [
-            'purchase_id' => Arr::random($purchase_id),
             'rating' => rand(0,5),
             'review' => $this->faker->text,
             'is_display' => rand(0,1),
