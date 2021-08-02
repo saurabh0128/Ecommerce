@@ -774,17 +774,6 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
             $('#month_select').trigger('change');
             //for load time set all notification
-            $.ajax({
-                type:'post',
-                url:'{{route('admin.dashboard.ajax')}}',
-                data:{'_token':'{{csrf_token()}}','notification_all':'notification_all'},
-                datatype:'json',
-                success:function(response){
-                    $('#all-noti').html(response.all_notification);
-                     console.log(response.notification_data);
-                }
-
-            });
              $('#month_select').trigger('change');
              UserChartAjax();
           });
@@ -816,39 +805,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
             });
         }
 
-        //for remove one(click) notification and reload all unread notification
-       $(document).on('click','#read-noti',function(){
-            var notification_id = $(this).attr('notification-id');
-            $.ajax({
-                type:'post',
-                url:'{{route('admin.dashboard.ajax')}}',
-                data:{'_token':'{{csrf_token()}}','notification_id':notification_id,'notification_read':'read'},
-                datatype:'json',
-                success:function(response){
-                   console.log(response.notification_count);
-                    $('#User-noti').attr('data-count',response.notification_count);
-                  console.log(response.all_notification);
-                   $('#all-noti').html(response.all_notification);
 
-                }
-            });
-        });
-
-        $(document).on('click','#read-all',function(){
-            $.ajax({
-                type:'post',
-                url:'{{route('admin.dashboard.ajax')}}',
-                data:{'_token':'{{csrf_token()}}','read_all':'read_all'},
-                datatype:'json',
-                success:function(response){
-
-                   $('#User-noti').attr('data-count',response.notification_counter);
-                   $('#all-noti').html(response.notification_all);
-                }
-
-            });
-
-        });
         function UserChartAjax(){
             $.ajax({
                 type:'post',

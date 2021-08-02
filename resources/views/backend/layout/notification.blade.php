@@ -21,7 +21,6 @@
                     <ul class="list-group list-group-flush">
                         <!-- all Notification view in li tag -->
                         <li class="px-0 list-group-item" id="all-noti" style="cursor:pointer;"></li>
-                       
                     </ul>
                 </div>
                 <div class="tab-pane-footer">
