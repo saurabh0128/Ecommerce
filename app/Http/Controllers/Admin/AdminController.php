@@ -118,7 +118,7 @@ class AdminController extends Controller
     public function logout()
     {
         Auth::logout();
-        return view('backend.admin.index');
+        return redirect()->route('admin.login.index');
     }
    
 }

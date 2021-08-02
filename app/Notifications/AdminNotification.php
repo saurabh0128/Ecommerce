@@ -17,9 +17,11 @@ class AdminNotification extends Notification
      *
      * @return void
      */
-    public function __construct($notif)
+    public function __construct($notif,$icon)
     {
         $this->notif = $notif;
+        $this->icon = $icon;
+
     }
 
     /**
@@ -56,7 +58,8 @@ class AdminNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-             $this->notif
+             $this->notif,
+             $this->icon
         ];
     }
 }

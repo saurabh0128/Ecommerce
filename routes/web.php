@@ -38,7 +38,7 @@ Route::get('/', function () {
     //$User = User::find(1);
     $notif = "my secound msg";
     /*User::find(4)->notify(new TaskComplete);*/
-    Notification::send(auth()->user(),new AdminNotification($notif));
+    Notification::send(auth()->user(),new AdminNotification("I am Create a new Notification","person"));
     return view('welcome');
 });
 
