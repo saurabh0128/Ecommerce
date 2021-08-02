@@ -16,38 +16,11 @@
 
     <div class="sidebar-content">
         <div class="tab-content">
-
-             <div class="tab-pane active" id="notes">
-                <div class="tab-pane-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="px-0 list-group-item">
-                            
-                            <p class="mb-0 fw-bold text-success d-flex justify-content-between">
-                               
-                            </p>
-                            <span class="text-muted small">
-                                <i class="bi bi-clock me-1"></i> Today
-                            </span>
-                          
-                        </li>
-                        
-                    </ul>
-                </div>
-                <div class="tab-pane-footer">
-                    <a href="#" class="btn btn-primary btn-block">
-                        <i class="bi bi-plus me-2"></i> Add Notes
-                    </a>
-                </div>
-            </div>
-            <div class="tab-pane " id="activities">
-
              <div class="tab-pane active">
-
                 <div class="tab-pane-body">
                     <ul class="list-group list-group-flush">
                         <!-- all Notification view in li tag -->
                         <li class="px-0 list-group-item" id="all-noti" style="cursor:pointer;"></li>
-                       
                     </ul>
                 </div>
                 <div class="tab-pane-footer">

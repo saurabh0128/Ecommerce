@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\admin;
 
@@ -29,7 +29,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('backend.category.index');
+        $Categorys = Category::where('parent_category_id',Null)->get();
+        return view('backend.category.index',compact('Categorys'));
     }
 
     /**
@@ -65,8 +66,17 @@ class CategoryController extends Controller
 
         $categorydata = new Category();
         $categorydata->category_name = $request->category_name;
+        $categorydata->parent_category_id  = $request->Category;
         $categorydata->save();
-        return Response()->json(["success"=> "data inserted successfully"]);
+
+        if($categorydata->parent_category_id == Null)
+        {
+            return Response()->json(["success"=> "data inserted successfully" , 'text' =>$categorydata->category_name ,'id'=>$categorydata->id ]);
+        }
+        else
+        {
+             return Response()->json(["success"=> "data inserted successfully"]);
+        }
     }
 
     /**
@@ -111,6 +121,7 @@ class CategoryController extends Controller
         }
         $category_data = Category::where('id','=',$id)->first();
         $category_data->category_name = $request->category_name;
+        $category_data->parent_category_id = $request->edit_category;
         $category_data->save();
 
         return Response()->json(["success"=> "Data updated Successfully" ]);
@@ -157,12 +168,14 @@ class CategoryController extends Controller
              $totalRecordswithFilter = Category::select('count(*) as allcount')->where('category_name', 'like', '%' .$searchValue . '%')->count();
 
              // Fetch records
-             $records = Category::orderBy($columnName,$columnSortOrder)
+             $records = Category::with('Parent_Category')->orderBy($columnName,$columnSortOrder)
                ->where('Categorys.category_name', 'like', '%' .$searchValue . '%')
                ->select('Categorys.*')
                ->skip($start)
                ->take($rowperpage)
                ->get();
+
+               // dd($records);
 
              $data_arr = array();
 
@@ -172,7 +185,7 @@ class CategoryController extends Controller
              foreach($records as $record){
                 $id = $record->id;
                 $name = $record->category_name;
-
+                $parent_category = isset($record->Parent_Category->category_name)?$record->parent_category->category_name:'-';
                 $action ="";
 
                 if(Auth()->user()->can('Edit Categories'))
@@ -189,6 +202,7 @@ class CategoryController extends Controller
                 $data_arr[] = array(
                   "id" => $count,
                   "category_name" => $name,
+                  "Parent_Category_Name" => $parent_category, 
                   "action" => $action
                 );
                 $count++;
