@@ -23,11 +23,12 @@
             </a>
         </div>
     </form>
+    
     @can('View Notification')
     <div class="header-bar ms-auto">
         <ul class="navbar-nav justify-content-end">
             <li class="nav-item">
-                <a href="#" class="nav-link nav-link-notify" data-count="{{ auth()->user()->unreadNotifications->count()}}" data-sidebar-target="#notifications">
+                <a href="#" class="nav-link nav-link-notify" id="User-noti" data-count="{{auth()->user()->unreadNotifications->count()}}" data-sidebar-target="#notifications">
                     <i class="bi bi-bell icon-lg"></i>
                 </a>
             </li>

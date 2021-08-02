@@ -11,9 +11,18 @@ use App\Models\User;
 
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Image;
 
 class ProductController extends Controller {
+
+	//Constructer for specifying a middleware of roles and permission
+	public function __construct() {
+		$this->middleware('permission:View Products', ['only' => ['index']]);
+		$this->middleware('permission:Add Products', ['only'  => ['create']]);
+		$this->middleware('permission:Edit Products', ['only' => ['edit']]);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -59,12 +68,19 @@ class ProductController extends Controller {
 				"regex" => "Only number and decimal allowed"
 			]);
 
+		$product = new Product();
+
 		$onlyImgName  = pathinfo($request->product_image->getClientOriginalName(), PATHINFO_FILENAME);
 		$imgExtension = $request->product_image->getClientOriginalExtension();
 		$imgName      = $onlyImgName."-".time().".".$imgExtension;
 		$request->product_image->move(public_path('backend_asset/product_images'), $imgName);
+		$product->product_img = $imgName;
 
-		$product                    = new Product();
+		// for thumbnail create and save
+		$img = Image::make(public_path('/backend_asset/product_images/'.$imgName));
+		$img->resize(150, 150);
+		$img->save(public_path().'/backend_asset/thumbnail/product_images/'.$imgName);
+
 		$product->product_name      = $request->product_name;
 		$product->product_desc      = $request->product_desc;
 		$product->product_sort_desc = $request->product_sort_desc;
@@ -75,7 +91,6 @@ class ProductController extends Controller {
 		$product->is_display        = $request->is_display;
 		$product->is_avilable       = $request->is_avilable;
 		$product->stock             = $request->stock;
-		$product->product_img       = $imgName;
 		$product->save();
 
 		return redirect()->route('admin.product.index')->with("success", "Data Inserted Successfully");
@@ -116,30 +131,30 @@ class ProductController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, $id) {
-		/* $request->validate([
-		"product_name" => "required|min:2|max:200",
-		"current_price" => "required|max:10",
-		"special_price" => "nullable|max:10",
-		"product_desc" =>  "required",
-		"product_sort_desc" =>  "required",
-		"Category" => "required",
-		"Seller" => "required",
-		"product_image" => "image|max:2048",
-		"stock" => "required|numeric",
-		"is_display" => "required",
-		"is_avilable" => "required"
-		],
-		[
-		"regex"=>"Only number and decimal allowed"
-		]);
-		 */
+		$request->validate([
+				"product_name"      => "required|min:2|max:200",
+				"current_price"     => "required|max:10",
+				"special_price"     => "nullable|max:10",
+				"product_desc"      => "required",
+				"product_sort_desc" => "required",
+				"Category"          => "required",
+				"Seller"            => "required",
+				"product_image"     => "image|max:2048",
+				"stock"             => "required|numeric",
+				"is_display"        => "required",
+				"is_avilable"       => "required"
+			],
+			[
+				"regex" => "Only number and decimal allowed"
+			]);
+
 		$product = Product::where('id', '=', $id)->first();
 
 		if ($request->hasFile('product_image')) {
 			$onlyImgName  = pathinfo($request->product_image->getClientOriginalName(), PATHINFO_FILENAME);
 			$imgExtension = $request->product_image->getClientOriginalExtension();
 			$imgName      = $onlyImgName."-".time().".".$imgExtension;
-			$request->product_image->move(public_path('backend_asset/product_images/'), $imgName);
+			$request->product_image->move(public_path('backend_asset/product_images'), $imgName);
 			$product->product_img = $imgName;
 
 			// for thumbnail create and save
@@ -231,14 +246,24 @@ class ProductController extends Controller {
 				$category     = $record->category->category_name;
 				$stock        = $record->stock;
 
+				$action = '<a href="'.route('admin.product.show', $id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a> ';
+
+				if (Auth()->user()->can('Edit Products')) {
+					$action .= '<a href="'.route('admin.product.edit', $id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> ';
+				}
+
+				if (Auth()->user()->can('Delete Products')) {
+					$action .= '<button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button> ';
+				}
+
 				$data_arr[] = array(
 					"id"            => $count,
 					"product_name"  => $product_name,
-					"product image" => '<img src="'.asset_img($product_img, '/thumbnail/product_images').'" alt="product image" height="100" width="100" >',
+					"product image" => '<img src="'.asset_img($record->product_img, '/thumbnail/product_images').'" alt="product image" height="100" width="100" >',
 					"category_id"   => $category,
 					"current_price" => $price,
 					"stock"         => $stock,
-					"action"        => '<a href="'.route('admin.product.show', $id).'"> <button type="button" class="btn btn-sm btn-warning" >View </button></a>  <a href="'.route('admin.product.edit', $id).'"><button type="button" id="EditBtn" class="btn btn-sm btn-info" >Edit</button></a> <button type="button" id="delbtn" onClick="DeleteFunc('.$id.')"   class="btn btn-danger btn-sm" >Delete</button>'
+					"action"        => $action
 				);
 				$count++;
 			}

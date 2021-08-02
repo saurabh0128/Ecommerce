@@ -3,18 +3,14 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Category;
-use App\Models\User;
-
 use Illuminate\Database\QueryException;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Product;
-
-
+use App\Models\User;
 use Validator;
-
+use Image;
 use DB;
 
 class ProductController extends Controller
@@ -78,13 +74,20 @@ class ProductController extends Controller
             "regex"=>"Only number and decimal allowed"
         ]);
 
+        $product = new Product();
 
         $onlyImgName = pathinfo($request->product_image->getClientOriginalName(),PATHINFO_FILENAME);
         $imgExtension = $request->product_image->getClientOriginalExtension(); 
         $imgName = $onlyImgName."-".time().".".$imgExtension;
         $request->product_image->move(public_path('backend_asset/product_images'),$imgName);
+        $product->product_img = $imgName;
 
-        $product = new Product();
+        // for thumbnail create and save 
+        $img = Image::make(public_path('/backend_asset/product_images/'.$imgName));
+        $img->resize(150,150);
+        $img->save(public_path().'/backend_asset/thumbnail/product_images/'.$imgName);
+
+
         $product->product_name = $request->product_name;
         $product->product_desc = $request->product_desc;
         $product->product_sort_desc = $request->product_sort_desc;
@@ -95,7 +98,6 @@ class ProductController extends Controller
         $product->is_display = $request->is_display;
         $product->is_avilable = $request->is_avilable;
         $product->stock = $request->stock;
-        $product->product_img = $imgName;
         $product->save();
 
         return redirect()->route('admin.product.index')->with("success","Data Inserted Successfully");
@@ -165,6 +167,11 @@ class ProductController extends Controller
             $imgName = $onlyImgName."-".time().".".$imgExtension;
             $request->product_image->move(public_path('backend_asset/product_images'),$imgName);
             $product->product_img = $imgName;
+
+            // for thumbnail create and save 
+            $img = Image::make(public_path('/backend_asset/product_images/'.$imgName));
+            $img->resize(150,150);
+            $img->save(public_path().'/backend_asset/thumbnail/product_images/'.$imgName);
         }    
 
         $product->product_name = $request->product_name;
@@ -270,7 +277,7 @@ class ProductController extends Controller
                 $data_arr[] = array(
                   "id" => $count,
                   "product_name" => $product_name,
-                  "product image"=>  '<img src="'.asset_img($product_img,'product_images').'" alt="product image" height="100" width="100" >' ,
+                  "product image"=>  '<img src="'.asset_img($record->product_img,'/thumbnail/product_images').'" alt="product image" height="100" width="100" >' ,
                   "category_id" =>$category,
                   "current_price" => $price,
                   "stock" => $stock,
