@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Purchase;
 
+use App\Models\Product;
+
+use App\Models\RatingReview;
+
 use App\Models\role;
 
 use DB;
@@ -33,6 +37,19 @@ class DashboardController extends Controller
 
         $monthArray = array();
 
+        $RecentRating = RatingReview::with('user')->latest()->take(4)->get();
+
+        $TotalOrders = Purchase::count();
+
+        $TotalSales = Purchase::sum('total_amt');
+        
+        $TotalDeliverdOrders = Purchase::where('delivery_status','Delivered')->count();
+
+        $TotalNewOrders = Purchase::where('delivery_status','Ordered')->count();
+
+        $RecentProducts = Product::latest()->take(4)->get();         
+
+        // dd($TotalSales); 
         
         foreach($orders as $order)
         {
@@ -42,7 +59,7 @@ class DashboardController extends Controller
 
         // dd($monthArray);
 
-        return view('backend.dashboard.index',compact('monthArray'));
+        return view('backend.dashboard.index',compact('monthArray','RecentRating','TotalOrders','TotalSales','TotalNewOrders','TotalDeliverdOrders','RecentProducts'));
     }
 
     /**

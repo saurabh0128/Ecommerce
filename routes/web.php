@@ -44,8 +44,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
-    Route::resource('login',AdminController::class);
-    Route::get('logout',[AdminController::class,'logout'])->name('logout');
+    Route::resource('login',AdminController::class)->middleware('guest');
     Route::get('logout',[AdminController::class,'logout'])->name('logout');
 
    

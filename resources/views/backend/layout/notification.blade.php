@@ -32,7 +32,7 @@
                             <span class="text-muted small">
                                 <i class="bi bi-clock me-1"></i> Today
                             </span>
-                            @endforeach
+                          
                         </li>
                         
                     </ul>
