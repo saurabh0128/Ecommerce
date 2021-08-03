@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\SellerPaymentController;
 use App\Http\Controllers\admin\CouponController;
 use App\Http\Controllers\admin\RolePermissionsController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\admin\PageController;
 
 //for notification 
 use App\Models\User;
@@ -50,8 +51,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
    
     Route::group(['middleware' => ['auth','role:admin|SuperAdmin']], function () {
 
-        Route::get('send_notification', [NotificationController::class,'sendnoti']);
-
+       
+        Route::post('page/ajax',[PageController::class,'ajax'])->name('page.ajax');
+        Route::post('page/image_upload',[PageController::class,'image_upload'])->name('page.image_upload');
+        Route::resource('page',PageController::class);
         Route::resource('dashboard',DashboardController::class);
         Route::post('dashboard/ajax',[DashboardController::class,'ajax'])->name('dashboard.ajax');
         Route::resource('user',Usercontroller::class);

@@ -293,8 +293,11 @@
                         {
                             toastr["error"](response.error);
                         }else{
-                            toastr["success"]("Record Deleted Successfully");
+                            toastr["success"](response.success);
+
                             $('#CategoryDatatable').DataTable().draw(false);
+                            $("#Category option[value="+ response.id +"]").remove()
+                            $("#EditCategory option[value=" + response.id +"]").remove()
                         }    
                     }
                 }); 

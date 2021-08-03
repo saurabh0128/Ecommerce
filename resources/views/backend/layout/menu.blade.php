@@ -100,6 +100,20 @@
 
 
             @hasanyrole('SuperAdmin|admin')
+            @can('View Pages')
+            <li>
+                <a href="{{route('admin.page.index')}}">
+                    <span class="nav-link-icon">
+                       <i class="bi bi-shop-window"></i>
+                    </span>
+                    <span>Page</span>
+                </a>   
+            </li>
+            @endcan
+            @endhasanyrole
+
+
+            @hasanyrole('SuperAdmin|admin')
             @can('View Categories')
             <li>
                 <a href="{{route('admin.category.index')}}">

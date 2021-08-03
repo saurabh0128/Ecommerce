@@ -93,7 +93,6 @@
             datatype:'json',
             success:function(response){
                 $('#all-noti').html(response.all_notification);
-                 console.log(response.notification_data);
             }
         });
     });

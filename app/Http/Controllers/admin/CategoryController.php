@@ -139,6 +139,7 @@ class CategoryController extends Controller
     {
         try {
             Category::where('id','=',$id)->delete();
+            return Response()->json(['id'=>$id,'success' => 'Record Deleted Successfully']);
         } catch (QueryException $e) {
             return Response()->json(["error"=> 'You cannot delete a Category directly , First delete a related records ']);
         }
