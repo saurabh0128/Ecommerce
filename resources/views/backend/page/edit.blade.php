@@ -14,7 +14,7 @@ Page Edit
 <div class="card m-3 ">
 	<div class="card-body">	
 		<div class="card-title text-center">Edit Page Form </div>
-		<form id="AddProduct" method="post"  action="{{ route('admin.page.store') }}" enctype="multipart/form-data" >
+		<form id="AddProduct" method="post"  action="{{ route('admin.page.update',$page->id) }}" enctype="multipart/form-data" >
 			@method('PUT')
 			@csrf
 			<div class="row">
@@ -29,30 +29,30 @@ Page Edit
 			    	</div>
 			    	
 			    	<div class="mb-3  ">
-				    	<label  for="is_active" class=" d-block form-label">Is Active?*</label>
+				    	<label  for="page_status" class=" d-block form-label">Is Active?*</label>
 				    	<div class="form-check form-check-inline " >	
-					    	<input class="form-check-input" type="radio"  id="is_active_yes" name="is_active" value="0" 
-					    	@if(old('is_active') ==0) checked @endif >
+					    	<input class="form-check-input" type="radio"  id="is_active_yes" name="page_status" value="0" 
+					    	@if(old('page_status',$page->page_status) == 0) checked @endif >
 					    	<label class="form-check-label" for="is_active_yes"    >
 							    Yes
 							</label>
 				    	</div>
 
 					    <div class="form-check form-check-inline ">
-					    	<input class="form-check-input" type="radio"  id="is_active_no" name="is_active" value="1"
-					    	@if(old('is_active') ==1) checked @endif  >
+					    	<input class="form-check-input" type="radio"  id="is_active_no" name="page_status" value="1"
+					    	@if(old('page_status',$page->page_status) == 1) checked @endif  >
 					    	<label class="form-check-label" for="is_active_no">
 							    No
 							</label>
 						</div>
-						@error('is_active')
+						@error('page_status')
 				    		<p class="text-danger">{{ $message }}</p>
 				    	@enderror
 					</div>
 
 					<div class="mb-3 ">
 						<label for="page_text" class="form-label">Page text* </label>
-							 <textarea name="page_text" rows="5" cols="40" class="form-control tinymce-editor">{{ $page->page_text }}</textarea>
+							 <textarea name="page_text" rows="5" cols="40" class="form-control tinymce-editor">{{ old('page_text',$page->page_text) }}</textarea>
 						</div>
 
 						@error('page_text')

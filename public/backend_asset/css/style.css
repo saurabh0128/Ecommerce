@@ -11,3 +11,10 @@ span.badge.badge-info {
     margin-right: 5px;
     margin-bottom: 5px;
 }
+
+
+.mb-3.col-6.sk {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
