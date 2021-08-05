@@ -21,16 +21,16 @@
     <!-- Bootstrap Docs -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/bootstrap-docs.css')}}" type="text/css">
 
+   
+
+    <!-- Main style file -->
+    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/style.css')}}" type="text/css">
+
+
     <!-- Main style file -->
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/app.min.css')}}" type="text/css">
 
-   <!-- Main style file -->
-    <link rel="stylesheet" href="{{URL::asset('backend_asset/css/style.css')}}" type="text/css">
-
     @yield('css')
-
-
-
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>

@@ -166,6 +166,45 @@ Product Details
 		    <div class="col-1"></div>
 		</div>	
 
+
+		<div class="row">
+			<div class="col-1" ></div>
+			<div class="col-2">
+				<label for="product_long_desc" class="form-label">Seo Title</label>
+			</div>	
+			<div class="col-1">:</div>
+		    <div class="mb-3 col-7 ">
+		    	 {{$product->seo_title}}  
+		    </div>
+		    <div class="col-1"></div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-1" ></div>
+			<div class="col-2">
+				<label for="product_long_desc" class="form-label">Seo Keyword</label>
+			</div>	
+			<div class="col-1">:</div>
+		    <div class="mb-3 col-7 ">
+		    	 {{$product->seo_keyword}}  
+		    </div>
+		    <div class="col-1"></div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-1" ></div>
+			<div class="col-2">
+				<label for="product_long_desc" class="form-label">Seo Description</label>
+			</div>	
+			<div class="col-1">:</div>
+		    <div class="mb-3 col-7 ">
+		    	 {{$product->seo_description}}  
+		    </div>
+		    <div class="col-1"></div>
+		</div>	
+
 	</div>
 </div>
 @endsection

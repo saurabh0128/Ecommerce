@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 namespace App\Http\Controllers\admin;
 
@@ -68,7 +68,10 @@ class ProductController extends Controller
             "product_image" => "required|image|max:2048",
             "stock" => "required|numeric",
             "is_display" => "required",
-            "is_avilable" => "required"
+            "is_avilable" => "required",
+            "seo_title" => "required",
+            "seo_keyword" =>"required",
+            "seo_description" => "required"
         ],
         [
             "regex"=>"Only number and decimal allowed"
@@ -98,6 +101,9 @@ class ProductController extends Controller
         $product->is_display = $request->is_display;
         $product->is_avilable = $request->is_avilable;
         $product->stock = $request->stock;
+        $product->seo_title = $request->seo_title;
+        $product->seo_keyword = $request->seo_keyword;
+        $product->seo_description = $request->seo_description;
         $product->save();
 
         return redirect()->route('admin.product.index')->with("success","Data Inserted Successfully");
