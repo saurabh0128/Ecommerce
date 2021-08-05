@@ -104,9 +104,22 @@
             <li>
                 <a href="{{route('admin.page.index')}}">
                     <span class="nav-link-icon">
-                       <i class="bi bi-shop-window"></i>
+                      <i class="bi bi-card-heading"></i>
                     </span>
                     <span>Page</span>
+                </a>   
+            </li>
+            @endcan
+            @endhasanyrole
+
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Slider')
+            <li>
+                <a href="{{route('admin.slide.index')}}">
+                    <span class="nav-link-icon">
+                       <i class="bi bi-shop-window"></i>
+                    </span>
+                    <span>Slider</span>
                 </a>   
             </li>
             @endcan

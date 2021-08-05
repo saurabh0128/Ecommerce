@@ -27,21 +27,21 @@ Page Create
 			    	</div>
 
 			    	<div class="mb-3  ">
-				    	<label  for="is_active" class=" d-block form-label">Is Active?*</label>
+				    	<label  for="page_status" class=" d-block form-label">Is Active?*</label>
 				    	<div class="form-check form-check-inline " >	
-					    	<input class="form-check-input" type="radio"  id="is_active_yes" name="is_active" value="0" >
+					    	<input class="form-check-input" type="radio"  id="is_active_yes" name="page_status" value="0" >
 					    	<label class="form-check-label" for="is_active_yes">
 							    Yes
 							</label>
 				    	</div>
 
 					    <div class="form-check form-check-inline ">
-					    	<input class="form-check-input" type="radio"  id="is_active_no" name="is_active" value="1" >
+					    	<input class="form-check-input" type="radio"  id="is_active_no" name="page_status" value="1" >
 					    	<label class="form-check-label" for="is_active_no">
 							    No
 							</label>
 						</div>
-						@error('is_active')
+						@error('page_status')
 				    		<p class="text-danger">{{ $message }}</p>
 				    	@enderror
 					</div>

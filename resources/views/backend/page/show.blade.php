@@ -53,7 +53,7 @@ Page Details
 		<div class="row">
 			<div class="col-1"></div>
 		    <div class="mb-3 col-10 ">
-			    <textarea name="page_text" rows="5" cols="40" class="form-control tinymce-editor">{{ $page->page_text }}</textarea>   
+			    <textarea name="page_text" rows="5" cols="40" class="form-control ">{{ $page->page_text }}</textarea>   
 		    </div>
 		    <div class="col-1"></div>
 		</div>
@@ -74,7 +74,7 @@ Page Details
 	 	tinymce.init({
             selector: 'textarea',
             readonly:true,
-            height: 300
+            height: 500
         });
 	 </script>
 

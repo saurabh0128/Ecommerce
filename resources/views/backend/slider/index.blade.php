@@ -1,9 +1,8 @@
 @extends('backend.layout.app')
 
 @section('title')
-Page
+	Slider
 @endsection
-
 
 @section('css')
 	<!-- DataTable -->
@@ -16,33 +15,33 @@ Page
     <link rel="stylesheet" href="{{URL::asset('backend_asset/css/toastr.css')}}" type="text/css">
 @endsection
 
-
 @section('content')
 
-	 <!-- content -->
-    <div class="content ">
-        
+<!-- content -->
+<div class="content ">        
     <div class="row">
         <div class="col-lg-12 bd-content">
             
             <div class="p-3">
-                <h4 class="d-inline" >Page Detail</h4>
-                @can('Add Pages')
-                <a href="{{route('admin.page.create')}}" >
+                <h4 class="d-inline" >Slider Detail</h4>
+                @can('Add Slider')
+                <a href="{{route('admin.slide.create')}}" >
                     <button class="btn btn-primary btn-icon d-inline float-end"  >
-                            <i class="bi bi-plus-circle"></i> Add Page
+                            <i class="bi bi-plus-circle"></i> Add slider
                     </button>
                 </a>
                 @endcan
             </div>
             <div class="card">
                 <div class="card-body">
-                    <table id="PageDatatable" class="table">
+                    <table id="SlideDatatable" class="table">
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Page Name</th>
-                            <th>Page Status</th>
+                            <th>Slide Image</th>
+                            <th>Slide Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -50,8 +49,10 @@ Page
                         <tfoot>
                         <tr>
                             <th>Id</th>
-                            <th>Page Name</th>
-                            <th>Page Status</th>
+                            <th>Slide Image</th>
+                            <th>Slide Status</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Action</th>
                         </tr>
                         </tfoot>
@@ -61,16 +62,12 @@ Page
             </div>
         </div>
     </div>
-
-    </div>
-    <!-- ./ content -->
-
+</div>
+<!-- ./ content -->
 
 @endsection
 
 @section('js')
-
-
 	<!-- Datatable -->
     <script src="{{URL::asset('backend_asset/libs/dataTable/datatables.min.js')}}"></script>
 
@@ -80,12 +77,8 @@ Page
     <!-- toaster js -->
     <script src="{{URL::asset('backend_asset/js/toastr.min.js')}}"></script>
 
-
-
-
-    <script type="text/javascript" charset="utf-8" async defer>
-
-         toastr.options = {
+    <script type="text/javascript">
+    	 toastr.options = {
           "closeButton": true,
           "debug": false,
           "newestOnTop": false,
@@ -103,19 +96,25 @@ Page
           "hideMethod": "fadeOut"
         }
 
+        @if(Session::get('success'))      
+            toastr["success"]("{{Session::get('success')}}")
+        @endif
 
-        $('#PageDatatable').DataTable({ 
+
+         	$('#SlideDatatable').DataTable({ 
                 processing: true,
                 serverSide: true,
                 ajax:{
                     type:'post',
-                    url:'{{ route('admin.page.ajax')}}',
+                    url:'{{ route('admin.slide.ajax')}}',
                     data:{'_token':'{{ csrf_token() }}','data':'datatable'}
                 },
                 columns:[
                     {data:'id',name:'DT_RowIndex'},
-                    {data:"page_name"},
-                    {data:"page_status"},
+                    {data:"slide_image"},
+                    {data:"slide_status"},
+                    {data:'start_date'},
+                    {data:'end_date'},
                     {
                         data:'action',
                         name:'action',
@@ -125,11 +124,7 @@ Page
                 ]
             });
 
-        @if(Session::get('success'))      
-            toastr["success"]("{{Session::get('success')}}")
-        @endif
-
-        function DeleteFunc(id){
+         	function DeleteFunc(id){
              //For remove a progressbar and set a closebutton
             toastr.options = {
                 "progressBar":false,
@@ -141,7 +136,7 @@ Page
             $('#cnf_del_btn').click(function(){
                 $.ajax({
                     type:'post',
-                    url:"{{route('admin.page.destroy','')}}"+'/'+id,
+                    url:"{{route('admin.slide.destroy','')}}"+'/'+id,
                     data:{'_token':'{{ csrf_token() }}','_method':'delete'},
                     success:function (response){
                         if(response.error){
@@ -149,12 +144,13 @@ Page
                         }
                         else{
                             toastr["success"]("Record Deleted Successfully");
-                            $('#PageDatatable').DataTable().draw(false);
+                            $('#SlideDatatable').DataTable().draw(false);
                         } 
                     }
                 });
             });
         }
+
 
     </script>
 

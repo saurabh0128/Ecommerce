@@ -4,12 +4,22 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 use  App\Models\Page;
 
 
 class PageController extends Controller
 {
+
+     //Constructer for specifying a middleware of roles and permission
+    public function __construct()
+    {
+        $this->middleware('permission:View Pages',['only'=>['index']]);
+        $this->middleware('permission:Add  Pages' , ['only'=>['create']]);
+        $this->middleware('permission:Edit Pages',['only'=>['edit']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +50,8 @@ class PageController extends Controller
     {
         $request->validate([
             "page_name" => 'required',
-            "page_text" => 'required'
+            "page_text" => 'required',
+            'page_status' => 'required'
         ]);
 
 
@@ -48,7 +59,7 @@ class PageController extends Controller
         $page = new Page();
         $page->page_name = $request->page_name;
         $page->page_text = $request->page_text;
-        $page->page_status = $request->is_active;
+        $page->page_status = $request->page_status;
         $page->save();
 
         return redirect()->route('admin.page.index')->with("success","Data Inserted Successfully");
@@ -88,8 +99,20 @@ class PageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        $request->validate([
+            "page_name" => 'required',
+            "page_text" => 'required',
+            'page_status' => 'required'
+        ]);
+        
+        $page = Page::find($id);
+        $page->page_name = $request->page_name;
+        $page->page_text = $request->page_text;
+        $page->page_status = $request->page_status;
+        $page->save();
+
+        return redirect()->route('admin.page.index')->with("success","Data Updated Successfully");   
     }
 
     /**
@@ -100,7 +123,11 @@ class PageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            Page::where('id','=',$id)->delete();
+        } catch (QueryException $e) {
+            return Response()->json(["error"=> 'You cannot delete a Page directly , First delete a related records ']);
+        }
     }
 
     public function ajax(Request $request)
@@ -188,6 +215,6 @@ class PageController extends Controller
         $imgExtension = $request->file->getClientOriginalExtension(); 
         $imgName = $onlyImgName."-".time().".".$imgExtension;
         $request->file->move(public_path('backend_asset/pages_images'),$imgName);
-        return response()->json(['location'=>"/backend_asset/pages_images/".$imgName ]); 
+        return response()->json(['location'=>"/../backend_asset/pages_images/".$imgName ]); 
     }
 }
