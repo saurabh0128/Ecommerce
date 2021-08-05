@@ -11,14 +11,14 @@ use App\Models\UserAddress;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
 use Illuminate\Notifications\Notifiable;
+
+use Laravel\Passport\HasApiTokens;
 
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable {
-	use HasFactory, HasRoles;
-	use Notifiable;
+	use HasFactory, HasRoles, HasApiTokens, Notifiable;
 
 	protected $filable = [
 		'name',
@@ -68,4 +68,7 @@ class User extends Authenticatable {
 		return $this->hasMany(RatingReview::class , 'user_id');
 	}
 
+	public function role() {
+		return $this->belongsToMany(role::class , 'model_has_roles', 'model_id', 'role_id');
+	}
 }

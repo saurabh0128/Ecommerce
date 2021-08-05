@@ -9,6 +9,7 @@ use App\Models\SellerInfos;
 use App\Models\UserAddress;
 use App\Models\Category;
 use App\Models\SellerCategory;
+use Laravel\Passport\HasApiTokens;
 
 use Spatie\Permission\Traits\HasRoles;
 
@@ -16,9 +17,8 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory,HasRoles;
-    use Notifiable;
-
+    use HasFactory,HasRoles,HasApiTokens,Notifiable;
+    
     protected $filable = [
         'name',
         'user_name',

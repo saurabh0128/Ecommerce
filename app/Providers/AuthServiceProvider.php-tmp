@@ -1,0 +1,33 @@
+
+Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+use Laravel\Passport\Passport;
+
+class AuthServiceProvider extends ServiceProvider {
+	/**
+	 * The policy mappings for the application.
+	 *
+	 * @var array
+	 */
+	protected $policies = [
+		'App\Models\Model' => 'App\Policies\ModelPolicy',
+	];
+
+	/**
+	 * Register any authentication / authorization services.
+	 *
+	 * @return void
+	 */
+	public function boot() {
+		$this->registerPolicies();
+
+		// if (! $this->app->routesAreCached()) {
+		Passport::routes();
+		// }
+	}
+}
