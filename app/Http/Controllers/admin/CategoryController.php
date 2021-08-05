@@ -75,7 +75,7 @@ class CategoryController extends Controller
         }
         else
         {
-             return Response()->json(["success"=> "data inserted successfully"]);
+            return Response()->json(["success"=> "data inserted successfully"]);
         }
     }
 

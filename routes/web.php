@@ -62,7 +62,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::resource('dashboard',DashboardController::class);
         Route::post('dashboard/ajax',[DashboardController::class,'ajax'])->name('dashboard.ajax');
         Route::resource('user',Usercontroller::class);
-        Route::post('user/ajax',[Usercontroller::class,'ajax'])->name('user.ajax');
+        Route::post('user/ajax',[Usercontroller::class,'ajax'])->name('user.ajax') ;
         Route::resource('seller',SellerController::class);
         Route::post('seller/ajax',[SellerController::class,'ajax'])->name('seller.ajax');
         Route::resource('category',CategoryController::class);

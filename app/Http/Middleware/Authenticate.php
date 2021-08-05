@@ -12,7 +12,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 
-class Authenticate //extends Middleware
+class Authenticate extends Middleware
 {
     /**
      * Get the path the user should be redirected to when they are not authenticated.
@@ -25,15 +25,15 @@ class Authenticate //extends Middleware
 
     public function handle(Request $request, Closure $next)
     {
-        $id = Auth::id();
+       
 
-       if($id)
-       { 
+        if(auth()->id()){
             return $next($request);
-       }
-       else {
+        }elseif(auth('api')->id()){
+            return $next($request); 
+        }else{
             throw new HttpException(404);
-        } 
+        }
     }
 
 
