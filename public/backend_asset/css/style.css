@@ -18,3 +18,14 @@ span.badge.badge-info {
     flex-wrap: wrap;
     align-content: center;
 }
+
+
+.mode-center{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.test-css{
+    padding-right: 10px;
+}

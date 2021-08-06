@@ -10,4 +10,20 @@
 		}	
 		return $img_default;
 	}
+
+	//function for get setting values from setting name
+	function SettingValue($SettingArray,$SettingName)
+	{	
+
+		$SettingIndex = array_search($SettingName,array_column($SettingArray,'setting_name'));
+		if($SettingIndex !== false)
+		{
+			return	$SettingArray[$SettingIndex]['setting_value'];
+		}
+	}
+
+	function sk()
+	{
+		return 'aa';	
+	}
 ?>
