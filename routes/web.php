@@ -18,6 +18,7 @@ use App\Http\Controllers\admin\RolePermissionsController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\SliderController;
+use App\Http\Controllers\admin\SettingController;
 
 //for notification 
 use App\Models\User;
@@ -52,6 +53,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
    
     Route::group(['middleware' => ['auth','role:admin|SuperAdmin']], function () {
 
+        Route::resource('setting', SettingController::class);
         Route::resource('slide', SliderController::class);
         Route::post('slide/ajax',[SliderController::class,'ajax'])->name('slide.ajax');
         Route::post('page/ajax',[PageController::class,'ajax'])->name('page.ajax');

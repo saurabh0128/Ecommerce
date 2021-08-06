@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateUserTable extends Migration
+class UpdateProducts1Table extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class UpdateUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users',function(Blueprint $table){
-            $table->dropcolumn('roll_id');
+        Schema::table('products', function(Blueprint $table) {
+            $table->string('seo_title',150);
+            $table->text('seo_description');
+            $table->text('seo_keyword');
         });
     }
 

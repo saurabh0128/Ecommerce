@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatesTable extends Migration
+class UpdateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
-            $table->id();
-            $table->string('StateName',40);
-            $table->timestamps();
+        Schema::table('settings', function (Blueprint $table) {
+            $table->text('setting_value')->nullable()->change();
         });
     }
 
@@ -27,6 +25,6 @@ class CreateStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('states');
+        //
     }
 }
