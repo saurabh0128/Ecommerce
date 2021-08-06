@@ -5,13 +5,16 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\RatingReview;
-
 use DB;
-
 use Illuminate\Http\Request;
 
 class RatingController extends Controller {
+
+	//Constructer for specifying a middleware of roles and permission
+	public function __construct() {
+		$this->middleware('permission:View Rating Reviews', ['only' => ['index']]);
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *

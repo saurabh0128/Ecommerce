@@ -122,7 +122,7 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        try {
+        try{
             Permissions::where('id','=',$id)->delete();
         } catch (Exception $e) {
              return Response()->json(["error"=> 'You cannot delete a Permission directly , First delete a related records ']);

@@ -17,19 +17,6 @@ class UpdateSellerinfoTable extends Migration
             $table->string('gst_no',30)->change();
             $table->string('ifsc_code',20)->change();
         });
-
-        Schema::table('states',function(Blueprint $table){
-            $table->renameColumn('create_at','created_at');
-        });
-
-        Schema::table('citys',function(Blueprint $table){
-            $table->renameColumn('create_at','created_at');
-        });
-
-        Schema::table('categorys',function(Blueprint $table){
-            $table->renameColumn('create_at','created_at');
-        });
-
     }
 
     /**

@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->string('email_id',40);
             $table->string('password',100);
             $table->string('profile_img',50);
-            $table->foreignId('roll_id')->constrained('rolls')->onUpdate('cascade');
             $table->tinyInteger('is_verified');
             $table->tinyInteger('is_block');
             $table->timestamps();

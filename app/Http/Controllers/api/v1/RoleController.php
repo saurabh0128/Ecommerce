@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
+use App\Models\Role as roll;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use Validator;
 
 class RoleController extends Controller
 {
@@ -36,7 +38,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            "role_name" => "required|unique:roles,name"
+        ]);
+        if($validator->fails())
+        {
+            return Response()->json(["error"=>$validator->errors()->all()]);
+        }else{
+            Role::create(['name'=>$request->role_name ]);
+            return Response()->json(["success"=>"Data Inserted Successfully"]);
+        }
     }
 
     /**
@@ -58,7 +69,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -70,7 +81,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $Validator = Validator::make($request->all(),[
+            "role_name" => 'required|unique:roles,name,'.$id
+        ]);
+        if($Validator->fails())
+        {
+            return Response()->json(["error"=>$Validator->errors()->all()]);
+        }
+        $role = roll::where('id','=',$id)->first();
+        $role->name = $request->role_name;
+        $role->save();
+        return Response()->json(['success'=>'Data Updated Successfully']);
     }
 
     /**
@@ -81,6 +102,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        roll::where('id','=',$id)->delete();
+        return Response()->json(['success'=>'Data deleted Successfully']);
     }
 }

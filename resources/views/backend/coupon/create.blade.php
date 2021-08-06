@@ -85,7 +85,7 @@ Add coupon
 			    </div>
 			    <div class="mb-3 col-5 ">
 			    	<label for="total_uses" class="form-label">total uses</label>
-			    	<input type="text" class="form-control" id="total_uses" name="total_uses" value="{{ old('total_uses') }}"   >
+			    	<input type="NUMBER" class="form-control" id="total_uses" name="total_uses" value="{{ old('total_uses') }}"   >
 			    	@error('total_uses')
 			    		<p class="text-danger">{{ $message }}</p>
 			    	@enderror

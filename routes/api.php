@@ -7,6 +7,14 @@ use App\Http\Controllers\api\v1\LoginController;
 use App\Http\Controllers\api\v1\SellerController;
 use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\api\v1\RoleController;
+use App\Http\Controllers\api\v1\ProductController;
+use App\Http\Controllers\api\v1\CouponController;
+use App\Http\Controllers\api\v1\ProfileController;
+use App\Http\Controllers\api\v1\PermissionController;
+use App\Http\Controllers\api\v1\RatingController;
+use App\Http\Controllers\api\v1\OrderController;
+use App\Http\Controllers\api\v1\SliderController;
+use App\Http\Controllers\api\v1\RolePermissionsController;
 
 
 /*
@@ -26,12 +34,20 @@ use App\Http\Controllers\api\v1\RoleController;
 
 
     Route::resource('login',LoginController::class);
+    Route::resource('/user',UserController::class);
     
-    Route::group(['middleware' => 'auth:api'],function(){
-        Route::resource('/user',UserController::class);
+    Route::group(['middleware' => 'auth:api','prefix' => 'v1'],function(){
         Route::resource('/seller',SellerController::class);
         Route::resource('/category',CategoryController::class);
-        Route::resource('/role',RoleController::class);
+       // Route::resource('/role',RoleController::class);
+        Route::resource('/product',ProductController::class);
+        Route::resource('/coupon',CouponController::class);
+        Route::resource('/profile',ProfileController::class);
+        Route::resource('/permission',PermissionController::class);
+        Route::resource('/rating',RatingController::class);
+        Route::resource('/order',OrderController::class);
+        Route::resource('/slider',SliderController::class);
+        Route::resource('/rolepermission',RolePermissionsController::class);
 
     });
     // Route::middleware('auth:api')->resource('/user','App\Http\Controllers\api\v1\UserController@index');

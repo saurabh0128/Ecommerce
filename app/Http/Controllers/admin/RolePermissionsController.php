@@ -6,12 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
 use App\Models\RoleHasPermission;
-
 use App\Models\Role as roles;
-
-
 use Validator;
 
 
