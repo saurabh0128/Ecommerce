@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use Illuminate\Database\QueryException;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;

@@ -200,7 +200,7 @@ class ProductController extends Controller
         try {
             Product::where('id','=',$id)->delete();
         } catch (QueryException $e) {
-             return Response()->json(["error"=> 'You cannot delete a Product directly , First delete a related records ']);
+            return Response()->json(["error"=> 'You cannot delete a Product directly , First delete a related records ']);
         }
     }
 
