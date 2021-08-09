@@ -22,8 +22,8 @@
 		}
 	}
 
-	function sk()
-	{
-		return 'aa';	
-	}
+	// function sk()
+	// {
+	// 	return 'aa';	
+	// }
 ?>

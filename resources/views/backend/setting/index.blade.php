@@ -197,31 +197,31 @@
 								  			</div>
 								  			<div class="col-6 ">
 											    	<label for="paypal_app_id" class="form-label">app id </label>
-											    	<input type="text" value="{{ old('paypal_app_id',SettingValue($AllSettingsData,'paypal_detail')) }}"  class="form-control form-control-sm" id="paypal_app_id" name="paypal_app_id">
+											    	<input type="text" value="{{ old('paypal_app_id',SettingValue($AllSettingsData,'paypal_details')['app_id']) }}"  class="form-control form-control-sm" id="paypal_app_id" name="paypal_app_id">
 										    </div>
 								    	</div>
 								    	
 								    	<div class="mb-2 row">
 								    			<div class="col-6 ">
 											    	<label for="paypal_username" class="form-label">Username </label>
-											    	<input type="text" value="{{ old('paypal_username',SettingValue($AllSettingsData,'paypal_username')) }}"  class="form-control form-control-sm" id="paypal_username" name="paypal_username">
+											    	<input type="text" value="{{ old('paypal_username',SettingValue($AllSettingsData,'paypal_details')['username']) }}"  class="form-control form-control-sm" id="paypal_username" name="paypal_username">
 										    	</div>
 
 										    	<div class="col-6 ">
 											    	<label for="paypal_password" class="form-label">Password </label>
-											    	<input type="text" value="{{ old('paypal_password',SettingValue($AllSettingsData,'paypal_password')) }}" class="form-control form-control-sm" id="paypal_password" name="paypal_password">
+											    	<input type="text" value="{{ old('paypal_password',SettingValue($AllSettingsData,'paypal_details')['password']) }}" class="form-control form-control-sm" id="paypal_password" name="paypal_password">
 										    	</div>
 								    	</div>
 
 								    	<div class="mb-2 row">
 								    			<div class="col-6 ">
 											    	<label for="paypal_secret" class="form-label">Secret </label>
-											    	<input type="text" value="{{ old('paypal_secret',SettingValue($AllSettingsData,'paypal_secret')) }}"  class="form-control form-control-sm" id="paypal_secret" name="paypal_secret">
+											    	<input type="text" value="{{ old('paypal_secret',SettingValue($AllSettingsData,'paypal_details')['secret']) }}"  class="form-control form-control-sm" id="paypal_secret" name="paypal_secret">
 										    	</div>
 
 										    	<div class="col-6 ">
 											    	<label for="paypal_certificate" class="form-label">certificate </label>
-											    	<input type="text"  value="{{ old('paypal_certificate',SettingValue($AllSettingsData,'paypal_certificate')) }}"  class="form-control form-control-sm" id="paypal_certificate" name="paypal_certificate">
+											    	<input type="text"  value="{{ old('paypal_certificate',SettingValue($AllSettingsData,'paypal_details')['certificate']) }}"  class="form-control form-control-sm" id="paypal_certificate" name="paypal_certificate">
 										    	</div>
 								    	</div>
 
@@ -243,21 +243,19 @@
 										    		<label class="form-check-label" for="stripe_mode" >live </label>
 										      </div>
 								  			</div>
-
 								    	</div>
 
 								    	<div class="mb-2 row">
 
 								    			<div class="col-6 ">
 											    	<label for="live_stripe_key" class="form-label">live Stripe Key </label>
-											    	<input type="text" value="{{ old('live_stripe_key',SettingValue($AllSettingsData,'live_stripe_key')) }}"  class="form-control form-control-sm" id="live_stripe_key" name="live_stripe_key">
+											    	<input type="text" value="{{ old('live_stripe_key',SettingValue($AllSettingsData,'stripe_details')['live_stripe_key']) }}"  class="form-control form-control-sm" id="live_stripe_key" name="live_stripe_key">
 										    	</div>
 
 										    	<div class="col-6 ">
 											    	<label for="live_stripe_secret_key" class="form-label">live secret </label>
 											    	<input type="text"  class="form-control form-control-sm"  
-                                                    value="{{ old('live_stripe_secret_key',SettingValue($AllSettingsData,'live_stripe_secret_key')) }}"  id="live_stripe_secret_key" 
-                                                        name="live_stripe_secret_key">
+                                                    value="{{ old('live_stripe_secret_key',SettingValue($AllSettingsData,'stripe_details')['live_secret_key']) }}"  id="live_stripe_secret_key" name="live_stripe_secret_key">
 										    	</div>
 
 								    	</div>
@@ -265,12 +263,12 @@
 								    	<div class="mb-2 row">
 								    			<div class="col-6 ">
 											    	<label for="test_stripe_key" class="form-label">test Stripe Key </label>
-											    	<input type="text" value="{{ old('test_stripe_key',SettingValue($AllSettingsData,'test_stripe_key')) }}"  class="form-control form-control-sm" id="test_stripe_key" name="test_stripe_key">
+											    	<input type="text" value="{{ old('test_stripe_key',SettingValue($AllSettingsData,'stripe_details')['test_stripe_key']) }}"  class="form-control form-control-sm" id="test_stripe_key" name="test_stripe_key">
 										    	</div>
 
 										    	<div class="col-6 ">
 											    	<label for="test_stripe_secret_key" class="form-label">test secret </label>
-											    	<input type="text" value="{{ old('test_stripe_secret_key',SettingValue($AllSettingsData,'test_stripe_secret_key')) }}"  class="form-control form-control-sm" id="test_stripe_secret_key" name="test_stripe_secret_key">		
+											    	<input type="text" value="{{ old('test_stripe_secret_key',SettingValue($AllSettingsData,'stripe_details')['test_secret_key']) }}"  class="form-control form-control-sm" id="test_stripe_secret_key" name="test_stripe_secret_key">		
 										    	</div>	
 								    	</div>
 								  </div>

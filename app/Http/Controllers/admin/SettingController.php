@@ -231,69 +231,63 @@ class SettingController extends Controller
             'app_id' =>  $request->paypal_app_id,
             'username' => $request->paypal_username,
             'password' => $request->paypal_password,
-            'secret' => $request->secret,
+            'secret' => $request->paypal_secret,
             'certificate' => $request->paypal_certificate,
         ];
-
         $setting_paypal_details->setting_value = $PaypalDetailArray;
         $setting_paypal_details->save();
 
 
+        $setting_paypal_mode = Setting::where('setting_name','paypal_mode')->first();
+        if(!$setting_paypal_mode)
+        {
+            $setting_paypal_mode = new Setting();
+            $setting_paypal_mode->setting_name = 'paypal_mode';
+        }
+        $setting_paypal_mode->setting_value = isset($request->paypal_mode)?1:0;
+        $setting_paypal_mode->save();
 
-    
+
+
+        $setting_stripe_active = Setting::where('setting_name','stripe_active')->first();
+        if(!$setting_stripe_active)
+        {
+            $setting_stripe_active = new Setting();
+            $setting_stripe_active->setting_name = 'stripe_active';
+        }
+        $setting_stripe_active->setting_value = isset($request->stripe_active)?1:0;
+        $setting_stripe_active->save();
+
+
+
+        $setting_stripe_mode = Setting::where('setting_name','stripe_mode')->first();
+        if(!$setting_stripe_mode)
+        {
+            $setting_stripe_mode = new Setting();
+            $setting_stripe_mode->setting_name = 'stripe_mode';
+        }
+        $setting_stripe_mode->setting_value = isset($request->stripe_mode)?1:0;
+        $setting_stripe_mode->save();
+
+
+
+        $setting_stripe_details = Setting::where('setting_name','stripe_details')->first();
+        if(!$setting_stripe_details)
+        {
+            $setting_stripe_details = new Setting();
+            $setting_stripe_details->setting_name = 'stripe_details';
+        }
+        $StripeDetailArray = [
+            'live_stripe_key' => $request->live_stripe_key,
+            'live_secret_key' => $request->live_stripe_secret_key,
+            'test_stripe_key' => $request->test_stripe_key,
+            'test_secret_key' => $request->test_stripe_secret_key
+        ];
+        $setting_stripe_details->setting_value = $StripeDetailArray;
+        $setting_stripe_details->save();
+
 
         
-
-         // $AllSettings = $request->all();
-         // dd($AllSettings);
-         // foreach( $AllSettings as $key => $value )
-         // {
-         //    if($key == '_token')
-         //    {
-         //        continue;
-         //    }
-            
-         //    $setting = Setting::where('setting_name',$key)->first();
-         //    if($setting != Null)
-         //    {
-         //        //if condition for logo image 
-         //       if($key == 'logo'){
-         //            $setting->setting_value = $imgName;
-         //       }
-         //       else{
-         //            if(preg_match('(cod_active|paypal_active|paypal_mode|stripe_active|stripe_mode)',$key) === 1)
-         //            {
-         //                // dd($key);
-         //                $setting->setting_value = $value == null?0:1;
-         //            }
-         //            else
-         //            {
-         //                $setting->setting_value = $value; 
-         //            } 
-         //       } 
-         //       $setting->save(); 
-         //    }
-         //    else{
-                
-         //        $NewSetting = new Setting();
-         //        $NewSetting->setting_name = $key;
-         //        //if condition for logo image 
-         //        if($key == 'logo'){
-         //            $NewSetting->setting_value = $imgName;
-         //        }
-         //        else{
-         //            if(preg_match('(cod_active|paypal_active|paypal_mode|stripe_active|stripe_mode)',$key) === 1)
-         //            {
-         //                $NewSetting->setting_value = $value === null?0:1;
-         //            }
-         //            else
-         //            {
-         //                $NewSetting->setting_value = $value; 
-         //            }  
-         //        } 
-         //        $NewSetting->save();
-         //    }
-         // }
          
         return redirect()->route('admin.setting.index')->with("success","Setting Save Successfully");  
     }   
