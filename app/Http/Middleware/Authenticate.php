@@ -25,8 +25,6 @@ class Authenticate //extends Middleware
 
     public function handle(Request $request, Closure $next)
     {
-       
-
         if(auth()->id()){
             return $next($request);
         }elseif(auth('api')->id()){

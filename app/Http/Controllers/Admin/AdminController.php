@@ -56,7 +56,7 @@ class AdminController extends Controller
         ]);
 
 
-        if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password]))
+        if(Auth::attempt(['user_name'=>$request->username, 'password'=>$request->password])   )
         {
 
             // $user =Auth()->user();

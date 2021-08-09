@@ -203,6 +203,8 @@
             </li>
             @endcan
             @endhasanyrole
+
+
            
             @hasanyrole('SuperAdmin|admin')
             @can('View Locations')
@@ -225,6 +227,21 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+            @endcan
+            @endhasanyrole
+
+
+            
+            @hasanyrole('SuperAdmin|admin')
+            @can('View Rating Reviews')
+            <li>
+                <a href="{{route('admin.setting.index')}}">
+                    <span class="nav-link-icon">
+                       <i class="bi bi-gear-fill"></i>
+                    </span>
+                    <span>Settings</span>
+                </a>
             </li>
             @endcan
             @endhasanyrole

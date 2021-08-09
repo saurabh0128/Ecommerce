@@ -26,7 +26,6 @@ Add Product
 	<div class="card-body">	
 		<div class="card-title text-center">Add Product Form </div>
 		<form id="AddProduct" method="post"  action="{{ route('admin.product.store') }}" enctype="multipart/form-data" >
-
 			@csrf
 			<div class="row">
 				<div class="col-1"></div>
