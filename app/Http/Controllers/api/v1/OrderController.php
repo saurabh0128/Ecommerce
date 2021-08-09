@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -12,6 +13,7 @@ use App\Models\Product;
 use App\Models\PurchaseItems;
 use App\Models\UserAddress;
 use Carbon\carbon;
+use Validator;
 
 class OrderController extends Controller
 {
@@ -22,11 +24,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $purchase = Purchase::all();
+        $user_id = auth('api')->id();
+        $purchase = Purchase::with('user','user_address','billing_address','purchase_item')->where('user_id',$user_id)->get();
 
         return Response()->json($purchase);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -45,16 +47,16 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "user" =>"required",
+        // dd($request->all());
+        $Validator = Validator::make($request->all(),[
             "customer_name"=>"nullable|regex:/^[\pL\s]+$/u",
             "deliveryAddress"=>"required",
             "billingAddress" =>"required",
             "product"=> "required",
-            "qty"=>'required|numeric|max:10',
+            "qty"=>'required|max:10',
             "is_payed"=>"required",
             "payment_mode"=>"required",
-            "transaction_no"=>"numeric|nullable|min:3|max:30"
+            "transaction_no"=>"numeric|nullable|digits_between:3,30"
         ],
         [
             "regex"=>"only alphabet and space allowed"
@@ -65,13 +67,11 @@ class OrderController extends Controller
             return Response()->json(['error'=>$Validator->errors()->all()]);
         }else{
 
-            $user = User::find($request->user);
-            $products = Product::find($request->product);
-
+            $user =  auth('api')->user();
+            
             $purchase = new Purchase;
-            $purchase_item = new PurchaseItems;
-
-            $purchase->user_id = $request->user;
+        
+            $purchase->user_id = $user->id;
             $purchase->customer_name = $user->user_name;
             $purchase->user_address_id = $request->deliveryAddress;
             $purchase->billing_address_id = $request->billingAddress;
@@ -80,7 +80,7 @@ class OrderController extends Controller
                 $purchase->coupon_id = $request->coupon;
             }
             $purchase->shipping_amt = 0;
-            $purchase->total_amt = isset($products->special_price)?$products->special_price:$products->current_price * $request->qty;
+            $purchase->total_amt = 0;
             $purchase->is_payed = $request->is_payed;
             $purchase->payment_mode = $request->payment_mode;
             if(isset($request->transaction_no))
@@ -88,7 +88,6 @@ class OrderController extends Controller
                 $purchase->transaction_no = $request->transaction_no;
             }
 
-         
             $purchase->purchase_date = carbon::parse(now())->format(env('APP_DATE_FORMAT'));
             $purchase->delivery_date = Carbon::now()->addDays(7)->format(env('APP_DATE_FORMAT'));
             $purchase->purchase_status = 'panding';
@@ -96,15 +95,28 @@ class OrderController extends Controller
 
             $purchase->save();
 
-            $purchase_item->purchase_id = $purchase->id;
-            $purchase_item->product_id = $request->product;
-            $purchase_item->product_name = $products->product_name;
-            $purchase_item->product_desc = $products->product_desc;
-            // echo $request->qty;
-            $purchase_item->qty = $request->qty;
-            $purchase_item->price = isset($products->special_price)?$products->special_price:$products->current_price;
-            
-            $purchase_item->save();
+            $count = count($request->product);
+            $total =  0;
+            for($i=$count-1;$i>=0;$i--)
+            {
+                $purchase_item = new PurchaseItems;
+
+                $purchase_item->purchase_id = $purchase->id;
+                $products = Product::find($request->product[$i]);
+                $purchase_item->product_id = $products->id;
+                $purchase_item->product_name = $products->product_name;
+                $purchase_item->product_desc = $products->product_desc;
+                $purchase_item->qty =$request->qty[$i];
+                $purchase_item->price = isset($products->special_price)?$products->special_price*$request->qty[$i]:$products->current_price*$request->qty[$i];
+                $total += isset($products->special_price)?$products->special_price*$request->qty[$i]:$products->current_price*$request->qty[$i];
+                
+                $purchase_item->save();
+            }
+
+            $purchase = Purchase::find($purchase->id);
+            $purchase->total_amt = $total;
+
+            $purchase->save();
 
             return Response()->json(['success'=>'Data Inserted Successfully']);
         }
@@ -118,7 +130,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $purchase = Purchase::with('user','user_address','billing_address','purchase_item')->findOrFail($id);
+
+        return Response()->json($purchase);
     }
 
     /**
@@ -141,7 +155,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $purchase = Purchase::findOrFail($id);
+
+        $purchase->purchase_status = "Cancel";
+
+        $purchase->save();
+
+        return Response()->json(['success' => 'Order Cancel Successfully']);
     }
 
     /**
@@ -152,11 +172,6 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            Purchase::where('id',$id)->delete();
-            // return Response()->json(["success"=> 'Data Deleted Successfully']);
-        } catch (QueryException $e) {
-            return Response()->json(["error"=> 'You cannot delete a Order directly , First delete a related records ']);
-        }
+        
     }
 }
