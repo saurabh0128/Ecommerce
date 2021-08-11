@@ -7,22 +7,29 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Cart;
 use Validator;
 use Image;
 
-class ProductController extends Controller
+
+class ProductController extends Controller 
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
-        $product = Product::all();
-        $category = Category::all();
+      //      Product::addToCart($request->id);
+        $product = Product::with('category')->get();
+        if($request->min_price)
+            $product = $product->where('current_price','>=',$request->min_price);
+        if($request->max_price) 
+            $product = $product->where('current_price','<=',$request->max_price);
 
-        return Response()->json(["produc" => $product , "category" => $category]);
+        return Response()->json(["product" => $product]);
+        // return Response($request->id);
     }
 
     /**

@@ -5,7 +5,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+
 use App\Models\Product;
 
 use Illuminate\Http\Request;
@@ -16,11 +16,19 @@ class ProductController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index() {
-		$product  = Product::all();
-		$category = Category::all();
+	public function index(Request $request) {
+		//      Product::addToCart($request->id);
+		$product = Product::with('category')->get();
+		if ($request->min_price) {
+			$product = $product->where('current_price', '>=', $request->min_price);
+		}
 
-		return Response()->json(["produc" => $product, "category" => $category]);
+		if ($request->max_price) {
+			$product = $product->where('current_price', '<=', $request->max_price);
+		}
+
+		return Response()->json(["product" => $product]);
+		// return Response($request->id);
 	}
 
 	/**

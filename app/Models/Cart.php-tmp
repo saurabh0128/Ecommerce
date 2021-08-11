@@ -11,8 +11,17 @@ class Cart extends Model {
 	use HasFactory;
 
 	protected $filable = [
-		'user_id',
-		'product_id',
-		'qty',
+		'cookie',
+		'auth_user',
+		'subtotal',
+		'discount',
+		'discount_percentage',
+		'coupon_id',
+		'shipping_charges',
+		'net_total',
+		'tax',
+		'total',
+		'round_off',
+		'payable',
 	];
 }

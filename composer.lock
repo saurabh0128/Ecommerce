@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3dd856672d194f66e02d5443e00208c",
+    "content-hash": "7f696a366e1c9bdd0f1ea993734766c3",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1166,6 +1166,63 @@
                 "source": "https://github.com/firebase/php-jwt/tree/v5.4.0"
             },
             "time": "2021-06-23T19:00:23+00:00"
+        },
+        {
+            "name": "freshbitsweb/laravel-cart-manager",
+            "version": "v1.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/freshbitsweb/laravel-cart-manager.git",
+                "reference": "24fdc8168ed43ba293508089ede9557560280e23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/freshbitsweb/laravel-cart-manager/zipball/24fdc8168ed43ba293508089ede9557560280e23",
+                "reference": "24fdc8168ed43ba293508089ede9557560280e23",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "illuminate/support": "5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0",
+                "php": "^7.3|^7.4|^8.0"
+            },
+            "require-dev": {
+                "laravel/legacy-factories": "^1.0.4",
+                "orchestra/testbench": "^6.15.1",
+                "phpunit/phpunit": "^9.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Freshbitsweb\\LaravelCartManager\\CartManagerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Freshbitsweb\\LaravelCartManager\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gaurav Makhecha",
+                    "email": "info@freshbits.in"
+                }
+            ],
+            "description": "Managing the cart of your Laravel application is a breeze",
+            "support": {
+                "issues": "https://github.com/freshbitsweb/laravel-cart-manager/issues",
+                "source": "https://github.com/freshbitsweb/laravel-cart-manager/tree/v1.4.2"
+            },
+            "time": "2021-02-13T13:01:51+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -9429,5 +9486,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.0.0"
 }
