@@ -36,14 +36,19 @@ use App\Notifications\AdminNotification;
 |
 */
 
-Route::get('/', function () {
-    //for nitification 
-    //$User = User::find(1);
-    $notif = "my secound msg";
-    /*User::find(4)->notify(new TaskComplete);*/
-    Notification::send(auth()->user(),new AdminNotification("I am Create a new Notification","person"));
-    return view('welcome');
+// Route::get('/', function () {
+//     //for nitification 
+//     //$User = User::find(1);
+//     $notif = "my secound msg";
+//     User::find(4)->notify(new TaskComplete);
+//     Notification::send(auth()->user(),new AdminNotification("I am Create a new Notification","person"));
+//     return view('welcome');
+// });
+
+Route::any('/{slug?}', function() {
+    return view('frontend.app');
 });
+
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
@@ -90,32 +95,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 });
 
-
-Route::group([
-    'name' => 'user.',
-    'prefix' => 'user',
-    'middleware' => 'auth'
-], function () {
-
-    // URL: /user/profile
-    // Route name: user.profile
-    Route::get('profile', function () {
-        return 'User profile';
-    })->name('profile');
-
-});
-
-Route::group([
-    'name' => 'front.',
-    'prefix' => 'front'
-], function () {
-
-    // No middleware here
-    // URL: /front/about-us
-    // Route name: front.about
-    Route::get('about-us', function () {
-        return 'About us page';
-    })->name('about');
-
-});
 
