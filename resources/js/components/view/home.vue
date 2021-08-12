@@ -1,10 +1,14 @@
+<!-- demo1 style will include in all page not only home page -->
 
-
-<style>
-  		@import '/frontend_asset/css/demo1.min.css';
+<style scoped>
+    @import '/frontend_asset/css/demo1.min.css';
 </style>
+
+
+
 <template>
-	 <!-- Start of Main-->
+
+	<!-- Start of Main-->
         <main class="main">
             <section class="intro-section">
                 <div class="owl-carousel owl-theme owl-nav-inner owl-dot-inner owl-nav-lg animation-slider gutter-no row cols-1"
@@ -3704,10 +3708,12 @@
             </div>
             <!--End of Catainer -->
         </main>
-        <!-- End of Main -->
+    <!-- End of Main -->
 </template>
+
+
+
 	
     
-	<script src="../../../../public/frontend_asset/vendor/jquery.countdown/jquery.countdown.min.js" type="text/javascript" charset="utf-8" async defer></script>
-
+	
 	

@@ -1,4 +1,4 @@
-<html>
+<html> 
 	<head>
 
 		<meta charset="UTF-8">
@@ -44,8 +44,8 @@
 	    <!-- Plugin JS File -->
  
    
-    <script src="frontend_asset/vendor/jquery/jquery.min.js"></script>
-	<script src="frontend_asset/vendor/jquery.plugin/jquery.plugin.min.js"></script>
+    <script src="{{asset('/frontend_asset/vendor/jquery/jquery.min.js')}}"></script>
+	<script src="{{asset('/frontend_asset/vendor/jquery.plugin/jquery.plugin.min.js')}}"></script>
 
 	</head>
 	<body>
@@ -53,13 +53,13 @@
 		<div id="app" >
 		</div>	
 	</body>
-	<script src="js/app.js" type="text/javascript" ></script>
+	<script src="{{asset('/js/app.js')}}" type="text/javascript" ></script>
 	
-	<script src="frontend_asset/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="frontend_asset/vendor/owl-carousel/owl.carousel.min.js"></script>
-    <script src="frontend_asset/vendor/zoom/jquery.zoom.min.js"></script>
-    <script src="frontend_asset/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+	<script src="{{asset('/frontend_asset/vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+    <script src="{{asset('/frontend_asset/vendor/owl-carousel/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('/frontend_asset/vendor/zoom/jquery.zoom.min.js')}}"></script>
+    <script src="{{asset('/frontend_asset/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
     
     <!-- Main JS -->
-    <script src="frontend_asset/js/main.min.js"></script>
+    <script src="{{asset('/frontend_asset/js/main.min.js')}}"></script>
 </html>

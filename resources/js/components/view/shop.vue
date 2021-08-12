@@ -1,13 +1,11 @@
 
-<style >
-	@import '/frontend_asset/vendor/nouislider/nouislider.min.css';
-	@import '/frontend_asset/css/style.min.css';
-</style>
-	
+
+
 
 
 <template>
-	 <!-- Start of Main -->
+    <fragment>
+    <!-- Start of Main -->
         <main class="main">
             <!-- Start of Breadcrumb -->
             <nav class="breadcrumb-nav">
@@ -1017,12 +1015,14 @@
             </div>
             <!-- End of Page Content -->
         </main>
-        <!-- End of Main -->
+    <!-- End of Main -->
+    </fragment>
 </template>
 
-<!-- <script src="../../../../public/frontend_asset/vendor/sticky/sticky.min.js"></script>
-<script src="../../../../public/frontend_asset/vendor/nouislider/nouislider.min.js"></script>
-<script src="../../../../public/frontend_asset/vendor/jquery.countdown/jquery.countdown.min.js"></script> -->
+
+
+
+
 
 
 

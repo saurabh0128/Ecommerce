@@ -1,4 +1,4 @@
-<template> 
+<template>  
 
 <div class="home"> 	
 	<div class="page-wrapper">
@@ -30,6 +30,5 @@
 			StickyFooter,
 			MobileMenu
 		}
-	}
-
+	};
 </script>

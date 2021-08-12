@@ -179,7 +179,7 @@
                     <div class="footer-right">
                         <span class="payment-label mr-lg-8">We're using safe payment for</span>
                         <figure class="payment">
-                            <img src="frontend_asset/images/payment.png" alt="payment" width="159" height="25" />
+                            <img src="/frontend_asset/images/payment.png" alt="payment" width="159" height="25" />
                         </figure>
                     </div>
                 </div>

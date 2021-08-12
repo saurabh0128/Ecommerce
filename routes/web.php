@@ -45,7 +45,7 @@ use App\Notifications\AdminNotification;
 //     return view('welcome');
 // });
 
-Route::any('/{slug?}', function() {
+Route::any('/{slug?}/{any?}', function() {
     return view('frontend.app');
 });
 
