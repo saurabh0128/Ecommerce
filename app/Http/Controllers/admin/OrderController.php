@@ -91,7 +91,7 @@ class OrderController extends Controller
             $purchase->coupon_id = $request->coupon;
         }
         $purchase->shipping_amt = 0;
-        $purchase->total_amt = isset($products->special_price)?$products->special_price:$products->current_price * $request->qty;
+        $purchase->total_amt = isset($products->special_price)?$products->special_price*$request->qty:$products->current_price * $request->qty;
         $purchase->is_payed = $request->is_payed;
         $purchase->payment_mode = $request->payment_mode;
         if(isset($request->transaction_no))

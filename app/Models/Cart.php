@@ -11,7 +11,22 @@ class Cart extends Model
 
     protected $filable = [
         'user_id',
-        'product_id',
-        'qty',
+        'subtotal',
+        'discount',
+        'discount_percentage',
+        'coupon_id',
+        'shipping_charges',
+        'total',
+    ];
+    public function CartItem()
+    {
+        return $this->hasMany(CartItem::class,'cart_id');
+    }
+    public function Coupone()
+    {
+        return $this->belongsTo(Coupone::class,'coupon_id');
+    }
+    protected $casts = [
+        'coupon_code' => 'array',
     ];
 }
