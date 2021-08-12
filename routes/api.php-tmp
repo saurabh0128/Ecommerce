@@ -2,6 +2,7 @@
 Deprecated: The each() function is deprecated. This message will be suppressed on further calls in C:\Users\Hp\AppData\Roaming\Sublime Text 3\Packages\PHPTools\php.tools\codeFormatter.php on line 54
 <?php
 
+use App\Http\Controllers\api\v1\CartController;
 use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\api\v1\LoginController;
 use App\Http\Controllers\api\v1\OrderController;
@@ -38,6 +39,7 @@ function () {
 				Route::resource('/product', ProductController::class )->only(['index', 'show']);
 				Route::resource('/order', OrderController::class );
 				Route::post('/rating', [RatingController::class , 'userRating'])->name('rating.userRating');
+				Route::resource('/cart', CartController::class );
 			});
 	});
 

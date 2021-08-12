@@ -8,6 +8,7 @@ use App\Http\Controllers\api\v1\CategoryController;
 use App\Http\Controllers\api\v1\ProductController;
 use App\Http\Controllers\api\v1\OrderController;
 use App\Http\Controllers\api\v1\RatingController;
+use App\Http\Controllers\api\v1\CartController;
 
 
 /*
@@ -36,6 +37,7 @@ use App\Http\Controllers\api\v1\RatingController;
          Route::resource('/product',ProductController::class)->only(['index','show']);
          Route::resource('/order',OrderController::class);
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');
+         Route::resource('/cart',CartController::class);
       });
    });
    

@@ -25,4 +25,8 @@ class Coupone extends Model
     {
         return $this->hasMany(purchase::class,'coupon_id');
     }
+    public function Cart()
+    {
+        return $this->hasMany(Cart::class,'coupon_id');
+    }
 }

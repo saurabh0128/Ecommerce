@@ -10,17 +10,23 @@ class Cart extends Model
     use HasFactory;
 
     protected $filable = [
-        'cookie',
-        'auth_user',
+        'user_id',
         'subtotal',
         'discount',
         'discount_percentage',
         'coupon_id',
         'shipping_charges',
-        'net_total',
-        'tax',
         'total',
-        'round_off',
-        'payable',
+    ];
+    public function CartItem()
+    {
+        return $this->hasMany(CartItem::class,'cart_id');
+    }
+    public function Coupone()
+    {
+        return $this->belongsTo(Coupone::class,'coupon_id');
+    }
+    protected $casts = [
+        'coupon_code' => 'array',
     ];
 }

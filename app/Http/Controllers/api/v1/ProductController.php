@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {   
-      //      Product::addToCart($request->id);
+      //  Product::addToCart($request->id);
         $product = Product::with('category')->get();
         if($request->min_price)
             $product = $product->where('current_price','>=',$request->min_price);
