@@ -1,4 +1,5 @@
 <template>
+<div class="my-account">  
 	<!-- Start of Main -->
         <main class="main">
             <!-- Start of Page Header -->
@@ -38,7 +39,7 @@
                                 <a href="#account-details" class="nav-link">Account details</a>
                             </li>
                             <li class="link-item">
-                                <a href="wishlist.html">Wishlist</a>
+                                <a href="wishlist.html"  >Wishlist</a>
                             </li>
                             <li class="link-item">
                                 <a href="login.html">Logout</a>
@@ -373,4 +374,5 @@
             <!-- End of PageContent -->
         </main>
     <!-- End of Main -->
+</div>
 </template>

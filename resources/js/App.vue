@@ -1,11 +1,9 @@
 <template>  
 
-<div class="home"> 	
-	<div class="page-wrapper">
+<div>	
 		<Header/>
 		<router-view></router-view>
 		<Footer/>	
-	</div>
 
 	<StickyFooter/>
 
@@ -13,7 +11,8 @@
     <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="fas fa-chevron-up"></i></a>
     <!-- End of Scroll Top -->
     <MobileMenu/>
-</div> 
+</div>
+
 </template>
 
 <script>

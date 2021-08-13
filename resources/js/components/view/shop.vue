@@ -1,11 +1,13 @@
 
-
-
+<style scoped >
+	@import '/frontend_asset/vendor/nouislider/nouislider.min.css';
+</style>
+	
 
 
 <template>
-    <fragment>
-    <!-- Start of Main -->
+    
+	 <!-- Start of Main -->
         <main class="main">
             <!-- Start of Breadcrumb -->
             <nav class="breadcrumb-nav">
@@ -1015,13 +1017,31 @@
             </div>
             <!-- End of Page Content -->
         </main>
-    <!-- End of Main -->
-    </fragment>
+        <!-- End of Main -->
+
+
 </template>
 
 
 
+<script>
+export default {
+mounted() {
+    let StickyScript = document.createElement('script')
+    StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
+    document.head.appendChild(StickyScript)
 
+    let NouisliderScript = document.createElement('script')
+    NouisliderScript.setAttribute('src', '/frontend_asset/vendor/nouislider/nouislider.min.js')
+    document.head.appendChild(NouisliderScript)
+
+    let JqueryCountDownScript = document.createElement('script')
+    JqueryCountDownScript.setAttribute('src', '/frontend_asset/vendor/jquery.countdown/jquery.countdown.min.js')
+    document.head.appendChild(JqueryCountDownScript)
+
+}
+};
+</script>
 
 
 

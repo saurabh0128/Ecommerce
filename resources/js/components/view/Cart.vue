@@ -207,3 +207,14 @@
         </main>
         <!-- End of Main -->
 </template>
+
+
+<script>
+export default {
+mounted() {
+    let StickyScript = document.createElement('script')
+    StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
+    document.head.appendChild(StickyScript)
+}
+};
+</script>

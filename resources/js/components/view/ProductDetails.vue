@@ -1,3 +1,9 @@
+<style scoped>
+    @import '/frontend_asset/vendor/photoswipe/photoswipe.min.css';
+    @import '/frontend_asset/vendor/photoswipe/default-skin/default-skin.min.css';
+</style>
+
+
 <template>
  	<!-- Start of Main -->
     <main class="main mb-10 pb-1">
@@ -1572,4 +1578,25 @@
         <!-- End of Page Content -->
     </main>
     <!-- End of Main -->
-</template>
+</template> 
+
+
+<script>
+export default {
+mounted() {
+    let StickyScript = document.createElement('script')
+    StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
+    document.head.appendChild(StickyScript)
+
+    let PhotoswipeScript = document.createElement('script')
+    PhotoswipeScript.setAttribute('src', '/frontend_asset/vendor/photoswipe/photoswipe.min.js')
+    document.head.appendChild(PhotoswipeScript)
+
+    let PhotoswipeUiScript = document.createElement('script')
+    PhotoswipeUiScript.setAttribute('src', '/frontend_asset/vendor/photoswipe/photoswipe-ui-default.min.js')
+    document.head.appendChild(PhotoswipeUiScript)
+
+}
+};
+</script>
+
