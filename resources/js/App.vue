@@ -2,7 +2,9 @@
 
 <div>	
 		<Header/>
+		<Login/>
 		<router-view></router-view>
+		<Subscribe/>
 		<Footer/>	
 
 	<StickyFooter/>
@@ -16,10 +18,12 @@
 </template>
 
 <script>
-	import Header from "./components/layout/header.vue";
-	import Footer from "./components/layout/footer.vue";
+	import Header from "./components/layout/Header.vue";
+	import Footer from "./components/layout/Footer.vue";
 	import StickyFooter from "./components/layout/StickyFooter.vue"
 	import MobileMenu from  "./components/layout/MobileMenu.vue";
+	import Subscribe from "./components/layout/Subscribe.vue";
+	import Login from "./components/auth/login.vue";
 
 	export default{
 		name: 'App',
@@ -27,7 +31,9 @@
 			Header,
 			Footer,
 			StickyFooter,
-			MobileMenu
+			MobileMenu,
+			Subscribe,
+			Login
 		}
 	};
 </script>

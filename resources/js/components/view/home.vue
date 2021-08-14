@@ -3,7 +3,7 @@
 </style>
 
 <template>
-
+<div class="home">    
 	<!-- Start of Main-->
         <main class='main'>
             <section class="intro-section">
@@ -3705,10 +3705,18 @@
             <!--End of Catainer -->
         </main>
     <!-- End of Main -->
+    
+
+
+</div>
+
+
+
 </template>
 
 
 <script>
+
 export default {
 mounted() {
     let JqueryCountdownScript = document.createElement('script')
@@ -3719,8 +3727,14 @@ mounted() {
     SkrollScript.setAttribute('src', '/frontend_asset/vendor/skrollr/skrollr.min.js')
     document.head.appendChild(SkrollScript)
 }
-}
+};
+
+ // import router from '../../router/index.js'
+
+
 </script>
+
+
 
 
 
