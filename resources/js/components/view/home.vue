@@ -1,15 +1,11 @@
-<!-- demo1 style will include in all page not only home page -->
-
 <style scoped>
-    @import '/frontend_asset/css/demo1.min.css';
+    @import '/frontend_asset/css/style.min.css';
 </style>
 
-
-
 <template>
-
+<div class="home">    
 	<!-- Start of Main-->
-        <main class="main">
+        <main class='main'>
             <section class="intro-section">
                 <div class="owl-carousel owl-theme owl-nav-inner owl-dot-inner owl-nav-lg animation-slider gutter-no row cols-1"
                     data-owl-options="{
@@ -3709,7 +3705,38 @@
             <!--End of Catainer -->
         </main>
     <!-- End of Main -->
+    
+
+
+</div>
+
+
+
 </template>
+
+
+<script>
+
+export default {
+mounted() {
+    let JqueryCountdownScript = document.createElement('script')
+    JqueryCountdownScript.setAttribute('src', '/frontend_asset/vendor/jquery.countdown/jquery.countdown.min.js')
+    document.head.appendChild(JqueryCountdownScript)
+
+    let SkrollScript = document.createElement('script')
+    SkrollScript.setAttribute('src', '/frontend_asset/vendor/skrollr/skrollr.min.js')
+    document.head.appendChild(SkrollScript)
+}
+};
+
+ // import router from '../../router/index.js'
+
+
+</script>
+
+
+
+
 
 
 
