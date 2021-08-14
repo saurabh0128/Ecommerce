@@ -4,6 +4,7 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 use App\Http\Controllers\api\v1\CartController;
 use App\Http\Controllers\api\v1\CategoryController;
+use App\Http\Controllers\api\v1\CouponController;
 use App\Http\Controllers\api\v1\LoginController;
 use App\Http\Controllers\api\v1\OrderController;
 use App\Http\Controllers\api\v1\ProductController;
@@ -40,6 +41,7 @@ function () {
 				Route::resource('/order', OrderController::class );
 				Route::post('/rating', [RatingController::class , 'userRating'])->name('rating.userRating');
 				Route::resource('/cart', CartController::class );
+				Route::resource('/coupon', CouponController::class );
 			});
 	});
 
