@@ -18978,3 +18978,7 @@ aside .sp-sidebar-banner span {
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
 }
+
+.txt-red{
+  color: red;
+}
