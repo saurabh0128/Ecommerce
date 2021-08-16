@@ -45,9 +45,7 @@ use App\Notifications\AdminNotification;
 //     return view('welcome');
 // });
 
-Route::any('/{slug?}/{any?}', function() {
-    return view('frontend.app');
-});
+
 
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -95,4 +93,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 });
 
+
+Route::any('/{slug?}/{any?}', function() {
+    return view('frontend.app');
+});
 
