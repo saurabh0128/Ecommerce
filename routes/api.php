@@ -9,6 +9,7 @@ use App\Http\Controllers\api\v1\ProductController;
 use App\Http\Controllers\api\v1\OrderController;
 use App\Http\Controllers\api\v1\RatingController;
 use App\Http\Controllers\api\v1\CartController;
+use App\Http\Controllers\api\v1\CouponController;
 
 
 /*
@@ -38,6 +39,7 @@ use App\Http\Controllers\api\v1\CartController;
          Route::resource('/order',OrderController::class);
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');
          Route::resource('/cart',CartController::class);
+         Route::resource('/coupon',CouponController::class);
       });
    });
    
