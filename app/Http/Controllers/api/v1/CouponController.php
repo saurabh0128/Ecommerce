@@ -48,6 +48,7 @@ class CouponController extends Controller
        // dd($coupon);
         $date = Carbon::now();
         //check coupon date Not Exceeded 
+        //check coupon exist or not
         if($coupon->start_date <= $date->ToDateString() && $coupon->end_date >= $date->ToDateString())
         {
             //check Coupon Apply to User 
@@ -71,7 +72,7 @@ class CouponController extends Controller
                         //check Old Coupon type for remove 
                         // dd($coupon->coupon_type_value);
                         // =====================
-                        if($key == $coupon_detail->coupon_type_value){
+                       // if($key == $coupon_detail->coupon_type_value){
                             if($coupon_detail->coupon_type == "product"){
                                 if($key == $coupon_detail->coupon_type_value){
                                     //dd($coupon_detail);
@@ -92,7 +93,7 @@ class CouponController extends Controller
                                 }
                             
                             }
-                        }
+                        //}
                         //check Old Coupon type for remove 
                         if($coupon_detail->coupon_type == "category"){  
                             $product = Product::where('category_id',$coupon_detail->coupon_type_value)->get();
@@ -105,6 +106,8 @@ class CouponController extends Controller
                                     $discount_product = CartItem::where('product_id',$products->id)->first();
                                     //check Cart item iS get or Not
                                     if(!is_null($discount_product)){
+                                        //use previous coupon_details variable
+                                    
                                         $coupon_detail = Coupone::where('coupon_code',$value)->first();
                                         //check old discount type for remove descount
                                         if($coupon_detail->discount_type == "fixed"){
