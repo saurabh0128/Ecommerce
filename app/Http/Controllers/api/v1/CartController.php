@@ -59,7 +59,7 @@ class CartController extends Controller
                 //chaeck Discount Type is Rupees Or Percentafes
                 if($coupon->discount_type == "fixed"){
                     $cart->discount = $coupon->coupon_discount;       
-                }elseif($coupon->discount_type == "Percentage"){
+                }elseif($coupon->discount_type == "percentage"){
                     $discount = $price/100*$coupon->coupon_discount;
                     $cart->discount = $discount;
                 }
