@@ -1991,10 +1991,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 function formclear() {
   $('#username').val('');
   $('#password').val('');
@@ -2006,31 +2002,44 @@ function formclear() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      form: {
-        username: '',
-        password: ''
+      LoginForm: {
+        username: 'ssk007',
+        password: 'saurabh123'
       },
-      errors: []
+      loginerrors: [],
+      RegForm: {
+        name: '',
+        profile_img: '',
+        email: '',
+        username: '',
+        phone_number: '',
+        password: '',
+        confirm_password: ''
+      },
+      Regerrors: []
     };
   },
   methods: {
     login: function login() {
       var _this = this;
 
-      this.errors = [];
-      axios.post('/api/v1/login', this.form).then(function (res) {
+      this.loginerrors = [];
+      axios.post('/api/v1/login', this.LoginForm).then(function (res) {
         if (res.data.status) {
           $('.login-box').hide();
           $('.login-modal-bg').hide();
           $('body').css("overflow-y", 'auto');
-          localStorage.setItem('user_details', JSON.stringify(res.data.info));
-          localStorage.setItem('access_token', res.data.access_token);
-          toastr["success"]('Login Successfully');
           formclear();
+          toastr["success"]('Login Successfully');
+
+          _this.$store.dispatch('login', res.data);
         } else {
-          _this.errors = res.data.error;
+          _this.loginerrors = res.data.error;
         }
       });
+    },
+    register: function register() {
+      console.log(this.RegForm);
     }
   }
 });
@@ -2060,6 +2069,643 @@ $(document).on("click", '#close-login', function () {
   $('.login-modal-bg').hide();
   $('body').css("overflow-y", 'auto');
   formclear();
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/logout.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/logout.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "logout",
+  created: function created() {
+    console.log('sk');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/layout/Header.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/layout/Header.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Header',
+  computed: {
+    loggedIn: function loggedIn() {
+      return this.$store.getters.loggedIn;
+    }
+  },
+  methods: {
+    logout: function logout() {
+      this.$store.dispatch('logout');
+    }
+  }
 });
 
 /***/ }),
@@ -8273,6 +8919,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var _store_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/index.js */ "./resources/js/store/index.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8281,6 +8928,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js").default;
+
 
 
 /**
@@ -8303,6 +8951,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 var app = new Vue({
   el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_0__.default,
+  store: _store_index_js__WEBPACK_IMPORTED_MODULE_2__.default,
   render: function render(h) {
     return h(_App_vue__WEBPACK_IMPORTED_MODULE_1__.default);
   }
@@ -8365,8 +9014,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_auth_login_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/auth/login.vue */ "./resources/js/components/auth/login.vue");
 /* harmony import */ var _components_auth_register_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/auth/register.vue */ "./resources/js/components/auth/register.vue");
 /* harmony import */ var _components_view_Home_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/view/Home.vue */ "./resources/js/components/view/Home.vue");
@@ -8379,6 +9028,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_view_Faq_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/view/Faq.vue */ "./resources/js/components/view/Faq.vue");
 /* harmony import */ var _components_view_404_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/view/404.vue */ "./resources/js/components/view/404.vue");
 /* harmony import */ var _components_view_MyAccount_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/view/MyAccount.vue */ "./resources/js/components/view/MyAccount.vue");
+/* harmony import */ var _store_index_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../store/index.js */ "./resources/js/store/index.js");
+/* harmony import */ var _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../components/auth/logout.vue */ "./resources/js/components/auth/logout.vue");
 
 
 
@@ -8393,8 +9044,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_12__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_13__.default);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_13__.default({
+
+
+vue__WEBPACK_IMPORTED_MODULE_14__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_15__.default);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_15__.default({
   mode: 'history',
   routes: [{
     path: '/',
@@ -8439,17 +9092,86 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_13__.default({
   }, {
     path: '/account',
     name: 'my_account',
-    component: _components_view_MyAccount_vue__WEBPACK_IMPORTED_MODULE_11__.default
+    component: _components_view_MyAccount_vue__WEBPACK_IMPORTED_MODULE_11__.default,
+    meta: {
+      requiresAuth: true
+    }
+  }, {
+    path: '/logout',
+    name: 'logout',
+    component: _components_auth_logout_vue__WEBPACK_IMPORTED_MODULE_13__.default
   }, {
     path: '*',
     name: 'not found',
     component: _components_view_404_vue__WEBPACK_IMPORTED_MODULE_10__.default
   }]
-}); // router.beforeEach((to, from, next) =>
-//     Promise.all([store.dispatch("auth/checkAuth")]).then(next)
-// );
-
+});
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  })) {
+    if (!_store_index_js__WEBPACK_IMPORTED_MODULE_12__.default.getters.loggedIn) {
+      next({
+        name: 'home'
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+/***/ }),
+
+/***/ "./resources/js/store/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/index.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+vue__WEBPACK_IMPORTED_MODULE_0__.default.use(vuex__WEBPACK_IMPORTED_MODULE_1__.default);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_1__.default.Store({
+  state: {
+    token: localStorage.getItem('access_token') || null
+  },
+  getters: {
+    loggedIn: function loggedIn(state) {
+      return state.token !== null;
+    }
+  },
+  mutations: {
+    setToken: function setToken(state, token) {
+      state.token = token;
+    },
+    removeToken: function removeToken(state, token) {
+      state.token = null;
+    }
+  },
+  actions: {
+    login: function login(context, data) {
+      localStorage.setItem('user_details', JSON.stringify(data.info));
+      localStorage.setItem('access_token', data.access_token);
+      context.commit('setToken', data.access_token);
+    },
+    logout: function logout(context) {
+      localStorage.removeItem('user_details');
+      localStorage.removeItem('access_token');
+      context.commit('removeToken');
+    }
+  },
+  modules: {}
+}));
 
 /***/ }),
 
@@ -44776,6 +45498,45 @@ component.options.__file = "resources/js/components/auth/login.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/logout.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/auth/logout.vue ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _logout_vue_vue_type_template_id_4f544354___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./logout.vue?vue&type=template&id=4f544354& */ "./resources/js/components/auth/logout.vue?vue&type=template&id=4f544354&");
+/* harmony import */ var _logout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./logout.vue?vue&type=script&lang=js& */ "./resources/js/components/auth/logout.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _logout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _logout_vue_vue_type_template_id_4f544354___WEBPACK_IMPORTED_MODULE_0__.render,
+  _logout_vue_vue_type_template_id_4f544354___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auth/logout.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/auth/register.vue":
 /*!***************************************************!*\
   !*** ./resources/js/components/auth/register.vue ***!
@@ -44862,15 +45623,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Header_vue_vue_type_template_id_a27ab812___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Header.vue?vue&type=template&id=a27ab812& */ "./resources/js/components/layout/Header.vue?vue&type=template&id=a27ab812&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header.vue?vue&type=script&lang=js& */ "./resources/js/components/layout/Header.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
-  script,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _Header_vue_vue_type_template_id_a27ab812___WEBPACK_IMPORTED_MODULE_0__.render,
   _Header_vue_vue_type_template_id_a27ab812___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
@@ -45490,6 +46253,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/logout.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/auth/logout.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_logout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./logout.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/logout.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_logout_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/layout/Header.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/layout/Header.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Header.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/layout/Header.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Header_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/view/AboutUs.vue?vue&type=script&lang=js&":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/view/AboutUs.vue?vue&type=script&lang=js& ***!
@@ -45639,6 +46434,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_login_vue_vue_type_template_id_6aa0b866___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_login_vue_vue_type_template_id_6aa0b866___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./login.vue?vue&type=template&id=6aa0b866& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/login.vue?vue&type=template&id=6aa0b866&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/logout.vue?vue&type=template&id=4f544354&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/auth/logout.vue?vue&type=template&id=4f544354& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_logout_vue_vue_type_template_id_4f544354___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_logout_vue_vue_type_template_id_4f544354___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_logout_vue_vue_type_template_id_4f544354___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./logout.vue?vue&type=template&id=4f544354& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/logout.vue?vue&type=template&id=4f544354&");
 
 
 /***/ }),
@@ -46041,14 +46853,14 @@ var render = function() {
                   "form",
                   { attrs: { method: "post", "accept-charset": "utf-8" } },
                   [
-                    _vm.errors[0]
+                    _vm.loginerrors[0]
                       ? _c(
                           "span",
                           {
                             staticClass: "txt-red",
                             attrs: { id: "mainerror" }
                           },
-                          [_vm._v(_vm._s(_vm.errors[0]))]
+                          [_vm._v(_vm._s(_vm.loginerrors[0]))]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -46060,8 +46872,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.username,
-                            expression: "form.username"
+                            value: _vm.LoginForm.username,
+                            expression: "LoginForm.username"
                           }
                         ],
                         staticClass: "form-control",
@@ -46071,25 +46883,29 @@ var render = function() {
                           id: "username",
                           required: ""
                         },
-                        domProps: { value: _vm.form.username },
+                        domProps: { value: _vm.LoginForm.username },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "username", $event.target.value)
+                            _vm.$set(
+                              _vm.LoginForm,
+                              "username",
+                              $event.target.value
+                            )
                           }
                         }
                       }),
                       _vm._v(" "),
-                      _vm.errors.username
+                      _vm.loginerrors.username
                         ? _c(
                             "span",
                             {
                               staticClass: "txt-red",
                               attrs: { id: "usernameerror" }
                             },
-                            [_vm._v(_vm._s(_vm.errors.username[0]))]
+                            [_vm._v(_vm._s(_vm.loginerrors.username[0]))]
                           )
                         : _vm._e()
                     ]),
@@ -46102,8 +46918,8 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.password,
-                            expression: "form.password"
+                            value: _vm.LoginForm.password,
+                            expression: "LoginForm.password"
                           }
                         ],
                         staticClass: "form-control",
@@ -46113,25 +46929,29 @@ var render = function() {
                           id: "password",
                           required: ""
                         },
-                        domProps: { value: _vm.form.password },
+                        domProps: { value: _vm.LoginForm.password },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "password", $event.target.value)
+                            _vm.$set(
+                              _vm.LoginForm,
+                              "password",
+                              $event.target.value
+                            )
                           }
                         }
                       }),
                       _vm._v(" "),
-                      _vm.errors.password
+                      _vm.loginerrors.password
                         ? _c(
                             "span",
                             {
                               staticClass: "txt-red",
                               attrs: { id: "passworderror" }
                             },
-                            [_vm._v(_vm._s(_vm.errors.password[0]))]
+                            [_vm._v(_vm._s(_vm.loginerrors.password[0]))]
                           )
                         : _vm._e()
                     ]),
@@ -46162,21 +46982,201 @@ var render = function() {
                 "form",
                 { attrs: { method: "post", "accept-charset": "utf-8" } },
                 [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Your Name*")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.RegForm.name,
+                          expression: "RegForm.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "reg_name",
+                        id: "reg_name",
+                        required: ""
+                      },
+                      domProps: { value: _vm.RegForm.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.RegForm, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Your Email Address *")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.RegForm.email,
+                          expression: "RegForm.email"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "reg_email",
+                        id: "reg_email",
+                        required: ""
+                      },
+                      domProps: { value: _vm.RegForm.email },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.RegForm, "email", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Username *")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.RegForm.username,
+                          expression: "RegForm.username"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "reg_username",
+                        id: "reg_username",
+                        required: ""
+                      },
+                      domProps: { value: _vm.RegForm.username },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.RegForm, "username", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Phone Number *")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.RegForm.phone_number,
+                          expression: "RegForm.phone_number"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "reg_ph_number",
+                        id: "reg_ph_number",
+                        required: ""
+                      },
+                      domProps: { value: _vm.RegForm.phone_number },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.RegForm,
+                            "phone_number",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Password *")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.RegForm.password,
+                          expression: "RegForm.password"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "reg_password",
+                        id: "reg_password",
+                        required: ""
+                      },
+                      domProps: { value: _vm.RegForm.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.RegForm, "password", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group mb-5" }, [
+                    _c("label", [_vm._v("Confirm Password *")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.RegForm.confirm_password,
+                          expression: "RegForm.confirm_password"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        name: "reg_confirm_password",
+                        id: "reg_confirm_password",
+                        required: ""
+                      },
+                      domProps: { value: _vm.RegForm.confirm_password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.RegForm,
+                            "confirm_password",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
                   _vm._m(2),
-                  _vm._v(" "),
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _vm._m(7),
-                  _vm._v(" "),
-                  _vm._m(8),
-                  _vm._v(" "),
-                  _vm._m(9),
                   _vm._v(" "),
                   _c(
                     "a",
@@ -46187,7 +47187,7 @@ var render = function() {
                     [_vm._v("Signup as a vendor?")]
                   ),
                   _vm._v(" "),
-                  _vm._m(10),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -46212,11 +47212,11 @@ var render = function() {
             _vm._v("Sign in with social account")
           ]),
           _vm._v(" "),
-          _vm._m(11)
+          _vm._m(4)
         ]
       ),
       _vm._v(" "),
-      _vm._m(12)
+      _vm._m(5)
     ])
   ])
 }
@@ -46269,127 +47269,6 @@ var staticRenderFns = [
         _c("a", { attrs: { href: "#" } }, [_vm._v("Last your password?")])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Your Name*")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", name: "reg_name", id: "reg_name", required: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Your Image*")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "file",
-          name: "reg_user_img",
-          id: "reg_user_img",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Your Email Address *")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "reg_email",
-          id: "reg_email",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Username *")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "reg_username",
-          id: "reg_username",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Phone Number *")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "reg_ph_number",
-          id: "reg_ph_number",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Password *")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "reg_password",
-          id: "reg_password",
-          required: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mb-5" }, [
-      _c("label", [_vm._v("Confirm Password *")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          name: "reg_confirm_password",
-          id: "reg_confirm_password",
-          required: ""
-        }
-      })
-    ])
   },
   function() {
     var _vm = this
@@ -46474,6 +47353,31 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/logout.vue?vue&type=template&id=4f544354&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/auth/logout.vue?vue&type=template&id=4f544354& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n\tsk\n")])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -46805,23 +47709,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "header" }, [
-      _c("div", { staticClass: "header-top" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "header-left" }, [
-            _c("p", { staticClass: "welcome-msg" }, [
-              _vm._v("Welcome to Wolmart Store message or remove it!")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "header-right" }, [
+  return _c("header", { staticClass: "header" }, [
+    _c("div", { staticClass: "header-top" }, [
+      _c("div", { staticClass: "container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "header-right" },
+          [
+            _vm.loggedIn
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "d-lg-show",
+                    attrs: { href: "" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.logout.apply(null, arguments)
+                      }
+                    }
+                  },
+                  [_vm._v("Logout")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c(
               "a",
               { staticClass: "d-lg-show", attrs: { href: "blog.html" } },
@@ -46834,18 +47747,18 @@ var staticRenderFns = [
               [_vm._v("Contact Us")]
             ),
             _vm._v(" "),
-            _c("a", { staticClass: "d-lg-show", attrs: { href: "/account" } }, [
-              _vm._v("My Account")
-            ]),
+            _vm.loggedIn
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass: "d-lg-show",
+                    attrs: { to: { name: "my_account" } }
+                  },
+                  [_vm._v("My Account")]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "d-lg-show login sign-in",
-                attrs: { href: "#sign-in" }
-              },
-              [_c("i", { staticClass: "w-icon-account" }), _vm._v("Sign In")]
-            ),
+            _vm._m(1),
             _vm._v(" "),
             _c("span", { staticClass: "delimiter d-lg-show" }, [_vm._v("/")]),
             _vm._v(" "),
@@ -46857,2180 +47770,2172 @@ var staticRenderFns = [
               },
               [_vm._v("Register")]
             )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "header-middle" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "header-left mr-md-4" }, [
-            _c("a", {
-              staticClass: "mobile-menu-toggle  w-icon-hamburger",
-              attrs: { href: "#" }
-            }),
-            _vm._v(" "),
-            _c("a", { staticClass: "logo ml-lg-0", attrs: { href: "/" } }, [
-              _c("img", {
-                attrs: {
-                  src: "/frontend_asset/images/logo.png",
-                  alt: "logo",
-                  width: "144",
-                  height: "45"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c(
-              "form",
-              {
-                staticClass:
-                  "header-search hs-expanded hs-round d-none d-md-flex input-wrapper",
-                attrs: { method: "get", action: "#" }
-              },
-              [
-                _c("div", { staticClass: "select-box" }, [
-                  _c(
-                    "select",
-                    { attrs: { id: "category", name: "category" } },
-                    [
-                      _c("option", { attrs: { value: "" } }, [
-                        _vm._v("All Categories")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "4" } }, [
-                        _vm._v("Fashion")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "5" } }, [
-                        _vm._v("Furniture")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "6" } }, [
-                        _vm._v("Shoes")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "7" } }, [
-                        _vm._v("Sports")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "8" } }, [
-                        _vm._v("Games")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "9" } }, [
-                        _vm._v("Computers")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "10" } }, [
-                        _vm._v("Electronics")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "11" } }, [
-                        _vm._v("Kitchen")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "12" } }, [
-                        _vm._v("Clothing")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "search",
-                    id: "search",
-                    placeholder: "Search in...",
-                    required: ""
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-search", attrs: { type: "submit" } },
-                  [_c("i", { staticClass: "w-icon-search" })]
-                )
-              ]
-            )
+          ],
+          1
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _vm._m(3)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-left" }, [
+      _c("p", { staticClass: "welcome-msg" }, [
+        _vm._v("Welcome to Wolmart Store message or remove it!")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "d-lg-show login sign-in", attrs: { href: "#sign-in" } },
+      [_c("i", { staticClass: "w-icon-account" }), _vm._v("Sign In")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-middle" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "header-left mr-md-4" }, [
+          _c("a", {
+            staticClass: "mobile-menu-toggle  w-icon-hamburger",
+            attrs: { href: "#" }
+          }),
+          _vm._v(" "),
+          _c("a", { staticClass: "logo ml-lg-0", attrs: { href: "/" } }, [
+            _c("img", {
+              attrs: {
+                src: "/frontend_asset/images/logo.png",
+                alt: "logo",
+                width: "144",
+                height: "45"
+              }
+            })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "header-right ml-4" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "header-call d-xs-show d-lg-flex align-items-center"
-              },
-              [
-                _c("a", {
-                  staticClass: "w-icon-call",
-                  attrs: { href: "tel:#" }
-                }),
+          _c(
+            "form",
+            {
+              staticClass:
+                "header-search hs-expanded hs-round d-none d-md-flex input-wrapper",
+              attrs: { method: "get", action: "#" }
+            },
+            [
+              _c("div", { staticClass: "select-box" }, [
+                _c("select", { attrs: { id: "category", name: "category" } }, [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("All Categories")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "4" } }, [_vm._v("Fashion")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "5" } }, [
+                    _vm._v("Furniture")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "6" } }, [_vm._v("Shoes")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "7" } }, [_vm._v("Sports")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "8" } }, [_vm._v("Games")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "9" } }, [
+                    _vm._v("Computers")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "10" } }, [
+                    _vm._v("Electronics")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "11" } }, [_vm._v("Kitchen")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "12" } }, [_vm._v("Clothing")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "search",
+                  id: "search",
+                  placeholder: "Search in...",
+                  required: ""
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-search", attrs: { type: "submit" } },
+                [_c("i", { staticClass: "w-icon-search" })]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "header-right ml-4" }, [
+          _c(
+            "div",
+            {
+              staticClass: "header-call d-xs-show d-lg-flex align-items-center"
+            },
+            [
+              _c("a", { staticClass: "w-icon-call", attrs: { href: "tel:#" } }),
+              _vm._v(" "),
+              _c("div", { staticClass: "call-info d-lg-show" }, [
+                _c(
+                  "h4",
+                  {
+                    staticClass:
+                      "chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0"
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-capitalize",
+                        attrs: { href: "mailto:#" }
+                      },
+                      [_vm._v("Live Chat")]
+                    ),
+                    _vm._v(" or :")
+                  ]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "call-info d-lg-show" }, [
-                  _c(
-                    "h4",
-                    {
-                      staticClass:
-                        "chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0"
-                    },
-                    [
+                _c(
+                  "a",
+                  {
+                    staticClass: "phone-number font-weight-bolder ls-50",
+                    attrs: { href: "tel:#" }
+                  },
+                  [_vm._v("0(800)123-456")]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "wishlist label-down link d-xs-show",
+              attrs: { href: "/wishlist" }
+            },
+            [
+              _c("i", { staticClass: "w-icon-heart" }),
+              _vm._v(" "),
+              _c("span", { staticClass: "wishlist-label d-lg-show" }, [
+                _vm._v("Wishlist")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "compare label-down link d-xs-show",
+              attrs: { href: "compare.html" }
+            },
+            [
+              _c("i", { staticClass: "w-icon-compare" }),
+              _vm._v(" "),
+              _c("span", { staticClass: "compare-label d-lg-show" }, [
+                _vm._v("Compare")
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2"
+            },
+            [
+              _c("div", { staticClass: "cart-overlay" }),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "cart-toggle label-down link",
+                  attrs: { href: "#" }
+                },
+                [
+                  _c("i", { staticClass: "w-icon-cart" }, [
+                    _c("span", { staticClass: "cart-count" }, [_vm._v("2")])
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "cart-label" }, [_vm._v("Cart")])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-box" }, [
+                _c("div", { staticClass: "cart-header" }, [
+                  _c("span", [_vm._v("Shopping Cart")]),
+                  _vm._v(" "),
+                  _c("a", { staticClass: "btn-close", attrs: { href: "#" } }, [
+                    _vm._v("Close"),
+                    _c("i", { staticClass: "w-icon-long-arrow-right" })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "products" }, [
+                  _c("div", { staticClass: "product product-cart" }, [
+                    _c("div", { staticClass: "product-detail" }, [
                       _c(
                         "a",
                         {
-                          staticClass: "text-capitalize",
-                          attrs: { href: "mailto:#" }
+                          staticClass: "product-name",
+                          attrs: { href: "product-default.html" }
                         },
-                        [_vm._v("Live Chat")]
+                        [
+                          _vm._v(
+                            "Beige knitted\n                                                elas"
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "tic\n                                                runner shoes"
+                          )
+                        ]
                       ),
-                      _vm._v(" or :")
-                    ]
+                      _vm._v(" "),
+                      _c("div", { staticClass: "price-box" }, [
+                        _c("span", { staticClass: "product-quantity" }, [
+                          _vm._v("1")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "product-price" }, [
+                          _vm._v("$25.68")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("figure", { staticClass: "product-media" }, [
+                      _c("a", { attrs: { href: "product-default.html" } }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/frontend_asset/images/cart/product-1.jpg",
+                            alt: "product",
+                            height: "84",
+                            width: "94"
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("button", { staticClass: "btn btn-link btn-close" }, [
+                      _c("i", { staticClass: "fas fa-times" })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "product product-cart" }, [
+                    _c("div", { staticClass: "product-detail" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "product-name",
+                          attrs: { href: "product-default.html" }
+                        },
+                        [
+                          _vm._v(
+                            "Blue utility\n                                                pina"
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "fore\n                                                denim dress"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "price-box" }, [
+                        _c("span", { staticClass: "product-quantity" }, [
+                          _vm._v("1")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "product-price" }, [
+                          _vm._v("$32.99")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("figure", { staticClass: "product-media" }, [
+                      _c("a", { attrs: { href: "product-default.html" } }, [
+                        _c("img", {
+                          attrs: {
+                            src: "/frontend_asset/images/cart/product-2.jpg",
+                            alt: "product",
+                            width: "84",
+                            height: "94"
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("button", { staticClass: "btn btn-link btn-close" }, [
+                      _c("i", { staticClass: "fas fa-times" })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "cart-total" }, [
+                  _c("label", [_vm._v("Subtotal:")]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "price" }, [_vm._v("$58.67")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "cart-action" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-dark btn-outline btn-rounded",
+                      attrs: { href: "/cart" }
+                    },
+                    [_vm._v("View Cart")]
                   ),
                   _vm._v(" "),
                   _c(
                     "a",
                     {
-                      staticClass: "phone-number font-weight-bolder ls-50",
-                      attrs: { href: "tel:#" }
+                      staticClass: "btn btn-primary  btn-rounded",
+                      attrs: { href: "checkout.html" }
                     },
-                    [_vm._v("0(800)123-456")]
+                    [_vm._v("Checkout")]
                   )
                 ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "wishlist label-down link d-xs-show",
-                attrs: { href: "/wishlist" }
-              },
-              [
-                _c("i", { staticClass: "w-icon-heart" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "wishlist-label d-lg-show" }, [
-                  _vm._v("Wishlist")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "compare label-down link d-xs-show",
-                attrs: { href: "compare.html" }
-              },
-              [
-                _c("i", { staticClass: "w-icon-compare" }),
-                _vm._v(" "),
-                _c("span", { staticClass: "compare-label d-lg-show" }, [
-                  _vm._v("Compare")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2"
-              },
-              [
-                _c("div", { staticClass: "cart-overlay" }),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "cart-toggle label-down link",
-                    attrs: { href: "#" }
-                  },
-                  [
-                    _c("i", { staticClass: "w-icon-cart" }, [
-                      _c("span", { staticClass: "cart-count" }, [_vm._v("2")])
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "cart-label" }, [_vm._v("Cart")])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "dropdown-box" }, [
-                  _c("div", { staticClass: "cart-header" }, [
-                    _c("span", [_vm._v("Shopping Cart")]),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "btn-close", attrs: { href: "#" } },
-                      [
-                        _vm._v("Close"),
-                        _c("i", { staticClass: "w-icon-long-arrow-right" })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "products" }, [
-                    _c("div", { staticClass: "product product-cart" }, [
-                      _c("div", { staticClass: "product-detail" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "product-name",
-                            attrs: { href: "product-default.html" }
-                          },
-                          [
-                            _vm._v(
-                              "Beige knitted\n                                                elas"
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "tic\n                                                runner shoes"
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "price-box" }, [
-                          _c("span", { staticClass: "product-quantity" }, [
-                            _vm._v("1")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "product-price" }, [
-                            _vm._v("$25.68")
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("figure", { staticClass: "product-media" }, [
-                        _c("a", { attrs: { href: "product-default.html" } }, [
-                          _c("img", {
-                            attrs: {
-                              src: "/frontend_asset/images/cart/product-1.jpg",
-                              alt: "product",
-                              height: "84",
-                              width: "94"
-                            }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("button", { staticClass: "btn btn-link btn-close" }, [
-                        _c("i", { staticClass: "fas fa-times" })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "product product-cart" }, [
-                      _c("div", { staticClass: "product-detail" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "product-name",
-                            attrs: { href: "product-default.html" }
-                          },
-                          [
-                            _vm._v(
-                              "Blue utility\n                                                pina"
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "fore\n                                                denim dress"
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "price-box" }, [
-                          _c("span", { staticClass: "product-quantity" }, [
-                            _vm._v("1")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "product-price" }, [
-                            _vm._v("$32.99")
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("figure", { staticClass: "product-media" }, [
-                        _c("a", { attrs: { href: "product-default.html" } }, [
-                          _c("img", {
-                            attrs: {
-                              src: "/frontend_asset/images/cart/product-2.jpg",
-                              alt: "product",
-                              width: "84",
-                              height: "94"
-                            }
-                          })
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("button", { staticClass: "btn btn-link btn-close" }, [
-                        _c("i", { staticClass: "fas fa-times" })
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cart-total" }, [
-                    _c("label", [_vm._v("Subtotal:")]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "price" }, [_vm._v("$58.67")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "cart-action" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-dark btn-outline btn-rounded",
-                        attrs: { href: "/cart" }
-                      },
-                      [_vm._v("View Cart")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-primary  btn-rounded",
-                        attrs: { href: "checkout.html" }
-                      },
-                      [_vm._v("Checkout")]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ])
+              ])
+            ]
+          )
         ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "header-bottom sticky-content fix-top sticky-header " },
-        [
-          _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "inner-wrap" }, [
-              _c("div", { staticClass: "header-left" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "dropdown category-dropdown has-border",
-                    attrs: { "data-visible": "true" }
-                  },
-                  [
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "header-bottom sticky-content fix-top sticky-header " },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "inner-wrap" }, [
+            _c("div", { staticClass: "header-left" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown category-dropdown has-border",
+                  attrs: { "data-visible": "true" }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "category-toggle text-dark",
+                      attrs: {
+                        href: "#",
+                        role: "button",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "true",
+                        "data-display": "static",
+                        title: "Browse Categories"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "w-icon-category" }),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("Browse Categories")])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "dropdown-box" }, [
                     _c(
-                      "a",
-                      {
-                        staticClass: "category-toggle text-dark",
-                        attrs: {
-                          href: "#",
-                          role: "button",
-                          "data-toggle": "dropdown",
-                          "aria-haspopup": "true",
-                          "aria-expanded": "true",
-                          "data-display": "static",
-                          title: "Browse Categories"
-                        }
-                      },
+                      "ul",
+                      { staticClass: "menu vertical-menu category-menu" },
                       [
-                        _c("i", { staticClass: "w-icon-category" }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Browse Categories")])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-box" }, [
-                      _c(
-                        "ul",
-                        { staticClass: "menu vertical-menu category-menu" },
-                        [
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-tshirt2" }),
-                                _vm._v(
-                                  "Fashion\n                                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("ul", { staticClass: "megamenu" }, [
-                              _c("li", [
-                                _c("h4", { staticClass: "menu-title" }, [
-                                  _vm._v("Women")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("New Arrivals")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Best Sellers")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Trending")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Clothing")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Shoes")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Bags")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Accessories")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Jewlery &\n                                                                Watches"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Sale")]
-                                    )
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c("h4", { staticClass: "menu-title" }, [
-                                  _vm._v("Men")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("New Arrivals")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Best Sellers")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Trending")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Clothing")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Shoes")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Bags")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Accessories")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Jewlery &\n                                                                Watches"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "banner-fixed menu-banner menu-banner2"
-                                  },
-                                  [
-                                    _c("figure", [
-                                      _c("img", {
-                                        attrs: {
-                                          src:
-                                            "/frontend_asset/images/menu/banner-2.jpg",
-                                          alt: "Menu Banner",
-                                          width: "235",
-                                          height: "347"
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "banner-content" },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "banner-price-info mb-1 ls-normal"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Get up to\n                                                                "
-                                            ),
-                                            _c(
-                                              "strong",
-                                              {
-                                                staticClass:
-                                                  "text-primary text-uppercase"
-                                              },
-                                              [_vm._v("20%Off")]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h3",
-                                          {
-                                            staticClass:
-                                              "banner-title ls-normal"
-                                          },
-                                          [_vm._v("Hot Sales")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-dark btn-sm btn-link btn-slide-right btn-icon-right",
-                                            attrs: {
-                                              href: "shop-banner-sidebar.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                                Shop Now"
-                                            ),
-                                            _c("i", {
-                                              staticClass:
-                                                "w-icon-long-arrow-right"
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
-                          ]),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-tshirt2" }),
+                              _vm._v(
+                                "Fashion\n                                            "
+                              )
+                            ]
+                          ),
                           _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-home" }),
-                                _vm._v(
-                                  "Home & Garden\n                                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("ul", { staticClass: "megamenu" }, [
-                              _c("li", [
-                                _c("h4", { staticClass: "menu-title" }, [
-                                  _vm._v("Bedroom")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Beds, Frames &\n                                                                Bases"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Dressers")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Nightstands")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Kid's Beds &\n                                                                Headboards"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Armoires")]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("h4", { staticClass: "menu-title mt-1" }, [
-                                  _vm._v("Living Room")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Coffee Tables")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Chairs")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Tables")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Futons & Sofa\n                                                                Beds"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Cabinets &\n                                                                Chests"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
+                          _c("ul", { staticClass: "megamenu" }, [
+                            _c("li", [
+                              _c("h4", { staticClass: "menu-title" }, [
+                                _vm._v("Women")
                               ]),
                               _vm._v(" "),
-                              _c("li", [
-                                _c("h4", { staticClass: "menu-title" }, [
-                                  _vm._v("Office")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Office Chairs")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Desks")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Bookcases")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("File Cabinets")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Breakroom\n                                                                Tables"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("h4", { staticClass: "menu-title mt-1" }, [
-                                  _vm._v("Kitchen & Dining")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Dining Sets")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Kitchen Storage\n                                                                Cabinets"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Bashers Racks")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Dining Chairs")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Dining Room\n                                                                Tables"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Bar Stools")]
-                                    )
-                                  ])
-                                ])
-                              ]),
+                              _c("hr", { staticClass: "divider" }),
                               _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "menu-banner banner-fixed menu-banner3"
-                                  },
-                                  [
-                                    _c("figure", [
-                                      _c("img", {
-                                        attrs: {
-                                          src:
-                                            "/frontend_asset/images/menu/banner-3.jpg",
-                                          alt: "Menu Banner",
-                                          width: "235",
-                                          height: "461"
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "banner-content" },
-                                      [
-                                        _c(
-                                          "h4",
-                                          {
-                                            staticClass:
-                                              "banner-subtitle font-weight-normal text-white mb-1"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                                Restroom"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h3",
-                                          {
-                                            staticClass:
-                                              "banner-title font-weight-bolder text-white ls-normal"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                                Furniture Sale"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "banner-price-info text-white font-weight-normal ls-25"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                                Up to "
-                                            ),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "text-secondary text-uppercase font-weight-bold"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "25%\n                                                                    Off"
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-white btn-link btn-sm btn-slide-right btn-icon-right",
-                                            attrs: {
-                                              href: "shop-banner-sidebar.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                                Shop Now"
-                                            ),
-                                            _c("i", {
-                                              staticClass:
-                                                "w-icon-long-arrow-right"
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-electronics" }),
-                                _vm._v(
-                                  "Electronics\n                                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("ul", { staticClass: "megamenu" }, [
-                              _c("li", [
-                                _c("h4", { staticClass: "menu-title" }, [
-                                  _vm._v("Laptops & Computers")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Desktop\n                                                                Computers"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Monitors")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Laptops")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Hard Drives &\n                                                                Storage"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Computer\n                                                                Accessories"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("h4", { staticClass: "menu-title mt-1" }, [
-                                  _vm._v("TV & Video")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("TVs")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Home Audio\n                                                                Speakers"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Projectors")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Media Streaming\n                                                                Devices"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c("h4", { staticClass: "menu-title" }, [
-                                  _vm._v("Digital Cameras")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Digital SLR\n                                                                Cameras"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Sports & Action\n                                                                Cameras"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Camera Lenses")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Photo Printer")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Digital Memory\n                                                                Cards"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("h4", { staticClass: "menu-title mt-1" }, [
-                                  _vm._v("Cell Phones")
-                                ]),
-                                _vm._v(" "),
-                                _c("hr", { staticClass: "divider" }),
-                                _vm._v(" "),
-                                _c("ul", [
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Carrier Phones")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [_vm._v("Unlocked Phones")]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Phone & Cellphone\n                                                                Cases"
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("li", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: "shop-fullwidth-banner.html"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Cellphone\n                                                                Chargers"
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "menu-banner banner-fixed menu-banner4"
-                                  },
-                                  [
-                                    _c("figure", [
-                                      _c("img", {
-                                        attrs: {
-                                          src:
-                                            "/frontend_asset/images/menu/banner-4.jpg",
-                                          alt: "Menu Banner",
-                                          width: "235",
-                                          height: "433"
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "banner-content" },
-                                      [
-                                        _c(
-                                          "h4",
-                                          {
-                                            staticClass:
-                                              "banner-subtitle font-weight-normal"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Deals Of The\n                                                                Week"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "h3",
-                                          {
-                                            staticClass:
-                                              "banner-title text-white"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Save On Smart EarPhone\n                                                            "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "banner-price-info text-secondary font-weight-bolder text-uppercase text-secondary"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                                20% Off"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-white btn-outline btn-sm btn-rounded",
-                                            attrs: {
-                                              href: "shop-banner-sidebar.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Shop\n                                                                Now"
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-furniture" }),
-                                _vm._v(
-                                  "Furniture\n                                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("ul", { staticClass: "megamenu type2" }, [
-                              _c("li", { staticClass: "row" }, [
-                                _c(
-                                  "div",
-                                  { staticClass: "col-md-3 col-lg-3 col-6" },
-                                  [
-                                    _c("h4", { staticClass: "menu-title" }, [
-                                      _vm._v("Furniture")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("hr", { staticClass: "divider" }),
-                                    _vm._v(" "),
-                                    _c("ul", [
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Sofas & Couches")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Armchairs")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Bed Frames")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Beside Tables")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Dressing Tables")]
-                                        )
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-md-3 col-lg-3 col-6" },
-                                  [
-                                    _c("h4", { staticClass: "menu-title" }, [
-                                      _vm._v("Lighting")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("hr", { staticClass: "divider" }),
-                                    _vm._v(" "),
-                                    _c("ul", [
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Light Bulbs")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Lamps")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Celling Lights")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Wall Lights")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Bathroom\n                                                                    Lighting"
-                                            )
-                                          ]
-                                        )
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-md-3 col-lg-3 col-6" },
-                                  [
-                                    _c("h4", { staticClass: "menu-title" }, [
-                                      _vm._v("Home Accessories")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("hr", { staticClass: "divider" }),
-                                    _vm._v(" "),
-                                    _c("ul", [
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Decorative\n                                                                    Accessories"
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Candals &\n                                                                    Holders"
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Home Fragrance")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Mirrors")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Clocks")]
-                                        )
-                                      ])
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "col-md-3 col-lg-3 col-6" },
-                                  [
-                                    _c("h4", { staticClass: "menu-title" }, [
-                                      _vm._v("Garden & Outdoors")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("hr", { staticClass: "divider" }),
-                                    _vm._v(" "),
-                                    _c("ul", [
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Garden\n                                                                    Furniture"
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Lawn Mowers")]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Pressure\n                                                                    Washers"
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "All Garden\n                                                                    Tools"
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("li", [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "shop-fullwidth-banner.html"
-                                            }
-                                          },
-                                          [_vm._v("Outdoor Dining")]
-                                        )
-                                      ])
-                                    ])
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "row" }, [
-                                _c("div", { staticClass: "col-6" }, [
+                              _c("ul", [
+                                _c("li", [
                                   _c(
-                                    "div",
+                                    "a",
                                     {
-                                      staticClass:
-                                        "banner banner-fixed menu-banner5 br-xs"
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("New Arrivals")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Best Sellers")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Trending")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Clothing")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Shoes")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Bags")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Accessories")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
                                     },
                                     [
-                                      _c("figure", [
-                                        _c("img", {
-                                          staticStyle: {
-                                            "background-color": "#D2D2D2"
+                                      _vm._v(
+                                        "Jewlery &\n                                                                Watches"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Sale")]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c("h4", { staticClass: "menu-title" }, [
+                                _vm._v("Men")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("New Arrivals")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Best Sellers")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Trending")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Clothing")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Shoes")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Bags")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Accessories")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Jewlery &\n                                                                Watches"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "banner-fixed menu-banner menu-banner2"
+                                },
+                                [
+                                  _c("figure", [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/frontend_asset/images/menu/banner-2.jpg",
+                                        alt: "Menu Banner",
+                                        width: "235",
+                                        height: "347"
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "banner-content" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "banner-price-info mb-1 ls-normal"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Get up to\n                                                                "
+                                        ),
+                                        _c(
+                                          "strong",
+                                          {
+                                            staticClass:
+                                              "text-primary text-uppercase"
                                           },
-                                          attrs: {
-                                            src:
-                                              "/frontend_asset/images/menu/banner-5.jpg",
-                                            alt: "Banner",
-                                            width: "410",
-                                            height: "123"
-                                          }
+                                          [_vm._v("20%Off")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      { staticClass: "banner-title ls-normal" },
+                                      [_vm._v("Hot Sales")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "btn btn-dark btn-sm btn-link btn-slide-right btn-icon-right",
+                                        attrs: {
+                                          href: "shop-banner-sidebar.html"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                                Shop Now"
+                                        ),
+                                        _c("i", {
+                                          staticClass: "w-icon-long-arrow-right"
                                         })
-                                      ]),
-                                      _vm._v(" "),
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-home" }),
+                              _vm._v(
+                                "Home & Garden\n                                            "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("ul", { staticClass: "megamenu" }, [
+                            _c("li", [
+                              _c("h4", { staticClass: "menu-title" }, [
+                                _vm._v("Bedroom")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Beds, Frames &\n                                                                Bases"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Dressers")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Nightstands")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Kid's Beds &\n                                                                Headboards"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Armoires")]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "menu-title mt-1" }, [
+                                _vm._v("Living Room")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Coffee Tables")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Chairs")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Tables")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Futons & Sofa\n                                                                Beds"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Cabinets &\n                                                                Chests"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c("h4", { staticClass: "menu-title" }, [
+                                _vm._v("Office")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Office Chairs")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Desks")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Bookcases")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("File Cabinets")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Breakroom\n                                                                Tables"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "menu-title mt-1" }, [
+                                _vm._v("Kitchen & Dining")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Dining Sets")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Kitchen Storage\n                                                                Cabinets"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Bashers Racks")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Dining Chairs")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Dining Room\n                                                                Tables"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Bar Stools")]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "menu-banner banner-fixed menu-banner3"
+                                },
+                                [
+                                  _c("figure", [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/frontend_asset/images/menu/banner-3.jpg",
+                                        alt: "Menu Banner",
+                                        width: "235",
+                                        height: "461"
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "banner-content" }, [
+                                    _c(
+                                      "h4",
+                                      {
+                                        staticClass:
+                                          "banner-subtitle font-weight-normal text-white mb-1"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                                Restroom"
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      {
+                                        staticClass:
+                                          "banner-title font-weight-bolder text-white ls-normal"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                                Furniture Sale"
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "banner-price-info text-white font-weight-normal ls-25"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                                Up to "
+                                        ),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "text-secondary text-uppercase font-weight-bold"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "25%\n                                                                    Off"
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "btn btn-white btn-link btn-sm btn-slide-right btn-icon-right",
+                                        attrs: {
+                                          href: "shop-banner-sidebar.html"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                                Shop Now"
+                                        ),
+                                        _c("i", {
+                                          staticClass: "w-icon-long-arrow-right"
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-electronics" }),
+                              _vm._v(
+                                "Electronics\n                                            "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("ul", { staticClass: "megamenu" }, [
+                            _c("li", [
+                              _c("h4", { staticClass: "menu-title" }, [
+                                _vm._v("Laptops & Computers")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Desktop\n                                                                Computers"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Monitors")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Laptops")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Hard Drives &\n                                                                Storage"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Computer\n                                                                Accessories"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "menu-title mt-1" }, [
+                                _vm._v("TV & Video")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("TVs")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Home Audio\n                                                                Speakers"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Projectors")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Media Streaming\n                                                                Devices"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c("h4", { staticClass: "menu-title" }, [
+                                _vm._v("Digital Cameras")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Digital SLR\n                                                                Cameras"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Sports & Action\n                                                                Cameras"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Camera Lenses")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Photo Printer")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Digital Memory\n                                                                Cards"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "menu-title mt-1" }, [
+                                _vm._v("Cell Phones")
+                              ]),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "divider" }),
+                              _vm._v(" "),
+                              _c("ul", [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Carrier Phones")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [_vm._v("Unlocked Phones")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Phone & Cellphone\n                                                                Cases"
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "shop-fullwidth-banner.html"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Cellphone\n                                                                Chargers"
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "menu-banner banner-fixed menu-banner4"
+                                },
+                                [
+                                  _c("figure", [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/frontend_asset/images/menu/banner-4.jpg",
+                                        alt: "Menu Banner",
+                                        width: "235",
+                                        height: "433"
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "banner-content" }, [
+                                    _c(
+                                      "h4",
+                                      {
+                                        staticClass:
+                                          "banner-subtitle font-weight-normal"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Deals Of The\n                                                                Week"
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      {
+                                        staticClass: "banner-title text-white"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Save On Smart EarPhone\n                                                            "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "banner-price-info text-secondary font-weight-bolder text-uppercase text-secondary"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                                                20% Off"
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass:
+                                          "btn btn-white btn-outline btn-sm btn-rounded",
+                                        attrs: {
+                                          href: "shop-banner-sidebar.html"
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Shop\n                                                                Now"
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-furniture" }),
+                              _vm._v(
+                                "Furniture\n                                            "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("ul", { staticClass: "megamenu type2" }, [
+                            _c("li", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                { staticClass: "col-md-3 col-lg-3 col-6" },
+                                [
+                                  _c("h4", { staticClass: "menu-title" }, [
+                                    _vm._v("Furniture")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("hr", { staticClass: "divider" }),
+                                  _vm._v(" "),
+                                  _c("ul", [
+                                    _c("li", [
                                       _c(
-                                        "div",
+                                        "a",
                                         {
-                                          staticClass:
-                                            "banner-content text-right y-50"
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Sofas & Couches")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Armchairs")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Bed Frames")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Beside Tables")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Dressing Tables")]
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-3 col-lg-3 col-6" },
+                                [
+                                  _c("h4", { staticClass: "menu-title" }, [
+                                    _vm._v("Lighting")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("hr", { staticClass: "divider" }),
+                                  _vm._v(" "),
+                                  _c("ul", [
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Light Bulbs")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Lamps")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Celling Lights")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Wall Lights")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
                                         },
                                         [
-                                          _c(
-                                            "h4",
-                                            {
-                                              staticClass:
-                                                "banner-subtitle font-weight-normal text-default text-capitalize"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                    New Arrivals"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "h3",
-                                            {
-                                              staticClass:
-                                                "banner-title font-weight-bolder text-capitalize ls-normal"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                    Amazing Sofa"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "banner-price-info font-weight-normal ls-normal"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                    Starting at "
-                                              ),
-                                              _c("strong", [_vm._v("$125.00")])
-                                            ]
+                                          _vm._v(
+                                            "Bathroom\n                                                                    Lighting"
                                           )
                                         ]
                                       )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-6" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "banner banner-fixed menu-banner5 br-xs"
-                                    },
-                                    [
-                                      _c("figure", [
-                                        _c("img", {
-                                          staticStyle: {
-                                            "background-color": "#9F9888"
-                                          },
-                                          attrs: {
-                                            src:
-                                              "/frontend_asset/images/menu/banner-6.jpg",
-                                            alt: "Banner",
-                                            width: "410",
-                                            height: "123"
-                                          }
-                                        })
-                                      ]),
-                                      _vm._v(" "),
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-3 col-lg-3 col-6" },
+                                [
+                                  _c("h4", { staticClass: "menu-title" }, [
+                                    _vm._v("Home Accessories")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("hr", { staticClass: "divider" }),
+                                  _vm._v(" "),
+                                  _c("ul", [
+                                    _c("li", [
                                       _c(
-                                        "div",
-                                        { staticClass: "banner-content y-50" },
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
                                         [
-                                          _c(
-                                            "h4",
-                                            {
-                                              staticClass:
-                                                "banner-subtitle font-weight-normal text-white text-capitalize"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                    Best Seller"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "h3",
-                                            {
-                                              staticClass:
-                                                "banner-title font-weight-bolder text-capitalize text-white ls-normal"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                    Chair & Lamp"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "banner-price-info font-weight-normal ls-normal text-white"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                                                    From "
-                                              ),
-                                              _c("strong", [_vm._v("$165.00")])
-                                            ]
+                                          _vm._v(
+                                            "Decorative\n                                                                    Accessories"
                                           )
                                         ]
                                       )
-                                    ]
-                                  )
-                                ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Candals &\n                                                                    Holders"
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Home Fragrance")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Mirrors")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Clocks")]
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "col-md-3 col-lg-3 col-6" },
+                                [
+                                  _c("h4", { staticClass: "menu-title" }, [
+                                    _vm._v("Garden & Outdoors")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("hr", { staticClass: "divider" }),
+                                  _vm._v(" "),
+                                  _c("ul", [
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Garden\n                                                                    Furniture"
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Lawn Mowers")]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Pressure\n                                                                    Washers"
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "All Garden\n                                                                    Tools"
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("li", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "shop-fullwidth-banner.html"
+                                          }
+                                        },
+                                        [_vm._v("Outdoor Dining")]
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "banner banner-fixed menu-banner5 br-xs"
+                                  },
+                                  [
+                                    _c("figure", [
+                                      _c("img", {
+                                        staticStyle: {
+                                          "background-color": "#D2D2D2"
+                                        },
+                                        attrs: {
+                                          src:
+                                            "/frontend_asset/images/menu/banner-5.jpg",
+                                          alt: "Banner",
+                                          width: "410",
+                                          height: "123"
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "banner-content text-right y-50"
+                                      },
+                                      [
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass:
+                                              "banner-subtitle font-weight-normal text-default text-capitalize"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    New Arrivals"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h3",
+                                          {
+                                            staticClass:
+                                              "banner-title font-weight-bolder text-capitalize ls-normal"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    Amazing Sofa"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "banner-price-info font-weight-normal ls-normal"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    Starting at "
+                                            ),
+                                            _c("strong", [_vm._v("$125.00")])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-6" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "banner banner-fixed menu-banner5 br-xs"
+                                  },
+                                  [
+                                    _c("figure", [
+                                      _c("img", {
+                                        staticStyle: {
+                                          "background-color": "#9F9888"
+                                        },
+                                        attrs: {
+                                          src:
+                                            "/frontend_asset/images/menu/banner-6.jpg",
+                                          alt: "Banner",
+                                          width: "410",
+                                          height: "123"
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "banner-content y-50" },
+                                      [
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass:
+                                              "banner-subtitle font-weight-normal text-white text-capitalize"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    Best Seller"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h3",
+                                          {
+                                            staticClass:
+                                              "banner-title font-weight-bolder text-capitalize text-white ls-normal"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    Chair & Lamp"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "banner-price-info font-weight-normal ls-normal text-white"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    From "
+                                            ),
+                                            _c("strong", [_vm._v("$165.00")])
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
                               ])
                             ])
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-heartbeat" }),
-                                _vm._v(
-                                  "Healthy & Beauty\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-gift" }),
-                                _vm._v(
-                                  "Gift Ideas\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-gamepad" }),
-                                _vm._v(
-                                  "Toy & Games\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-ice-cream" }),
-                                _vm._v(
-                                  "Cooking\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-ios" }),
-                                _vm._v(
-                                  "Smart Phones\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-camera" }),
-                                _vm._v(
-                                  "Cameras & Photo\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              { attrs: { href: "shop-fullwidth-banner.html" } },
-                              [
-                                _c("i", { staticClass: "w-icon-ruby" }),
-                                _vm._v(
-                                  "Accessories\n                                            "
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "font-weight-bold text-primary text-uppercase ls-25",
-                                attrs: { href: "shop-banner-sidebar.html" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                                View All Categories"
-                                ),
-                                _c("i", { staticClass: "w-icon-angle-right" })
-                              ]
-                            )
                           ])
-                        ]
-                      )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-heartbeat" }),
+                              _vm._v(
+                                "Healthy & Beauty\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-gift" }),
+                              _vm._v(
+                                "Gift Ideas\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-gamepad" }),
+                              _vm._v(
+                                "Toy & Games\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-ice-cream" }),
+                              _vm._v(
+                                "Cooking\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-ios" }),
+                              _vm._v(
+                                "Smart Phones\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-camera" }),
+                              _vm._v(
+                                "Cameras & Photo\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            { attrs: { href: "shop-fullwidth-banner.html" } },
+                            [
+                              _c("i", { staticClass: "w-icon-ruby" }),
+                              _vm._v(
+                                "Accessories\n                                            "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "font-weight-bold text-primary text-uppercase ls-25",
+                              attrs: { href: "shop-banner-sidebar.html" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                                View All Categories"
+                              ),
+                              _c("i", { staticClass: "w-icon-angle-right" })
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("nav", { staticClass: "main-nav" }, [
+                _c("ul", { staticClass: "menu active-underline" }, [
+                  _c("li", { staticClass: "active" }, [
+                    _c("a", { attrs: { href: "/" } }, [_vm._v("Home")])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("a", { attrs: { href: "/shop" } }, [_vm._v("Shop")])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("a", { attrs: { href: "/aboutus" } }, [
+                      _vm._v("About Us")
                     ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("nav", { staticClass: "main-nav" }, [
-                  _c("ul", { staticClass: "menu active-underline" }, [
-                    _c("li", { staticClass: "active" }, [
-                      _c("a", { attrs: { href: "/" } }, [_vm._v("Home")])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "/shop" } }, [_vm._v("Shop")])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "/aboutus" } }, [
-                        _vm._v("About Us")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "/contactus" } }, [
-                        _vm._v("Contact Us")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _c("a", { attrs: { href: "/faq" } }, [_vm._v("FAQs")])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("a", { attrs: { href: "/contactus" } }, [
+                      _vm._v("Contact Us")
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("a", { attrs: { href: "/faq" } }, [_vm._v("FAQs")])
                   ])
                 ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "header-right" }, [
+              _c("a", { staticClass: "d-xl-show", attrs: { href: "#" } }, [
+                _c("i", { staticClass: "w-icon-map-marker mr-1" }),
+                _vm._v("Track Order")
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "header-right" }, [
-                _c("a", { staticClass: "d-xl-show", attrs: { href: "#" } }, [
-                  _c("i", { staticClass: "w-icon-map-marker mr-1" }),
-                  _vm._v("Track Order")
-                ]),
-                _vm._v(" "),
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("i", { staticClass: "w-icon-sale" }),
-                  _vm._v("Daily Deals")
-                ])
+              _c("a", { attrs: { href: "#" } }, [
+                _c("i", { staticClass: "w-icon-sale" }),
+                _vm._v("Daily Deals")
               ])
             ])
           ])
-        ]
-      )
-    ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -85321,6 +86226,1272 @@ function getOuterHTML (el) {
 Vue.compile = compileToFunctions;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Vue);
+
+
+/***/ }),
+
+/***/ "./node_modules/vuex/dist/vuex.esm.js":
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "Store": () => (/* binding */ Store),
+/* harmony export */   "createLogger": () => (/* binding */ createLogger),
+/* harmony export */   "createNamespacedHelpers": () => (/* binding */ createNamespacedHelpers),
+/* harmony export */   "install": () => (/* binding */ install),
+/* harmony export */   "mapActions": () => (/* binding */ mapActions),
+/* harmony export */   "mapGetters": () => (/* binding */ mapGetters),
+/* harmony export */   "mapMutations": () => (/* binding */ mapMutations),
+/* harmony export */   "mapState": () => (/* binding */ mapState)
+/* harmony export */ });
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+}
+
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof __webpack_require__.g !== 'undefined'
+    ? __webpack_require__.g
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  }, { prepend: true });
+
+  store.subscribeAction(function (action, state) {
+    devtoolHook.emit('vuex:action', action, state);
+  }, { prepend: true });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+function find (list, f) {
+  return list.filter(f)[0]
+}
+
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+function deepCopy (obj, cache) {
+  if ( cache === void 0 ) cache = [];
+
+  // just return if obj is immutable value
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+
+  // if obj is hit, it is in circular structure
+  var hit = find(cache, function (c) { return c.original === obj; });
+  if (hit) {
+    return hit.copy
+  }
+
+  var copy = Array.isArray(obj) ? [] : {};
+  // put the copy into cache at first
+  // because we want to refer it in recursive deepCopy
+  cache.push({
+    original: obj,
+    copy: copy
+  });
+
+  Object.keys(obj).forEach(function (key) {
+    copy[key] = deepCopy(obj[key], cache);
+  });
+
+  return copy
+}
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
+}
+
+// Base data struct for store's module, package with some attribute and method
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  // Store some children item
+  this._children = Object.create(null);
+  // Store the origin module object which passed by programmer
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+
+  // Store the origin module's state
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors = { namespaced: { configurable: true } };
+
+prototypeAccessors.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
+
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.hasChild = function hasChild (key) {
+  return key in this._children
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if ((true)) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  var child = parent.getChild(key);
+
+  if (!child) {
+    if ((true)) {
+      console.warn(
+        "[vuex] trying to unregister module '" + key + "', which is " +
+        "not registered"
+      );
+    }
+    return
+  }
+
+  if (!child.runtime) {
+    return
+  }
+
+  parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  if (parent) {
+    return parent.hasChild(key)
+  }
+
+  return false
+};
+
+function update (path, targetModule, newModule) {
+  if ((true)) {
+    assertRawModule(path, newModule);
+  }
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if ((true)) {
+          console.warn(
+            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+            'manual reload is needed'
+          );
+        }
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if ((true)) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null);
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  var state = this._modules.root.state;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+  if (useDevtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors$1 = { state: { configurable: true } };
+
+prototypeAccessors$1.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors$1.state.set = function (v) {
+  if ((true)) {
+    assert(false, "use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown mutation type: " + type));
+    }
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+
+  this._subscribers
+    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+    .forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+    ( true) &&
+    options && options.silent
+  ) {
+    console.warn(
+      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
+      'Use the filter functionality in the vue-devtools'
+    );
+  }
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown action type: " + type));
+    }
+    return
+  }
+
+  try {
+    this._actionSubscribers
+      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+      .filter(function (sub) { return sub.before; })
+      .forEach(function (sub) { return sub.before(action, this$1.state); });
+  } catch (e) {
+    if ((true)) {
+      console.warn("[vuex] error in before action subscribers: ");
+      console.error(e);
+    }
+  }
+
+  var result = entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload);
+
+  return new Promise(function (resolve, reject) {
+    result.then(function (res) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.after; })
+          .forEach(function (sub) { return sub.after(action, this$1.state); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in after action subscribers: ");
+          console.error(e);
+        }
+      }
+      resolve(res);
+    }, function (error) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.error; })
+          .forEach(function (sub) { return sub.error(action, this$1.state, error); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in error action subscribers: ");
+          console.error(e);
+        }
+      }
+      reject(error);
+    });
+  })
+};
+
+Store.prototype.subscribe = function subscribe (fn, options) {
+  return genericSubscribe(fn, this._subscribers, options)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn, options) {
+  var subs = typeof fn === 'function' ? { before: fn } : fn;
+  return genericSubscribe(subs, this._actionSubscribers, options)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if ((true)) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule (path) {
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  return this._modules.isRegistered(path)
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors$1 );
+
+function genericSubscribe (fn, subs, options) {
+  if (subs.indexOf(fn) < 0) {
+    options && options.prepend
+      ? subs.unshift(fn)
+      : subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store);
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && ("development" !== 'production')) {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      if ((true)) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._actions[type]) {
+          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._mutations[type]) {
+          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if ((true)) {
+      console.error(("[vuex] duplicate getter key: " + type));
+    }
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if ((true)) {
+      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
+    }
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.reduce(function (state, key) { return state[key]; }, state)
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if ((true)) {
+    assert(typeof type === 'string', ("expects string as the type, but found " + (typeof type) + "."));
+  }
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if ((true)) {
+      console.error(
+        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+      );
+    }
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  if (( true) && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept another params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  if (( true) && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // Get the commit method from store
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  if (( true) && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    // The namespace has been mutated by normalizeNamespace
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if (( true) && !(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val));
+        return
+      }
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  if (( true) && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // get dispatch function from store
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
+function normalizeMap (map) {
+  if (!isValidMap(map)) {
+    return []
+  }
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if (( true) && !module) {
+    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
+  }
+  return module
+}
+
+// Credits: borrowed code from fcomb/redux-logger
+
+function createLogger (ref) {
+  if ( ref === void 0 ) ref = {};
+  var collapsed = ref.collapsed; if ( collapsed === void 0 ) collapsed = true;
+  var filter = ref.filter; if ( filter === void 0 ) filter = function (mutation, stateBefore, stateAfter) { return true; };
+  var transformer = ref.transformer; if ( transformer === void 0 ) transformer = function (state) { return state; };
+  var mutationTransformer = ref.mutationTransformer; if ( mutationTransformer === void 0 ) mutationTransformer = function (mut) { return mut; };
+  var actionFilter = ref.actionFilter; if ( actionFilter === void 0 ) actionFilter = function (action, state) { return true; };
+  var actionTransformer = ref.actionTransformer; if ( actionTransformer === void 0 ) actionTransformer = function (act) { return act; };
+  var logMutations = ref.logMutations; if ( logMutations === void 0 ) logMutations = true;
+  var logActions = ref.logActions; if ( logActions === void 0 ) logActions = true;
+  var logger = ref.logger; if ( logger === void 0 ) logger = console;
+
+  return function (store) {
+    var prevState = deepCopy(store.state);
+
+    if (typeof logger === 'undefined') {
+      return
+    }
+
+    if (logMutations) {
+      store.subscribe(function (mutation, state) {
+        var nextState = deepCopy(state);
+
+        if (filter(mutation, prevState, nextState)) {
+          var formattedTime = getFormattedTime();
+          var formattedMutation = mutationTransformer(mutation);
+          var message = "mutation " + (mutation.type) + formattedTime;
+
+          startMessage(logger, message, collapsed);
+          logger.log('%c prev state', 'color: #9E9E9E; font-weight: bold', transformer(prevState));
+          logger.log('%c mutation', 'color: #03A9F4; font-weight: bold', formattedMutation);
+          logger.log('%c next state', 'color: #4CAF50; font-weight: bold', transformer(nextState));
+          endMessage(logger);
+        }
+
+        prevState = nextState;
+      });
+    }
+
+    if (logActions) {
+      store.subscribeAction(function (action, state) {
+        if (actionFilter(action, state)) {
+          var formattedTime = getFormattedTime();
+          var formattedAction = actionTransformer(action);
+          var message = "action " + (action.type) + formattedTime;
+
+          startMessage(logger, message, collapsed);
+          logger.log('%c action', 'color: #03A9F4; font-weight: bold', formattedAction);
+          endMessage(logger);
+        }
+      });
+    }
+  }
+}
+
+function startMessage (logger, message, collapsed) {
+  var startMessage = collapsed
+    ? logger.groupCollapsed
+    : logger.group;
+
+  // render
+  try {
+    startMessage.call(logger, message);
+  } catch (e) {
+    logger.log(message);
+  }
+}
+
+function endMessage (logger) {
+  try {
+    logger.groupEnd();
+  } catch (e) {
+    logger.log('—— log end ——');
+  }
+}
+
+function getFormattedTime () {
+  var time = new Date();
+  return (" @ " + (pad(time.getHours(), 2)) + ":" + (pad(time.getMinutes(), 2)) + ":" + (pad(time.getSeconds(), 2)) + "." + (pad(time.getMilliseconds(), 3)))
+}
+
+function repeat (str, times) {
+  return (new Array(times + 1)).join(str)
+}
+
+function pad (num, maxLength) {
+  return repeat('0', maxLength - num.toString().length) + num
+}
+
+var index = {
+  Store: Store,
+  install: install,
+  version: '3.6.2',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers,
+  createLogger: createLogger
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (index);
+
 
 
 /***/ })

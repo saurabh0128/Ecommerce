@@ -9,9 +9,10 @@
                     <div class="header-right">
                         <!-- End of Dropdown Menu -->
                         
+                        <a href="" @click.prevent="logout" class="d-lg-show" v-if="loggedIn" >Logout</a>
                         <a href="blog.html" class="d-lg-show">Blog</a>
                         <a href="/contactus" class="d-lg-show">Contact Us</a>
-                        <a href="/account" class="d-lg-show">My Account</a>
+                        <router-link :to="{name:'my_account'}" class="d-lg-show" v-if="loggedIn" >My Account</router-link>
                         <a href="#sign-in"  class="d-lg-show login sign-in"><i class="w-icon-account"></i>Sign In</a>
                        <!--  <router-link to = "/login" class="d-lg-show login sign-in" ><i class="w-icon-account"></i>Sign In</router-link> -->
                         <span class="delimiter d-lg-show">/</span>
@@ -579,11 +580,26 @@
             </div>
         </header>
         <!-- End of Header -->
-
-   
-
-
 </template>
+
+
+<script type="text/javascript" >
+export default{
+    name:'Header',
+    computed:{
+        loggedIn(){
+            return this.$store.getters.loggedIn
+        }
+    },
+    methods:{
+        logout(){
+            this.$store.dispatch('logout');
+
+        }
+    }
+};
+
+</script>
 
 
 

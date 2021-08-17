@@ -14,16 +14,16 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="sign-in">
                         <form method="post" accept-charset="utf-8">
-                            <span v-if="errors[0]" id="mainerror" class="txt-red" >{{ errors[0] }}</span>
+                            <span v-if="loginerrors[0]" id="mainerror" class="txt-red" >{{ loginerrors[0] }}</span>
                             <div class="form-group">
                                 <label>Username *</label>
-                                <input type="text" v-model="form.username" class="form-control" name="username" id="username"  required>
-                                <span v-if="errors.username" id="usernameerror"  class="txt-red" >{{ errors.username[0] }}</span>
+                                <input type="text" v-model="LoginForm.username" class="form-control" name="username" id="username"  required>
+                                <span v-if="loginerrors.username" id="usernameerror"  class="txt-red" >{{ loginerrors.username[0] }}</span>
                             </div>
                             <div class="form-group mb-0">
                                 <label>Password *</label>
-                                <input type="password" v-model="form.password" name="password" id="password"  class="form-control"   required>
-                                <span v-if="errors.password" id="passworderror" class="txt-red" >{{ errors.password[0] }}</span>
+                                <input type="password" v-model="LoginForm.password" name="password" id="password"  class="form-control"   required>
+                                <span v-if="loginerrors.password" id="passworderror" class="txt-red" >{{ loginerrors.password[0] }}</span>
                             </div>
                             <div class="form-checkbox d-flex align-items-center justify-content-between">
                                 <input type="checkbox" class="custom-checkbox" required="">
@@ -38,32 +38,28 @@
                         
                         <div class="form-group">
                             <label>Your Name*</label>
-                            <input type="text" class="form-control" name="reg_name" id="reg_name" required>
+                            <input type="text" v-model="RegForm.name"  class="form-control" name="reg_name" id="reg_name" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Your Image*</label>
-                            <input type="file" class="form-control" name="reg_user_img" id="reg_user_img" required>
-                        </div>
-                        <div class="form-group">
                             <label>Your Email Address *</label>
-                            <input type="text" class="form-control" name="reg_email" id="reg_email" required>
+                            <input type="text" v-model="RegForm.email"  class="form-control" name="reg_email" id="reg_email" required>
                         </div>
                         <div class="form-group">
                             <label>Username *</label>
-                            <input type="text" class="form-control" name="reg_username" id="reg_username" required>
+                            <input  v-model="RegForm.username"  type="text" class="form-control" name="reg_username" id="reg_username" required>
                         </div>
                         <div class="form-group">
                             <label>Phone Number *</label>
-                            <input type="text" class="form-control" name="reg_ph_number" id="reg_ph_number" required>
+                            <input v-model="RegForm.phone_number" type="text" class="form-control" name="reg_ph_number" id="reg_ph_number" required>
                         </div>
                         <div class="form-group">
                             <label>Password *</label>
-                            <input type="text" class="form-control" name="reg_password" id="reg_password" required>
+                            <input v-model="RegForm.password" type="text" class="form-control" name="reg_password" id="reg_password" required>
                         </div>
                         <div class="form-group mb-5">
                             <label>Confirm Password *</label>
-                            <input type="text" class="form-control" name="reg_confirm_password" id="reg_confirm_password" required>
+                            <input v-model="RegForm.confirm_password" type="text" class="form-control" name="reg_confirm_password" id="reg_confirm_password" required>
                         </div>
                         <p>Your personal data will be used to support your experience 
                             throughout this website, to manage access to your account, 
@@ -94,7 +90,6 @@
 
 <script>
     
-    
     function formclear() {
         $('#username').val('');
         $('#password').val(''); 
@@ -104,36 +99,52 @@
     }
     
 
+
     export default{
         data(){
             return{
-                form:{
-                    username:'',
-                    password:''
+                LoginForm:{
+                    username:'ssk007',
+                    password:'saurabh123'
                 },
-                errors:[]
+                loginerrors:[],
+                RegForm:{
+                    name:'',
+                    profile_img:'',
+                    email:'',
+                    username:'',
+                    phone_number:'',
+                    password:'',
+                    confirm_password:''
+                },  
+                Regerrors:[]
             }
         },
         methods:{
             login(){
-                this.errors = []; 
-                axios.post('/api/v1/login',this.form).then((res)=>{
+
+                this.loginerrors = []; 
+                axios.post('/api/v1/login',this.LoginForm).then((res)=>{
                     if(res.data.status)
                     {
                         $('.login-box').hide();
                         $('.login-modal-bg').hide();
                         $('body').css("overflow-y",'auto');
-                        localStorage.setItem('user_details',JSON.stringify(res.data.info));
-                        localStorage.setItem('access_token',res.data.access_token);
-                        toastr["success"]('Login Successfully');  
                         formclear();
+                        toastr["success"]('Login Successfully');                  
+                        this.$store.dispatch('login',res.data)
+
+
                     }   
                     else 
                     {
-                        this.errors = res.data.error;
+                        this.loginerrors = res.data.error;
                     }
                     
                 })
+            },
+            register(){
+                console.log(this.RegForm);
             }
         }
     }

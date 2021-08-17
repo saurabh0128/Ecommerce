@@ -40,6 +40,9 @@ use App\Http\Controllers\api\v1\CouponController;
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');
          Route::resource('/cart',CartController::class);
          Route::resource('/coupon',CouponController::class);
+         Route::get('/authenticated',function(){
+            return false;
+         });         
       });
    });
    
