@@ -3718,10 +3718,9 @@
 <script>
 
 export default {
+    name:'Home',
 mounted() {
-    let JqueryCountdownScript = document.createElement('script')
-    JqueryCountdownScript.setAttribute('src', '/frontend_asset/vendor/jquery.countdown/jquery.countdown.min.js')
-    document.head.appendChild(JqueryCountdownScript)
+ 
 
     let SkrollScript = document.createElement('script')
     SkrollScript.setAttribute('src', '/frontend_asset/vendor/skrollr/skrollr.min.js')

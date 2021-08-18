@@ -34,8 +34,8 @@ use App\Http\Controllers\api\v1\CouponController;
 
       Route::group(['middleware' => 'auth:api'],function(){
       
-         Route::get('category',[CategoryController::class,'categoryDetails'])->name('category.categoryDetails');
          Route::resource('/product',ProductController::class)->only(['index','show']);
+         Route::get('category',[CategoryController::class,'categoryDetails'])->name('category.categoryDetails');
          Route::resource('/order',OrderController::class);
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');
          Route::resource('/cart',CartController::class);

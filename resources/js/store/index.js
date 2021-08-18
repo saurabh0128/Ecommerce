@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router/index.js'
+import product from  './module/products.js'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
+
 
 export default new Vuex.Store({
 	state:{
@@ -32,12 +35,13 @@ export default new Vuex.Store({
 			localStorage.removeItem('user_details');
 			localStorage.removeItem('access_token');
 			context.commit('removeToken');
+			router.push('/').catch(()=>{});
 		}
 
 
 	},
 	modules:{
-
+		product
 	}
 
 })
