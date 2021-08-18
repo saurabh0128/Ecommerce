@@ -26,7 +26,4 @@ class Cart extends Model
     {
         return $this->belongsTo(Coupone::class,'coupon_id');
     }
-    protected $casts = [
-        'coupon_code' => 'array',
-    ];
 }
