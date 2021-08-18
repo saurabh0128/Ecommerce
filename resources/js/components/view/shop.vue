@@ -178,14 +178,16 @@
                                     </div>
                                 </div>
                             </nav>
+                            
                             <div class="product-wrapper row cols-xl-5 cols-lg-3 cols-md-4 cols-sm-3 cols-2">
-                                <Product_Box/>
-                                <Product_Box/>
-                                <Product_Box/>
-                                <Product_Box/>
-                                <Product_Box/>
-                                <Product_List/>
+                            <Product_Box/>
                             </div>
+                                <!-- <Product_Box/> -->
+                                <!-- <Product_Box/> -->
+                                <!-- <Product_Box/> -->
+                                <!-- <Product_Box/> -->
+                                <!-- <Product_List/> -->
+                            <!-- </div> -->
 
                             <div class="toolbox toolbox-pagination justify-content-between">
                                 <p class="showing-info mb-2 mb-sm-0">
@@ -248,10 +250,7 @@ mounted() {
     NouisliderScript.setAttribute('src', '/frontend_asset/vendor/nouislider/nouislider.min.js')
     document.head.appendChild(NouisliderScript)
 
-    let JqueryCountDownScript = document.createElement('script')
-    JqueryCountDownScript.setAttribute('src', '/frontend_asset/vendor/jquery.countdown/jquery.countdown.min.js')
-    document.head.appendChild(JqueryCountDownScript)
-
+   
 }
 };
 

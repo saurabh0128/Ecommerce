@@ -9,13 +9,14 @@
                     <div class="header-right">
                         <!-- End of Dropdown Menu -->
                         
-                        <a href="blog.html" class="d-lg-show">Blog</a>
-                        <a href="/contactus" class="d-lg-show">Contact Us</a>
-                        <a href="/account" class="d-lg-show">My Account</a>
-                        <a href="#sign-in"  class="d-lg-show login sign-in"><i class="w-icon-account"></i>Sign In</a>
+                        <a href="" @click.prevent="logout"  v-if="loggedIn" >Logout</a>
+                        <a href="#" class="d-lg-show">Blog</a>
+                        <router-link :to="{name:'contactus'}" class="d-lg-show">Contact Us</router-link>
+                        <router-link :to="{name:'my_account'}" class="d-lg-show" v-if="loggedIn" >My Account</router-link>
+                        <a href="#sign-in" v-if="!loggedIn"  class="d-lg-show login sign-in"><i class="w-icon-account"></i>Sign In</a>
                        <!--  <router-link to = "/login" class="d-lg-show login sign-in" ><i class="w-icon-account"></i>Sign In</router-link> -->
-                        <span class="delimiter d-lg-show">/</span>
-                        <a href="#sign-up" class="ml-0 d-lg-show login register">Register</a>
+                        <span class="delimiter d-lg-show" v-if="!loggedIn" >/</span>
+                        <a href="#sign-up" v-if="!loggedIn" class="ml-0 d-lg-show login register">Register</a>
                     </div>
                 </div>
             </div>
@@ -26,9 +27,9 @@
                     <div class="header-left mr-md-4">
                         <a href="#" class="mobile-menu-toggle  w-icon-hamburger">
                         </a>
-                        <a href="/" class="logo ml-lg-0">
+                        <router-link :to="{name:'home'}"  class="logo ml-lg-0">
                             <img src="/frontend_asset/images/logo.png" alt="logo" width="144" height="45" />
-                        </a>
+                        </router-link>
                         <form method="get" action="#" class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper">
                             <div class="select-box">
                                 <select id="category" name="category">
@@ -131,7 +132,7 @@
                                 </div>
 
                                 <div class="cart-action">
-                                    <a href="/cart" class="btn btn-dark btn-outline btn-rounded">View Cart</a>
+                                    <router-link :to="{ name:'cart' }"  class="btn btn-dark btn-outline btn-rounded">View Cart</router-link>
                                     <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
                                 </div>
                             </div>
@@ -550,19 +551,19 @@
                                     </li>
             
                                     <li>
-                                        <a href="/shop">Shop</a>
+                                        <router-link :to="{name:'shop'}" >Shop</router-link>
                                     </li>
 
                                     <li>
-                                        <a href="/aboutus">About Us</a>
+                                        <router-link :to="{name:'aboutus'}" >About Us</router-link>
                                     </li>
 
                                     <li>
-                                        <a href="/contactus">Contact Us</a>
+                                        <router-link :to="{name:'contactus'}" >Contact Us</router-link>
                                     </li>
 
                                     <li>
-                                        <a href="/faq">FAQs</a>
+                                        <router-link :to="{name:'faq'}" >FAQs</router-link>
                                     </li>
             
                                     
@@ -579,11 +580,25 @@
             </div>
         </header>
         <!-- End of Header -->
-
-   
-
-
 </template>
+
+
+<script type="text/javascript" >
+export default{
+    name:'Header',
+    computed:{
+        loggedIn(){
+            return this.$store.getters.loggedIn
+        }
+    },
+    methods:{
+        logout(){
+            this.$store.dispatch('logout');
+        }
+    }
+};
+
+</script>
 
 
 

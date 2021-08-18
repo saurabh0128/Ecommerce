@@ -1,5 +1,7 @@
 <template>
-	 <div class="product-wrap">
+    
+<div>        
+    <div v-for="product in allProduct" class="product-wrap">
         <div class="product text-center">
             <figure class="product-media">
                 <a href="product-default.html">
@@ -39,4 +41,22 @@
             </div>
         </div>
     </div>
+</div>
 </template>
+
+<script>
+import { mapGetters,mapActions } from 'vuex';
+
+export default{
+    name:'Product_Box',
+    methods:{
+        ...mapActions(['getProducts'])
+    },
+    computed: mapGetters(['allProduct']),
+    created()
+    {
+        this.getProducts();
+        console.log(this.allProduct)
+    }
+};
+</script>       

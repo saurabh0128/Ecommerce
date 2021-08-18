@@ -12,6 +12,8 @@ import Cart from '../components/view/Cart.vue';
 import Faq from '../components/view/Faq.vue';
 import page404 from	 '../components/view/404.vue';
 import MyAccount from '../components/view/MyAccount.vue';
+import store from '../store/index.js';
+import logout from '../components/auth/logout.vue';
 
 Vue.use(VueRouter);
 
@@ -73,7 +75,16 @@ mode: 'history',
 		{
 			path:'/account',
 			name:'my_account',
-			component:MyAccount	
+			component:MyAccount,
+			meta:{
+				requiresAuth:true
+			}
+
+		},
+		{
+			path:'/logout',
+			name:'logout',
+			component:logout
 		},
 		{
 			path:'*',
@@ -85,8 +96,22 @@ mode: 'history',
 
 });
 
-// router.beforeEach((to, from, next) =>
-//     Promise.all([store.dispatch("auth/checkAuth")]).then(next)
-// );
+
+
+router.beforeEach((to, from, next) =>{
+    if (to.matched.some(record =>record.meta.requiresAuth)){
+    	if(!store.getters.loggedIn)
+    	{
+    		next({
+ 				name:'home' 			
+    		})
+    	}
+    	else{
+    		next()
+    	}
+    }else{
+    	next()
+    }
+});
 
 export default router;

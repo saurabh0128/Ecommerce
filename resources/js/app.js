@@ -10,6 +10,7 @@ window.Vue = require('vue').default;
 
 import router from './router';
 import App from './App.vue';
+import store from './store/index.js'
 
 
 
@@ -37,5 +38,6 @@ import App from './App.vue';
 const app = new Vue({
     el: '#app',
     router,
+    store,
     render: h => h(App)
 });

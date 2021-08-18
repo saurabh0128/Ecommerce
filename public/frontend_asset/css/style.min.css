@@ -254,7 +254,7 @@
 .owl-carousel .slide-animate {
   transform: translate3d(0, 0, 0) scale(1);
   will-change: filter, transform, opacity;
-  opacity: 0;
+  opacity: initial;
 }
 .owl-carousel .slide-animate.show-content {
   opacity: 1;
@@ -3586,11 +3586,11 @@ blockquote {
     Animation
         - Sticky Content
 -----------------------------------------*/
-.appear-animate {
+/* .appear-animate {
   visibility: hidden;
   opacity: 0;
 }
-
+ */
 .appear-animation-visible {
   visibility: visible;
   opacity: 1;
@@ -7769,7 +7769,7 @@ body .product-popup {
   width: calc(50% - .5rem);
   margin: 0;
 }
-.login-popup .nav.nav-tabs .nav-item:first-child {
+.login-popup .nav.nav-tabs .nav-item:not(:last-child) {
   margin-right: 1rem;
 }
 .login-popup .nav-item .nav-link {
@@ -10370,7 +10370,7 @@ body .product-popup {
 
 .nav-tabs {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   border-bottom: 1px solid #eee;
   color: #333;
 }
@@ -18953,7 +18953,7 @@ aside .sp-sidebar-banner span {
 
 
 .login-box{
-    position: absolute;
+    position: sticky;
     z-index: 1100;
     padding-top: 100px;
     max-width: 50rem;
@@ -18962,6 +18962,7 @@ aside .sp-sidebar-banner span {
     width: 100%;
     background-color: white;
     padding: 3.3rem 5rem 2.6rem;
+    margin: auto;
 }
 
 .login-modal-bg{

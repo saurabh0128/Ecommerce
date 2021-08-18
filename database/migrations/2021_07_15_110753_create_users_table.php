@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('phone_no');
             $table->string('email_id',40);
             $table->string('password',100);
-            $table->string('profile_img',50);
+            $table->string('profile_img',50)->nullable();
             $table->tinyInteger('is_verified');
             $table->tinyInteger('is_block');
             $table->timestamps();
