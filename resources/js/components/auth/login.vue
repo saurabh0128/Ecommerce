@@ -141,6 +141,7 @@
 </template>	
 
 <script>
+import {mapActions,mapGetters} from 'vuex';
     
     function formclear() {
         $('#username').val('');
@@ -193,11 +194,13 @@
 
 
     export default{
+        name:'login',
+        computed: mapGetters(['allErrors']),
         data(){
             return{
                 LoginForm:{
-                    username:'ssk007',
-                    password:'saurabh123'
+                    username:'',
+                    password:''
                 },
                 loginerrors:[],
                 RegForm:{
@@ -225,25 +228,10 @@
             }
         },
         methods:{
+            ...mapActions(["userlogin"]),
             login(){
-
-                this.loginerrors = []; 
-                axios.post('/api/v1/login',this.LoginForm).then((res)=>{
-                    if(res.data.status)
-                    {
-                        $('.login-box').hide();
-                        $('.login-modal-bg').hide();
-                        $('body').css("overflow-y",'auto');
-                        formclear();
-                        toastr["success"]('Login Successfully');                  
-                        this.$store.dispatch('login',res.data)
-                    }   
-                    else 
-                    {
-                        this.loginerrors = res.data.error;
-                    }
-                    
-                })
+                this.userlogin(this.LoginForm);
+                // this.allErrors;
             },
             register(){
                 this.regerrors = [];

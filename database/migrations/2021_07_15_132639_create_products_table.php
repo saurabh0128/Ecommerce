@@ -25,6 +25,7 @@ class CreateProductsTable extends Migration
             $table->tinyInteger('is_display');
             $table->tinyInteger('is_avilable');
             $table->bigInteger('stoke');
+            $table->deimal('rating',4,2);
             $table->timestamps();
         });
     }

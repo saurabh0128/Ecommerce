@@ -10,9 +10,10 @@ window.Vue = require('vue').default;
 
 import router from './router';
 import App from './App.vue';
-import store from './store/index.js'
+import store from './store/index.js';
+import toastr from "vue-toastr";
 
-
+Vue.use(toastr);
 
 /**
  * The following block of code may be used to automatically register your
@@ -39,5 +40,6 @@ const app = new Vue({
     el: '#app',
     router,
     store,
+    toastr,
     render: h => h(App)
 });

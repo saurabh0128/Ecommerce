@@ -28,8 +28,6 @@
 	    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_asset/vendor/animate/animate.min.css')}}">
 	    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_asset/vendor/magnific-popup/magnific-popup.min.css')}}">
 
-	    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_asset/css/toastr.css') }}">
-
 	    <!-- WebFont.js -->
 	    <script>
 	        WebFontConfig = {
@@ -61,7 +59,7 @@
     <script src="{{asset('/frontend_asset/vendor/owl-carousel/owl.carousel.min.js')}}"></script>
     <script src="{{asset('/frontend_asset/vendor/zoom/jquery.zoom.min.js')}}"></script>
     <script src="{{asset('/frontend_asset/vendor/magnific-popup/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{ asset('frontend_asset/js/toastr.min.js') }}" type="text/javascript" charset="utf-8" async defer></script>
+
 
     <!-- Main JS -->
     <script src="{{asset('/frontend_asset/js/main.min.js')}}"></script>
