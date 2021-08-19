@@ -18,7 +18,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = Cart::with('CartItem')->where('user_id',auth('api')->id())->first();
+     
+        return Response()->json(['cart' => $cart]);
     }
 
     /**
@@ -129,9 +131,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        $cart = Cart::with('CartItem')->where('id',$id)->first();
-     
-        return Response()->json(['cart' => $cart]);
+       
     }
 
     /**

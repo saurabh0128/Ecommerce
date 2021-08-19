@@ -25,17 +25,18 @@ class Product extends Model
     ];
 
     public function category(){
-
         return $this->belongsTo(Category::class,'category_id');
     }
 
     public function user(){
-
         return $this->belongsTo(User::class,'user_id');
     }
 
-    public function rating_review()
-    {
+    public function rating_review(){
         return $this->hasMany(RatingReview::class,'product_id');
+    }
+
+    public function cart_item(){
+        return $this->hasMany(CartItem::class,'product_id');
     }
 }

@@ -43,60 +43,68 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
+        //Get User Cart detail 
         $cart_detail = Cart::where('user_id',auth('api')->id())->first();
+        //Get User Enter Coupon DEtail 
         $coupon = Coupone::where('coupon_code',$request->coupon_code)->first();
-        //dd($coupon);
+        $discount = 0;
+        $percentage_discount=0;
+        $cart_total_amt = 0; 
         $date = Carbon::now();
+        //Check User Enter Coupon is Exist in Coupon Table
         if(is_null($coupon)){
             return Response()->json(["error" => "This Coupon Is Not Exist "]);
         }elseif(!($coupon->start_date <= $date->ToDateString() && $coupon->end_date >= $date->ToDateString())){
             return Response()->json(["error" => "Sorry Coupon Has Exceeded"]);
         }elseif($coupon->coupon_code == $cart_detail->coupon_code){
             return Response()->json(["error" =>"This Coupone Alredy Apply"]);
-        }elseif(!$coupon->user_id){
-            if($coupon->coupon_type == "product")
-            {
-                if($coupon->discount_type == "fixed"){
-                    $cart_detail->discount = $coupon->coupon_discount;
-                    $cart_detail->coupon_code = $request->coupon_code;
-                }elseif($coupon->discount_type == "percentage"){
-                    $product_detail = CartItem::where('product_id',$coupon->coupon_type_value)->first();
-                    $product_total_amt = $product_detail->price*$product_detail->quantity;
-                    $product_discount = $product_total_amt/100*$coupon->coupon_discount;
-                    $cart_detail->discount = $product_discount;
-                    $cart_detail->coupon_code = $request->coupon_code;
-                    //dd($cart_detail);
+        //check Tha Coupon for User and This User is Eligible For This Coupon 
+        }elseif($coupon->user_id && $coupon->user_id != auth('api')->id()){
+            return Response()->json("User Is Not Eligible For This Coupon");
+        }else{
+            if($coupon->coupon_type == "product"){
+                //Get Product Detail Form Tha Cart Item 
+                $cart_item = CartItem::where('product_id',$coupon->coupon_type_value)->first();
+                if($cart_item){
+                    if($coupon->discount_type == "fixed"){ 
+                        $discount = $coupon->coupon_discount;   
+                    }elseif($coupon->discount_type == "percentage"){
+                        $product_total_amt = $cart_item->price*$cart_item->quantity;
+                        $product_discount = $product_total_amt/100*$coupon->coupon_discount;
+                        $discount = $product_discount;
+                    }
                 }
             }elseif($coupon->coupon_type == "category"){
-                if($coupon->discount_type == "fixed"){
-                    $product = Product::where('category_id',$coupon->coupon_type_value)->get();
-                    foreach($product as $product_detail){
-                        $cart_item = CartItem::where('product_id',$product_detail->id)->first();
-                        if($cart_item){
-                            $cart_detail->discount = $coupon->coupon_discount;
-                            $cart_detail->coupon_code = $request->coupon_code;
-                            break;            
+                //Get All Cart Item With Relationship Products useing Product Id 
+                $cart_item = CartItem::with('product')->where('cart_id',$cart_detail->id)->get();
+                if($cart_item){
+                    if($coupon->discount_type == "fixed"){
+                        foreach($cart_item as $cart){
+                            if($cart->product->category_id == $coupon->coupon_type_value){
+                                $discount = $coupon->coupon_discount;                       
+                            }
                         }
                     }
-                }elseif($coupon->discount_type == "percentage"){
-                    $product = Product::where('category_id',$coupon->coupon_type_value)->get();
-                    foreach($product as $product_detail){
-                        $cart_item = CartItem::where('product_id',$product_detail->id)->first();
-                        if($cart_item){
-                            //===========================
+                    if($coupon->discount_type == "percentage"){
+                        foreach($cart_item as $cart){
+                            if($cart->product->category_id == $coupon->coupon_type_value){
+                                $product_total_amt = $cart->price*$cart->quantity;
+                                $percentage_discount += $product_total_amt/100*$coupon->coupon_discount;
+                                $discount = $percentage_discount;                           
+                            }     
                         }
                     }
                 }
             }
-            //$cart_detail->save();
-            return Response()->json(["success" => "Coupon Add SuccessFully"]);
-        }else{
-            if(!($coupon->user_id == auth('api')->id()))
-            {
-                return Response()->json(["error" =>"This Coupone is Not valida"]);
-            }else{
-                dd("apply");
+            //Get All Product Data Into Tha Cart 
+            $cart_product = CartItem::where('cart_id',$cart_detail->id)->get();
+            foreach($cart_product as $products){
+                $cart_total_amt += $products->price*$products->quantity;
             }
+            $cart_detail->discount = min($cart_total_amt,$discount);
+            $cart_detail->coupon_code = $request->coupon_code;
+            $cart_detail->save();
+            return Response()->json(["success" => "Coupon Add SuccessFully"]);
         }
     }
 
@@ -142,68 +150,15 @@ class CouponController extends Controller
      */
     public function destroy($id)
     {
-        $coupon_detail = Coupone::where('coupon_code',$id)->first();
-        //dd($coupon_detail);
         $cart_detail = Cart::where('user_id',auth('api')->id())->first();
-       // dd($coupon_detail);
-        foreach($cart_detail->coupon_code as $key => $value){
-
-            if($value == $id){
-
-                if($coupon_detail->coupon_type == "product"){
-                   
-                    if($coupon_detail->discount_type == "fixed")
-                    {
-                        $cart_detail->discount -= $coupon_detail->coupon_discount;
-                       
-                       // dd($cart_detail->discount);
-                        $coupon_delete =$cart_detail->coupon_code;
-                        unset($coupon_delete[$coupon_detail->coupon_type_value]);
-                        $cart_detail->coupon_code = $coupon_delete;
-                        $cart_detail->save();
-                    }elseif($coupon_detail->discount_type == "percentage"){
-                        $cart_item = CartItem::where('product_id',$coupon_detail->coupon_type_value)->first();
-                        $total_amt = $cart_item->price*$cart_item->quantity;
-                        $discount = $total_amt/100*$coupon_detail->coupon_discount;
-                        $cart_detail->discount -= $discount;
-                        $coupon_delete =$cart_detail->coupon_code;
-                        unset($coupon_delete[$coupon_detail->coupon_type_value]);
-                        $cart_detail->coupon_code = $coupon_delete;
-                        $cart_detail->save();
-                    }   
-                    
-                }elseif($coupon_detail->coupon_type == "category"){
-                    if($coupon_detail->discount_type == "fixed")
-                    {
-                        $cart_detail->discount -= $coupon_detail->coupon_discount;
-                        $coupons_detail =$cart_detail->coupon_code;
-                        $coupon_delete=array_diff($coupons_detail,[$id]);
-                        $cart_detail->coupon_code = $coupon_delete;
-                        $cart_detail->save();
-                    }elseif($coupon_detail->discount_type == "percentage"){
-                        $product = Product::where('category_id',$coupon_detail->coupon_type_value)->get();
-                        foreach($product as $product_detail){
-                            $cart_item = CartItem::where('product_id',$product_detail->id)->first();
-                            if(!is_null($cart_item)){
-                                $discount_product = CartItem::where('product_id',$product_detail->id)->first();
-                                 if(!is_null($discount_product)){
-                                    $cart_item = CartItem::where('product_id',$product_detail->id)->first();
-                                    $total_amt = $cart_item->price*$cart_item->quantity;
-                                    $discount = $total_amt/100*$coupon_detail->coupon_discount;
-                                    $cart_detail->discount -= $discount;
-                                    $coupons_detail = $cart_detail->coupon_code;
-                                    $coupon_delete=array_diff($coupons_detail,[$id]);
-                                    $cart_detail->coupon_code = $coupon_delete;
-                                    $cart_detail->save();
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-
+        //dd($cart_detail);
+        if(!($cart_detail->coupon_code == $id)){
+            return Response()->json(["error" => "Coupon Not Exist"]);
+        }else{
+            $cart_detail->discount = 0;
+            $cart_detail->coupon_code = Null;
         }
-        //return Response($coupon_detail);
+        $cart_detail->save();
+        return Response()->json(["success" => "Coupon Deleted Successfully"]);
     }
 }

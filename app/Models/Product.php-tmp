@@ -4,12 +4,11 @@ Deprecated: The each() function is deprecated. This message will be suppressed o
 
 namespace App\Models;
 
-use Freshbitsweb\LaravelCartManager\Traits\Cartable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model {
-	use HasFactory, Cartable;
+	use HasFactory;
 
 	protected $filable = [
 		'product_name',
@@ -26,16 +25,18 @@ class Product extends Model {
 	];
 
 	public function category() {
-
 		return $this->belongsTo(Category::class , 'category_id');
 	}
 
 	public function user() {
-
 		return $this->belongsTo(User::class , 'user_id');
 	}
 
 	public function rating_review() {
 		return $this->hasMany(RatingReview::class , 'product_id');
+	}
+
+	public function cart_item() {
+		return $this->hasMany(CartItem::class , 'product_id');
 	}
 }
