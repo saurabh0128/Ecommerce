@@ -547,7 +547,7 @@
                             <nav class="main-nav">
                                 <ul class="menu active-underline">
                                     <li class="active">
-                                        <a href="/">Home</a>
+                                        <router-link :to="{name:'home'}" >Home</router-link>
                                     </li>
             
                                     <li>
@@ -584,17 +584,12 @@
 
 
 <script type="text/javascript" >
+import {mapActions, mapGetters} from 'vuex'
 export default{
     name:'Header',
-    computed:{
-        loggedIn(){
-            return this.$store.getters.loggedIn
-        }
-    },
+    computed:mapGetters(['loggedIn']),
     methods:{
-        logout(){
-            this.$store.dispatch('logout');
-        }
+            ...mapActions(['logout'])
     }
 };
 

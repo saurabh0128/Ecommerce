@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\api\v1;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -22,13 +20,13 @@ class ProductController extends Controller
     public function index(Request $request)
     {   
       //  Product::addToCart($request->id);
-        $product = Product::with('category')->get();
+        $product = Product::with('category','rating_review')->get();
         if($request->min_price)
             $product = $product->where('current_price','>=',$request->min_price);
         if($request->max_price) 
             $product = $product->where('current_price','<=',$request->max_price);
 
-        return Response()->json(["product" => $product]);
+        return Response()->json(["status"=> true,"product" => $product]);
         // return Response($request->id);
     }
 

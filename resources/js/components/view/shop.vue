@@ -178,10 +178,10 @@
                                     </div>
                                 </div>
                             </nav>
-                            
-                            <div class="product-wrapper row cols-xl-5 cols-lg-3 cols-md-4 cols-sm-3 cols-2">
-                            <Product_Box/>
-                            </div>
+                         
+                                <Product_Box/>
+                                
+                          
                                 <!-- <Product_Box/> -->
                                 <!-- <Product_Box/> -->
                                 <!-- <Product_Box/> -->

@@ -1,5 +1,7 @@
 import axios from  'axios';
 
+axios.defaults.headers.common = {'Authorization': `Bearer `+ localStorage.getItem('access_token')}
+
 const state = {
 	products:[]
 }
@@ -9,11 +11,13 @@ const getters ={
 }
 
 const actions ={
-	async getProducts(){
-		const productsData = axios.get('/api/v1/product',{
-			params:{'access_token': localStorage.getItem('access_token')}
+	async getProducts({ commit }){
+		axios.get('/api/v1/product').then((res)=>{
+			if(res.data.status)
+			{
+				commit('setProduct',res.data.product);
+			}
 		});
-		commit('setProduct',productsData.data); 
 	}
 }
 
