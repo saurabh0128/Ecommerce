@@ -1912,31 +1912,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2107,25 +2097,23 @@ function SelRegFormClear() {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'login',
-  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['allErrors']),
+  //all form data comes into the form variables
   data: function data() {
     return {
       LoginForm: {
         username: '',
         password: ''
       },
-      loginerrors: [],
       RegForm: {
-        name: '',
-        email: '',
-        username: '',
-        phone_number: '',
-        password: '',
-        confirm_password: '',
+        name: 'yash',
+        email: 'yj@n.v',
+        username: 'yj',
+        phone_number: '7894561230',
+        password: 'saurabh123',
+        confirm_password: 'saurabh123',
         user_status: 'customer',
-        agree: ''
+        agree: true
       },
-      regerrors: [],
       SellerRegForm: {
         name: '',
         email: '',
@@ -2135,32 +2123,66 @@ function SelRegFormClear() {
         confirm_password: '',
         user_status: 'seller',
         agree: ''
-      },
-      selregerrors: []
+      }
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(["userlogin"])), {}, {
+  //whever error occur in login it will fatch from store 
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+    errors: 'allErrors',
+    loggedIn: 'loggedIn'
+  })),
+  //it will check if error in computer id error found it will display
+  watch: {
+    errors: function errors(val) {
+      if (val) {
+        var errstr = '';
+        val.forEach(function (err) {
+          return errstr += err + "<br/>";
+        });
+        this.$toastr.e(errstr);
+      }
+    }
+  },
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(["userLogin", "userRegister"])), {}, {
+    //user login methos with success message
     login: function login() {
-      this.userlogin(this.LoginForm); // this.allErrors;
-    },
-    register: function register() {
       var _this = this;
 
-      this.regerrors = [];
-      axios.post('/api/v1/registration', this.RegForm).then(function (res) {
-        if (res.data.status) {
-          $('.login-box').hide();
-          $('.login-modal-bg').hide();
-          $('body').css("overflow-y", 'auto');
-          RegFormClear();
-          toastr["success"](res.data.message);
-        } else {
-          _this.regerrors = res.data.error;
+      this.userLogin(this.LoginForm).then(function (res) {
+        if (_this.loggedIn) {
+          _this.$toastr.s('Login Successfully');
+
+          formclear();
         }
       });
     },
-    sellerregister: function sellerregister() {
+    register: function register() {
       var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.t0 = console;
+                _context.next = 3;
+                return _this2.userRegister(_this2.RegForm);
+
+              case 3:
+                _context.t1 = _context.sent;
+
+                _context.t0.log.call(_context.t0, _context.t1);
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    sellerregister: function sellerregister() {
+      var _this3 = this;
 
       this.selregerrors = [];
       axios.post('/api/v1/registration', this.SellerRegForm).then(function (res) {
@@ -2171,7 +2193,7 @@ function SelRegFormClear() {
           SelRegFormClear();
           toastr["success"](res.data.message);
         } else {
-          _this2.selregerrors = res.data.error;
+          _this3.selregerrors = res.data.error;
         }
       });
     }
@@ -9370,7 +9392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../router/index.js */ "./resources/js/router/index.js");
 /* harmony import */ var _module_products_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./module/products.js */ "./resources/js/store/module/products.js");
-/* harmony import */ var _module_login_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/login.js */ "./resources/js/store/module/login.js");
+/* harmony import */ var _module_auth_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./module/auth.js */ "./resources/js/store/module/auth.js");
 
 
 
@@ -9380,16 +9402,16 @@ vue__WEBPACK_IMPORTED_MODULE_3__.default.use(vuex__WEBPACK_IMPORTED_MODULE_4__.d
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_4__.default.Store({
   modules: {
     product: _module_products_js__WEBPACK_IMPORTED_MODULE_1__.default,
-    login: _module_login_js__WEBPACK_IMPORTED_MODULE_2__.default
+    login: _module_auth_js__WEBPACK_IMPORTED_MODULE_2__.default
   }
 }));
 
 /***/ }),
 
-/***/ "./resources/js/store/module/login.js":
-/*!********************************************!*\
-  !*** ./resources/js/store/module/login.js ***!
-  \********************************************/
+/***/ "./resources/js/store/module/auth.js":
+/*!*******************************************!*\
+  !*** ./resources/js/store/module/auth.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9397,7 +9419,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../router/index.js */ "./resources/js/router/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router/index.js */ "./resources/js/router/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 var state = {
   token: localStorage.getItem('access_token') || null,
@@ -9408,7 +9438,7 @@ var getters = {
     return state.token !== null;
   },
   allErrors: function allErrors(state) {
-    console.log(state.error);
+    return state.error;
   }
 };
 var mutations = {
@@ -9426,35 +9456,77 @@ var mutations = {
   }
 };
 var actions = {
-  formclear: function formclear() {
-    $('#username').val('');
-    $('#password').val('');
-    $('#mainerror').html('');
-    $('#usernameerror').html('');
-    $('#passworderror').html('');
-  },
-  userlogin: function userlogin(_ref, data) {
-    var commit = _ref.commit;
-    axios.post('/api/v1/login', data).then(function (res) {
-      if (res.data.status) {
-        $('.login-box').hide();
-        $('.login-modal-bg').hide();
-        $('body').css("overflow-y", 'auto');
-        localStorage.setItem('user_details', JSON.stringify(res.data.info));
-        localStorage.setItem('access_token', res.data.access_token);
-        commit('setToken', res.data.access_token);
-        commit('removeError');
-      } else {
-        commit('setError', res.data.error);
-      }
-    });
+  userLogin: function userLogin(_ref, loginData) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref.commit;
+              _context.next = 3;
+              return axios.post('/api/v1/login', loginData).then(function (res) {
+                if (res.data.status) {
+                  $('.login-box').hide();
+                  $('.login-modal-bg').hide();
+                  $('body').css("overflow-y", 'auto');
+                  localStorage.setItem('user_details', JSON.stringify(res.data.info));
+                  localStorage.setItem('access_token', res.data.access_token);
+                  commit('setToken', res.data.access_token);
+                  commit('removeError'); // console.log('saurabh');
+                  // return "Login Successfully";                   
+                } else {
+                  commit('setError', res.data.error);
+                }
+              });
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   logout: function logout(_ref2) {
     var commit = _ref2.commit;
     localStorage.removeItem('user_details');
     localStorage.removeItem('access_token');
     commit('removeToken');
-    _router_index_js__WEBPACK_IMPORTED_MODULE_0__.default.push('/')["catch"](function () {});
+    _router_index_js__WEBPACK_IMPORTED_MODULE_1__.default.push('/')["catch"](function () {});
+  },
+  userRegister: function userRegister(_ref3, userRegisterData) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref3.commit;
+              _context2.next = 3;
+              return axios.post('/api/v1/registration', userRegisterData).then(function (res) {
+                if (res.data.status) {
+                  $('.login-box').hide();
+                  $('.login-modal-bg').hide();
+                  $('body').css("overflow-y", 'auto');
+                  commit('removeError');
+                  console.log('sk');
+                  return 1;
+                } else {
+                  commit('setError', res.data.error);
+                }
+              });
+
+            case 3:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -47997,17 +48069,6 @@ var render = function() {
                   "form",
                   { attrs: { method: "post", "accept-charset": "utf-8" } },
                   [
-                    _vm.loginerrors[0]
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "mainerror" }
-                          },
-                          [_vm._v(_vm._s(_vm.loginerrors[0]))]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Username *")]),
                       _vm._v(" "),
@@ -48040,18 +48101,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.loginerrors.username
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "usernameerror" }
-                            },
-                            [_vm._v(_vm._s(_vm.loginerrors.username[0]))]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group mb-0" }, [
@@ -48086,18 +48136,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.loginerrors.password
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "passworderror" }
-                            },
-                            [_vm._v(_vm._s(_vm.loginerrors.password[0]))]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _vm._m(1),
@@ -48126,17 +48165,6 @@ var render = function() {
                 "form",
                 { attrs: { method: "post", "accept-charset": "utf-8" } },
                 [
-                  _vm.regerrors.agree
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "txt-red d-block",
-                          attrs: { id: "RegAgree" }
-                        },
-                        [_vm._v("Accept the terms and condition")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", [_vm._v("Your Name*")]),
                     _vm._v(" "),
@@ -48165,18 +48193,7 @@ var render = function() {
                           _vm.$set(_vm.RegForm, "name", $event.target.value)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.regerrors.name
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "NameError" }
-                          },
-                          [_vm._v(_vm._s(_vm.regerrors.name[0]))]
-                        )
-                      : _vm._e()
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -48207,18 +48224,7 @@ var render = function() {
                           _vm.$set(_vm.RegForm, "email", $event.target.value)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.regerrors.email
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "RegEmailError" }
-                          },
-                          [_vm._v(_vm._s(_vm.regerrors.email[0]))]
-                        )
-                      : _vm._e()
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -48249,18 +48255,7 @@ var render = function() {
                           _vm.$set(_vm.RegForm, "username", $event.target.value)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.regerrors.username
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "RegUsernameError" }
-                          },
-                          [_vm._v(_vm._s(_vm.regerrors.username[0]))]
-                        )
-                      : _vm._e()
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -48295,18 +48290,7 @@ var render = function() {
                           )
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.regerrors.phone_number
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "RegPhoneError" }
-                          },
-                          [_vm._v(_vm._s(_vm.regerrors.phone_number[0]))]
-                        )
-                      : _vm._e()
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
@@ -48337,18 +48321,7 @@ var render = function() {
                           _vm.$set(_vm.RegForm, "password", $event.target.value)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.regerrors.password
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "RegPasswordError" }
-                          },
-                          [_vm._v(_vm._s(_vm.regerrors.password[0]))]
-                        )
-                      : _vm._e()
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group mb-5" }, [
@@ -48383,18 +48356,7 @@ var render = function() {
                           )
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _vm.regerrors.confirm_password
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red",
-                            attrs: { id: "RegConfirmPasswordError" }
-                          },
-                          [_vm._v(_vm._s(_vm.regerrors.confirm_password[0]))]
-                        )
-                      : _vm._e()
+                    })
                   ]),
                   _vm._v(" "),
                   _c(
@@ -48495,62 +48457,7 @@ var render = function() {
                   "form",
                   { attrs: { method: "post", "accept-charset": "utf-8" } },
                   [
-                    _vm.selregerrors.agree
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "txt-red d-block",
-                            attrs: { id: "SelRegAgree" }
-                          },
-                          [_vm._v("Accept the terms and condition")]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Your Name*")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.SellerRegForm.name,
-                            expression: "SellerRegForm.name"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "sel_reg_name",
-                          id: "sel_reg_name",
-                          required: ""
-                        },
-                        domProps: { value: _vm.SellerRegForm.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.SellerRegForm,
-                              "name",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.selregerrors.name
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "SelNameError" }
-                            },
-                            [_vm._v(_vm._s(_vm.selregerrors.name[0]))]
-                          )
-                        : _vm._e()
-                    ]),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Your Email Address *")]),
@@ -48584,18 +48491,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.selregerrors.email
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "SelRegEmailError" }
-                            },
-                            [_vm._v(_vm._s(_vm.selregerrors.email[0]))]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -48630,18 +48526,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.selregerrors.username
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "SelRegUsernameError" }
-                            },
-                            [_vm._v(_vm._s(_vm.selregerrors.username[0]))]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -48676,18 +48561,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.selregerrors.phone_number
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "SelRegPhoneError" }
-                            },
-                            [_vm._v(_vm._s(_vm.selregerrors.phone_number[0]))]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
@@ -48722,18 +48596,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.selregerrors.password
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "SelRegPasswordError" }
-                            },
-                            [_vm._v(_vm._s(_vm.selregerrors.password[0]))]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group mb-5" }, [
@@ -48768,22 +48631,7 @@ var render = function() {
                             )
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.selregerrors.confirm_password
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "txt-red",
-                              attrs: { id: "SelRegConfirmPasswordError" }
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.selregerrors.confirm_password[0])
-                              )
-                            ]
-                          )
-                        : _vm._e()
+                      })
                     ]),
                     _vm._v(" "),
                     _c(
@@ -48846,7 +48694,7 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _vm._m(3)
+                        _vm._m(4)
                       ]
                     ),
                     _vm._v(" "),
@@ -48874,11 +48722,11 @@ var render = function() {
             _vm._v("Sign in with social account")
           ]),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(5)
         ]
       ),
       _vm._v(" "),
-      _vm._m(5)
+      _vm._m(6)
     ])
   ])
 }
@@ -48956,6 +48804,14 @@ var staticRenderFns = [
         )
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Your Name*")])
+    ])
   },
   function() {
     var _vm = this

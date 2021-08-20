@@ -21,7 +21,7 @@ class LoginController extends Controller
 
         if($LoginValidator->fails())
         {
-            return Response()->json(["status"=>false,"error"=> $LoginValidator->errors()]);
+            return Response()->json(["status"=>false,"error"=> $LoginValidator->errors()->all()]);
         }
         
 

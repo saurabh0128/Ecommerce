@@ -27,7 +27,7 @@ class RegistrationController extends Controller
         
         if($validator->fails())
         {
-            return Response()->json(['status'=>false,'error'=>$validator->errors()]);
+            return Response()->json(['status'=>false,'error'=>$validator->errors()->all()]);
         }else{
             $user = new User;
             

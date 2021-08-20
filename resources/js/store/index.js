@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router/index.js'
 import product from  './module/products.js'
-import login from './module/login.js'
+import login from './module/auth.js'
 
 Vue.use(Vuex);
 
