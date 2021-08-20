@@ -153,7 +153,7 @@ class CouponController extends Controller
         $cart_detail = Cart::where('user_id',auth('api')->id())->first();
         //dd($cart_detail);
         if(!($cart_detail->coupon_code == $id)){
-            return Response()->json(["error" => "Coupon Not Exist"]);
+            return Response()->json(["error" => "Coupon Not Exist"]);   
         }else{
             $cart_detail->discount = 0;
             $cart_detail->coupon_code = Null;

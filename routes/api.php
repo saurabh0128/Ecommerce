@@ -10,6 +10,7 @@ use App\Http\Controllers\api\v1\OrderController;
 use App\Http\Controllers\api\v1\RatingController;
 use App\Http\Controllers\api\v1\CartController;
 use App\Http\Controllers\api\v1\CouponController;
+use App\Http\Controllers\api\v1\WishlistController;
 
 
 /*
@@ -40,6 +41,7 @@ use App\Http\Controllers\api\v1\CouponController;
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');
          Route::resource('/cart',CartController::class);
          Route::resource('/coupon',CouponController::class);
+         Route::resource('/wishlist',WishlistController::class);
          Route::get('/authenticated',function(){
             return false;
          });         

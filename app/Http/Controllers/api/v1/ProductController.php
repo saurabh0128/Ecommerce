@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Cart;
 use Validator;
 use Image;
+use DB;
 
 
 class ProductController extends Controller 
@@ -21,13 +22,27 @@ class ProductController extends Controller
     {   
       //  Product::addToCart($request->id);
         $product = Product::with('category','rating_review')->get();
-        if($request->min_price)
+        if($request->min_price){
             $product = $product->where('current_price','>=',$request->min_price);
-        if($request->max_price) 
+        }elseif($request->max_price){ 
             $product = $product->where('current_price','<=',$request->max_price);
+        }elseif($request->sorting == "ltoh"){
+            $product = $product->sortBy('current_price');
+        }elseif($request->sorting == "htol"){
+            $product = $product->sortBy('current_price')->reverse();
+        }elseif($request->sorting == "date"){
+            $product = $product->sortBy('created_at');
+        }elseif($request->sorting == "rating"){
+           $product = $product->sortBy('rating')->reverse();
+        }elseif($request->page == 5){
+            dd("ok");
+            
+        }
+
+
 
         return Response()->json(["status"=> true,"product" => $product]);
-        // return Response($request->id);
+        
     }
 
     /**
