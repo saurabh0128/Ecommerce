@@ -6,14 +6,8 @@ const state ={
 	error: null
 }
 const getters = {
-	loggedIn(state)
-	{
-		return state.token !== null;
-	},
-	allErrors(state)
-	{
-		console.log(state.error);
-	}
+	loggedIn: state => state.token !== null,
+	allErrors : state => state.error
 }
 const mutations = {
 	setToken(state , token){
@@ -31,16 +25,8 @@ const mutations = {
 	}
 }
 const actions = {
-	formclear() {
-        $('#username').val('');
-        $('#password').val(''); 
-        $('#mainerror').html('');
-        $('#usernameerror').html('');
-        $('#passworderror').html('');
-    },
-	userlogin({commit},data){
-
-		axios.post('/api/v1/login',data).then((res)=>{
+	async userLogin({commit},loginData){
+		await axios.post('/api/v1/login',loginData).then((res)=>{
             if(res.data.status)
             {
                 $('.login-box').hide();
@@ -49,12 +35,15 @@ const actions = {
                 localStorage.setItem('user_details',JSON.stringify(res.data.info));
  	 			localStorage.setItem('access_token',res.data.access_token);
  	 			commit('setToken',res.data.access_token);
-				commit('removeError');                   
+				commit('removeError');
+				// console.log('saurabh');
+				// return "Login Successfully";                   
             }   
             else 
             {
                 commit('setError',res.data.error);
             } 
+
         })
 	},
 	logout({commit}){
@@ -62,6 +51,23 @@ const actions = {
 		localStorage.removeItem('access_token');
 		commit('removeToken');
 		router.push('/').catch(()=>{});
+	},
+	async userRegister({commit},userRegisterData){
+ 		return await axios.post('/api/v1/registration',userRegisterData).then((res)=>{
+            if(res.data.status)
+            {
+                $('.login-box').hide();
+                $('.login-modal-bg').hide();
+                $('body').css("overflow-y",'auto');
+                commit('removeError');
+                console.log('sk');
+                return 1;
+            }
+            else{
+                commit('setError',res.data.error);
+            }     
+        })
+        // return 1;
 	}
 }
 
