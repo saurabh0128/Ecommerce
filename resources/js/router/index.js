@@ -13,7 +13,7 @@ import Faq from '../components/view/Faq.vue';
 import page404 from	 '../components/view/404.vue';
 import MyAccount from '../components/view/MyAccount.vue';
 import store from '../store/index.js';
-import logout from '../components/auth/logout.vue';
+
 
 Vue.use(VueRouter);
 
@@ -80,11 +80,6 @@ mode: 'history',
 				requiresAuth:true
 			}
 
-		},
-		{
-			path:'/logout',
-			name:'logout',
-			component:logout
 		},
 		{
 			path:'*',

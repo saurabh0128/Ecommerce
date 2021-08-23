@@ -144,18 +144,17 @@
                         <div class="main-content">
                             <nav class="toolbox sticky-toolbox sticky-content fix-top">
                                 <div class="toolbox-left">
-                                    <a href="#" class="btn btn-primary btn-outline btn-rounded left-sidebar-toggle 
-                                        btn-icon-left d-block d-lg-none"><i
-                                            class="w-icon-category"></i><span>Filters</span></a>
+                                    <a href="#" class="btn btn-primary btn-outline btn-rounded left-sidebar-toggle btn-icon-left d-block d-lg-none"><i class="w-icon-category"></i><span>Filters</span></a>
                                     <div class="toolbox-item toolbox-sort select-box text-dark">
                                         <label>Sort By :</label>
-                                        <select name="orderby" class="form-control">
-                                            <option value="default" selected="selected">Default sorting</option>
-                                            <option value="popularity">Sort by popularity</option>
-                                            <option value="rating">Sort by average rating</option>
-                                            <option value="date">Sort by latest</option>
-                                            <option value="price-low">Sort by pric: low to high</option>
-                                            <option value="price-high">Sort by price: high to low</option>
+                                        <select name="sorting" id="sorting" v-model="sort"  
+                                        class="form-control">
+                                            <option value="default" selected>Default sorting</option>
+                                            <option value="popularity">popularity</option>
+                                            <option value="rating">average rating</option>
+                                            <option value="date">latest</option>
+                                            <option value="ltoh">pric: low to high</option>
+                                            <option value="htol">price: high to low</option>
                                         </select>
                                     </div>
                                 </div>
@@ -169,25 +168,23 @@
                                         </select>
                                     </div>
                                     <div class="toolbox-item toolbox-layout">
-                                        <a href="shop-both-sidebar.html" class="icon-mode-grid btn-layout active">
+                                       <a @click.prevent="productTypeBox" class="icon-mode-grid btn-layout " id="product-box"  >
                                             <i class="w-icon-grid"></i>
                                         </a>
-                                        <a href="shop-list.html" class="icon-mode-list btn-layout">
+                                         <a @click.prevent="productTypeList" class="icon-mode-list btn-layout" id="product-list" >
                                             <i class="w-icon-list"></i>
                                         </a>
                                     </div>
                                 </div>
                             </nav>
                          
-                                <Product_Box/>
-                                
-                          
-                                <!-- <Product_Box/> -->
-                                <!-- <Product_Box/> -->
-                                <!-- <Product_Box/> -->
-                                <!-- <Product_Box/> -->
-                                <!-- <Product_List/> -->
-                            <!-- </div> -->
+                                <!-- Box wise All Products -->
+                                    <Product_Box v-if="productDisplayType == 'box' " ></Product_Box>
+                                <!-- End Box wise All Products  -->
+
+                                <!-- List wise All Products -->
+                                    <Product_List v-if="productDisplayType == 'list' " > </Product_List>
+                                <!-- List wise All Products -->
 
                             <div class="toolbox toolbox-pagination justify-content-between">
                                 <p class="showing-info mb-2 mb-sm-0">
@@ -234,12 +231,40 @@
 import Product_Box from "./products_content/product-box.vue";
 
 import Product_List from "./products_content/product-list.vue";
+import { mapGetters,mapActions } from 'vuex';
 
 export default {
 name: 'Shop',
 components:{
     Product_Box,
     Product_List
+},
+data(){
+    return{
+        productDisplayType:localStorage.getItem('productDisplayType') || 'box',
+        sort:''
+    }
+},
+watch:{
+    sort:function(val){
+        this.getProducts(val);    
+    }
+},
+computed: mapGetters(['allProduct']),
+methods:{
+     ...mapActions(['getProducts']),
+    productTypeBox(){
+        this.productDisplayType = 'box'
+        localStorage.setItem('productDisplayType','box')
+        $('#product-box').addClass('active');
+        $('#product-list').removeClass('active');
+    },
+    productTypeList(){
+        this.productDisplayType = 'list'
+        localStorage.setItem('productDisplayType','list')
+        $('#product-list').addClass('active');
+        $('#product-box').removeClass('active');
+    }
 },
 mounted() {
     let StickyScript = document.createElement('script')
@@ -250,6 +275,14 @@ mounted() {
     NouisliderScript.setAttribute('src', '/frontend_asset/vendor/nouislider/nouislider.min.js')
     document.head.appendChild(NouisliderScript)
 
+    if(localStorage.getItem('productDisplayType') && localStorage.getItem('productDisplayType') =='list')
+    {
+        $('#product-list').addClass('active');
+    }
+    else
+    {
+        $('#product-box').addClass('active');   
+    }
    
 }
 };

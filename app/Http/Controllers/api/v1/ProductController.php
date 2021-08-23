@@ -20,26 +20,26 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {   
-      //  Product::addToCart($request->id);
-        $product = Product::with('category','rating_review')->get();
-        if($request->min_price){
-            $product = $product->where('current_price','>=',$request->min_price);
-        }elseif($request->max_price){ 
-            $product = $product->where('current_price','<=',$request->max_price);
-        }elseif($request->sorting == "ltoh"){
-            $product = $product->sortBy('current_price');
-        }elseif($request->sorting == "htol"){
-            $product = $product->sortBy('current_price')->reverse();
-        }elseif($request->sorting == "date"){
-            $product = $product->sortBy('created_at');
-        }elseif($request->sorting == "rating"){
-           $product = $product->sortBy('rating')->reverse();
-        }elseif($request->page == 5){
-            dd("ok");
-            
-        }
 
+        //  Product::addToCart($request->id);
+        $query = Product::with('category','rating_review','purchase_item');
 
+        $query->when(request('sorting') == "date",function($q){
+            $q->latest();
+        });
+        $query->when(request('sorting') == "ltoh",function($q){
+            $q->orderBy('current_price');
+        });
+        $query->when(request('sorting') == "htol",function($q){
+            $q->orderBy('current_price','DESC');
+        });
+        $query->when(request('sorting') == "rating",function($q){
+            $q->orderBy('rating','DESC');
+        });
+        $query->when(request('sorting') == "popularity",function($q){ 
+        });
+        $product = $query->get();
+        dd( $product[0]['purchase_item']));
 
         return Response()->json(["status"=> true,"product" => $product]);
         

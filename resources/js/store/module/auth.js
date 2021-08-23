@@ -35,9 +35,7 @@ const actions = {
                 localStorage.setItem('user_details',JSON.stringify(res.data.info));
  	 			localStorage.setItem('access_token',res.data.access_token);
  	 			commit('setToken',res.data.access_token);
-				commit('removeError');
-				// console.log('saurabh');
-				// return "Login Successfully";                   
+				commit('removeError');    
             }   
             else 
             {
@@ -56,18 +54,27 @@ const actions = {
  		return await axios.post('/api/v1/registration',userRegisterData).then((res)=>{
             if(res.data.status)
             {
-                $('.login-box').hide();
-                $('.login-modal-bg').hide();
-                $('body').css("overflow-y",'auto');
                 commit('removeError');
-                console.log('sk');
-                return 1;
+                return {'status':true};
             }
             else{
                 commit('setError',res.data.error);
+                return {'status':false};
             }     
         })
-        // return 1;
+	},
+	async sellerRegister({commit},sellerRegisterData){
+		return await axios.post('/api/v1/registration',sellerRegisterData).then((res)=>{
+            if(res.data.status)
+            {
+               commit('removeError');
+               return {'status':true};
+            }
+            else{
+                commit('setError',res.data.error);
+                return {'status':false};
+            }     
+        })
 	}
 }
 

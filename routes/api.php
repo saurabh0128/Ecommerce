@@ -33,9 +33,9 @@ use App\Http\Controllers\api\v1\WishlistController;
       Route::post('registration',[RegistrationController::class,'userRegistration'])->name('registration.userRegistration');
       Route::post('login',[LoginController::class,'userLogin'])->name('login.userLogin');
 
+         Route::resource('/product',ProductController::class)->only(['index','show']);
       Route::group(['middleware' => 'auth:api'],function(){
       
-         Route::resource('/product',ProductController::class)->only(['index','show']);
          Route::get('category',[CategoryController::class,'categoryDetails'])->name('category.categoryDetails');
          Route::resource('/order',OrderController::class);
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');

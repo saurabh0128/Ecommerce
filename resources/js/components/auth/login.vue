@@ -74,7 +74,7 @@
                         <form method="post" accept-charset="utf-8">
                            <div class="form-group" >
                                 <label>Your Name*</label>
-                                <input type="text" v-model="SellerRegForm.name"  class="form-control" name="sel_reg_name" id="sel_reg_name" required
+                                <input type="text" v-model="SellerRegForm.name"  class="form-control" name="sel_reg_name" id="sel_reg_name" required>
                             </div>
 
                             <div class="form-group">
@@ -100,7 +100,7 @@
                             
                             
                             <div class="form-checkbox d-flex align-items-center justify-content-between mb-5">
-                                <input type="checkbox"v-model="SellerRegForm.agree"  class="custom-checkbox" id="seller_agree" name="seller_agree" required>
+                                <input type="checkbox" v-model="SellerRegForm.agree"  class="custom-checkbox" id="seller_agree" name="seller_agree" required>
                                 <label for="agree" class="font-size-md">I agree to the <a  href="#" class="text-primary font-size-md">privacy policy</a></label>
                             </div>
                     
@@ -140,16 +140,7 @@ import {mapActions,mapGetters} from 'vuex';
         $('#reg_phoneumber').val('');
         $('#reg_password').val('');
         $('#reg_confirm_password').val('');
-        $('#user_agree').val('');
-
-        $('#NameError').html('');
-        $('#RegEmailError').html('');
-        $('#RegUsernameError').html('');
-        $('#RegPhoneError').html('');
-        $('#RegPasswordError').html('');
-        $('#RegConfirmPasswordError').html('');
-        $('#RegAgree').html('');
-
+        $('#user_agree').prop('checked', false);
 
     }
 
@@ -160,53 +151,14 @@ import {mapActions,mapGetters} from 'vuex';
         $('#reg_phoneumber').val('');
         $('#reg_password').val('');
         $('#reg_confirm_password').val('');
-        $('#seller_agree').val('');
-
-        $('#SelNameError').html('');
-        $('#SelRegEmailError').html('');
-        $('#SelRegUsernameError').html('');
-        $('#SelRegPhoneError').html('');
-        $('#SelRegPasswordError').html('');
-        $('#SelRegConfirmPasswordError').html('');
-        $('#SelRegAgree').html('');
-
-
+        $('#seller_agree').prop('checked', false);
     }
     
 
 
     export default{
         name:'login',
-        //all form data comes into the form variables
-        data(){
-            return{
-                LoginForm:{
-                    username:'',
-                    password:''
-                },
-                RegForm:{
-                    name:'yash',
-                    email:'yj@n.v',
-                    username:'yj',
-                    phone_number:'7894561230',
-                    password:'saurabh123',
-                    confirm_password:'saurabh123',
-                    user_status:'customer',
-                    agree:true
-                },  
-                SellerRegForm:{
-                    name:'',
-                    email:'',
-                    username:'',
-                    phone_number:'',
-                    password:'',
-                    confirm_password:'',
-                    user_status:'seller',
-                    agree:''
-                },
-            }
-        },
-        //whever error occur in login it will fatch from store 
+         //whever error occur in login it will fatch from store 
         computed:{
           ...mapGetters({
                 errors:'allErrors',
@@ -224,42 +176,77 @@ import {mapActions,mapGetters} from 'vuex';
             }
           }
         },
+        //all form data comes into the form variables
+        data(){
+            return{
+                LoginForm:{
+                    username:'',
+                    password:''
+                },
+                RegForm:{
+                    name:'',
+                    email:'',
+                    username:'',
+                    phone_number:'',
+                    password:'',
+                    confirm_password:'',
+                    user_status:'customer',
+                    agree:''
+                },  
+                SellerRegForm:{
+                    name:'',
+                    email:'',
+                    username:'',
+                    phone_number:'',
+                    password:'',
+                    confirm_password:'',
+                    user_status:'seller',
+                    agree:''
+                },
+            }
+        },
+       
         methods:{
             //import all method from store
-            ...mapActions(["userLogin","userRegister"]),
+            ...mapActions(["userLogin","userRegister","sellerRegister"]),
             //user login methos with success message
             login(){ 
                this.userLogin(this.LoginForm).then((res)=>{
                    if(this.loggedIn)
                    {
+                        close_login_model()
                         this.$toastr.s('Login Successfully')
                         formclear()
                    }
                 })
             },
-           async register(){
-                console.log(await this.userRegister(this.RegForm))
-                // (async()=>{
-                // })()
+            async register(){
+                let response = await this.userRegister(this.RegForm);
+                if(response.status)
+                {
+                    close_login_model()
+                    this.$toastr.s('Register Successfully')
+                    RegFormClear()
+                }
             },
-            sellerregister()
+            async sellerregister()
             {
-                this.selregerrors = [];
-                axios.post('/api/v1/registration',this.SellerRegForm).then((res)=>{
-                    if(res.data.status)
-                    {
-                        $('.login-box').hide();
-                        $('.login-modal-bg').hide();
-                        $('body').css("overflow-y",'auto');
-                        SelRegFormClear();
-                        toastr["success"](res.data.message);
-                    }
-                    else{
-                        this.selregerrors = res.data.error;
-                    }     
-                })
+               let selresponse = await this.sellerRegister(this.SellerRegForm);
+                if(selresponse.status)
+                {
+                    close_login_model()
+                    this.$toastr.s('Register Successfully')
+                    SelRegFormClear()
+                }
             }
         }
+    }
+
+
+     function close_login_model(){
+        $('.login-box').hide();
+        $('.login-modal-bg').hide();
+        $('body').css("overflow-y",'auto');
     }
     
     function login_model() {
@@ -294,9 +281,7 @@ import {mapActions,mapGetters} from 'vuex';
 
 
     $(document).on("click",'#close-login',function(){
-        $('.login-box').hide();
-        $('.login-modal-bg').hide();
-        $('body').css("overflow-y",'auto');
+        close_login_model();
         formclear();
         RegFormClear();
         SelRegFormClear();

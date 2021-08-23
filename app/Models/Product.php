@@ -43,4 +43,8 @@ class Product extends Model
     {
         return $this->hasMany(wishlist::class,'product_id');
     }
+    public function purchase_item()
+    {
+        return $this->hasMany(PurchaseItems::class,'product_id');
+    }
 }
