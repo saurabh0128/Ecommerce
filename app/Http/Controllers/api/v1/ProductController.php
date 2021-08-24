@@ -37,12 +37,10 @@ class ProductController extends Controller
             $q->orderBy('rating','DESC');
         });
         $query->when(request('sorting') == "popularity",function($q){ 
+            $q->orderBy('total_order','DESC');
         });
         $product = $query->get();
-        dd( $product[0]['purchase_item']));
-
         return Response()->json(["status"=> true,"product" => $product]);
-        
     }
 
     /**

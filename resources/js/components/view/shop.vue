@@ -149,7 +149,7 @@
                                         <label>Sort By :</label>
                                         <select name="sorting" id="sorting" v-model="sort"  
                                         class="form-control">
-                                            <option value="default" selected>Default sorting</option>
+                                            <option value="" selected>Default sorting</option>
                                             <option value="popularity">popularity</option>
                                             <option value="rating">average rating</option>
                                             <option value="date">latest</option>

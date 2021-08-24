@@ -109,7 +109,8 @@ class OrderController extends Controller
                 $purchase_item->qty =$request->qty[$i];
                 $purchase_item->price = isset($products->special_price)?$products->special_price*$request->qty[$i]:$products->current_price*$request->qty[$i];
                 $total += isset($products->special_price)?$products->special_price*$request->qty[$i]:$products->current_price*$request->qty[$i];
-                
+                $products->total_order += 1;
+                $products->save();
                 $purchase_item->save();
             }
 

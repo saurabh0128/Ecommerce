@@ -71113,7 +71113,7 @@ var render = function() {
                           [
                             _c(
                               "option",
-                              { attrs: { value: "default", selected: "" } },
+                              { attrs: { value: "", selected: "" } },
                               [_vm._v("Default sorting")]
                             ),
                             _vm._v(" "),
