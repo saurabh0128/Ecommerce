@@ -6,8 +6,7 @@
             <div class="product text-center">
                 <figure class="product-media">
                     <a href="product-default.html">
-                        <img :src="'backend_asset/product_images/' + product.product_img " alt="Product" width="300"
-                            height="338" />
+                        <img :src="'backend_asset/product_images/' + product.product_img " alt="Product" width="300"height="338" />
                     </a>
                     <div class="product-action-horizontal">
                         <a href="#" class="btn-product-icon btn-cart w-icon-cart"

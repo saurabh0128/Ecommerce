@@ -20,25 +20,31 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {   
-
         //  Product::addToCart($request->id);
         $query = Product::with('category','rating_review','purchase_item');
 
-        $query->when(request('sorting') == "date",function($q){
-            $q->latest();
-        });
-        $query->when(request('sorting') == "ltoh",function($q){
-            $q->orderBy('current_price');
-        });
-        $query->when(request('sorting') == "htol",function($q){
-            $q->orderBy('current_price','DESC');
-        });
-        $query->when(request('sorting') == "rating",function($q){
-            $q->orderBy('rating','DESC');
-        });
-        $query->when(request('sorting') == "popularity",function($q){ 
-            $q->orderBy('total_order','DESC');
-        });
+        if(request('sorting') == "date"){
+            $query->latest();
+        }
+        if(request('sorting') == "ltoh"){
+            $query->orderBy('current_price');
+        }
+        if(request('sorting') == "htol"){
+            $query->orderBy('current_price','DESC');
+        }
+        if(request('sorting') == "rating"){
+            $query->orderBy('rating','DESC');
+        }
+        if(request('sorting') == "popularity"){ 
+            $query->orderBy('total_order','DESC');
+        }
+        if(request('min')){
+            $query->where('current_price','>=',request('min')); 
+        }
+        if(request('max')){
+            $query->Where('current_price','<=',request('max')); 
+        }
+
         $product = $query->get();
         return Response()->json(["status"=> true,"product" => $product]);
     }

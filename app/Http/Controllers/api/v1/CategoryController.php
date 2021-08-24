@@ -12,7 +12,6 @@ class CategoryController extends Controller
     public function categoryDetails()
     {
         $category = Category::all();
-
-        return Response()->json($category);    
+        return Response()->json(["status"=> true,"category" => $category]); 
     }
 }

@@ -11,9 +11,8 @@ const getters ={
 }
 
 const actions ={
-	async getProducts({ commit },sortdata =1 ){
-		// console.log(sortdata)
-		axios.get('/api/v1/product', { params:{ 'sorting': sortdata }} ).then((res)=>{
+	async getProducts({ commit },FilterData ){
+		await axios.get('/api/v1/product',{ params:FilterData  }).then((res)=>{
 			if(res.data.status)
 			{
 				commit('setProduct',res.data.product);

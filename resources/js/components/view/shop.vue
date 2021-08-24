@@ -53,19 +53,8 @@
                                     <!-- Start of Collapsible widget -->
                                     <div class="widget widget-collapsible">
                                         <h3 class="widget-title"><label>All Categories</label></h3>
-                                        <ul class="widget-body filter-items search-ul">
-                                            <li><a href="#">Accessories</a></li>
-                                            <li><a href="#">Babies</a></li>
-                                            <li><a href="#">Beauty</a></li>
-                                            <li><a href="#">Decoration</a></li>
-                                            <li><a href="#">Electronics</a></li>
-                                            <li><a href="#">Fashion</a></li>
-                                            <li><a href="#">Food</a></li>
-                                            <li><a href="#">Furniture</a></li>
-                                            <li><a href="#">Kitchen</a></li>
-                                            <li><a href="#">Medical</a></li>
-                                            <li><a href="#">Sports</a></li>
-                                            <li><a href="#">Watches</a></li>
+                                        <ul  class="widget-body filter-items search-ul">
+                                            <li v-for="category in allCategory" :key="category.id" ><a href="#"   @click.prevent="CategoryFilter(" + {{category.category_name }} + ")" > {{ category.category_name }}</a></li>
                                         </ul>
                                     </div>
                                     <!-- End of Collapsible Widget -->
@@ -75,18 +64,16 @@
                                         <h3 class="widget-title"><label>Price</label></h3>
                                         <div class="widget-body">
                                             <ul class="filter-items search-ul">
-                                                <li><a href="#">$0.00 - $100.00</a></li>
-                                                <li><a href="#">$100.00 - $200.00</a></li>
-                                                <li><a href="#">$200.00 - $300.00</a></li>
-                                                <li><a href="#">$300.00 - $500.00</a></li>
-                                                <li><a href="#">$500.00+</a></li>
+                                                <li><a href="#" @click.prevent="minMaxFilter(0,100)"  >₹0.00 - ₹100.00</a></li>
+                                                <li><a href="#" @click.prevent="minMaxFilter(100,200)" >₹100.00 - ₹200.00</a></li>
+                                                <li><a href="#" @click.prevent="minMaxFilter(200,300)" >₹200.00 - ₹300.00</a></li>
+                                                <li><a href="#" @click.prevent="minMaxFilter(300,500)" >₹300.00 - ₹500.00</a></li>
+                                                <li><a href="#" @click.prevent="minMaxFilter(500)" >₹500.00+</a></li>
                                             </ul>
                                             <form class="price-range">
-                                                <input type="number" name="min_price" class="min_price text-center"
-                                                    placeholder="$min"><span class="delimiter">-</span><input
-                                                    type="number" name="max_price" class="max_price text-center"
-                                                    placeholder="$max"><a href="#"
-                                                    class="btn btn-primary btn-rounded">Go</a>
+                                                <input type="number" v-model="filter.min" name="min_price" class="min_price text-center" placeholder="₹min"><span class="delimiter">-</span><input type="number" v-model="filter.max"  name="max_price" class="max_price text-center"
+                                                placeholder="₹max">
+                                                <button type="submit"  @click.prevent="ProductFilter" class="btn btn-primary btn-rounded">Go</button>
                                             </form>
                                         </div>
                                     </div>
@@ -147,8 +134,8 @@
                                     <a href="#" class="btn btn-primary btn-outline btn-rounded left-sidebar-toggle btn-icon-left d-block d-lg-none"><i class="w-icon-category"></i><span>Filters</span></a>
                                     <div class="toolbox-item toolbox-sort select-box text-dark">
                                         <label>Sort By :</label>
-                                        <select name="sorting" id="sorting" v-model="sort"  
-                                        class="form-control">
+                                        <select name="sorting" id="sorting" v-model="filter.sorting"  
+                                        class="form-control" @change.prevent="ProductFilter" >
                                             <option value="" selected>Default sorting</option>
                                             <option value="popularity">popularity</option>
                                             <option value="rating">average rating</option>
@@ -242,17 +229,25 @@ components:{
 data(){
     return{
         productDisplayType:localStorage.getItem('productDisplayType') || 'box',
-        sort:''
+        filter:{
+            sorting:'',
+            min:'',
+            max:'',
+            category:''
+        }
     }
 },
 watch:{
-    sort:function(val){
-        this.getProducts(val);    
-    }
+    // filter:function(val){
+    //     this.getProducts(val);
+    // }
 },
-computed: mapGetters(['allProduct']),
+computed:{
+    ...mapGetters(['allProduct','allCategory']),
+},
 methods:{
      ...mapActions(['getProducts']),
+     ...mapActions(['getCategory']),
     productTypeBox(){
         this.productDisplayType = 'box'
         localStorage.setItem('productDisplayType','box')
@@ -264,7 +259,22 @@ methods:{
         localStorage.setItem('productDisplayType','list')
         $('#product-list').addClass('active');
         $('#product-box').removeClass('active');
+    },
+    minMaxFilter(min,max = 0 ){
+      this.filter.min = min;
+      this.filter.max = max|0;
+      this.ProductFilter()
+    },
+    CategoryFilter(category)
+    {
+        this.filter.category = category
+    },
+    ProductFilter(){
+       this.getProducts(this.filter);
     }
+},
+async created(){
+    await this.getCategory();
 },
 mounted() {
     let StickyScript = document.createElement('script')
@@ -282,10 +292,8 @@ mounted() {
     else
     {
         $('#product-box').addClass('active');   
-    }
-   
-}
-};
+    }   
+}};
 
 </script>
 
