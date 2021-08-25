@@ -9,8 +9,8 @@ const getters ={
 }
 
 const actions ={
-	async getCategory({ commit }) {
-		await axios.get('/api/v1/category').then((res)=>{
+	async getCategory({ commit },status = 0) {
+		await axios.get('/api/v1/category',{ params:{'status': status } }).then((res)=>{
 			if(res.data.status)
 			{
 				commit('setCategory',res.data.category);

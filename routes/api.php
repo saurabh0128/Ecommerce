@@ -11,7 +11,8 @@ use App\Http\Controllers\api\v1\RatingController;
 use App\Http\Controllers\api\v1\CartController;
 use App\Http\Controllers\api\v1\CouponController;
 use App\Http\Controllers\api\v1\WishlistController;
-
+use App\Http\Controllers\api\v1\SellerController;
+ 
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ use App\Http\Controllers\api\v1\WishlistController;
 
          Route::resource('/product',ProductController::class)->only(['index','show']);
          Route::get('category',[CategoryController::class,'categoryDetails'])->name('category.categoryDetails');
+         Route::get('seller',[SellerController::class,'index'])->name('seller.sellerDeatils');
       Route::group(['middleware' => 'auth:api'],function(){
       
          Route::resource('/order',OrderController::class);

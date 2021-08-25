@@ -48,13 +48,14 @@
                                 <div class="sticky-sidebar">
                                     <div class="filter-actions">
                                         <label>Filter :</label>
-                                        <a href="#" class="btn btn-dark btn-link filter-clean">Clean All</a>
+                                        <a @click.prevent="clearFilter" href="#" class="btn btn-dark btn-link filter-clean">Clean All</a>
                                     </div>
                                     <!-- Start of Collapsible widget -->
                                     <div class="widget widget-collapsible">
                                         <h3 class="widget-title"><label>All Categories</label></h3>
                                         <ul  class="widget-body filter-items search-ul">
-                                            <li v-for="category in allCategory" :key="category.id" ><a href="#"   @click.prevent="CategoryFilter(" + {{category.category_name }} + ")" > {{ category.category_name }}</a></li>
+                                            <!-- Display All Category and store category id for filter  main category contain sub category product also -->
+                                            <li v-for="category in allCategory" :key="category.id"  ><a v-on:click.prevent=" CategoryFilter($event)" :categoryid="category.id" href="#"  >{{ category.category_name }}</a></li>
                                         </ul>
                                     </div>
                                     <!-- End of Collapsible Widget -->
@@ -63,6 +64,7 @@
                                     <div class="widget widget-collapsible">
                                         <h3 class="widget-title"><label>Price</label></h3>
                                         <div class="widget-body">
+                                            <!-- min max filter with fixed price or customise price -->
                                             <ul class="filter-items search-ul">
                                                 <li><a href="#" @click.prevent="minMaxFilter(0,100)"  >₹0.00 - ₹100.00</a></li>
                                                 <li><a href="#" @click.prevent="minMaxFilter(100,200)" >₹100.00 - ₹200.00</a></li>
@@ -81,42 +83,11 @@
 
                                     <!-- Start of Collapsible Widget -->
                                     <div class="widget widget-collapsible">
-                                        <h3 class="widget-title"><label>Size</label></h3>
+                                        <h3 class="widget-title"><label>Seller</label></h3>
+                                        <!-- seller filter display all selet name and store seller id for filter -->
                                         <ul class="widget-body filter-items item-check mt-1">
-                                            <li><a href="#">Extra Large</a></li>
-                                            <li><a href="#">Large</a></li>
-                                            <li><a href="#">Medium</a></li>
-                                            <li><a href="#">Small</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- End of Collapsible Widget -->
-
-                                    <!-- Start of Collapsible Widget -->
-                                    <div class="widget widget-collapsible">
-                                        <h3 class="widget-title"><label>Brand</label></h3>
-                                        <ul class="widget-body filter-items item-check mt-1">
-                                            <li><a href="#">Elegant Auto Group</a></li>
-                                            <li><a href="#">Green Grass</a></li>
-                                            <li><a href="#">Node Js</a></li>
-                                            <li><a href="#">NS8</a></li>
-                                            <li><a href="#">Red</a></li>
-                                            <li><a href="#">Skysuite Tech</a></li>
-                                            <li><a href="#">Sterling</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- End of Collapsible Widget -->
-
-                                    <!-- Start of Collapsible Widget -->
-                                    <div class="widget widget-collapsible">
-                                        <h3 class="widget-title"><label>Color</label></h3>
-                                        <ul class="widget-body filter-items item-check">
-                                            <li><a href="#">Black</a></li>
-                                            <li><a href="#">Blue</a></li>
-                                            <li><a href="#">Brown</a></li>
-                                            <li><a href="#">Green</a></li>
-                                            <li><a href="#">Grey</a></li>
-                                            <li><a href="#">Orange</a></li>
-                                            <li><a href="#">Yellow</a></li>
+                                            <li v-for="seller in allSeller" :key="seller.id" ><a 
+                                                :sellerid="seller.id" v-on:click.prevent="SellerFilter($event)"   href="#">{{ seller.name }}</a></li>
                                         </ul>
                                     </div>
                                     <!-- End of Collapsible Widget -->
@@ -134,6 +105,7 @@
                                     <a href="#" class="btn btn-primary btn-outline btn-rounded left-sidebar-toggle btn-icon-left d-block d-lg-none"><i class="w-icon-category"></i><span>Filters</span></a>
                                     <div class="toolbox-item toolbox-sort select-box text-dark">
                                         <label>Sort By :</label>
+                                        <!-- alll sorting and store sorting name -->
                                         <select name="sorting" id="sorting" v-model="filter.sorting"  
                                         class="form-control" @change.prevent="ProductFilter" >
                                             <option value="" selected>Default sorting</option>
@@ -147,10 +119,10 @@
                                 </div>
                                 <div class="toolbox-right">
                                     <div class="toolbox-item toolbox-show select-box">
-                                        <select name="count" class="form-control">
-                                            <option value="9">Show 9</option>
-                                            <option value="12" selected="selected">Show 12</option>
-                                            <option value="24">Show 24</option>
+                                        <select name="count" v-model="filter.totalproduct" @change.prevent="ProductFilter"  class="form-control">
+                                            <option value="2" selected >Show 9</option>
+                                            <option value="3" >Show 12</option>
+                                            <option value="4">Show 24</option>
                                             <option value="36">Show 36</option>
                                         </select>
                                     </div>
@@ -220,12 +192,15 @@ import Product_Box from "./products_content/product-box.vue";
 import Product_List from "./products_content/product-list.vue";
 import { mapGetters,mapActions } from 'vuex';
 
+
 export default {
 name: 'Shop',
+// product box for box view of product or product list for list view of product
 components:{
     Product_Box,
     Product_List
 },
+// all data relater to a filter or sorting
 data(){
     return{
         productDisplayType:localStorage.getItem('productDisplayType') || 'box',
@@ -233,49 +208,85 @@ data(){
             sorting:'',
             min:'',
             max:'',
-            category:''
+            category:'',
+            seller:[],
+            totalproduct:10
         }
     }
 },
-watch:{
-    // filter:function(val){
-    //     this.getProducts(val);
-    // }
-},
+//automaticaly call when data chage in given name like allproduct,allcategory etc it is connected with store
 computed:{
-    ...mapGetters(['allProduct','allCategory']),
+    ...mapGetters(['allProduct','allCategory','allSeller']),
 },
+
 methods:{
+    //all get method for get all data
      ...mapActions(['getProducts']),
+     ...mapActions(['getSeller']),
      ...mapActions(['getCategory']),
+    //method for a box type view of product 
     productTypeBox(){
-        this.productDisplayType = 'box'
+        // this.productDisplayType = 'box'
         localStorage.setItem('productDisplayType','box')
         $('#product-box').addClass('active');
         $('#product-list').removeClass('active');
     },
+    //method for a list type of view
     productTypeList(){
-        this.productDisplayType = 'list'
+        // this.productDisplayType = 'list'
         localStorage.setItem('productDisplayType','list')
         $('#product-list').addClass('active');
         $('#product-box').removeClass('active');
     },
+    //method for a minmax filter 
     minMaxFilter(min,max = 0 ){
       this.filter.min = min;
       this.filter.max = max|0;
       this.ProductFilter()
     },
-    CategoryFilter(category)
+    //method for a category filter
+    CategoryFilter(event)
     {
-        this.filter.category = category
+       //get data of clicked tag using event   
+       var category = event.currentTarget.getAttribute('categoryid');
+       this.filter.category = category;
+       this.ProductFilter();
     },
+    //method for seller filter
+    SellerFilter(event)
+    {
+        var sellers = this.filter.seller;
+        var newSeller = event.currentTarget.getAttribute('sellerid');
+        if(sellers.includes(newSeller)){
+            var oldSellerIndex = sellers.indexOf(newSeller);
+            sellers.splice(oldSellerIndex,1);
+        }
+        else{
+            sellers.push(newSeller);
+        }
+        this.filter.seller = sellers;
+        this.ProductFilter();
+    },
+    //clean all filter
+    clearFilter(){
+        this.filter.sorting = '',
+        this.filter.min = '',
+        this.filter.max = '',
+        this.filter.category = '',
+        this.filter.seller = []
+        this.ProductFilter();
+    },
+    //to get all product after apply filter
     ProductFilter(){
        this.getProducts(this.filter);
     }
 },
+//page load time call method
 async created(){
-    await this.getCategory();
+    await this.getCategory(1),
+    await this.getSeller()
 },
+//call js when page load and set product view type if not previous select it will boc view other wise as per selected
 mounted() {
     let StickyScript = document.createElement('script')
     StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers\api\v1;
 
@@ -9,9 +9,14 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function categoryDetails()
+    public function categoryDetails(Request $request)
     {
-        $category = Category::all();
+        if($request->status == 0 ){
+            $category = Category::all();   
+        }
+        else{
+            $category = Category::where('parent_category_id',Null)->get();
+        }
         return Response()->json(["status"=> true,"category" => $category]); 
     }
 }
