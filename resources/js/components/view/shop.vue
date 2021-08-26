@@ -48,7 +48,7 @@
                                 <div class="sticky-sidebar">
                                     <div class="filter-actions">
                                         <label>Filter :</label>
-                                        <a @click.prevent="clearFilter" href="#" class="btn btn-dark btn-link filter-clean">Clean All</a>
+                                        <a @click.prevent="ClearFilter" href="#" class="btn btn-dark btn-link filter-clean">Clean All</a>
                                     </div>
                                     <!-- Start of Collapsible widget -->
                                     <div class="widget widget-collapsible">
@@ -119,11 +119,11 @@
                                 </div>
                                 <div class="toolbox-right">
                                     <div class="toolbox-item toolbox-show select-box">
-                                        <select name="count" v-model="filter.totalproduct" @change.prevent="ProductFilter"  class="form-control">
-                                            <option value="2" selected >Show 9</option>
-                                            <option value="3" >Show 12</option>
-                                            <option value="4">Show 24</option>
-                                            <option value="36">Show 36</option>
+                                        <select name="count" v-model="pagination.per_page" @change.prevent="ProductFilter"  class="form-control">
+                                            <option value="1" selected >Show 1</option>
+                                            <option value="2" >Show 2</option>
+                                            <option value="3">Show 3</option>
+                                            <option value="4">Show 4</option>
                                         </select>
                                     </div>
                                     <div class="toolbox-item toolbox-layout">
@@ -147,22 +147,20 @@
 
                             <div class="toolbox toolbox-pagination justify-content-between">
                                 <p class="showing-info mb-2 mb-sm-0">
-                                    Showing<span>1-12 of 60</span>Products
+                                    Showing<span>{{allProduct.from}}-{{allProduct.to }} of {{ allProduct.total }}</span>Products 
+                                    <!-- {{ this.$store.getters.allProduct.last_page }} -->
                                 </p>
                                 <ul class="pagination">
-                                    <li class="prev disabled">
-                                        <a href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                    <li class="prev ">
+                                        <a href="#" @click.prevent="PreviousPage()" aria-label="Previous"  >
                                             <i class="w-icon-long-arrow-left"></i>Prev
                                         </a>
                                     </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
+                                    <li v-for="index in allProduct.last_page" :key="index" @click.prevent="CurrentPage($event)" :page-no="index" class="page-item  ">
+                                        <a class="page-link"  href="#">{{index}}</a>
                                     </li>
                                     <li class="next">
-                                        <a href="#" aria-label="Next">
+                                        <a href="#" @click.prevent="NextPage(allProduct.last_page)" aria-label="Next">
                                             Next<i class="w-icon-long-arrow-right"></i>
                                         </a>
                                     </li>
@@ -209,8 +207,11 @@ data(){
             min:'',
             max:'',
             category:'',
-            seller:[],
-            totalproduct:10
+            seller:[]
+        },
+        pagination:{
+            per_page:1,
+            page:1
         }
     }
 },
@@ -218,7 +219,6 @@ data(){
 computed:{
     ...mapGetters(['allProduct','allCategory','allSeller']),
 },
-
 methods:{
     //all get method for get all data
      ...mapActions(['getProducts']),
@@ -226,14 +226,14 @@ methods:{
      ...mapActions(['getCategory']),
     //method for a box type view of product 
     productTypeBox(){
-        // this.productDisplayType = 'box'
+        this.productDisplayType = 'box'
         localStorage.setItem('productDisplayType','box')
         $('#product-box').addClass('active');
         $('#product-list').removeClass('active');
     },
     //method for a list type of view
     productTypeList(){
-        // this.productDisplayType = 'list'
+        this.productDisplayType = 'list'
         localStorage.setItem('productDisplayType','list')
         $('#product-list').addClass('active');
         $('#product-box').removeClass('active');
@@ -268,7 +268,7 @@ methods:{
         this.ProductFilter();
     },
     //clean all filter
-    clearFilter(){
+    ClearFilter(){
         this.filter.sorting = '',
         this.filter.min = '',
         this.filter.max = '',
@@ -276,15 +276,38 @@ methods:{
         this.filter.seller = []
         this.ProductFilter();
     },
+    CurrentPage(event){
+
+        var cur_page = event.currentTarget.getAttribute('page-no');
+        // event.currentTarget.classList.add("active");
+        this.pagination.page = cur_page;
+        this.ProductFilter();
+    },
+    PreviousPage(){
+       if(this.pagination.page > 1){ 
+            this.pagination.page --;
+            this.ProductFilter();
+       } 
+    },
+    NextPage(lastval){
+        if(this.pagination.page < lastval)
+        {
+            this.pagination.page ++; 
+            this.ProductFilter();
+        }
+    },
     //to get all product after apply filter
     ProductFilter(){
-       this.getProducts(this.filter);
+       $("ul").find(`[page-no='${this.pagination.page}']`).addClass("active");
+       this.getProducts({'filter':this.filter,'pagination':this.pagination});
     }
 },
 //page load time call method
 async created(){
     await this.getCategory(1),
-    await this.getSeller()
+    await this.getSeller(),
+    await this.ProductFilter(),
+     $("ul").find(`[page-no=1]`).addClass("active");
 },
 //call js when page load and set product view type if not previous select it will boc view other wise as per selected
 mounted() {
@@ -304,6 +327,7 @@ mounted() {
     {
         $('#product-box').addClass('active');   
     }   
+   
 }};
 
 </script>

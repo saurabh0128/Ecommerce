@@ -9006,8 +9006,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -9027,8 +9025,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         min: '',
         max: '',
         category: '',
-        seller: [],
-        totalproduct: 10
+        seller: []
+      },
+      pagination: {
+        per_page: 1,
+        page: 1
       }
     };
   },
@@ -9037,14 +9038,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)(['getProducts'])), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)(['getSeller'])), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapActions)(['getCategory'])), {}, {
     //method for a box type view of product 
     productTypeBox: function productTypeBox() {
-      // this.productDisplayType = 'box'
+      this.productDisplayType = 'box';
       localStorage.setItem('productDisplayType', 'box');
       $('#product-box').addClass('active');
       $('#product-list').removeClass('active');
     },
     //method for a list type of view
     productTypeList: function productTypeList() {
-      // this.productDisplayType = 'list'
+      this.productDisplayType = 'list';
       localStorage.setItem('productDisplayType', 'list');
       $('#product-list').addClass('active');
       $('#product-box').removeClass('active');
@@ -9079,13 +9080,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.ProductFilter();
     },
     //clean all filter
-    clearFilter: function clearFilter() {
+    ClearFilter: function ClearFilter() {
       this.filter.sorting = '', this.filter.min = '', this.filter.max = '', this.filter.category = '', this.filter.seller = [];
       this.ProductFilter();
     },
+    CurrentPage: function CurrentPage(event) {
+      var cur_page = event.currentTarget.getAttribute('page-no'); // event.currentTarget.classList.add("active");
+
+      this.pagination.page = cur_page;
+      this.ProductFilter();
+    },
+    PreviousPage: function PreviousPage() {
+      if (this.pagination.page > 1) {
+        this.pagination.page--;
+        this.ProductFilter();
+      }
+    },
+    NextPage: function NextPage(lastval) {
+      if (this.pagination.page < lastval) {
+        this.pagination.page++;
+        this.ProductFilter();
+      }
+    },
     //to get all product after apply filter
     ProductFilter: function ProductFilter() {
-      this.getProducts(this.filter);
+      $("ul").find("[page-no='".concat(this.pagination.page, "']")).addClass("active");
+      this.getProducts({
+        'filter': this.filter,
+        'pagination': this.pagination
+      });
     }
   }),
   //page load time call method
@@ -9105,6 +9128,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _this.getSeller();
 
             case 4:
+              _context.next = 6;
+              return _this.ProductFilter();
+
+            case 6:
+              $("ul").find("[page-no=1]").addClass("active");
+
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -9143,12 +9173,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -9205,15 +9229,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return " (" + value.length + " reviews)";
     }
   },
-  methods: _objectSpread({
+  methods: {
     avg_per: function avg_per(value) {
       return value * 100 / 5;
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['getProducts'])),
-  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['allProduct']),
-  created: function created() {
-    this.getProducts(); // console.log(this.allProduct)
-  }
+  },
+  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['allProduct'])
 });
 
 /***/ }),
@@ -9230,12 +9251,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -9291,15 +9306,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return " (" + value.length + " reviews)";
     }
   },
-  methods: _objectSpread({
+  methods: {
     avg_per: function avg_per(value) {
       return value * 100 / 5;
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)(['getProducts'])),
-  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['allProduct']),
-  created: function created() {
-    this.getProducts(); // console.log(this.allProduct)
-  }
+  },
+  computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['allProduct'])
 });
 
 /***/ }),
@@ -9826,24 +9838,26 @@ var getters = {
   }
 };
 var actions = {
-  getProducts: function getProducts(_ref, FilterData) {
+  getProducts: function getProducts(_ref, _ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var commit;
+      var commit, filter, pagination, AllReqestData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
-              _context.next = 3;
+              filter = _ref2.filter, pagination = _ref2.pagination;
+              AllReqestData = Object.assign({}, filter, pagination);
+              _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/product', {
-                params: FilterData
+                params: AllReqestData
               }).then(function (res) {
                 if (res.data.status) {
                   commit('setProduct', res.data.product);
                 }
               });
 
-            case 3:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -71263,7 +71277,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.clearFilter.apply(null, arguments)
+                            return _vm.ClearFilter.apply(null, arguments)
                           }
                         }
                       },
@@ -71597,8 +71611,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.filter.totalproduct,
-                                expression: "filter.totalproduct"
+                                value: _vm.pagination.per_page,
+                                expression: "pagination.per_page"
                               }
                             ],
                             staticClass: "form-control",
@@ -71616,8 +71630,8 @@ var render = function() {
                                       return val
                                     })
                                   _vm.$set(
-                                    _vm.filter,
-                                    "totalproduct",
+                                    _vm.pagination,
+                                    "per_page",
                                     $event.target.multiple
                                       ? $$selectedVal
                                       : $$selectedVal[0]
@@ -71636,20 +71650,20 @@ var render = function() {
                           [
                             _c(
                               "option",
-                              { attrs: { value: "2", selected: "" } },
-                              [_vm._v("Show 9")]
+                              { attrs: { value: "1", selected: "" } },
+                              [_vm._v("Show 1")]
                             ),
                             _vm._v(" "),
+                            _c("option", { attrs: { value: "2" } }, [
+                              _vm._v("Show 2")
+                            ]),
+                            _vm._v(" "),
                             _c("option", { attrs: { value: "3" } }, [
-                              _vm._v("Show 12")
+                              _vm._v("Show 3")
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "4" } }, [
-                              _vm._v("Show 24")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "36" } }, [
-                              _vm._v("Show 36")
+                              _vm._v("Show 4")
                             ])
                           ]
                         )
@@ -71695,7 +71709,104 @@ var render = function() {
               _vm._v(" "),
               _vm.productDisplayType == "list" ? _c("Product_List") : _vm._e(),
               _vm._v(" "),
-              _vm._m(7)
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "toolbox toolbox-pagination justify-content-between"
+                },
+                [
+                  _c("p", { staticClass: "showing-info mb-2 mb-sm-0" }, [
+                    _vm._v("\n                                    Showing"),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm.allProduct.from) +
+                          "-" +
+                          _vm._s(_vm.allProduct.to) +
+                          " of " +
+                          _vm._s(_vm.allProduct.total)
+                      )
+                    ]),
+                    _vm._v("Products \n                                    ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    { staticClass: "pagination" },
+                    [
+                      _c("li", { staticClass: "prev " }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#", "aria-label": "Previous" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.PreviousPage()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "w-icon-long-arrow-left" }),
+                            _vm._v(
+                              "Prev\n                                        "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.allProduct.last_page, function(index) {
+                        return _c(
+                          "li",
+                          {
+                            key: index,
+                            staticClass: "page-item  ",
+                            attrs: { "page-no": index },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.CurrentPage($event)
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#" }
+                              },
+                              [_vm._v(_vm._s(index))]
+                            )
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "next" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#", "aria-label": "Next" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.NextPage(_vm.allProduct.last_page)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                            Next"
+                            ),
+                            _c("i", { staticClass: "w-icon-long-arrow-right" })
+                          ]
+                        )
+                      ])
+                    ],
+                    2
+                  )
+                ]
+              )
             ],
             1
           )
@@ -71817,61 +71928,6 @@ var staticRenderFns = [
       [
         _c("i", { staticClass: "w-icon-category" }),
         _c("span", [_vm._v("Filters")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "toolbox toolbox-pagination justify-content-between" },
-      [
-        _c("p", { staticClass: "showing-info mb-2 mb-sm-0" }, [
-          _vm._v("\n                                    Showing"),
-          _c("span", [_vm._v("1-12 of 60")]),
-          _vm._v("Products\n                                ")
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "pagination" }, [
-          _c("li", { staticClass: "prev disabled" }, [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "#",
-                  "aria-label": "Previous",
-                  tabindex: "-1",
-                  "aria-disabled": "true"
-                }
-              },
-              [
-                _c("i", { staticClass: "w-icon-long-arrow-left" }),
-                _vm._v("Prev\n                                        ")
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item active" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("1")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "page-item" }, [
-            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
-              _vm._v("2")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", { staticClass: "next" }, [
-            _c("a", { attrs: { href: "#", "aria-label": "Next" } }, [
-              _vm._v("\n                                            Next"),
-              _c("i", { staticClass: "w-icon-long-arrow-right" })
-            ])
-          ])
-        ])
       ]
     )
   }
@@ -72255,7 +72311,7 @@ var render = function() {
       staticClass:
         "product-wrapper row cols-xl-5 cols-lg-3 cols-md-4 cols-sm-3 cols-2"
     },
-    _vm._l(_vm.allProduct, function(product) {
+    _vm._l(_vm.allProduct.data, function(product) {
       return _c("div", { key: product.id }, [
         _c("div", { staticClass: "product-wrap" }, [
           _c("div", { staticClass: "product text-center" }, [
@@ -72378,7 +72434,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.allProduct, function(product) {
+    _vm._l(_vm.allProduct.data, function(product) {
       return _c("div", { key: product.id }, [
         _c("div", { staticClass: "product product-list product-select" }, [
           _c("figure", { staticClass: "product-media" }, [

@@ -68,7 +68,7 @@ class ProductController extends Controller
             $query->whereIn('user_id',request('seller'));
         }
 
-        $product = $query->take(request('totalproduct'))->get();
+        $product = $query->paginate(request('per_page'));
         return Response()->json(["status"=> true,"product" => $product]);
     }
 

@@ -11,8 +11,9 @@ const getters ={
 }
 
 const actions ={
-	async getProducts({ commit },FilterData ){
-		await axios.get('/api/v1/product',{ params:FilterData  }).then((res)=>{
+	async getProducts({ commit },{filter,pagination }){
+		var AllReqestData = Object.assign({},filter,pagination);
+		await axios.get('/api/v1/product',{ params:AllReqestData }).then((res)=>{
 			if(res.data.status)
 			{
 				commit('setProduct',res.data.product);

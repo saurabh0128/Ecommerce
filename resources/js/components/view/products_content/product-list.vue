@@ -1,6 +1,6 @@
 <template>
 <div>        
-    <div v-for="product in allProduct" :key="product.id"  > 
+    <div v-for="product in allProduct.data" :key="product.id"  > 
         <div class="product product-list product-select"> 
             <figure class="product-media">
                 <a href="product-default.html">
@@ -58,15 +58,8 @@ export default{
     methods:{
         avg_per(value){
             return value * 100 /5 ;
-        },
-        ...mapActions(['getProducts'])
-
+        }
     },
-    computed: mapGetters(['allProduct']),
-    created()
-    {
-        this.getProducts();
-        // console.log(this.allProduct)
-    }
+    computed: mapGetters(['allProduct'])
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
     
 <div class="product-wrapper row cols-xl-5 cols-lg-3 cols-md-4 cols-sm-3 cols-2">    
-    <div v-for="product in allProduct" :key="product.id"  >        
+    <div v-for="product in allProduct.data" :key="product.id"  >        
         <div class="product-wrap">
             <div class="product text-center">
                 <figure class="product-media">
@@ -59,15 +59,8 @@ export default{
     methods:{
         avg_per(value){
             return value * 100 /5 ;
-        },
-        ...mapActions(['getProducts'])
-
+        }
     },
-    computed: mapGetters(['allProduct']),
-    created()
-    {
-        this.getProducts();
-        // console.log(this.allProduct)
-    }
+    computed: mapGetters(['allProduct'])
 };
 </script>       
