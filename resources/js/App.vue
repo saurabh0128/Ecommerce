@@ -4,6 +4,7 @@
 		<Header/>
 		<Login/>
 		<router-view></router-view>
+		<productview/>
 		<Subscribe/>
 		<Footer/>	
 
@@ -24,7 +25,7 @@
 	import MobileMenu from  "./components/layout/MobileMenu.vue";
 	import Subscribe from "./components/layout/Subscribe.vue";
 	import Login from "./components/auth/login.vue";
-
+	import productview from "./components/layout/product-view.vue";
 	export default{
 		name: 'App',
 		components:{
@@ -33,6 +34,7 @@
 			StickyFooter,
 			MobileMenu,
 			Subscribe,
+			productview,
 			Login
 		}
 	};

@@ -107,7 +107,7 @@
                                         <label>Sort By :</label>
                                         <!-- alll sorting and store sorting name -->
                                         <select name="sorting" id="sorting" v-model="filter.sorting"  
-                                        class="form-control" @change.prevent="ProductFilter" >
+                                        class="form-control" @change.prevent="ProductFilter()" >
                                             <option value="" selected>Default sorting</option>
                                             <option value="popularity">popularity</option>
                                             <option value="rating">average rating</option>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="toolbox-right">
                                     <div class="toolbox-item toolbox-show select-box">
-                                        <select name="count" v-model="pagination.per_page" @change.prevent="ProductFilter"  class="form-control">
+                                        <select name="count" v-model="pagination.per_page" @change.prevent="ProductFilter()"  class="form-control">
                                             <option value="1" selected >Show 1</option>
                                             <option value="2" >Show 2</option>
                                             <option value="3">Show 3</option>
@@ -151,17 +151,18 @@
                                     <!-- {{ this.$store.getters.allProduct.last_page }} -->
                                 </p>
                                 <ul class="pagination">
-                                    <li class="prev ">
-                                        <a href="#" @click.prevent="PreviousPage()" aria-label="Previous"  >
+                                    <li v-bind:class="pagination.page == 1?'prev disabled':'prev' ">
+                                        <a href="#" @click.prevent="PreviousPage()"  aria-label="Previous"  >
                                             <i class="w-icon-long-arrow-left"></i>Prev
                                         </a>
                                     </li>
-                                    <li v-for="index in allProduct.last_page" :key="index" @click.prevent="CurrentPage($event)" :page-no="index" class="page-item  ">
+                                    <li v-for="index in allProduct.last_page" :key="index" @click.prevent="CurrentPage($event)" :page-no="index" 
+                                    v-bind:class="index == pagination.page ?'page-item active':'page-time' ">
                                         <a class="page-link"  href="#">{{index}}</a>
                                     </li>
-                                    <li class="next">
+                                    <li v-bind:class="pagination.page == allProduct.last_page?'next disabled':'next'">
                                         <a href="#" @click.prevent="NextPage(allProduct.last_page)" aria-label="Next">
-                                            Next<i class="w-icon-long-arrow-right"></i>
+                                            Next  <i class="w-icon-long-arrow-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -178,8 +179,8 @@
         </main>
         <!-- End of Main -->
 
-
 </template>
+
 
 
 
@@ -279,35 +280,37 @@ methods:{
     CurrentPage(event){
 
         var cur_page = event.currentTarget.getAttribute('page-no');
-        // event.currentTarget.classList.add("active");
         this.pagination.page = cur_page;
-        this.ProductFilter();
+        this.ProductFilter(1);
     },
     PreviousPage(){
        if(this.pagination.page > 1){ 
             this.pagination.page --;
-            this.ProductFilter();
+            this.ProductFilter(1);
        } 
     },
     NextPage(lastval){
         if(this.pagination.page < lastval)
         {
             this.pagination.page ++; 
-            this.ProductFilter();
+            this.ProductFilter(1);
         }
     },
     //to get all product after apply filter
-    ProductFilter(){
-       $("ul").find(`[page-no='${this.pagination.page}']`).addClass("active");
+    ProductFilter(val){
+        if(val == undefined)
+        {
+            this.pagination.page = 1; 
+        }
        this.getProducts({'filter':this.filter,'pagination':this.pagination});
     }
 },
 //page load time call method
 async created(){
+    // console.log('sk'),
     await this.getCategory(1),
     await this.getSeller(),
-    await this.ProductFilter(),
-     $("ul").find(`[page-no=1]`).addClass("active");
+    await this.ProductFilter()
 },
 //call js when page load and set product view type if not previous select it will boc view other wise as per selected
 mounted() {
@@ -327,7 +330,7 @@ mounted() {
     {
         $('#product-box').addClass('active');   
     }   
-   
+    // $("ul").find(`[page-no=1]`).addClass("active");
 }};
 
 </script>

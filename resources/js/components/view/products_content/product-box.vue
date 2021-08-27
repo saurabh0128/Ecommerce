@@ -1,6 +1,6 @@
 <template>
     
-<div class="product-wrapper row cols-xl-5 cols-lg-3 cols-md-4 cols-sm-3 cols-2">    
+<div  class="product-wrapper row cols-xl-5 cols-lg-3 cols-md-4 cols-sm-3 cols-2">    
     <div v-for="product in allProduct.data" :key="product.id"  >        
         <div class="product-wrap">
             <div class="product text-center">
@@ -15,7 +15,7 @@
                             title="Wishlist"></a>
                         <a href="#" class="btn-product-icon btn-compare w-icon-compare"
                             title="Compare"></a>
-                        <a href="#" class="btn-product-icon btn-quickview w-icon-search"
+                        <a href="#" @click.prevent="setProduct(product)"  class="btn-product-icon btn-quickview w-icon-search"
                             title="Quick View"></a>
                     </div>
                 </figure>
@@ -43,6 +43,9 @@
             </div>
         </div>
     </div>
+
+   
+
 </div>
 </template>
 
@@ -57,10 +60,24 @@ export default{
         }
     },
     methods:{
+        ...mapActions(['getSingleProduct']),
         avg_per(value){
             return value * 100 /5 ;
+        },
+        setProduct(val)
+        {
+            this.getSingleProduct(val);
+        },
+        addToCart()
+        {
+                alert('s');
+                console.log('sk');
         }
     },
     computed: mapGetters(['allProduct'])
 };
+
+
+
+
 </script>       

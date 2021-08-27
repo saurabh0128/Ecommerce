@@ -103,8 +103,7 @@ class ProductController extends Controller
     {
         $product = Product::with('user','rating_review')->findOrFail($id);
 
-        return Response()->json($product);
-    
+        return Response()->json(["status"=> true,"product" => $product]);
     }
 
     /**
