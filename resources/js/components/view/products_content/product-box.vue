@@ -68,11 +68,11 @@ export default{
         {
             this.getSingleProduct(val);
         },
-        addToCart()
-        {
-                alert('s');
-                console.log('sk');
-        }
+        // addToCart()
+        // {
+        //         alert('s');
+        //         console.log('sk');
+        // }
     },
     computed: mapGetters(['allProduct'])
 };

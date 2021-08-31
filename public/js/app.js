@@ -2990,6 +2990,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+// $(document).on('click','#addtocart',function(e){
+//     console.log(this.$data.qty);
+// });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'product_view',
@@ -2998,18 +3004,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return " (" + value.length + " reviews)";
     }
   },
+  data: function data() {
+    return {
+      qty: 1
+    };
+  },
   methods: {
     avg_per: function avg_per(value) {
       return value * 100 / 5;
     },
-    _cancel: function _cancel() {
-      alert('s');
-      console.log('sk');
+    sk: function sk() {
+      console.log('ss');
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['singleProduct'])),
-  mounted: function mounted() {
-    this.$refs.cartbtn.click();
+  mounted: function mounted() {// this.$refs.cartbtn.click()
   }
 });
 
@@ -9399,11 +9408,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     setProduct: function setProduct(val) {
       this.getSingleProduct(val);
-    },
-    addToCart: function addToCart() {
-      alert('s');
-      console.log('sk');
-    }
+    } // addToCart()
+    // {
+    //         alert('s');
+    //         console.log('sk');
+    // }
+
   }),
   computed: (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['allProduct'])
 });
@@ -53833,49 +53843,40 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "product-short-desc" }, [
-                  _c("ul", { staticClass: "list-type-check list-style-none" }, [
-                    _c("li", [
-                      _vm._v(
-                        "Ultrices eros in cursus turpis massa cursus mattis. " +
-                          _vm._s(_vm._cancel()) +
-                          " "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _vm._v("Volutpat ac tincidunt vitae semper quis lectus.")
-                    ]),
-                    _vm._v(" "),
-                    _c("li", [
-                      _vm._v(
-                        "Aliquam id diam maecenas ultricies mi eget mauris."
-                      )
-                    ])
-                  ])
-                ]),
+                _vm._m(4),
                 _vm._v(" "),
                 _c("hr", { staticClass: "product-divider" }),
                 _vm._v(" "),
-                _c("div", { staticClass: "product-form" }, [
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      ref: "cartbtn",
-                      staticClass: "btn btn-primary btn-cart",
-                      on: { click: _vm._cancel }
-                    },
-                    [
-                      _c("i", { staticClass: "w-icon-cart" }),
+                _c(
+                  "form",
+                  { attrs: { method: "post", "accept-charset": "utf-8" } },
+                  [
+                    _c("div", { staticClass: "product-form" }, [
+                      _vm._m(5),
                       _vm._v(" "),
-                      _c("span", [_vm._v("Add to Cart")])
-                    ]
-                  )
-                ]),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-cart",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.sk.apply(null, arguments)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "w-icon-cart" }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Add to Cart")])
+                        ]
+                      )
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
-                _vm._m(5)
+                _vm._m(6)
               ])
             ])
           ])
@@ -53928,11 +53929,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "product-short-desc" }, [
+      _c("ul", { staticClass: "list-type-check list-style-none" }, [
+        _c("li", [
+          _vm._v("Ultrices eros in cursus turpis massa cursus mattis.  ")
+        ]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Volutpat ac tincidunt vitae semper quis lectus.")]),
+        _vm._v(" "),
+        _c("li", [_vm._v("Aliquam id diam maecenas ultricies mi eget mauris.")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "product-qty-form" }, [
       _c("div", { staticClass: "input-group" }, [
         _c("input", {
           staticClass: "quantity form-control",
-          attrs: { type: "number", min: "1", max: "10000000" }
+          attrs: {
+            type: "number",
+            min: "1",
+            max: "10000000",
+            name: "qty",
+            id: "asd123"
+          }
         }),
         _vm._v(" "),
         _c("button", { staticClass: "quantity-plus w-icon-plus" }),

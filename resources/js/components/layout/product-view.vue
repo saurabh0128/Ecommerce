@@ -2,6 +2,7 @@
 	
 <!-- Start of Quick View -->
 <div  class="product product-single product-popup " id="ProductModel" aria-hidden="true" role="dialog" tabindex="-1" >
+
     <div v-if="singleProduct" class="row gutter-lg">
         <div class="col-md-6 mb-4 mb-md-0">
             <div class="product-gallery product-gallery-sticky mb-0">
@@ -54,30 +55,32 @@
 
                 <div class="product-short-desc">
                     <ul class="list-type-check list-style-none">
-                        <li>Ultrices eros in cursus turpis massa cursus mattis. {{ _cancel() }} </li>
+                        <li>Ultrices eros in cursus turpis massa cursus mattis.  </li>
                         <li>Volutpat ac tincidunt vitae semper quis lectus.</li>
                         <li>Aliquam id diam maecenas ultricies mi eget mauris.</li>
                     </ul>
                 </div>
 
                 <hr class="product-divider">
-
    
-          
-
+            <form method="post" accept-charset="utf-8">
                 <div class="product-form">
                     <div class="product-qty-form">
                         <div class="input-group">
-                            <input class="quantity form-control" type="number" min="1" max="10000000">
+                            <input  class="quantity form-control" type="number" min="1" max="10000000" name="qty" id="asd123">
                             <button class="quantity-plus w-icon-plus"    ></button>
                             <button class="quantity-minus w-icon-minus"></button>
                         </div>
                     </div>
-                    <a @click="_cancel"  ref="cartbtn" class="btn btn-primary btn-cart">
-                        <i class="w-icon-cart"></i>
-                        <span>Add to Cart</span>
-                    </a>
+                        <button @click.prevent="sk" type="submit"  class="btn btn-primary btn-cart">
+                            <i class="w-icon-cart"></i>
+                            <span>Add to Cart</span>
+                        </button>
                 </div>
+            </form>
+
+
+               
 
                 <div class="social-links-wrapper">
                     <div class="social-links">
@@ -106,8 +109,13 @@
 
 
 <script>
-import { mapGetters,mapActions } from 'vuex';
 
+// $(document).on('click','#addtocart',function(e){
+//     console.log(this.$data.qty);
+// });
+
+
+import { mapGetters,mapActions } from 'vuex';
 	export default{
 		name:'product_view',
 		filters:{
@@ -115,21 +123,25 @@ import { mapGetters,mapActions } from 'vuex';
 	            return " (" + value.length+" reviews)";
 	        }
     	},
+        data(){
+            return{
+                qty:1
+            }
+        },
     	methods:{
     		avg_per(value){
             	return value * 100 /5 ;
         	},
-        	_cancel()
-        	{
-        		alert('s');
-        		console.log('sk');
-        	}
+            sk(){
+                console.log('ss');
+            }
     	},
 		computed:{
 			 ...mapGetters(['singleProduct']),
 		},
 		mounted(){
-			this.$refs.cartbtn.click()
+			// this.$refs.cartbtn.click()
 		}
 	};
+
 </script>			
