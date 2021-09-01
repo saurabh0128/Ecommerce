@@ -243,7 +243,7 @@ import {mapActions,mapGetters} from 'vuex';
     }
 
 
-     function close_login_model(){
+    function close_login_model(){
         $('.login-box').hide();
         $('.login-modal-bg').hide();
         $('body').css("overflow-y",'auto');

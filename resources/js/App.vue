@@ -4,7 +4,9 @@
 		<Header/>
 		<Login/>
 		<router-view></router-view>
-		<productview/>
+		<div id="ak">	
+			<productview/>
+		</div>
 		<Subscribe/>
 		<Footer/>	
 

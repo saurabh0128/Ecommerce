@@ -37,7 +37,7 @@ use App\Http\Controllers\api\v1\SellerController;
          Route::resource('/product',ProductController::class)->only(['index','show']);
          Route::get('category',[CategoryController::class,'categoryDetails'])->name('category.categoryDetails');
          Route::get('seller',[SellerController::class,'index'])->name('seller.sellerDeatils');
-      Route::group(['middleware' => 'auth:api'],function(){
+         Route::group(['middleware' => 'auth:api'],function(){
       
          Route::resource('/order',OrderController::class);
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');

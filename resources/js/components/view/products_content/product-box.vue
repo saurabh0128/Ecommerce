@@ -15,8 +15,9 @@
                             title="Wishlist"></a>
                         <a href="#" class="btn-product-icon btn-compare w-icon-compare"
                             title="Compare"></a>
-                        <a href="#" @click.prevent="setProduct(product)"  class="btn-product-icon btn-quickview w-icon-search"
-                            title="Quick View"></a>
+                            <!-- setProduct for get clicked product details -->
+                        <a href="#" @click.prevent="setProduct(product)" data-toggle="modal" 
+                        data-target="#ProductModel"  class="btn-product-icon w-icon-search" title="Quick View"></a>
                     </div>
                 </figure>
                 <div class="product-details">
@@ -67,12 +68,9 @@ export default{
         setProduct(val)
         {
             this.getSingleProduct(val);
-        },
-        // addToCart()
-        // {
-        //         alert('s');
-        //         console.log('sk');
-        // }
+            $('.header-bottom').removeClass('fixed');
+            $('body').css("overflow-y",'hidden');
+        }
     },
     computed: mapGetters(['allProduct'])
 };

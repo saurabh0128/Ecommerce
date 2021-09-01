@@ -41,9 +41,12 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $cartdata =Cart::where('user_id','=',auth('api')->id())->first();
+        dd(auth('api')->id());
+        // {
+        //     return Response()->json(["status" => "user not"]);
+        // } 
         //User Create new cart Or Not
-        if(is_null($cartdata)){
+        if(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
             $cart = new Cart;
             $product_data = Product::find($request->product_id);
             $cart_item = new CartItem;
@@ -119,7 +122,6 @@ class CartController extends Controller
 
                 return Response()->json(["success" => "Product Add SuccessFully"]);   
             }
-
         }
     }
 

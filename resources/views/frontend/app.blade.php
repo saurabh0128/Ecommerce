@@ -14,6 +14,8 @@
 		<!-- Favicon -->
     	<link rel="icon" type="image/png" href="{{asset('frontend_asset/images/icons/favicon.png')}}">
 
+    	<link rel="stylesheet" href="{{ asset('frontend_asset/css/bootstrap.min.css')}}" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
 		<!-- font CSS -->
 		<link rel="preload" href="{{ asset('frontend_asset/vendor/fontawesome-free/webfonts/fa-regular-400.woff2')}}" as="font" type="font/woff2" crossorigin="anonymous">
 	    <link rel="preload" href="{{ asset('frontend_asset/vendor/fontawesome-free/webfonts/fa-solid-900.woff2')}}" as="font" type="font/woff2" crossorigin="anonymous">
@@ -27,6 +29,8 @@
 	    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_asset/vendor/owl-carousel/owl.carousel.min.css')}}">
 	    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_asset/vendor/animate/animate.min.css')}}">
 	    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_asset/vendor/magnific-popup/magnific-popup.min.css')}}">
+
+	    
 
 	    <!-- WebFont.js -->
 	    <script>
@@ -63,6 +67,7 @@
 
     <!-- Main JS -->
     <script src="{{asset('/frontend_asset/js/main.min.js')}}"></script>
+    <script src="{{asset('/frontend_asset/js/bootstrap.min.js')}}" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
 </html>
 
 
