@@ -3021,8 +3021,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     avg_per: function avg_per(value) {
       return value * 100 / 5;
     },
-    addcart: function addcart() {
-      this.addCartProduct();
+    addcart: function addcart(productId) {
+      this.addCartProduct({
+        'product_id': productId,
+        'qty': this.qty
+      });
     },
     productModalClose: function productModalClose() {
       $('.header-bottom').addClass('fixed');
@@ -9948,30 +9951,84 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
-  cart: []
+  cart: [],
+  cartCount: 0
 };
 var getters = {
   allCart: function allCart(state) {
     return state.cart;
+  },
+  allCartCount: function allCartCount(state) {
+    return state.cartCount;
   }
 };
 var actions = {
-  addCartProduct: function addCartProduct(_ref) {
+  addCartProduct: function addCartProduct(_ref, _ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var commit;
+      var commit, product_id, qty, AllProductData;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref.commit;
-              _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/cart').then(function (res) {
+              product_id = _ref2.product_id, qty = _ref2.qty;
+              AllProductData = {
+                'product_id': product_id,
+                'qty': qty
+              };
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/cart', {
+                'productData': AllProductData
+              }).then(function (res) {
                 if (res.data.status) {
                   console.log(res.data.status);
+                } else {
+                  var productData = localStorage.getItem('productData');
+                  var fProductData = '';
+                  var cartcount = 0;
+
+                  if (productData) {
+                    var ProductArr = productData.split(' ');
+                    var ProductExist = 0;
+                    var ProductObj = {};
+                    var BreakException = {};
+
+                    try {
+                      ProductArr.forEach(function (product) {
+                        ProductObj = JSON.parse(product);
+
+                        if (ProductObj.product_id == res.data.productData.product_id) {
+                          var ProductArrIndex = ProductArr.indexOf(product);
+                          ProductArr.splice(ProductArrIndex, 1);
+                          ProductExist = 0;
+                          throw BreakException;
+                        } else {
+                          ProductExist = 1;
+                        }
+                      });
+                    } catch (e) {
+                      if (e !== BreakException) throw e;
+                    }
+
+                    if (ProductExist == 0) {
+                      var NewProdutcString = ProductArr.join(' ') + ' ' + JSON.stringify(res.data.productData);
+                      fProductData += NewProdutcString;
+                    } else {
+                      fProductData += productData;
+                      fProductData += ' ' + JSON.stringify(res.data.productData);
+                    }
+                  } else {
+                    fProductData += JSON.stringify(res.data.productData);
+                    cartcount = res.data.productData.qty;
+                  }
+
+                  localStorage.setItem('productData', fProductData);
+                  commit('setCart', fProductData);
+                  commit('setCartCount', cartcount);
                 }
               });
 
-            case 3:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -9983,6 +10040,9 @@ var actions = {
 var mutations = {
   setCart: function setCart(state, cart) {
     return state.cart = cart;
+  },
+  setCartCount: function setCartCount(state, count) {
+    return state.cartCount = count;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -54042,9 +54102,8 @@ var render = function() {
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()
-                                            return _vm.addcart.apply(
-                                              null,
-                                              arguments
+                                            return _vm.addcart(
+                                              _vm.singleProduct.id
                                             )
                                           }
                                         }

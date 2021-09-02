@@ -75,7 +75,7 @@ aria-labelledby="ProductModal"  >
                                             <button class="quantity-minus w-icon-minus"></button>
                                         </div>
                                     </div>
-                                    <button @click.prevent="addcart" type="submit" id="cartBtn" class="btn btn-primary btn-cart">
+                                    <button @click.prevent="addcart(singleProduct.id)" type="submit" id="cartBtn" class="btn btn-primary btn-cart">
                                         <i class="w-icon-cart"></i>
                                         <span>Add to Cart</span>
                                     </button>
@@ -139,8 +139,8 @@ aria-labelledby="ProductModal"  >
             avg_per(value){
                 return value * 100 /5 ;
             },
-            addcart(){
-               this.addCartProduct(); 
+            addcart(productId){
+               this.addCartProduct({'product_id':productId,'qty':this.qty}); 
             },
             productModalClose()
             {

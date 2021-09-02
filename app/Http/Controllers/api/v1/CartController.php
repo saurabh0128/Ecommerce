@@ -41,12 +41,12 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        dd(auth('api')->id());
-        // {
-        //     return Response()->json(["status" => "user not"]);
-        // } 
+        if(!(auth('api')->id()))
+        {
+            return Response()->json(["status" => false,'productData'=>$request->productData ]);
+        } 
         //User Create new cart Or Not
-        if(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
+        elseif(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
             $cart = new Cart;
             $product_data = Product::find($request->product_id);
             $cart_item = new CartItem;
@@ -81,7 +81,7 @@ class CartController extends Controller
 
             $cart_item->save();
 
-            return Response()->json(["success" => "Product Add SuccessFully"]);
+            return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
         }else{
             //Old User Cart
             $cart = Cart::where('user_id',auth('api')->id())->first();
@@ -106,7 +106,7 @@ class CartController extends Controller
                 $cart->coupon_code = 0;
                 $cart->save();
 
-                return Response()->json(["success" => "Product Add SuccessFully"]);
+                return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
                
             }else{//User Add Old Product
                 //if tha coupon Enter Or Not                
@@ -120,7 +120,7 @@ class CartController extends Controller
 
                 $product->save();
 
-                return Response()->json(["success" => "Product Add SuccessFully"]);   
+                return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);   
             }
         }
     }
