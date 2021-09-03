@@ -21,7 +21,7 @@
                     </div>
                 </figure>
                 <div class="product-details">
-                    <div class="product-cat">
+                    <div class="product-cart">
                         <a href="shop-banner-sidebar.html">{{ product.category.category_name }}</a>
                     </div>
                     <h3 class="product-name">

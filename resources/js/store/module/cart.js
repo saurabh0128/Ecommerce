@@ -1,39 +1,45 @@
 import axios from  'axios';
 
+axios.defaults.headers.common = {'Authorization': `Bearer `+ localStorage.getItem('access_token')}
 
 const state = {
 	cart:[],
-	cartCount:0
+	totalPrice:0
 }
 
 const getters ={
 	allCart: state => state.cart,
-	allCartCount : state => state.cartCount
+	tPrice : state => state.totalPrice
 }
 
 const actions ={
 	async addCartProduct({ commit },{product_id,qty}){
-		var AllProductData = { 'product_id':product_id ,'qty':qty };
+		var AllProductData = { 'id':product_id ,'qty':qty };
 		await axios.post('/api/v1/cart',{'productData':AllProductData}).then((res)=>{
 			if(res.data.status)
 			{
 				console.log(res.data.status);
 			}
 			else{
-				var productData =localStorage.getItem('productData');
+				var productData =localStorage.getItem('cartProductData');
 				var fProductData ='';
-				var cartcount = 0;
+				var totalPrice = localStorage.getItem('cartTotal')? parseInt(localStorage.getItem('cartTotal')) : 0;
 				if(productData)
 				{
-					var ProductArr = productData.split(' ');
+					var ProductArr = productData.split('|');
 					var ProductExist = 0;
 					var ProductObj = {};
 					var BreakException = {};
+					var ProductQty = 0;
+					var ProductPrice =0;
 					try{	
 						ProductArr.forEach(function(product){
 							ProductObj = JSON.parse(product);
-							if(ProductObj.product_id == res.data.productData.product_id)
+							
+							if(ProductObj.id == res.data.productData.id)
 							{
+								ProductQty = ProductObj.qty;
+								ProductPrice = ProductObj.special_price? ProductObj.special_price: ProductObj.current_price; 
 								var ProductArrIndex = ProductArr.indexOf(product);
 								ProductArr.splice(ProductArrIndex, 1);
 								ProductExist = 0;
@@ -51,21 +57,45 @@ const actions ={
 
 					if(ProductExist == 0)
 					{
-						var NewProdutcString = ProductArr.join(' ') + ' ' + JSON.stringify(res.data.productData);
+						var NewProdutcString = '';
+						res.data.productData.subTotal = res.data.productData.special_price? res.data.productData.special_price * res.data.productData.qty  : res.data.productData.current_price * res.data.productData.qty;
+						if(ProductArr.length == 0)
+						{
+								NewProdutcString = ProductArr.join('|') + JSON.stringify(res.data.productData);	
+						}
+						else
+						{
+								NewProdutcString = ProductArr.join('|') + '|' + JSON.stringify(res.data.productData);
+						}
 						fProductData += NewProdutcString;
+						if(ProductQty > res.data.productData.qty)
+						{
+								ProductQty -= res.data.productData.qty;
+								totalPrice -= ProductPrice * ProductQty;
+						}
+						else if(ProductQty < res.data.productData.qty)
+						{
+								ProductQty = res.data.productData.qty - ProductQty;
+								totalPrice += ProductPrice * ProductQty;
+						} 
+
 					}
 					else{
 						fProductData += productData;
-						fProductData += ' ' + JSON.stringify(res.data.productData);
+						res.data.productData.subTotal = res.data.productData.special_price? res.data.productData.special_price * res.data.productData.qty  : res.data.productData.current_price * res.data.productData.qty;
+						fProductData += '|' + JSON.stringify(res.data.productData);
+						totalPrice    += res.data.productData.special_price? res.data.productData.special_price * res.data.productData.qty  : res.data.productData.current_price * res.data.productData.qty; 
 					}
 				}	
 				else{	
-					fProductData += JSON.stringify(res.data.productData);
-					cartcount = res.data.productData.qty;
+					res.data.productData.subTotal  =  res.data.productData.special_price? res.data.productData.special_price * res.data.productData.qty  : res.data.productData.current_price * res.data.productData.qty;
+					fProductData  += JSON.stringify(res.data.productData);
+					totalPrice    += res.data.productData.special_price? res.data.productData.special_price * res.data.productData.qty  : res.data.productData.current_price * res.data.productData.qty; 
 				}
-				localStorage.setItem('productData', fProductData);
+				localStorage.setItem('cartProductData', fProductData);
+				localStorage.setItem('cartTotal',totalPrice);
 				commit('setCart',fProductData);
-				commit('setCartCount',cartcount);
+				commit('setTotalPrice',totalPrice);
 			}
 		});
 	}
@@ -74,7 +104,7 @@ const actions ={
 
 const mutations = {
 	setCart: (state,cart) => state.cart = cart,
-	setCartCount: (state,count) => state.cartCount = count
+	setTotalPrice:(state,tprice) => state.totalPrice = tprice
 }
 
 

@@ -41,8 +41,14 @@ const actions = {
             {
                 commit('setError',res.data.error);
             } 
-
         })
+
+        var CartProductArr = localStorage.getItem('cartProductData').split('|');
+
+        await CartProductArr.forEach(function(product){
+        	axios.post('/api/v1/cart',{'productData':JSON.parse(product)})
+        });
+
 	},
 	logout({commit}){
 		localStorage.removeItem('user_details');

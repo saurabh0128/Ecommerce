@@ -3001,8 +3001,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-// $(document).on('click','#cartBtn',function(e){
-//     console.log('ssk');
+// $(document).on('click','#ProductModel',function(e){
 // });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -9814,7 +9813,7 @@ var mutations = {
 var actions = {
   userLogin: function userLogin(_ref, loginData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var commit;
+      var commit, CartProductArr;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -9836,6 +9835,15 @@ var actions = {
               });
 
             case 3:
+              CartProductArr = localStorage.getItem('cartProductData').split('|');
+              _context.next = 6;
+              return CartProductArr.forEach(function (product) {
+                axios.post('/api/v1/cart', {
+                  'productData': JSON.parse(product)
+                });
+              });
+
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -9950,16 +9958,19 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+(axios__WEBPACK_IMPORTED_MODULE_1___default().defaults.headers.common) = {
+  'Authorization': "Bearer " + localStorage.getItem('access_token')
+};
 var state = {
   cart: [],
-  cartCount: 0
+  totalPrice: 0
 };
 var getters = {
   allCart: function allCart(state) {
     return state.cart;
   },
-  allCartCount: function allCartCount(state) {
-    return state.cartCount;
+  tPrice: function tPrice(state) {
+    return state.totalPrice;
   }
 };
 var actions = {
@@ -9973,7 +9984,7 @@ var actions = {
               commit = _ref.commit;
               product_id = _ref2.product_id, qty = _ref2.qty;
               AllProductData = {
-                'product_id': product_id,
+                'id': product_id,
                 'qty': qty
               };
               _context.next = 5;
@@ -9983,21 +9994,25 @@ var actions = {
                 if (res.data.status) {
                   console.log(res.data.status);
                 } else {
-                  var productData = localStorage.getItem('productData');
+                  var productData = localStorage.getItem('cartProductData');
                   var fProductData = '';
-                  var cartcount = 0;
+                  var totalPrice = localStorage.getItem('cartTotal') ? parseInt(localStorage.getItem('cartTotal')) : 0;
 
                   if (productData) {
-                    var ProductArr = productData.split(' ');
+                    var ProductArr = productData.split('|');
                     var ProductExist = 0;
                     var ProductObj = {};
                     var BreakException = {};
+                    var ProductQty = 0;
+                    var ProductPrice = 0;
 
                     try {
                       ProductArr.forEach(function (product) {
                         ProductObj = JSON.parse(product);
 
-                        if (ProductObj.product_id == res.data.productData.product_id) {
+                        if (ProductObj.id == res.data.productData.id) {
+                          ProductQty = ProductObj.qty;
+                          ProductPrice = ProductObj.special_price ? ProductObj.special_price : ProductObj.current_price;
                           var ProductArrIndex = ProductArr.indexOf(product);
                           ProductArr.splice(ProductArrIndex, 1);
                           ProductExist = 0;
@@ -10011,20 +10026,40 @@ var actions = {
                     }
 
                     if (ProductExist == 0) {
-                      var NewProdutcString = ProductArr.join(' ') + ' ' + JSON.stringify(res.data.productData);
+                      var NewProdutcString = '';
+                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+
+                      if (ProductArr.length == 0) {
+                        NewProdutcString = ProductArr.join('|') + JSON.stringify(res.data.productData);
+                      } else {
+                        NewProdutcString = ProductArr.join('|') + '|' + JSON.stringify(res.data.productData);
+                      }
+
                       fProductData += NewProdutcString;
+
+                      if (ProductQty > res.data.productData.qty) {
+                        ProductQty -= res.data.productData.qty;
+                        totalPrice -= ProductPrice * ProductQty;
+                      } else if (ProductQty < res.data.productData.qty) {
+                        ProductQty = res.data.productData.qty - ProductQty;
+                        totalPrice += ProductPrice * ProductQty;
+                      }
                     } else {
                       fProductData += productData;
-                      fProductData += ' ' + JSON.stringify(res.data.productData);
+                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+                      fProductData += '|' + JSON.stringify(res.data.productData);
+                      totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
                     }
                   } else {
+                    res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
                     fProductData += JSON.stringify(res.data.productData);
-                    cartcount = res.data.productData.qty;
+                    totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
                   }
 
-                  localStorage.setItem('productData', fProductData);
+                  localStorage.setItem('cartProductData', fProductData);
+                  localStorage.setItem('cartTotal', totalPrice);
                   commit('setCart', fProductData);
-                  commit('setCartCount', cartcount);
+                  commit('setTotalPrice', totalPrice);
                 }
               });
 
@@ -10041,8 +10076,8 @@ var mutations = {
   setCart: function setCart(state, cart) {
     return state.cart = cart;
   },
-  setCartCount: function setCartCount(state, count) {
-    return state.cartCount = count;
+  setTotalPrice: function setTotalPrice(state, tprice) {
+    return state.totalPrice = tprice;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -54037,6 +54072,12 @@ var render = function() {
                                   attrs: {
                                     method: "post",
                                     "accept-charset": "utf-8"
+                                  },
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.addcart(_vm.singleProduct.id)
+                                    }
                                   }
                                 },
                                 [
@@ -54091,34 +54132,12 @@ var render = function() {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-primary btn-cart",
-                                        attrs: {
-                                          type: "submit",
-                                          id: "cartBtn"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.addcart(
-                                              _vm.singleProduct.id
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _c("i", { staticClass: "w-icon-cart" }),
-                                        _vm._v(" "),
-                                        _c("span", [_vm._v("Add to Cart")])
-                                      ]
-                                    )
+                                    _vm._m(5)
                                   ])
                                 ]
                               ),
                               _vm._v(" "),
-                              _vm._m(5)
+                              _vm._m(6)
                             ]
                           )
                         ]
@@ -54203,6 +54222,23 @@ var staticRenderFns = [
         _c("li", [_vm._v("Aliquam id diam maecenas ultricies mi eget mauris.")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary btn-cart",
+        attrs: { type: "submit", id: "cartBtn" }
+      },
+      [
+        _c("i", { staticClass: "w-icon-cart" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Add to Cart")])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -73241,7 +73277,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "product-details" }, [
-              _c("div", { staticClass: "product-cat" }, [
+              _c("div", { staticClass: "product-cart" }, [
                 _c("a", { attrs: { href: "shop-banner-sidebar.html" } }, [
                   _vm._v(_vm._s(product.category.category_name))
                 ])

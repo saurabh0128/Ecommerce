@@ -43,12 +43,15 @@ class CartController extends Controller
     {
         if(!(auth('api')->id()))
         {
-            return Response()->json(["status" => false,'productData'=>$request->productData ]);
+            $product_data = Product::select('id','product_name','current_price','special_price')->find($request->productData['id'])->toArray();
+            $product_data['qty'] = $request->productData['qty'];
+            return Response()->json(["status" => false,'productData'=>$product_data]);
         } 
         //User Create new cart Or Not
         elseif(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
+            dd($request->productData,true);
             $cart = new Cart;
-            $product_data = Product::find($request->product_id);
+            $product_data = Product::find($request->productData['id']);
             $cart_item = new CartItem;
             
             $cart->user_id = auth('api')->id();
@@ -58,7 +61,7 @@ class CartController extends Controller
             if(isset($request->coupon_code)){
                 $coupon = Coupone::where('coupon_code',$request->coupon_code)->first();
                 $cart->coupon_code =[
-                   $request->product_id => $request->coupon_code
+                   $request->productData['id'] => $request->coupon_code
                 ];
                 $price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
                 //chaeck Discount Type is Rupees Or Percentafes
@@ -73,20 +76,20 @@ class CartController extends Controller
             $cart->save();
 
             $cart_item->cart_id = $cart->id;
-            $cart_item->product_id = $request->product_id;
+            $cart_item->product_id = $request->productData['id'];
             $cart_item->name = $product_data->product_name;
             $cart_item->price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
             $cart_item->image = $product_data->product_img;
-            $cart_item->quantity = 1;
+            $cart_item->quantity = $request->productData['qty'];
 
             $cart_item->save();
 
             return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
         }else{
-            //Old User Cart
+            //Old Cart (Update Cart)
             $cart = Cart::where('user_id',auth('api')->id())->first();
-            $product_data =  Product::find($request->product_id);
-            $Old_product = CartItem::where('cart_id',$cart->id)->where('product_id',$request->product_id)->first();
+            $product_data =  Product::find($request->productData['id']);
+            $Old_product = CartItem::where('cart_id',$cart->id)->where('product_id',$request->productData['id'])->first();
                   
             //User Add New Peoduct Or Not
             if(is_null($Old_product))
@@ -94,11 +97,11 @@ class CartController extends Controller
                 $cart_item = new CartItem;
                 
                 $cart_item->cart_id = $cart->id;
-                $cart_item->product_id = $request->product_id;
+                $cart_item->product_id = $request->productData['id'];
                 $cart_item->name = $product_data->product_name;
                 $cart_item->price =  isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
                 $cart_item->image = $product_data->product_img;
-                $cart_item->quantity = 1;
+                $cart_item->quantity = $request->productData['qty'];
 
                 $cart_item->save();
                 //if add coupan discount write
@@ -111,8 +114,8 @@ class CartController extends Controller
             }else{//User Add Old Product
                 //if tha coupon Enter Or Not                
                 //USer Coupon Not Enter
-                $product = CartItem::where('cart_id',$cart->id)->where('product_id',"=",$request->product_id)->first(); 
-                $product->quantity += 1; 
+                $product = CartItem::where('cart_id',$cart->id)->where('product_id',"=",$request->productData['id'])->first(); 
+                $product->quantity = $request->productData['qty']; 
                 
                 $cart->discount = 0;
                 $cart->coupon_code = 0;
