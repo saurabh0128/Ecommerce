@@ -186,6 +186,10 @@
 
 <script>
 
+
+
+
+
 import Product_Box from "./products_content/product-box.vue";
 
 import Product_List from "./products_content/product-list.vue";

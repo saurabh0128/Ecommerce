@@ -1,5 +1,7 @@
 import router from '../../router/index.js';
+import axios from  'axios';
 
+axios.defaults.headers.common = {'Authorization': `Bearer `+ localStorage.getItem('access_token')}
 
 const state ={
 	token: localStorage.getItem('access_token') || null,
@@ -43,12 +45,20 @@ const actions = {
             } 
         })
 
-        var CartProductArr = localStorage.getItem('cartProductData').split('|');
-
-        await CartProductArr.forEach(function(product){
-        	axios.post('/api/v1/cart',{'productData':JSON.parse(product)})
-        });
-
+		if(localStorage.getItem('cartProductData') && localStorage.getItem('access_token') )
+		{
+			var CartProductArr = localStorage.getItem('cartProductData').split('|');
+	        // await CartProductArr.forEach(function(product){
+	        await axios.post('/api/v1/cart',{'productData':CartProductArr},
+	        {headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
+	        	if(res.data.status)
+	        	{
+	        		localStorage.removeItem('cartTotal');
+	        		localStorage.removeItem('cartProductData');		
+	        	}
+	        });
+	        // });
+		}
 	},
 	logout({commit}){
 		localStorage.removeItem('user_details');

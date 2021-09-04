@@ -16,7 +16,7 @@
                         <a href="#" class="btn-product-icon btn-compare w-icon-compare"
                             title="Compare"></a>
                             <!-- setProduct for get clicked product details -->
-                        <a href="#" @click.prevent="setProduct(product)" data-toggle="modal" 
+                        <a href="#" @click.prevent="setProduct(product)" data-backdrop="static" data-keyboard="false"  data-toggle="modal" 
                         data-target="#ProductModel"  class="btn-product-icon w-icon-search" title="Quick View"></a>
                     </div>
                 </figure>
@@ -51,6 +51,9 @@
 </template>
 
 <script>
+
+
+
 import { mapGetters,mapActions } from 'vuex';
 
 export default{

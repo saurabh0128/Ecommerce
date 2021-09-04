@@ -20,7 +20,7 @@ class CartController extends Controller
     {
         $cart = Cart::with('CartItem')->where('user_id',auth('api')->id())->first();
      
-        return Response()->json(['cart' => $cart]);
+        return Response()->json(['status'=>true,'cart' => $cart]);
     }
 
     /**
@@ -49,82 +49,45 @@ class CartController extends Controller
         } 
         //User Create new cart Or Not
         elseif(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
-            dd($request->productData,true);
-            $cart = new Cart;
-            $product_data = Product::find($request->productData['id']);
-            $cart_item = new CartItem;
-            
-            $cart->user_id = auth('api')->id();
-            $cart->shipping_charges = 1500;
-            $cart->save();
-            //User apply Any Coupon Or Not
-            if(isset($request->coupon_code)){
-                $coupon = Coupone::where('coupon_code',$request->coupon_code)->first();
-                $cart->coupon_code =[
-                   $request->productData['id'] => $request->coupon_code
-                ];
-                $price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
-                //chaeck Discount Type is Rupees Or Percentafes
-                if($coupon->discount_type == "fixed"){
-                    $cart->discount = $coupon->coupon_discount;       
-                }elseif($coupon->discount_type == "percentage"){
-                    $discount = $price/100*$coupon->coupon_discount;
-                    $cart->discount = $discount;
+
+            if(array_keys($request->productData) === range(0, count($request->productData) - 1))
+            {
+                $FirstElement = array_reverse($request->productData);
+                $FirstElement = array_pop($FirstElement);
+                foreach($request->productData as $product)
+                {
+                    if($FirstElement == $product)
+                    {
+                        $response = AddNewProductToCart(json_decode($product,true));
+                    }
+                    else
+                    {
+                       $response = AddProductToCart(json_decode($product,true));
+                    }
                 }
+                return $response;
             }
-
-            $cart->save();
-
-            $cart_item->cart_id = $cart->id;
-            $cart_item->product_id = $request->productData['id'];
-            $cart_item->name = $product_data->product_name;
-            $cart_item->price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
-            $cart_item->image = $product_data->product_img;
-            $cart_item->quantity = $request->productData['qty'];
-
-            $cart_item->save();
-
-            return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
+            else
+            {
+                $response = AddNewProductToCart($request->productData);
+                return $response;
+            }    
         }else{
             //Old Cart (Update Cart)
-            $cart = Cart::where('user_id',auth('api')->id())->first();
-            $product_data =  Product::find($request->productData['id']);
-            $Old_product = CartItem::where('cart_id',$cart->id)->where('product_id',$request->productData['id'])->first();
-                  
-            //User Add New Peoduct Or Not
-            if(is_null($Old_product))
-            {   //User Add New Product
-                $cart_item = new CartItem;
-                
-                $cart_item->cart_id = $cart->id;
-                $cart_item->product_id = $request->productData['id'];
-                $cart_item->name = $product_data->product_name;
-                $cart_item->price =  isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
-                $cart_item->image = $product_data->product_img;
-                $cart_item->quantity = $request->productData['qty'];
+            if(array_keys($request->productData) === range(0, count($request->productData) - 1))
+            {
+                foreach($request->productData as $product)
+                {
+                    $response = AddProductToCart(json_decode($product,true));
+                }
+                    return $response;
+            }   
+            else    
+            {
 
-                $cart_item->save();
-                //if add coupan discount write
-                $cart->discount = 0;
-                $cart->coupon_code = 0;
-                $cart->save();
-
-                return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
-               
-            }else{//User Add Old Product
-                //if tha coupon Enter Or Not                
-                //USer Coupon Not Enter
-                $product = CartItem::where('cart_id',$cart->id)->where('product_id',"=",$request->productData['id'])->first(); 
-                $product->quantity = $request->productData['qty']; 
-                
-                $cart->discount = 0;
-                $cart->coupon_code = 0;
-                $cart->save();
-
-                $product->save();
-
-                return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);   
-            }
+                $response = AddProductToCart($request->productData);
+                return $response;
+            }   
         }
     }
 

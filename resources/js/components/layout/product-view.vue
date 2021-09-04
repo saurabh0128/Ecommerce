@@ -5,7 +5,7 @@
 aria-labelledby="ProductModal"  >
     <div class="modal-dialog sigleProductModel" role="document">
         <div class="modal-content singleProductModelTopCss ">
-            <div class="modal-body">
+            <div class="modal-body ">
                     <div v-if="singleProduct" class="row gutter-lg">
                         <div class="col-md-6 mb-4 mb-md-0">
                             <div class="product-gallery product-gallery-sticky mb-0">
@@ -47,7 +47,7 @@ aria-labelledby="ProductModal"  >
 
                                 <hr class="product-divider">
 
-                                <div class="product-price">₹{{ singleProduct.special_price || singleProduct.current_price  }}</div>
+                                <div class=" product-price-modal">₹{{ singleProduct.special_price || singleProduct.current_price  }}</div>
 
                                 <div class="ratings-container">
                                     <div class="ratings-full">
@@ -71,8 +71,8 @@ aria-labelledby="ProductModal"  >
                                     <div class="product-qty-form">
                                         <div class="input-group">
                                             <input  v-model="qty"  class="quantity form-control" type="number" min="1" max="10000000" name="qty"  >
-                                            <button class="quantity-plus w-icon-plus" ></button>
-                                            <button class="quantity-minus w-icon-minus"></button>
+                                            <button @click.prevent="ProductPlus" class="quantity-plus w-icon-plus" ></button>
+                                            <button @click.prevent="ProductMinus" class="quantity-minus w-icon-minus"></button>
                                         </div>
                                     </div>
                                     <button type="submit" id="cartBtn" class="btn btn-primary btn-cart">
@@ -116,9 +116,6 @@ aria-labelledby="ProductModal"  >
 
 <script>
 
-// $(document).on('click','#ProductModel',function(e){
-    
-// });
 
 
 	import { mapGetters,mapActions } from 'vuex';
@@ -146,6 +143,15 @@ aria-labelledby="ProductModal"  >
             {
                 $('.header-bottom').addClass('fixed');
                 $('body').css("overflow-y",'auto');
+            },
+            ProductPlus()
+            {
+                this.qty++;
+            },
+            ProductMinus()
+            {
+                if(this.qty > 1)
+                    this.qty --;
             }
         },
         computed:{

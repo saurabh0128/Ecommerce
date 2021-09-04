@@ -1,6 +1,6 @@
 import axios from  'axios';
 
-axios.defaults.headers.common = {'Authorization': `Bearer `+ localStorage.getItem('access_token')}
+// axios.defaults.headers.common = {'Authorization': `Bearer `+ localStorage.getItem('access_token')}
 
 const state = {
 	cart:[],
@@ -15,7 +15,7 @@ const getters ={
 const actions ={
 	async addCartProduct({ commit },{product_id,qty}){
 		var AllProductData = { 'id':product_id ,'qty':qty };
-		await axios.post('/api/v1/cart',{'productData':AllProductData}).then((res)=>{
+		await axios.post('/api/v1/cart',{'productData':AllProductData},{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
 			if(res.data.status)
 			{
 				console.log(res.data.status);
@@ -98,6 +98,14 @@ const actions ={
 				commit('setTotalPrice',totalPrice);
 			}
 		});
+	},
+	async getCart({commit}){
+			axios.get('/api/v1/cart',{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
+				if(res.data.status)
+				{
+						commit('setCart',res.data.cart);
+				}
+			});
 	}
 }
 

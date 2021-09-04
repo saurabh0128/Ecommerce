@@ -1,4 +1,4 @@
-<template> 
+<template>  
 	 <!-- Start of Header -->
         <header class="header">
             <div class="header-top">
@@ -14,7 +14,6 @@
                         <router-link :to="{name:'contactus'}" class="d-lg-show">Contact Us</router-link>
                         <router-link :to="{name:'my_account'}" class="d-lg-show" v-if="loggedIn" >My Account</router-link>
                         <a href="#sign-in" v-if="!loggedIn"  class="d-lg-show login sign-in"><i class="w-icon-account"></i>Sign In</a>
-                       <!--  <router-link to = "/login" class="d-lg-show login sign-in" ><i class="w-icon-account"></i>Sign In</router-link> -->
                         <span class="delimiter d-lg-show" v-if="!loggedIn" >/</span>
                         <a href="#sign-up" v-if="!loggedIn" class="ml-0 d-lg-show login register">Register</a>
                     </div>
@@ -83,11 +82,9 @@
                                 </div>
 
                                 <div class="products">
-                                    <div class="product product-cart">
+                                    <div v-for="cart in allCart.cart_item" :key="cart.id" class="product product-cart">
                                         <div class="product-detail">
-                                            <a href="product-default.html" class="product-name">Beige knitted
-                                                elas<br>tic
-                                                runner shoes</a>
+                                            <a href="product-default.html" class="product-name">{{ cart.name }}</a>
                                             <div class="price-box">
                                                 <span class="product-quantity">1</span>
                                                 <span class="product-price">$25.68</span>
@@ -104,26 +101,6 @@
                                         </button>
                                     </div>
 
-                                    <div class="product product-cart">
-                                        <div class="product-detail">
-                                            <a href="product-default.html" class="product-name">Blue utility
-                                                pina<br>fore
-                                                denim dress</a>
-                                            <div class="price-box">
-                                                <span class="product-quantity">1</span>
-                                                <span class="product-price">$32.99</span>
-                                            </div>
-                                        </div>
-                                        <figure class="product-media">
-                                            <a href="product-default.html">
-                                                <img src="/frontend_asset/images/cart/product-2.jpg" alt="product" width="84"
-                                                    height="94" />
-                                            </a>
-                                        </figure>
-                                        <button class="btn btn-link btn-close">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
                                 </div>
 
                                 <div class="cart-total">
@@ -587,9 +564,14 @@
 import {mapActions, mapGetters} from 'vuex'
 export default{
     name:'Header',
-    computed:mapGetters(['loggedIn']),
+    computed:{
+        ...mapGetters(['loggedIn','allCart'])
+    },
     methods:{
-            ...mapActions(['logout'])
+            ...mapActions(['logout','getCart'])
+    },
+    async created(){
+        await this.getCart()
     }
 };
 

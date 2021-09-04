@@ -1,4 +1,9 @@
 <?php
+
+use App\Models\Cart;
+use App\Models\Product;
+use App\Models\CartItem;
+
 	function asset_img($imgpath,$folder_name)
 	{
 		/*$path_chaek = public_path().'/backend_asset/user_img/'.$imgpath;*/
@@ -21,6 +26,88 @@
 			return	$SettingArray[$SettingIndex]['setting_value'];
 		}
 	}
+
+    function AddProductToCart($cartProduct)
+    {
+        // dd($product['qty']);
+        $cart = Cart::where('user_id',auth('api')->id())->first();
+        $product_data =  Product::find($cartProduct['id']);
+        $Old_product = CartItem::where('cart_id',$cart->id)->where('product_id',$cartProduct['id'])->first();
+              
+        //User Add New Peoduct Or Not
+        if(is_null($Old_product))
+        {   //User Add New Product
+            $cart_item = new CartItem;
+            
+            $cart_item->cart_id = $cart->id;
+            $cart_item->product_id = $cartProduct['id'];
+            $cart_item->name = $product_data->product_name;
+            $cart_item->price =  isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
+            $cart_item->image = $product_data->product_img;
+            $cart_item->quantity = $cartProduct['qty'];
+
+            $cart_item->save();
+            //if add coupan discount write
+            $cart->discount = 0;
+            $cart->coupon_code = 0;
+            $cart->save();
+
+            return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
+           
+        }else{//User Add Old Product
+            //if tha coupon Enter Or Not                
+            //USer Coupon Not Enter
+            $product = CartItem::where('cart_id',$cart->id)->where('product_id',"=",$cartProduct['id'])->first(); 
+            $product->quantity = $cartProduct['qty']; 
+            
+            $cart->discount = 0;
+            $cart->coupon_code = 0;
+            $cart->save();
+
+            $product->save();
+
+            return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);   
+        }
+    }
+
+
+    function AddNewProductToCart($product){
+        $cart = new Cart;
+        $product_data = Product::find($product['id']);
+        $cart_item = new CartItem;
+        
+        $cart->user_id = auth('api')->id();
+        $cart->shipping_charges = 1500;
+        $cart->save();
+        //User apply Any Coupon Or Not
+        if(isset($product->coupon_code)){
+            $coupon = Coupone::where('coupon_code',$product->coupon_code)->first();
+            $cart->coupon_code =[
+               $product['id'] => $product->coupon_code
+            ];
+            $price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
+            //chaeck Discount Type is Rupees Or Percentafes
+            if($coupon->discount_type == "fixed"){
+                $cart->discount = $coupon->coupon_discount;       
+            }elseif($coupon->discount_type == "percentage"){
+                $discount = $price/100*$coupon->coupon_discount;
+                $cart->discount = $discount;
+            }
+        }
+
+        $cart->save();
+
+        $cart_item->cart_id = $cart->id;
+        $cart_item->product_id = $product['id'];
+        $cart_item->name = $product_data->product_name;
+        $cart_item->price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
+        $cart_item->image = $product_data->product_img;
+        $cart_item->quantity = $product['qty'];
+        $cart_item->save();
+        return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
+    }
+
+
 
 
 
