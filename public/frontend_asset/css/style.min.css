@@ -13036,11 +13036,10 @@ body .product-popup {
   right: -34rem;
   max-width: 34rem;
   margin-top: 0;
-  padding: 2.4rem 2rem 2rem;
   width: 100%;
   height: 110vh;
   min-width: auto;
-  padding: 2.9rem 3rem;
+  padding: 2.9rem 0rem 2.9rem 3rem;
   opacity: 1;
   visibility: visible;
   transition: right 0.3s;
@@ -19003,5 +19002,10 @@ aside .sp-sidebar-banner span {
   border-radius: 50% !important;
 }
 
+.sidebar-cart{
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-right: 10px;
+}
 
 
