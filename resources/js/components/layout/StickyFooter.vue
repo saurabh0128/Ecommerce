@@ -1,5 +1,5 @@
 <template>
-	 <!-- Start of Sticky Footer -->
+	<!-- Start of Sticky Footer -->
     <div class="sticky-footer sticky-content fix-bottom">
         <a href="demo1.html" class="sticky-link active">
             <i class="w-icon-home"></i>

@@ -18,6 +18,7 @@ const actions ={
 		await axios.post('/api/v1/cart',{'productData':AllProductData},{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
 			if(res.data.status)
 			{
+				//change karvanu 6a
 				console.log(res.data.status);
 			}
 			else{
@@ -106,6 +107,9 @@ const actions ={
 						commit('setCart',res.data.cart);
 				}
 			});
+	},
+	 removeCartProduct({commit},id){
+			 axios.delete('/api/v1/cart/'+id,{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}});
 	}
 }
 

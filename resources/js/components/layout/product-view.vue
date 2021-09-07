@@ -71,8 +71,8 @@ aria-labelledby="ProductModal"  >
                                     <div class="product-qty-form">
                                         <div class="input-group">
                                             <input  v-model="qty"  class="quantity form-control" type="number" min="1" max="10000000" name="qty"  >
-                                            <button @click.prevent="ProductPlus" class="quantity-plus w-icon-plus" ></button>
-                                            <button @click.prevent="ProductMinus" class="quantity-minus w-icon-minus"></button>
+                                            <button @click.prevent="ProductPlus" type="button" class="quantity-plus w-icon-plus" ></button>
+                                            <button @click.prevent="ProductMinus" type="button" class="quantity-minus w-icon-minus"></button>
                                         </div>
                                     </div>
                                     <button type="submit" id="cartBtn" class="btn btn-primary btn-cart">
@@ -132,12 +132,14 @@ aria-labelledby="ProductModal"  >
             }
         },
         methods:{
-            ...mapActions(['addCartProduct']),
+            ...mapActions(['addCartProduct','getCart']),
             avg_per(value){
                 return value * 100 /5 ;
             },
             addcart(productId){
-               this.addCartProduct({'product_id':productId,'qty':this.qty}); 
+               this.addCartProduct({'product_id':productId,'qty':this.qty});
+               this.$toastr.s('Cart Updated Successfully');
+               this.getCart(); 
             },
             productModalClose()
             {

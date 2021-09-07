@@ -71,7 +71,7 @@
                             <div class="cart-overlay"></div>
                             <a href="#" class="cart-toggle label-down link">
                                 <i class="w-icon-cart">
-                                    <span class="cart-count">2</span>
+                                    <span class="cart-count" v-if="allCart.cart_item" >{{ allCart.cart_item.length }}</span>
                                 </i>
                                 <span class="cart-label">Cart</span>
                             </a>
@@ -96,14 +96,14 @@
                                                     width="94" />
                                             </a>
                                         </figure>
-                                        <button class="btn btn-link btn-close">
+                                        <button @click="rmCartProduct(cart.id)" class="btn btn-link btn-close">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </div>
 
                                 </div>
 
-                                <div class="cart-total">
+                                <div class="cart-total" v-if="allCart.cart_item" >
                                     <label>Subtotal:</label>
                                     <span class="price">₹{{subTotal}}</span>
                                 </div>
@@ -542,10 +542,7 @@
 
                                     <li>
                                         <router-link :to="{name:'faq'}" >FAQs</router-link>
-                                    </li>
-            
-                                    
-                            
+                                    </li>    
                                 </ul>
                             </nav>
                         </div>
@@ -568,11 +565,19 @@ export default{
     computed:{
         ...mapGetters(['loggedIn','allCart']),
         subTotal:function(){
-            console.log(this.allCart.cart_item);
+            let total = 0;
+            this.allCart.cart_item.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
+            return total;
         }
     },
     methods:{
-        ...mapActions(['logout','getCart'])
+        ...mapActions(['logout','getCart','removeCartProduct']),
+        rmCartProduct(id){
+            this.removeCartProduct(id);
+            this.getCart();
+            this.$toastr.s('Product Removed from cart')
+        }
+
     },
     async created(){
         await this.getCart()

@@ -156,6 +156,6 @@ class CartController extends Controller
     {
         CartItem::find($id)->delete();
 
-        return Response()->json(["success" => "Product Delete Successfully"]);
+        return Response()->json(['status'=>true,"success" => "Product Delete Successfully"]);
     }
 }
