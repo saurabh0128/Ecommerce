@@ -2840,14 +2840,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
+$(document).on('click', '#vcart', function () {
+  $('.cart-offcanvas').removeClass('opened');
+});
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Header',
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['loggedIn', 'allCart'])), {}, {
     subTotal: function subTotal() {
       var total = 0;
-      this.allCart.cart_item.forEach(function (a) {
+      this.allCart.forEach(function (a) {
         return total += Math.floor(a.price * a.quantity);
       });
       return total;
@@ -3422,6 +3424,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3633,11 +3650,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'Cart',
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['allCart'])),
+  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['getCart'])),
   mounted: function mounted() {
     var StickyScript = document.createElement('script');
     StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js');
     document.head.appendChild(StickyScript);
+  },
+  created: function created() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.getCart();
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   }
 });
 
@@ -10010,6 +10050,9 @@ var getters = {
   },
   tPrice: function tPrice(state) {
     return state.totalPrice;
+  },
+  logedingetter: function logedingetter(state, getters, rootGetters) {
+    return getters.loggedIn;
   }
 };
 var actions = {
@@ -10024,7 +10067,7 @@ var actions = {
               product_id = _ref2.product_id, qty = _ref2.qty;
               AllProductData = {
                 'id': product_id,
-                'qty': qty
+                'quantity': qty
               };
               _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/cart', {
@@ -10055,7 +10098,7 @@ var actions = {
                         ProductObj = JSON.parse(product);
 
                         if (ProductObj.id == res.data.productData.id) {
-                          ProductQty = ProductObj.qty;
+                          ProductQty = ProductObj.quantity;
                           ProductPrice = ProductObj.special_price ? ProductObj.special_price : ProductObj.current_price;
                           var ProductArrIndex = ProductArr.indexOf(product);
                           ProductArr.splice(ProductArrIndex, 1);
@@ -10071,7 +10114,7 @@ var actions = {
 
                     if (ProductExist == 0) {
                       var NewProdutcString = '';
-                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
 
                       if (ProductArr.length == 0) {
                         NewProdutcString = ProductArr.join('|') + JSON.stringify(res.data.productData);
@@ -10081,23 +10124,23 @@ var actions = {
 
                       fProductData += NewProdutcString;
 
-                      if (ProductQty > res.data.productData.qty) {
-                        ProductQty -= res.data.productData.qty;
+                      if (ProductQty > res.data.productData.quantity) {
+                        ProductQty -= res.data.productData.quantity;
                         totalPrice -= ProductPrice * ProductQty;
-                      } else if (ProductQty < res.data.productData.qty) {
-                        ProductQty = res.data.productData.qty - ProductQty;
+                      } else if (ProductQty < res.data.productData.quantity) {
+                        ProductQty = res.data.productData.quantity - ProductQty;
                         totalPrice += ProductPrice * ProductQty;
                       }
                     } else {
                       fProductData += productData;
-                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
                       fProductData += '|' + JSON.stringify(res.data.productData);
-                      totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+                      totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
                     }
                   } else {
-                    res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+                    res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
                     fProductData += JSON.stringify(res.data.productData);
-                    totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.qty : res.data.productData.current_price * res.data.productData.qty;
+                    totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
                   }
 
                   localStorage.setItem('cartProductData', fProductData);
@@ -10116,30 +10159,26 @@ var actions = {
     }))();
   },
   getCart: function getCart(_ref3) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var commit;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              commit = _ref3.commit;
-              axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/cart', {
-                headers: {
-                  'Authorization': "Bearer " + localStorage.getItem('access_token')
-                }
-              }).then(function (res) {
-                if (res.data.status) {
-                  commit('setCart', res.data.cart);
-                }
-              });
+    var commit = _ref3.commit,
+        getters = _ref3.getters;
 
-            case 2:
-            case "end":
-              return _context2.stop();
-          }
+    if (getters.logedingetter) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/cart', {
+        headers: {
+          'Authorization': "Bearer " + localStorage.getItem('access_token')
         }
-      }, _callee2);
-    }))();
+      }).then(function (res) {
+        if (res.data.status) {
+          commit('setCart', res.data.cart.cart_item);
+        }
+      });
+    } else {
+      var productres = localStorage.getItem('cartProductData').split('|');
+      productres.forEach(function (product, index) {
+        this[index] = JSON.parse(product);
+      }, productres);
+      commit('setCart', productres);
+    }
   },
   removeCartProduct: function removeCartProduct(_ref4, id) {
     var commit = _ref4.commit;
@@ -50197,9 +50236,9 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "w-icon-cart" }, [
-                    _vm.allCart.cart_item
+                    _vm.allCart
                       ? _c("span", { staticClass: "cart-count" }, [
-                          _vm._v(_vm._s(_vm.allCart.cart_item.length))
+                          _vm._v(_vm._s(_vm.allCart.length))
                         ])
                       : _vm._e()
                   ]),
@@ -50214,7 +50253,7 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "products sidebar-cart" },
-                  _vm._l(_vm.allCart.cart_item, function(cart) {
+                  _vm._l(_vm.allCart, function(cart) {
                     return _c(
                       "div",
                       { key: cart.id, staticClass: "product product-cart" },
@@ -50273,7 +50312,7 @@ var render = function() {
                   0
                 ),
                 _vm._v(" "),
-                _vm.allCart.cart_item
+                _vm.allCart
                   ? _c("div", { staticClass: "cart-total" }, [
                       _c("label", [_vm._v("Subtotal:")]),
                       _vm._v(" "),
@@ -50291,7 +50330,7 @@ var render = function() {
                       "router-link",
                       {
                         staticClass: "btn btn-dark btn-outline btn-rounded",
-                        attrs: { to: { name: "cart" } }
+                        attrs: { id: "vcart", to: { name: "cart" } }
                       },
                       [_vm._v("View Cart")]
                     ),
@@ -50300,7 +50339,7 @@ var render = function() {
                       "a",
                       {
                         staticClass: "btn btn-primary  btn-rounded",
-                        attrs: { href: "checkout.html" }
+                        attrs: { href: "#" }
                       },
                       [_vm._v("Checkout")]
                     )

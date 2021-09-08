@@ -43,8 +43,8 @@ class CartController extends Controller
     {
         if(!(auth('api')->id()))
         {
-            $product_data = Product::select('id','product_name','current_price','special_price')->find($request->productData['id'])->toArray();
-            $product_data['qty'] = $request->productData['qty'];
+            $product_data = Product::select('id','product_name as name','current_price','special_price','product_img as image')->find($request->productData['id'])->toArray();
+            $product_data['quantity'] = $request->productData['quantity'];
             return Response()->json(["status" => false,'productData'=>$product_data]);
         } 
         //User Create new cart Or Not

@@ -44,7 +44,7 @@ use App\Models\CartItem;
             $cart_item->name = $product_data->product_name;
             $cart_item->price =  isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
             $cart_item->image = $product_data->product_img;
-            $cart_item->quantity = $cartProduct['qty'];
+            $cart_item->quantity = $cartProduct['quantity'];
 
             $cart_item->save();
             //if add coupan discount write
@@ -58,7 +58,7 @@ use App\Models\CartItem;
             //if tha coupon Enter Or Not                
             //USer Coupon Not Enter
             $product = CartItem::where('cart_id',$cart->id)->where('product_id',"=",$cartProduct['id'])->first(); 
-            $product->quantity = $cartProduct['qty']; 
+            $product->quantity = $cartProduct['quantity']; 
             
             $cart->discount = 0;
             $cart->coupon_code = 0;
@@ -102,7 +102,7 @@ use App\Models\CartItem;
         $cart_item->name = $product_data->product_name;
         $cart_item->price = isset($product_data->special_price)?$product_data->special_price:$product_data->current_price;
         $cart_item->image = $product_data->product_img;
-        $cart_item->quantity = $product['qty'];
+        $cart_item->quantity = $product['quantity'];
         $cart_item->save();
         return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);
     }

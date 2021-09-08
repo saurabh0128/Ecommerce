@@ -1,4 +1,4 @@
-<template>  
+<template>   
 	 <!-- Start of Header -->
         <header class="header">
             <div class="header-top">
@@ -71,7 +71,7 @@
                             <div class="cart-overlay"></div>
                             <a href="#" class="cart-toggle label-down link">
                                 <i class="w-icon-cart">
-                                    <span class="cart-count" v-if="allCart.cart_item" >{{ allCart.cart_item.length }}</span>
+                                    <span class="cart-count" v-if="allCart" >{{ allCart.length }}</span>
                                 </i>
                                 <span class="cart-label">Cart</span>
                             </a>
@@ -82,7 +82,7 @@
                                 </div>
 
                                 <div class="products sidebar-cart">
-                                    <div v-for="cart in allCart.cart_item" :key="cart.id" class="product product-cart" >
+                                    <div v-for="cart in allCart" :key="cart.id" class="product product-cart" >
                                         <div class="product-detail">
                                             <a href="product-default.html" class="product-name">{{ cart.name }}</a>
                                             <div class="price-box">
@@ -100,17 +100,16 @@
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </div>
-
                                 </div>
 
-                                <div class="cart-total" v-if="allCart.cart_item" >
+                                <div class="cart-total" v-if="allCart" >
                                     <label>Subtotal:</label>
                                     <span class="price">₹{{subTotal}}</span>
                                 </div>
 
                                 <div class="cart-action">
-                                    <router-link :to="{ name:'cart' }"  class="btn btn-dark btn-outline btn-rounded">View Cart</router-link>
-                                    <a href="checkout.html" class="btn btn-primary  btn-rounded">Checkout</a>
+                                    <router-link id="vcart" :to="{ name:'cart'}"  class="btn btn-dark btn-outline btn-rounded">View Cart</router-link>
+                                    <a href="#" class="btn btn-primary  btn-rounded">Checkout</a>
                                 </div>
                             </div>
 
@@ -559,6 +558,12 @@
 
 
 <script type="text/javascript" >
+
+$(document).on('click','#vcart',function(){
+    $('.cart-offcanvas').removeClass('opened');
+});
+
+
 import {mapActions, mapGetters} from 'vuex'
 export default{
     name:'Header',
@@ -566,7 +571,7 @@ export default{
         ...mapGetters(['loggedIn','allCart']),
         subTotal:function(){
             let total = 0;
-            this.allCart.cart_item.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
+            this.allCart.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
             return total;
         }
     },

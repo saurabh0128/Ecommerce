@@ -210,11 +210,22 @@
 
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
-mounted() {
-    let StickyScript = document.createElement('script')
-    StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
-    document.head.appendChild(StickyScript)
-}
+    name:'Cart',
+    computed:{
+        ...mapGetters(['allCart'])
+    },
+    methods:{
+        ...mapActions(['getCart'])
+    },
+    mounted() {
+        let StickyScript = document.createElement('script')
+        StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
+        document.head.appendChild(StickyScript)
+    },
+    async created(){
+        await this.getCart();
+    }
 };
-</script>
+</script> 
