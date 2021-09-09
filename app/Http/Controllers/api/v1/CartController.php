@@ -40,18 +40,32 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        // go to if user not exist
         if(!(auth('api')->id()))
         {
+            // get proidyct using product id
             $product_data = Product::select('id','product_name as name','current_price','special_price','product_img as image')->find($request->productData['id'])->toArray();
+            // set a price if special price exist it is main price otherwise current price
+            if($product_data['special_price'])
+            {
+                $product_data['price'] = $product_data['special_price'];
+                unset($product_data['special_price']);
+            }
+            else{
+                $product_data['price'] = $product_data['current_price'];
+                unset($product_data['current_price']);
+            }
             $product_data['quantity'] = $request->productData['quantity'];
             return Response()->json(["status" => false,'productData'=>$product_data]);
         } 
         //User Create new cart Or Not
         elseif(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
 
+            // if it is muiple Products
             if(array_keys($request->productData) === range(0, count($request->productData) - 1))
             {
+                // get a first product of product data in FirstElement
                 $FirstElement = array_reverse($request->productData);
                 $FirstElement = array_pop($FirstElement);
                 foreach($request->productData as $product)
@@ -67,6 +81,7 @@ class CartController extends Controller
                 }
                 return $response;
             }
+            // if it is single product
             else
             {
                 $response = AddNewProductToCart($request->productData);

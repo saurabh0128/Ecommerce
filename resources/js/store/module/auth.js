@@ -27,7 +27,7 @@ const mutations = {
 	}
 }
 const actions = {
-	async userLogin({commit},loginData){
+	async userLogin({commit , dispatch},loginData){
 		await axios.post('/api/v1/login',loginData).then((res)=>{
             if(res.data.status)
             {
@@ -54,7 +54,8 @@ const actions = {
 	        	if(res.data.status)
 	        	{
 	        		localStorage.removeItem('cartTotal');
-	        		localStorage.removeItem('cartProductData');		
+	        		localStorage.removeItem('cartProductData');	
+	        		dispatch('cart/getCart',null,{root:true});	
 	        	}
 	        });
 	        // });

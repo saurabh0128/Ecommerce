@@ -2840,6 +2840,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+// to close the slider
 $(document).on('click', '#vcart', function () {
   $('.cart-offcanvas').removeClass('opened');
 });
@@ -2847,6 +2848,7 @@ $(document).on('click', '#vcart', function () {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Header',
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['loggedIn', 'allCart'])), {}, {
+    // Total All Cart Product
     subTotal: function subTotal() {
       var total = 0;
       this.allCart.forEach(function (a) {
@@ -2856,6 +2858,7 @@ $(document).on('click', '#vcart', function () {
     }
   }),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['logout', 'getCart', 'removeCartProduct'])), {}, {
+    // function for remove cart Product
     rmCartProduct: function rmCartProduct(id) {
       this.removeCartProduct(id);
       this.getCart();
@@ -9881,12 +9884,12 @@ var mutations = {
 var actions = {
   userLogin: function userLogin(_ref, loginData) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var commit, CartProductArr;
+      var commit, dispatch, CartProductArr;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              commit = _ref.commit;
+              commit = _ref.commit, dispatch = _ref.dispatch;
               _context.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/v1/login', loginData).then(function (res) {
                 if (res.data.status) {
@@ -9921,6 +9924,9 @@ var actions = {
                 if (res.data.status) {
                   localStorage.removeItem('cartTotal');
                   localStorage.removeItem('cartProductData');
+                  dispatch('cart/getCart', null, {
+                    root: true
+                  });
                 }
               });
 
@@ -10045,17 +10051,21 @@ var state = {
   totalPrice: 0
 };
 var getters = {
+  // get all cart Details
   allCart: function allCart(state) {
     return state.cart;
   },
+  //total price of all product
   tPrice: function tPrice(state) {
     return state.totalPrice;
   },
+  //get a details of user logged in or not
   logedingetter: function logedingetter(state, getters, rootGetters) {
     return getters.loggedIn;
   }
 };
 var actions = {
+  //get a two details from front site product id and qty
   addCartProduct: function addCartProduct(_ref, _ref2) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var commit, product_id, qty, AllProductData;
@@ -10065,10 +10075,12 @@ var actions = {
             case 0:
               commit = _ref.commit;
               product_id = _ref2.product_id, qty = _ref2.qty;
+              // parameter all Product data assighn to a variable 
               AllProductData = {
                 'id': product_id,
                 'quantity': qty
-              };
+              }; // call a add to cart method using axios and pass cart data with authentication berar
+
               _context.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/cart', {
                 'productData': AllProductData
@@ -10077,15 +10089,21 @@ var actions = {
                   'Authorization': "Bearer " + localStorage.getItem('access_token')
                 }
               }).then(function (res) {
+                // get a response from axios request if user logged in status return true otherwise false
                 if (res.data.status) {
                   //change karvanu 6a
                   console.log(res.data.status);
                 } else {
+                  // get a all cart Product Details from local storage
                   var productData = localStorage.getItem('cartProductData');
-                  var fProductData = '';
-                  var totalPrice = localStorage.getItem('cartTotal') ? parseInt(localStorage.getItem('cartTotal')) : 0;
+                  var fProductData = ''; // get total of all cart product
 
+                  // get total of all cart product
+                  var totalPrice = localStorage.getItem('cartTotal') ? parseInt(localStorage.getItem('cartTotal')) : 0; //create a new cart if not exist other wise update old cat
+
+                  //create a new cart if not exist other wise update old cat
                   if (productData) {
+                    // all product data convert into array seprate from '|'
                     var ProductArr = productData.split('|');
                     var ProductExist = 0;
                     var ProductObj = {};
@@ -10094,12 +10112,13 @@ var actions = {
                     var ProductPrice = 0;
 
                     try {
+                      //Update Old Product Qty other insert new product in cart
                       ProductArr.forEach(function (product) {
                         ProductObj = JSON.parse(product);
 
                         if (ProductObj.id == res.data.productData.id) {
                           ProductQty = ProductObj.quantity;
-                          ProductPrice = ProductObj.special_price ? ProductObj.special_price : ProductObj.current_price;
+                          ProductPrice = ProductObj.price;
                           var ProductArrIndex = ProductArr.indexOf(product);
                           ProductArr.splice(ProductArrIndex, 1);
                           ProductExist = 0;
@@ -10110,20 +10129,28 @@ var actions = {
                       });
                     } catch (e) {
                       if (e !== BreakException) throw e;
-                    }
+                    } //Update old Product and add into localstorage
 
+
+                    //Update old Product and add into localstorage
                     if (ProductExist == 0) {
-                      var NewProdutcString = '';
-                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
+                      var NewProdutcString = ''; // count product subtotal
 
+                      // count product subtotal
+                      res.data.productData.subTotal = res.data.productData.price * res.data.productData.quantity; //if it only one product not require '|' if multiple then required 
+
+                      //if it only one product not require '|' if multiple then required 
                       if (ProductArr.length == 0) {
                         NewProdutcString = ProductArr.join('|') + JSON.stringify(res.data.productData);
                       } else {
                         NewProdutcString = ProductArr.join('|') + '|' + JSON.stringify(res.data.productData);
-                      }
+                      } //Add new strinh to fproductdata for store in localstorage  
 
-                      fProductData += NewProdutcString;
 
+                      //Add new strinh to fproductdata for store in localstorage  
+                      fProductData += NewProdutcString; // calculate total price as per increment or decrement of qty
+
+                      // calculate total price as per increment or decrement of qty
                       if (ProductQty > res.data.productData.quantity) {
                         ProductQty -= res.data.productData.quantity;
                         totalPrice -= ProductPrice * ProductQty;
@@ -10132,20 +10159,30 @@ var actions = {
                         totalPrice += ProductPrice * ProductQty;
                       }
                     } else {
+                      // goto else when product not exist
                       fProductData += productData;
-                      res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
+                      res.data.productData.subTotal = res.data.productData.price * res.data.productData.quantity;
                       fProductData += '|' + JSON.stringify(res.data.productData);
-                      totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
+                      totalPrice += res.data.productData.price * res.data.productData.quantity;
                     }
                   } else {
-                    res.data.productData.subTotal = res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
+                    // goto else when cart not exist
+                    res.data.productData.subTotal = res.data.productData.price * res.data.productData.quantity;
                     fProductData += JSON.stringify(res.data.productData);
-                    totalPrice += res.data.productData.special_price ? res.data.productData.special_price * res.data.productData.quantity : res.data.productData.current_price * res.data.productData.quantity;
-                  }
+                    totalPrice += res.data.productData.price * res.data.productData.quantity;
+                  } // set cart product and total price in local storage
 
+
+                  // set cart product and total price in local storage
                   localStorage.setItem('cartProductData', fProductData);
-                  localStorage.setItem('cartTotal', totalPrice);
-                  commit('setCart', fProductData);
+                  localStorage.setItem('cartTotal', totalPrice); //store data in json format in vuex store 
+
+                  //store data in json format in vuex store 
+                  var cartproductres = fProductData.split('|');
+                  cartproductres.forEach(function (product, index) {
+                    this[index] = JSON.parse(product);
+                  }, cartproductres);
+                  commit('setCart', cartproductres);
                   commit('setTotalPrice', totalPrice);
                 }
               });
@@ -10162,6 +10199,7 @@ var actions = {
     var commit = _ref3.commit,
         getters = _ref3.getters;
 
+    // get all cart data from database and commit into vuex store
     if (getters.logedingetter) {
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/cart', {
         headers: {
@@ -10172,7 +10210,8 @@ var actions = {
           commit('setCart', res.data.cart.cart_item);
         }
       });
-    } else {
+    } //  get all data from localstorage and commit into vuex store
+    else if (localStorage.getItem('cartProductData')) {
       var productres = localStorage.getItem('cartProductData').split('|');
       productres.forEach(function (product, index) {
         this[index] = JSON.parse(product);
@@ -10180,13 +10219,33 @@ var actions = {
       commit('setCart', productres);
     }
   },
+  //remove cart product
   removeCartProduct: function removeCartProduct(_ref4, id) {
-    var commit = _ref4.commit;
-    axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/cart/' + id, {
-      headers: {
-        'Authorization': "Bearer " + localStorage.getItem('access_token')
-      }
-    });
+    var commit = _ref4.commit,
+        getters = _ref4.getters;
+
+    if (getters.logedingetter) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/cart/' + id, {
+        headers: {
+          'Authorization': "Bearer" + localStorage.getItem('access_token')
+        }
+      });
+    } else {
+      var AllCartProduct = localStorage.getItem('cartProductData').split('|');
+      var ProductString = '';
+      AllCartProduct.forEach(function (product, index) {
+        this[index] = JSON.parse(product);
+      }, AllCartProduct);
+      AllCartProduct.forEach(function (product, index) {
+        if (product.id == id) {
+          AllCartProduct.splice(AllCartProduct.indexOf(product), 1);
+        }
+      });
+      AllCartProduct.forEach(function (product, index) {
+        this[index] = JSON.stringify(product);
+      }, AllCartProduct);
+      localStorage.setItem('cartProductData', AllCartProduct.join('|'));
+    }
   }
 };
 var mutations = {

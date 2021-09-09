@@ -558,7 +558,7 @@
 
 
 <script type="text/javascript" >
-
+// to close the slider
 $(document).on('click','#vcart',function(){
     $('.cart-offcanvas').removeClass('opened');
 });
@@ -569,6 +569,7 @@ export default{
     name:'Header',
     computed:{
         ...mapGetters(['loggedIn','allCart']),
+        // Total All Cart Product
         subTotal:function(){
             let total = 0;
             this.allCart.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
@@ -577,6 +578,7 @@ export default{
     },
     methods:{
         ...mapActions(['logout','getCart','removeCartProduct']),
+        // function for remove cart Product
         rmCartProduct(id){
             this.removeCartProduct(id);
             this.getCart();
