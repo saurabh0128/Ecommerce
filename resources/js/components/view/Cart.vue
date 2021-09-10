@@ -20,6 +20,7 @@
                 <div class="container">
                     <div class="row gutter-lg mb-10">
                         <div class="col-lg-8 pr-lg-4 mb-6">
+
                             <table class="shop-table cart-table">
                                 <thead>
                                     <tr>
@@ -31,12 +32,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+
+                                    <tr v-for="product in allCart" :key="product.id">
                                         <td class="product-thumbnail">
                                             <div class="p-relative">
                                                 <a href="product-default.html">
                                                     <figure>
-                                                        <img src="/frontend_asset/images/shop/12.jpg" alt="product"
+                                                        <img :src="'backend_asset/thumbnail/product_images/'+ product.image" alt="product"
                                                             width="300" height="338">
                                                     </figure>
                                                 </a>
@@ -46,48 +48,21 @@
                                         </td>
                                         <td class="product-name">
                                             <a href="product-default.html">
-                                                Classic Simple Backpack
+                                               {{ product.name }}
                                             </a>
                                         </td>
-                                        <td class="product-price"><span class="amount">$40.00</span></td>
+                                        <td class="product-price"><span class="amount">₹{{product.price}}</span></td>
                                         <td class="product-quantity">
                                             <div class="input-group">
-                                                <input class="quantity form-control" type="number" min="1" max="100000">
-                                                <button class="quantity-plus w-icon-plus"></button>
-                                                <button class="quantity-minus w-icon-minus"></button>
+                                                <input   class="quantity form-control" type="number" min="1" max="100000">
+                                                <!-- @click.prevent="ProductPlus" -->
+                                                <button  class="w-icon-plus"></button>
+                                                <!-- @click.prevent="ProductMinus" -->
+                                                <button  class="w-icon-minus"></button>
                                             </div>
                                         </td>
                                         <td class="product-subtotal">
-                                            <span class="amount">$40.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <div class="p-relative">
-                                                <a href="product-default.html">
-                                                    <figure>
-                                                        <img src="/frontend_asset/images/shop/13.jpg" alt="product"
-                                                            width="300" height="338">
-                                                    </figure>
-                                                </a>
-                                                <button class="btn btn-close"><i class="fas fa-times"></i></button>
-                                            </div>
-                                        </td>
-                                        <td class="product-name">
-                                            <a href="product-default.html">
-                                                Smart Watch
-                                            </a>
-                                        </td>
-                                        <td class="product-price"><span class="amount">$60.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="input-group">
-                                                <input class="quantity form-control" type="number" min="1" max="100000">
-                                                <button class="quantity-plus w-icon-plus"></button>
-                                                <button class="quantity-minus w-icon-minus"></button>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">
-                                            <span class="amount">$60.00</span>
+                                            <span class="amount">₹{{product.price}}</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -96,7 +71,7 @@
                             <div class="cart-action mb-6">
                                 <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"><i class="w-icon-long-arrow-left"></i>Continue Shopping</a>
                                 <button type="submit" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button> 
-                                <button type="submit" class="btn btn-rounded btn-update disabled" name="update_cart" value="Update Cart">Update Cart</button>
+                                <button type="submit" class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
                             </div>
 
                             <form class="coupon">
@@ -204,6 +179,7 @@
                 </div>
             </div>
             <!-- End of PageContent -->
+
         </main>
         <!-- End of Main -->
 </template>
@@ -213,11 +189,29 @@
 import {mapActions, mapGetters} from 'vuex'
 export default {
     name:'Cart',
+    data(){
+        return{
+            allProduct:null
+        }
+    },
     computed:{
         ...mapGetters(['allCart'])
     },
     methods:{
-        ...mapActions(['getCart'])
+        ...mapActions(['getCart']),
+        DisplayCart()
+        {
+            this.allProduct = this.allCart;
+        }
+            // ProductPlus()
+            // {
+            //     this.qty++;
+            // },
+            // ProductMinus()
+            // {
+            //     if(this.qty > 1)
+            //         this.qty --;
+            // }
     },
     mounted() {
         let StickyScript = document.createElement('script')
@@ -226,6 +220,7 @@ export default {
     },
     async created(){
         await this.getCart();
+        this.DisplayCart();
     }
 };
 </script> 

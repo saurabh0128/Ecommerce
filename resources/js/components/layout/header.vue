@@ -9,7 +9,7 @@
                     <div class="header-right">
                         <!-- End of Dropdown Menu -->
                         
-                        <a href="" @click.prevent="logout"  v-if="loggedIn" >Logout</a>
+                        <a href="" @click.prevent="userLogout"  v-if="loggedIn" >Logout</a>
                         <a href="#" class="d-lg-show">Blog</a>
                         <router-link :to="{name:'contactus'}" class="d-lg-show">Contact Us</router-link>
                         <router-link :to="{name:'my_account'}" class="d-lg-show" v-if="loggedIn" >My Account</router-link>
@@ -583,6 +583,10 @@ export default{
             this.removeCartProduct(id);
             this.getCart();
             this.$toastr.s('Product Removed from cart')
+        },
+        userLogout(){
+            this.logout();
+            this.getCart();
         }
 
     },

@@ -208,12 +208,13 @@ import {mapActions,mapGetters} from 'vuex';
        
         methods:{
             //import all method from store
-            ...mapActions(["userLogin","userRegister","sellerRegister"]),
+            ...mapActions(["userLogin","userRegister","sellerRegister","getCart"]),
             //user login methos with success message
             login(){ 
                this.userLogin(this.LoginForm).then((res)=>{
                    if(this.loggedIn)
                    {
+                        this.getCart();
                         close_login_model()
                         this.$toastr.s('Login Successfully')
                         formclear()

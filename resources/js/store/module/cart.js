@@ -151,6 +151,9 @@ const actions ={
 			}, productres);
 			commit('setCart',productres);	
 		}
+		else{
+			commit('setCart',[]);
+		}
 	},
 	//remove cart product
 	 removeCartProduct({commit , getters},id){
@@ -189,7 +192,6 @@ const mutations = {
 
 
 export default {
-
   state,
   getters,
   actions,
