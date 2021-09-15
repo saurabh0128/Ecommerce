@@ -3635,6 +3635,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Cart',
@@ -3643,20 +3645,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       allProduct: null
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['allCart'])),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['getCart'])), {}, {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['allCart', 'loggedIn'])),
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['getCart', 'updateCartProduct'])), {}, {
     DisplayCart: function DisplayCart() {
-      this.allProduct = this.allCart;
-    } // ProductPlus()
-    // {
-    //     this.qty++;
-    // },
-    // ProductMinus()
-    // {
-    //     if(this.qty > 1)
-    //         this.qty --;
-    // }
+      if (this.$store.getters.allCart.length) {
+        this.allProduct = this.allCart;
+      }
+    },
+    ProductPlus: function ProductPlus(index) {
+      if (this.allProduct[index].quantity < 100000) this.allProduct[index].quantity++;
+    },
+    ProductMinus: function ProductMinus(index) {
+      if (this.allProduct[index].quantity > 1) this.allProduct[index].quantity--;
+    },
+    updateCart: function updateCart() {
+      if (this.loggedIn) {
+        console.log('Logged In');
+      } else {
+        var updatedProduct = this.allProduct; // console.log(updatedProduct);
 
+        this.updateCartProduct(updatedProduct);
+      }
+    }
   }),
   mounted: function mounted() {
     var StickyScript = document.createElement('script');
@@ -3675,9 +3685,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _this.getCart();
 
             case 2:
-              _this.DisplayCart();
-
-            case 3:
             case "end":
               return _context.stop();
           }
@@ -10206,7 +10213,11 @@ var actions = {
         }
       }).then(function (res) {
         if (res.data.status) {
-          commit('setCart', res.data.cart.cart_item);
+          var dbCartProduct = res.data.cart.cart_item;
+          dbCartProduct.forEach(function (dbproduct, index) {
+            dbproduct['subTotal'] = dbproduct.price * dbproduct.quantity;
+          }, dbCartProduct);
+          commit('setCart', dbCartProduct);
         }
       });
     } //  get all data from localstorage and commit into vuex store
@@ -10247,6 +10258,13 @@ var actions = {
       }, AllCartProduct);
       localStorage.setItem('cartProductData', AllCartProduct.join('|'));
     }
+  },
+  updateCartProduct: function updateCartProduct(_ref5, allUpdateProduct) {
+    var commit = _ref5.commit;
+    allUpdateProduct.forEach(function (product, index) {
+      this[index] = JSON.stringify(product);
+    }, allUpdateProduct);
+    localStorage.setItem('cartProductData', allUpdateProduct.join('|'));
   }
 };
 var mutations = {
@@ -55255,7 +55273,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.allCart, function(product) {
+                _vm._l(_vm.allProduct, function(product, index) {
                   return _c("tr", { key: product.id }, [
                     _c("td", { staticClass: "product-thumbnail" }, [
                       _c("div", { staticClass: "p-relative" }, [
@@ -55294,11 +55312,63 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(3, true),
+                    _c("td", { staticClass: "product-quantity" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model.number",
+                              value: _vm.allProduct[index].quantity,
+                              expression: "allProduct[index].quantity",
+                              modifiers: { number: true }
+                            }
+                          ],
+                          staticClass: "productQty form-control",
+                          attrs: { type: "number", min: "1", max: "100000" },
+                          domProps: { value: _vm.allProduct[index].quantity },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.allProduct[index],
+                                "quantity",
+                                _vm._n($event.target.value)
+                              )
+                            },
+                            blur: function($event) {
+                              return _vm.$forceUpdate()
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("button", {
+                          staticClass: "quantity-plus w-icon-plus",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.ProductPlus(index)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("button", {
+                          staticClass: "quantity-minus w-icon-minus",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.ProductMinus(index)
+                            }
+                          }
+                        })
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "product-subtotal" }, [
                       _c("span", { staticClass: "amount" }, [
-                        _vm._v("₹" + _vm._s(product.price))
+                        _vm._v("₹" + _vm._s(product.subTotal))
                       ])
                     ])
                   ])
@@ -55307,15 +55377,51 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(4),
+            _c("div", { staticClass: "cart-action mb-6" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-rounded btn-default btn-clear",
+                  attrs: {
+                    type: "submit",
+                    name: "clear_cart",
+                    value: "Clear Cart"
+                  }
+                },
+                [_vm._v("Clear Cart")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-rounded btn-update",
+                  attrs: {
+                    type: "submit",
+                    name: "update_cart",
+                    value: "Update Cart"
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.updateCart.apply(null, arguments)
+                    }
+                  }
+                },
+                [_vm._v("Update Cart")]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(5)
+            _vm._m(4)
           ]),
           _vm._v(" "),
-          _vm._m(6)
+          _vm._m(5)
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _vm._v("\n            " + _vm._s(_vm.DisplayCart()) + "\n        ")
   ])
 }
 var staticRenderFns = [
@@ -55383,55 +55489,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "product-quantity" }, [
-      _c("div", { staticClass: "input-group" }, [
-        _c("input", {
-          staticClass: "quantity form-control",
-          attrs: { type: "number", min: "1", max: "100000" }
-        }),
-        _vm._v(" "),
-        _c("button", { staticClass: "w-icon-plus" }),
-        _vm._v(" "),
-        _c("button", { staticClass: "w-icon-minus" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cart-action mb-6" }, [
-      _c(
-        "a",
-        {
-          staticClass:
-            "btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto",
-          attrs: { href: "#" }
-        },
-        [
-          _c("i", { staticClass: "w-icon-long-arrow-left" }),
-          _vm._v("Continue Shopping")
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-rounded btn-default btn-clear",
-          attrs: { type: "submit", name: "clear_cart", value: "Clear Cart" }
-        },
-        [_vm._v("Clear Cart")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-rounded btn-update",
-          attrs: { type: "submit", name: "update_cart", value: "Update Cart" }
-        },
-        [_vm._v("Update Cart")]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass:
+          "btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto",
+        attrs: { href: "#" }
+      },
+      [
+        _c("i", { staticClass: "w-icon-long-arrow-left" }),
+        _vm._v("Continue Shopping")
+      ]
+    )
   },
   function() {
     var _vm = this

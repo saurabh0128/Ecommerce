@@ -138,7 +138,11 @@ const actions ={
 			axios.get('/api/v1/cart',{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
 				if(res.data.status)
 				{
-					commit('setCart',res.data.cart.cart_item);
+					var dbCartProduct = res.data.cart.cart_item;
+					dbCartProduct.forEach(function(dbproduct, index) {
+			  		dbproduct['subTotal'] = dbproduct.price * dbproduct.quantity;
+					}, dbCartProduct);
+					commit('setCart',dbCartProduct);
 				}
 			});
 		}
@@ -154,6 +158,7 @@ const actions ={
 		else{
 			commit('setCart',[]);
 		}
+
 	},
 	//remove cart product
 	 removeCartProduct({commit , getters},id){
@@ -181,6 +186,13 @@ const actions ={
 	 		
 	 		localStorage.setItem('cartProductData',AllCartProduct.join('|'));
 	 	}
+	},
+	updateCartProduct({commit},allUpdateProduct){
+		
+		allUpdateProduct.forEach(function(product,index){	
+	 			this[index] =  JSON.stringify(product); 
+	 		},allUpdateProduct);
+		localStorage.setItem('cartProductData',allUpdateProduct.join('|'));
 	}
 }
 

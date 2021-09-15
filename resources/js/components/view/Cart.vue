@@ -33,7 +33,7 @@
                                 </thead>
                                 <tbody>
 
-                                    <tr v-for="product in allCart" :key="product.id">
+                                    <tr v-for="(product,index) in allProduct" :key="product.id">
                                         <td class="product-thumbnail">
                                             <div class="p-relative">
                                                 <a href="product-default.html">
@@ -54,16 +54,18 @@
                                         <td class="product-price"><span class="amount">₹{{product.price}}</span></td>
                                         <td class="product-quantity">
                                             <div class="input-group">
-                                                <input   class="quantity form-control" type="number" min="1" max="100000">
+                                                <!-- [i].quantity -->
+                                                <input v-model.number="allProduct[index].quantity"    class="productQty form-control" type="number" min="1" max="100000">
                                                 <!-- @click.prevent="ProductPlus" -->
-                                                <button  class="w-icon-plus"></button>
+                                                <button @click.prevent="ProductPlus(index)" class="quantity-plus w-icon-plus"></button>
                                                 <!-- @click.prevent="ProductMinus" -->
-                                                <button  class="w-icon-minus"></button>
+                                                <button @click.prevent="ProductMinus(index)"  class="quantity-minus w-icon-minus"></button>
                                             </div>
                                         </td>
                                         <td class="product-subtotal">
-                                            <span class="amount">₹{{product.price}}</span>
+                                            <span class="amount">₹{{product.subTotal  }}</span>
                                         </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -71,7 +73,7 @@
                             <div class="cart-action mb-6">
                                 <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"><i class="w-icon-long-arrow-left"></i>Continue Shopping</a>
                                 <button type="submit" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button> 
-                                <button type="submit" class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
+                                <button type="submit" @click.prevent="updateCart" class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
                             </div>
 
                             <form class="coupon">
@@ -179,13 +181,15 @@
                 </div>
             </div>
             <!-- End of PageContent -->
-
+            {{ DisplayCart() }}
         </main>
         <!-- End of Main -->
 </template>
 
 
 <script>
+
+
 import {mapActions, mapGetters} from 'vuex'
 export default {
     name:'Cart',
@@ -195,23 +199,38 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(['allCart'])
+        ...mapGetters(['allCart','loggedIn'])
     },
     methods:{
-        ...mapActions(['getCart']),
+        ...mapActions(['getCart','updateCartProduct']),
         DisplayCart()
         {
-            this.allProduct = this.allCart;
+            if(this.$store.getters.allCart.length){
+                this.allProduct = this.allCart;
+            }
+        },
+        ProductPlus(index)
+        {
+            
+            if(this.allProduct[index].quantity < 100000)
+            this.allProduct[index].quantity++;
+        },
+        ProductMinus(index)
+        {
+            if(this.allProduct[index].quantity > 1)
+            this.allProduct[index].quantity--;
+        },
+        updateCart()
+        {
+            if(this.loggedIn){
+                console.log('Logged In');
+            }
+            else{
+                var updatedProduct=this.allProduct;
+                // console.log(updatedProduct);
+                this.updateCartProduct(updatedProduct);
+            }
         }
-            // ProductPlus()
-            // {
-            //     this.qty++;
-            // },
-            // ProductMinus()
-            // {
-            //     if(this.qty > 1)
-            //         this.qty --;
-            // }
     },
     mounted() {
         let StickyScript = document.createElement('script')
@@ -220,7 +239,7 @@ export default {
     },
     async created(){
         await this.getCart();
-        this.DisplayCart();
+        // console.log(this.$store.getters.allCart);
     }
 };
 </script> 
