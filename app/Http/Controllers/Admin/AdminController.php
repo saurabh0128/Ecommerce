@@ -12,9 +12,6 @@ use Session;
 use Illuminate\Notifications\Notifiable;
 
 
-
-
-
 class AdminController extends Controller
 {
     /**
