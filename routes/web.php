@@ -19,6 +19,8 @@ use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\PageController;
 use App\Http\Controllers\admin\SliderController;
 use App\Http\Controllers\admin\SettingController;
+use App\Http\Controllers\api\v1\StripeController;
+
 
 //for notification 
 use App\Models\User;
@@ -93,6 +95,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 });
 
+Route::get('payment', [StripeController::class, 'stripe']);
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 Route::any('/{slug?}/{any?}', function() {
     return view('frontend.app');
