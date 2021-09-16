@@ -32,7 +32,7 @@ const actions ={
 			}
 			else{
 				// get a all cart Product Details from local storage
-				var productData =localStorage.getItem('cartProductData');
+				var productData = localStorage.getItem('cartProductData');
 				var fProductData ='';
 				// get total of all cart product
 				var totalPrice = localStorage.getItem('cartTotal')? parseInt(localStorage.getItem('cartTotal')) : 0;
@@ -150,10 +150,12 @@ const actions ={
 		else if(localStorage.getItem('cartProductData'))
 		{
 			var productres = localStorage.getItem('cartProductData').split('|');
+			var productTotal = localStorage.getItem('cartTotal');
 			productres.forEach(function(product, index) {
 			  this[index] = JSON.parse(product);
 			}, productres);
 			commit('setCart',productres);	
+			commit('setTotalPrice',productTotal);
 		}
 		else{
 			commit('setCart',[]);
@@ -168,8 +170,7 @@ const actions ={
 	 	}
 	 	else{
 	 		var AllCartProduct = localStorage.getItem('cartProductData').split('|');
-	 		var ProductString  = '';
-	 		   
+	 		var ProductSubTotal = 0;   
 	 		AllCartProduct.forEach(function(product, index) {
 			  this[index] = JSON.parse(product);
 			},AllCartProduct);
@@ -178,29 +179,41 @@ const actions ={
 	 			if(product.id == id)
 	 			{	
 	 				AllCartProduct.splice(AllCartProduct.indexOf(product),1);
-	 			}
+	 				ProductSubTotal = product.price * product.quantity;
+	 			} 
 	 		});
+
 	 		AllCartProduct.forEach(function(product,index){	
 	 			this[index] =  JSON.stringify(product); 
 	 		},AllCartProduct);
-	 		
+
+	 		ProductSubTotal = localStorage.getItem('cartTotal') - ProductSubTotal;
+
+	 		localStorage.setItem('cartTotal',ProductSubTotal);
 	 		localStorage.setItem('cartProductData',AllCartProduct.join('|'));
 	 	}
 	},
 	updateCartProduct({commit},allUpdateProduct){
-
-		commit('setCart',allUpdateProduct);
 		var CartSubTotal = 0; 
+		var newUpdatedProduct = [];		 
+		commit('setCart',allUpdateProduct);
 		allUpdateProduct.forEach(function(product,index){
 				CartSubTotal  +=	 product.subTotal;
 	 			this[index] =  JSON.stringify(product); 
-	 	},allUpdateProduct);
-
-		localStorage.setItem('cartProductData',allUpdateProduct.join('|'));
+	 	},newUpdatedProduct);
+		localStorage.setItem('cartProductData',newUpdatedProduct.join('|'));
 		localStorage.setItem('cartTotal',CartSubTotal);
-			allUpdateProduct.forEach(function(product,index){	
-	 			this[index] =  JSON.parse(product); 
-	 		},allUpdateProduct);	
+		commit('setTotalPrice',CartSubTotal);
+	},
+	clearCartProduct({commit,getters}){
+	 	if(getters.logedingetter)
+	 	{
+	 		console.log('logged in');
+	 	}
+	 	else{
+	 		localStorage.removeItem('cartProductData');
+	 		localStorage.removeItem('cartTotal');
+	 	}
 	}
 }
 

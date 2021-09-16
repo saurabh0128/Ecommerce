@@ -8,8 +8,7 @@
                     width="330" height="338" />
                 </a>
                 <div class="product-action-vertical">
-                    <a href="#" class="btn-product-icon btn-quickview w-icon-search"
-                        title="Quick View"></a>
+                    <a @click.prevent="setProduct(product)" data-backdrop="static" data-keyboard="false"  data-toggle="modal" data-target="#ProductModel"  class="btn-product-icon btn-quickview w-icon-search" title="Quick View"></a>
                 </div>
             </figure>
             <div class="product-details">
@@ -21,7 +20,7 @@
                 </h4>
                 <div class="ratings-container">
                     <div class="ratings-full">
-                        <span class="ratings" s:style=" 'width:' + avg_per(product.rating)  + '%' "></span>
+                        <span class="ratings" :style=" 'width:' + avg_per(product.rating)  + '%' "></span>
                     </div>
                     <a href="product-default.html" class="rating-reviews">{{ product.rating_review| total_rating  }}</a>
                 </div>
@@ -56,8 +55,15 @@ export default{
         }
     },
     methods:{
+        ...mapActions(['getSingleProduct']),
         avg_per(value){
             return value * 100 /5 ;
+        },
+        setProduct(val)
+        {
+            this.getSingleProduct(val);
+            $('.header-bottom').removeClass('fixed');
+            $('body').css("overflow-y",'hidden');
         }
     },
     computed: mapGetters(['allProduct'])

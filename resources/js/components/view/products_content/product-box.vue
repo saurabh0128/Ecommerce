@@ -13,7 +13,7 @@
                             title="Add to cart"></a>
                         <a href="#" class="btn-product-icon btn-wishlist w-icon-heart"
                             title="Wishlist"></a>
-                        <a href="#" class="btn-product-icon btn-compare w-icon-compare"
+                        <a href="#" class="btn-product-icon btn-compare w-icon-compare" 
                             title="Compare"></a>
                             <!-- setProduct for get clicked product details -->
                         <a href="#" @click.prevent="setProduct(product)" data-backdrop="static" data-keyboard="false"  data-toggle="modal" 

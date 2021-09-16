@@ -21,6 +21,9 @@
                     <div class="row gutter-lg mb-10">
                         <div class="col-lg-8 pr-lg-4 mb-6">
 
+                            <form action="#" @submit.prevent="updateCart" method="post" accept-charset="utf-8">
+                                
+                            
                             <table class="shop-table cart-table">
                                 <thead>
                                     <tr>
@@ -42,8 +45,7 @@
                                                             width="300" height="338">
                                                     </figure>
                                                 </a>
-                                                <button type="submit" class="btn btn-close"><i
-                                                        class="fas fa-times"></i></button>
+                                                <button type="button" @click.prevent="removeCart(product.id)"  class="btn btn-close"><i class="fas fa-times"></i></button>
                                             </div>
                                         </td>
                                         <td class="product-name">
@@ -55,7 +57,7 @@
                                         <td class="product-quantity">
                                             <div class="input-group">
 
-                                                <input v-model.number="allProduct[index].quantity" :id="index + 'ProductQty' "  class="productQty form-control" type="number" min="1" max="100000">
+                                                <input v-model.number="allProduct[index].quantity" :id="index + 'ProductQty'" @input="productQtyChange(index)"  class="productQty form-control" type="number" min="1" max="100000">
 
                                                 <button @click.prevent="ProductPlus(index)" class="quantity-plus w-icon-plus"></button>
 
@@ -70,10 +72,14 @@
                             </table>
 
                             <div class="cart-action mb-6">
-                                <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"><i class="w-icon-long-arrow-left"></i>Continue Shopping</a>
-                                <button type="button" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button> 
-                                <button type="submit" @click.prevent="updateCart" class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
+                                <router-link :to="{name:'shop'}" class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto" ><i class="w-icon-long-arrow-left"></i>Continue Shopping</router-link>
+                                <button type="button" @click.prevent="clearCart" class="btn btn-rounded btn-default btn-clear" name="clear_cart"  value="Clear Cart">Clear Cart</button> 
+                                <button type="submit"  class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
                             </div>
+
+                            </form>
+
+
 
                             <form class="coupon">
                                 <h5 class="title coupon-title font-weight-bold text-uppercase">Coupon Discount</h5>
@@ -87,7 +93,7 @@
                                     <h3 class="cart-title text-uppercase">Cart Totals</h3>
                                     <div class="cart-subtotal d-flex align-items-center justify-content-between">
                                         <label class="ls-25">Subtotal</label>
-                                        <span>$100.00</span>
+                                        <span>₹{{ allProductTotal }} </span>
                                     </div>
 
                                     <hr class="divider">
@@ -192,35 +198,47 @@ export default {
     name:'Cart',
     data(){
         return{
-            allProduct:null
+            allProduct:null,
+            allProductTotal:null
         }
     },
     computed:{
-        ...mapGetters(['allCart','loggedIn'])
+        ...mapGetters(['allCart','loggedIn','tPrice'])
     },
     methods:{
-        ...mapActions(['getCart','updateCartProduct']),
+        ...mapActions(['getCart','updateCartProduct','removeCartProduct','clearCartProduct']),
         DisplayCart()
         {
             if(this.$store.getters.allCart.length){
                 this.allProduct = this.allCart;
+                this.allProductTotal = this.tPrice;
+            }   
+            else{
+                this.allProduct = null;
+                this.allProductTotal = null;
             }
         },
         ProductPlus(index)
         {
-            if(this.allProduct[index].quantity < 100000);
-            this.allProduct[index].quantity++;   
-            $('#'+ index +'ProductQty').val(this.allProduct[index].quantity);
-            this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
-            
+            if(this.allProduct[index].quantity < 100000)
+            {
+                this.allProduct[index].quantity++;   
+                this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
+            }
         },
         ProductMinus(index)
         {
-            // console.log('minus');
-            if(this.allProduct[index].quantity > 1);
-            this.allProduct[index].quantity--;
-            $('#'+ index +'ProductQty').val(this.allProduct[index].quantity);
-            this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
+            if(this.allProduct[index].quantity > 1)
+            {
+                this.allProduct[index].quantity--;
+                this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
+            }
+        },
+        productQtyChange(index){
+            if(this.allProduct[index].quantity >0 && this.allProduct[index].quantity<=100000)
+            {
+                this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
+            }
         },
         updateCart()
         {
@@ -232,17 +250,27 @@ export default {
                 this.updateCartProduct(updatedProduct);
                 this.DisplayCart();
             }
+        },
+        removeCart(id)
+        {   
+            this.removeCartProduct(id);
+            this.getCart();
+            this.DisplayCart();
+        },
+        clearCart()
+        {
+            this.clearCartProduct();
+            this.getCart();
+            this.DisplayCart();
         }
     },
     mounted() {
         let StickyScript = document.createElement('script')
         StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
         document.head.appendChild(StickyScript)
-
     },
     async created(){
         await this.getCart();
-        // console.log(this.$store.getters.allCart);
     }
 };
 </script> 
