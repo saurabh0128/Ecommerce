@@ -54,25 +54,24 @@
                                         <td class="product-price"><span class="amount">₹{{product.price}}</span></td>
                                         <td class="product-quantity">
                                             <div class="input-group">
-                                                <!-- [i].quantity -->
-                                                <input v-model.number="allProduct[index].quantity"    class="productQty form-control" type="number" min="1" max="100000">
-                                                <!-- @click.prevent="ProductPlus" -->
+
+                                                <input v-model.number="allProduct[index].quantity" :id="index + 'ProductQty' "  class="productQty form-control" type="number" min="1" max="100000">
+
                                                 <button @click.prevent="ProductPlus(index)" class="quantity-plus w-icon-plus"></button>
-                                                <!-- @click.prevent="ProductMinus" -->
+
                                                 <button @click.prevent="ProductMinus(index)"  class="quantity-minus w-icon-minus"></button>
                                             </div>
                                         </td>
                                         <td class="product-subtotal">
                                             <span class="amount">₹{{product.subTotal  }}</span>
                                         </td>
-                                        
                                     </tr>
                                 </tbody>
                             </table>
 
                             <div class="cart-action mb-6">
                                 <a href="#" class="btn btn-dark btn-rounded btn-icon-left btn-shopping mr-auto"><i class="w-icon-long-arrow-left"></i>Continue Shopping</a>
-                                <button type="submit" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button> 
+                                <button type="button" class="btn btn-rounded btn-default btn-clear" name="clear_cart" value="Clear Cart">Clear Cart</button> 
                                 <button type="submit" @click.prevent="updateCart" class="btn btn-rounded btn-update" name="update_cart" value="Update Cart">Update Cart</button>
                             </div>
 
@@ -161,8 +160,7 @@
                                                 <input class="form-control form-control-md" type="text"
                                                     name="zipcode" placeholder="ZIP">
                                             </div>
-                                            <button type="submit" class="btn btn-dark btn-outline btn-rounded">Update
-                                                Totals</button>
+                                            <button type="submit" class="btn btn-dark btn-outline btn-rounded">Update Totals</button>
                                         </form>
                                     </div>
 
@@ -171,8 +169,7 @@
                                         <label>Total</label>
                                         <span class="ls-50">$100.00</span>
                                     </div>
-                                    <a href="#"
-                                        class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">
+                                    <a href="#" class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">
                                         Proceed to checkout<i class="w-icon-long-arrow-right"></i></a>
                                 </div>
                             </div>
@@ -211,14 +208,19 @@ export default {
         },
         ProductPlus(index)
         {
+            if(this.allProduct[index].quantity < 100000);
+            this.allProduct[index].quantity++;   
+            $('#'+ index +'ProductQty').val(this.allProduct[index].quantity);
+            this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
             
-            if(this.allProduct[index].quantity < 100000)
-            this.allProduct[index].quantity++;
         },
         ProductMinus(index)
         {
-            if(this.allProduct[index].quantity > 1)
+            // console.log('minus');
+            if(this.allProduct[index].quantity > 1);
             this.allProduct[index].quantity--;
+            $('#'+ index +'ProductQty').val(this.allProduct[index].quantity);
+            this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
         },
         updateCart()
         {
@@ -227,8 +229,8 @@ export default {
             }
             else{
                 var updatedProduct=this.allProduct;
-                // console.log(updatedProduct);
                 this.updateCartProduct(updatedProduct);
+                this.DisplayCart();
             }
         }
     },
@@ -236,6 +238,7 @@ export default {
         let StickyScript = document.createElement('script')
         StickyScript.setAttribute('src', '/frontend_asset/vendor/sticky/sticky.min.js')
         document.head.appendChild(StickyScript)
+
     },
     async created(){
         await this.getCart();

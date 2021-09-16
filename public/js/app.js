@@ -3634,9 +3634,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Cart',
@@ -3653,18 +3650,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     ProductPlus: function ProductPlus(index) {
-      if (this.allProduct[index].quantity < 100000) this.allProduct[index].quantity++;
+      if (this.allProduct[index].quantity < 100000) ;
+      this.allProduct[index].quantity++;
+      $('#' + index + 'ProductQty').val(this.allProduct[index].quantity);
+      this.allProduct[index].subTotal = this.allProduct[index].price * this.allProduct[index].quantity;
     },
     ProductMinus: function ProductMinus(index) {
-      if (this.allProduct[index].quantity > 1) this.allProduct[index].quantity--;
+      // console.log('minus');
+      if (this.allProduct[index].quantity > 1) ;
+      this.allProduct[index].quantity--;
+      $('#' + index + 'ProductQty').val(this.allProduct[index].quantity);
+      this.allProduct[index].subTotal = this.allProduct[index].price * this.allProduct[index].quantity;
     },
     updateCart: function updateCart() {
       if (this.loggedIn) {
         console.log('Logged In');
       } else {
-        var updatedProduct = this.allProduct; // console.log(updatedProduct);
-
+        var updatedProduct = this.allProduct;
         this.updateCartProduct(updatedProduct);
+        this.DisplayCart();
       }
     }
   }),
@@ -10261,10 +10265,17 @@ var actions = {
   },
   updateCartProduct: function updateCartProduct(_ref5, allUpdateProduct) {
     var commit = _ref5.commit;
+    commit('setCart', allUpdateProduct);
+    var CartSubTotal = 0;
     allUpdateProduct.forEach(function (product, index) {
+      CartSubTotal += product.subTotal;
       this[index] = JSON.stringify(product);
     }, allUpdateProduct);
     localStorage.setItem('cartProductData', allUpdateProduct.join('|'));
+    localStorage.setItem('cartTotal', CartSubTotal);
+    allUpdateProduct.forEach(function (product, index) {
+      this[index] = JSON.parse(product);
+    }, allUpdateProduct);
   }
 };
 var mutations = {
@@ -55325,7 +55336,12 @@ var render = function() {
                             }
                           ],
                           staticClass: "productQty form-control",
-                          attrs: { type: "number", min: "1", max: "100000" },
+                          attrs: {
+                            id: index + "ProductQty",
+                            type: "number",
+                            min: "1",
+                            max: "100000"
+                          },
                           domProps: { value: _vm.allProduct[index].quantity },
                           on: {
                             input: function($event) {
@@ -55385,7 +55401,7 @@ var render = function() {
                 {
                   staticClass: "btn btn-rounded btn-default btn-clear",
                   attrs: {
-                    type: "submit",
+                    type: "button",
                     name: "clear_cart",
                     value: "Clear Cart"
                   }
@@ -55731,11 +55747,7 @@ var staticRenderFns = [
                   staticClass: "btn btn-dark btn-outline btn-rounded",
                   attrs: { type: "submit" }
                 },
-                [
-                  _vm._v(
-                    "Update\n                                                Totals"
-                  )
-                ]
+                [_vm._v("Update Totals")]
               )
             ])
           ]),

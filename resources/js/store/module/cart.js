@@ -169,7 +169,7 @@ const actions ={
 	 	else{
 	 		var AllCartProduct = localStorage.getItem('cartProductData').split('|');
 	 		var ProductString  = '';
-	 		
+	 		   
 	 		AllCartProduct.forEach(function(product, index) {
 			  this[index] = JSON.parse(product);
 			},AllCartProduct);
@@ -188,11 +188,19 @@ const actions ={
 	 	}
 	},
 	updateCartProduct({commit},allUpdateProduct){
-		
-		allUpdateProduct.forEach(function(product,index){	
+
+		commit('setCart',allUpdateProduct);
+		var CartSubTotal = 0; 
+		allUpdateProduct.forEach(function(product,index){
+				CartSubTotal  +=	 product.subTotal;
 	 			this[index] =  JSON.stringify(product); 
-	 		},allUpdateProduct);
+	 	},allUpdateProduct);
+
 		localStorage.setItem('cartProductData',allUpdateProduct.join('|'));
+		localStorage.setItem('cartTotal',CartSubTotal);
+			allUpdateProduct.forEach(function(product,index){	
+	 			this[index] =  JSON.parse(product); 
+	 		},allUpdateProduct);	
 	}
 }
 
