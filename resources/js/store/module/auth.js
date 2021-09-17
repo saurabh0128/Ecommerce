@@ -47,6 +47,7 @@ const actions = {
 
 		if(localStorage.getItem('cartProductData') && localStorage.getItem('access_token') )
 		{
+			// console.log('sdada');
 			var CartProductArr = localStorage.getItem('cartProductData').split('|');
 	        await axios.post('/api/v1/cart',{'productData':CartProductArr},
 	        {headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{

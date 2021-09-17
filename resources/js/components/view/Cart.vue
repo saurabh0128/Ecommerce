@@ -93,7 +93,8 @@
                                     <h3 class="cart-title text-uppercase">Cart Totals</h3>
                                     <div class="cart-subtotal d-flex align-items-center justify-content-between">
                                         <label class="ls-25">Subtotal</label>
-                                        <span>₹{{ allProductTotal }} </span>
+                                        <span v-if="this.loggedIn">₹{{subTotal}}  </span>
+                                        <span v-else>₹{{ allProductTotal }} </span>
                                     </div>
 
                                     <hr class="divider">
@@ -199,11 +200,16 @@ export default {
     data(){
         return{
             allProduct:null,
-            allProductTotal:null
+            allProductTotal:0
         }
     },
     computed:{
-        ...mapGetters(['allCart','loggedIn','tPrice'])
+        ...mapGetters(['allCart','loggedIn','tPrice']),
+        subTotal:function(){
+            let total = 0;
+            this.allCart.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
+            return total;
+        }
     },
     methods:{
         ...mapActions(['getCart','updateCartProduct','removeCartProduct','clearCartProduct']),
@@ -215,7 +221,7 @@ export default {
             }   
             else{
                 this.allProduct = null;
-                this.allProductTotal = null;
+                this.allProductTotal = 0;
             }
         },
         ProductPlus(index)
@@ -243,7 +249,8 @@ export default {
         updateCart()
         {
             if(this.loggedIn){
-                console.log('Logged In');
+                // console.log('Logged In');
+                this.updateCartProduct(this.allProduct);
             }
             else{
                 var updatedProduct=this.allProduct;

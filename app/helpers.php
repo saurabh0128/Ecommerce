@@ -29,11 +29,14 @@ use App\Models\CartItem;
 
     function AddProductToCart($cartProduct)
     {
-        // dd($product['qty']);
+
+        if(array_key_exists('product_id',$cartProduct))
+        {
+            $cartProduct['id'] = $cartProduct['product_id'];
+        }
         $cart = Cart::where('user_id',auth('api')->id())->first();
         $product_data =  Product::find($cartProduct['id']);
         $Old_product = CartItem::where('cart_id',$cart->id)->where('product_id',$cartProduct['id'])->first();
-              
         //User Add New Peoduct Or Not
         if(is_null($Old_product))
         {   //User Add New Product
@@ -57,14 +60,12 @@ use App\Models\CartItem;
         }else{//User Add Old Product
             //if tha coupon Enter Or Not                
             //USer Coupon Not Enter
-            $product = CartItem::where('cart_id',$cart->id)->where('product_id',"=",$cartProduct['id'])->first(); 
-            $product->quantity = $cartProduct['quantity']; 
-            
+            $Old_product->quantity = $cartProduct['quantity']; 
             $cart->discount = 0;
-            $cart->coupon_code = 0;
+            $cart->coupon_code = null;
             $cart->save();
 
-            $product->save();
+            $Old_product->save();
 
             return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);   
         }

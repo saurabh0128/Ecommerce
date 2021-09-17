@@ -193,17 +193,28 @@ const actions ={
 	 		localStorage.setItem('cartProductData',AllCartProduct.join('|'));
 	 	}
 	},
-	updateCartProduct({commit},allUpdateProduct){
-		var CartSubTotal = 0; 
-		var newUpdatedProduct = [];		 
-		commit('setCart',allUpdateProduct);
-		allUpdateProduct.forEach(function(product,index){
-				CartSubTotal  +=	 product.subTotal;
-	 			this[index] =  JSON.stringify(product); 
-	 	},newUpdatedProduct);
-		localStorage.setItem('cartProductData',newUpdatedProduct.join('|'));
-		localStorage.setItem('cartTotal',CartSubTotal);
-		commit('setTotalPrice',CartSubTotal);
+	async updateCartProduct({commit},allUpdateProduct){
+		if(getters.logedingetter)
+		{
+			console.log('data save in database');
+			await axios.post('/api/v1/cart',{'productData':allUpdateProduct},
+	        {headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
+	        	console.log(res.data);
+	        });
+		}	
+		else
+		{
+			var CartSubTotal = 0; 
+			var newUpdatedProduct = [];		 
+			commit('setCart',allUpdateProduct);
+			allUpdateProduct.forEach(function(product,index){
+					CartSubTotal  +=	 product.subTotal;
+		 			this[index] =  JSON.stringify(product); 
+		 	},newUpdatedProduct);
+			localStorage.setItem('cartProductData',newUpdatedProduct.join('|'));
+			localStorage.setItem('cartTotal',CartSubTotal);
+		}	
+			commit('setTotalPrice',CartSubTotal);
 	},
 	clearCartProduct({commit,getters}){
 	 	if(getters.logedingetter)

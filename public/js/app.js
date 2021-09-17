@@ -3640,16 +3640,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Cart',
   data: function data() {
     return {
       allProduct: null,
-      allProductTotal: null
+      allProductTotal: 0
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['allCart', 'loggedIn', 'tPrice'])),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['allCart', 'loggedIn', 'tPrice'])), {}, {
+    subTotal: function subTotal() {
+      var total = 0;
+      this.allCart.forEach(function (a) {
+        return total += Math.floor(a.price * a.quantity);
+      });
+      return total;
+    }
+  }),
   methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['getCart', 'updateCartProduct', 'removeCartProduct', 'clearCartProduct'])), {}, {
     DisplayCart: function DisplayCart() {
       if (this.$store.getters.allCart.length) {
@@ -3657,7 +3666,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.allProductTotal = this.tPrice;
       } else {
         this.allProduct = null;
-        this.allProductTotal = null;
+        this.allProductTotal = 0;
       }
     },
     ProductPlus: function ProductPlus(index) {
@@ -3679,7 +3688,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateCart: function updateCart() {
       if (this.loggedIn) {
-        console.log('Logged In');
+        // console.log('Logged In');
+        this.updateCartProduct(this.allProduct);
       } else {
         var updatedProduct = this.allProduct;
         this.updateCartProduct(updatedProduct);
@@ -9960,6 +9970,7 @@ var actions = {
                 break;
               }
 
+              // console.log('sdada');
               CartProductArr = localStorage.getItem('cartProductData').split('|');
               _context.next = 7;
               return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/v1/cart', {
@@ -10304,17 +10315,56 @@ var actions = {
     }
   },
   updateCartProduct: function updateCartProduct(_ref5, allUpdateProduct) {
-    var commit = _ref5.commit;
-    var CartSubTotal = 0;
-    var newUpdatedProduct = [];
-    commit('setCart', allUpdateProduct);
-    allUpdateProduct.forEach(function (product, index) {
-      CartSubTotal += product.subTotal;
-      this[index] = JSON.stringify(product);
-    }, newUpdatedProduct);
-    localStorage.setItem('cartProductData', newUpdatedProduct.join('|'));
-    localStorage.setItem('cartTotal', CartSubTotal);
-    commit('setTotalPrice', CartSubTotal);
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, CartSubTotal, newUpdatedProduct;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref5.commit;
+
+              if (!getters.logedingetter) {
+                _context2.next = 7;
+                break;
+              }
+
+              console.log('data save in database');
+              _context2.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/cart', {
+                'productData': allUpdateProduct
+              }, {
+                headers: {
+                  'Authorization': "Bearer " + localStorage.getItem('access_token')
+                }
+              }).then(function (res) {
+                console.log(res.data);
+              });
+
+            case 5:
+              _context2.next = 13;
+              break;
+
+            case 7:
+              CartSubTotal = 0;
+              newUpdatedProduct = [];
+              commit('setCart', allUpdateProduct);
+              allUpdateProduct.forEach(function (product, index) {
+                CartSubTotal += product.subTotal;
+                this[index] = JSON.stringify(product);
+              }, newUpdatedProduct);
+              localStorage.setItem('cartProductData', newUpdatedProduct.join('|'));
+              localStorage.setItem('cartTotal', CartSubTotal);
+
+            case 13:
+              commit('setTotalPrice', CartSubTotal);
+
+            case 14:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   },
   clearCartProduct: function clearCartProduct(_ref6) {
     var commit = _ref6.commit,
@@ -55556,9 +55606,11 @@ var render = function() {
                   [
                     _c("label", { staticClass: "ls-25" }, [_vm._v("Subtotal")]),
                     _vm._v(" "),
-                    _c("span", [
-                      _vm._v("₹" + _vm._s(_vm.allProductTotal) + " ")
-                    ])
+                    this.loggedIn
+                      ? _c("span", [_vm._v("₹" + _vm._s(_vm.subTotal) + "  ")])
+                      : _c("span", [
+                          _vm._v("₹" + _vm._s(_vm.allProductTotal) + " ")
+                        ])
                   ]
                 ),
                 _vm._v(" "),

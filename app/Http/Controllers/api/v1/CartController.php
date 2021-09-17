@@ -62,7 +62,7 @@ class CartController extends Controller
         //User Create new cart Or Not
         elseif(is_null(Cart::where('user_id','=',auth('api')->id())->first())){
 
-            // if it is muiple Products
+            // if it is multiple Products
             if(array_keys($request->productData) === range(0, count($request->productData) - 1))
             {
                 // get a first product of product data in FirstElement
@@ -93,9 +93,17 @@ class CartController extends Controller
             {
                 foreach($request->productData as $product)
                 {
-                    $response = AddProductToCart(json_decode($product,true));
+                    if(is_array($product))
+                    {
+                        // print_r($product);
+                        $response = AddProductToCart($product);
+                    }
+                    else{
+                        // print_r($product);
+                        $response = AddProductToCart(json_decode($product,true));
+                    }
                 }
-                    return $response;
+                return $response;
             }   
             else    
             {
