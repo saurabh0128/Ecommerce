@@ -175,10 +175,14 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        CartItem::find($id)->delete();
-
+        if($request->type == 'cart'){
+            CartItem::where('cart_id',$id)->delete();    
+        }
+        else{
+            CartItem::find($id)->delete();
+        }
         return Response()->json(['status'=>true,"success" => "Product Delete Successfully"]);
     }
 }

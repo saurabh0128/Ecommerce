@@ -6,6 +6,7 @@ import login from './module/auth.js'
 import category from './module/category.js'
 import seller from './module/seller.js'
 import cart from './module/cart.js'
+import coupon from './module/coupon.js'
 
 Vue.use(Vuex);
 
@@ -16,9 +17,9 @@ export default new Vuex.Store({
 		login,
 		category,
 		seller,
-		cart
+		cart,
+		coupon
 	}
-
 })
 
 

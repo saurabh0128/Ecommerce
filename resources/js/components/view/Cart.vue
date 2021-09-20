@@ -83,8 +83,10 @@
 
                             <form class="coupon">
                                 <h5 class="title coupon-title font-weight-bold text-uppercase">Coupon Discount</h5>
-                                <input type="text" class="form-control mb-4" placeholder="Enter coupon code here..." required />
-                                <button class="btn btn-dark btn-outline btn-rounded">Apply Coupon</button>
+                                <input v-model="coupon" id="txtcoupon" type="text" class="form-control mb-4" placeholder="Enter coupon code here..." required />
+                                <button @click.prevent="applyCoupon" class="btn btn-dark  btn-outline btn-rounded" 
+                                id="ApplyCoupanButton">Apply Coupon</button>
+                                <label v-if="totalDiscount" class="product-label label-discount " style="background:#cecccb">{{ getCoupon }} <button type="button" @click.prevent="removeCoupon"  class="btn-close"> </button></label>
                             </form>
                         </div>
                         <div class="col-lg-4 sticky-sidebar-wrapper">
@@ -200,11 +202,12 @@ export default {
     data(){
         return{
             allProduct:null,
-            allProductTotal:0
+            allProductTotal:0,
+            coupon:null
         }
     },
     computed:{
-        ...mapGetters(['allCart','loggedIn','tPrice']),
+        ...mapGetters(['allCart','loggedIn','tPrice','totalDiscount','getCoupon']),
         subTotal:function(){
             let total = 0;
             this.allCart.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
@@ -212,7 +215,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['getCart','updateCartProduct','removeCartProduct','clearCartProduct']),
+        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan']),
         DisplayCart()
         {
             if(this.$store.getters.allCart.length){
@@ -269,6 +272,22 @@ export default {
             this.clearCartProduct();
             this.getCart();
             this.DisplayCart();
+        },
+        applyCoupon()
+        {
+            if(!this.loggedIn)
+            {
+               $('#ApplyCoupanButton').addClass('sign-in');
+            }
+            else
+            {
+                this.addCoupon(this.coupon);
+                $('#txtcoupon').val('');
+                this.coupon = null
+            }
+        },
+        removeCoupon(){
+            this.rmvCoupan();
         }
     },
     mounted() {
@@ -278,6 +297,10 @@ export default {
     },
     async created(){
         await this.getCart();
+        if(this.loggedIn)
+        {
+            await this.getAllCouponData();
+        }
     }
 };
 </script> 

@@ -37,7 +37,8 @@ const actions = {
                 localStorage.setItem('user_details',JSON.stringify(res.data.info));
  	 			localStorage.setItem('access_token',res.data.access_token);
  	 			commit('setToken',res.data.access_token);
-				commit('removeError');    
+				commit('removeError');
+				$('#ApplyCoupanButton').removeClass('sign-in');    
             }   
             else 
             {

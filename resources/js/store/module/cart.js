@@ -196,7 +196,6 @@ const actions ={
 	async updateCartProduct({commit},allUpdateProduct){
 		if(getters.logedingetter)
 		{
-			console.log('data save in database');
 			await axios.post('/api/v1/cart',{'productData':allUpdateProduct},
 	        {headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
 	        	console.log(res.data);
@@ -216,10 +215,10 @@ const actions ={
 		}	
 			commit('setTotalPrice',CartSubTotal);
 	},
-	clearCartProduct({commit,getters}){
-	 	if(getters.logedingetter)
+	async clearCartProduct({commit,getters}){
+	 	if(getters.logedingetter && getters.allCart.length)
 	 	{
-	 		console.log('logged in');
+	 		await axios.delete('/api/v1/cart/'+getters.allCart[0].cart_id,{headers:{'Authorization': `Bearer`+ localStorage.getItem('access_token')},params:{type:'cart'}});
 	 	}
 	 	else{
 	 		localStorage.removeItem('cartProductData');

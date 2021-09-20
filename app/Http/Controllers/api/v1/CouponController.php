@@ -22,7 +22,8 @@ class CouponController extends Controller
 
     public function index()
     {
-        //
+        $cart_data = Cart::where('user_id',auth('api')->id())->select('discount','coupon_code')->first();
+        return Response()->json(["status"=>true,"coupon_data"=>$cart_data]);
     }
 
     /**
@@ -53,18 +54,18 @@ class CouponController extends Controller
         $date = Carbon::now();
         //Check User Enter Coupon is Exist in Coupon Table
         if(is_null($coupon)){
-            return Response()->json(["error" => "This Coupon Is Not Exist "]);
+            return Response()->json(["status"=>false,"error" => "This Coupon Is Not Exist "]);
         }elseif(!($coupon->start_date <= $date->ToDateString() && $coupon->end_date >= $date->ToDateString())){
-            return Response()->json(["error" => "Sorry Coupon Has Exceeded"]);
+            return Response()->json(["status"=>false,"error" => "Sorry Coupon Has Exceeded"]);
         }elseif($coupon->coupon_code == $cart_detail->coupon_code){
-            return Response()->json(["error" =>"This Coupone Alredy Apply"]);
+            return Response()->json(["status"=>false,"error" =>"This Coupone Already Apply"]);
         //check Tha Coupon for User and This User is Eligible For This Coupon 
         }elseif($coupon->user_id && $coupon->user_id != auth('api')->id()){
-            return Response()->json("User Is Not Eligible For This Coupon");
+            return Response()->json(["status"=>false,"error" =>"User Is Not Eligible For This Coupon"]);
         }else{
             if($coupon->coupon_type == "product"){
                 //Get Product Detail Form Tha Cart Item 
-                $cart_item = CartItem::where('product_id',$coupon->coupon_type_value)->first();
+                $cart_item = CartItem::where('product_id',$coupon->coupon_type_value)->where('cart_id',$cart_detail->id)->first();
                 if($cart_item){
                     if($coupon->discount_type == "fixed"){ 
                         $discount = $coupon->coupon_discount;   
@@ -101,10 +102,11 @@ class CouponController extends Controller
             foreach($cart_product as $products){
                 $cart_total_amt += $products->price*$products->quantity;
             }
-            $cart_detail->discount = min($cart_total_amt,$discount);
+            $f_discount = min($cart_total_amt,$discount);
+            $cart_detail->discount = $f_discount;
             $cart_detail->coupon_code = $request->coupon_code;
             $cart_detail->save();
-            return Response()->json(["success" => "Coupon Add SuccessFully"]);
+            return Response()->json(["status"=>true,"success" => "Coupon Added SuccessFully","discount"=>$f_discount]);
         }
     }
 
@@ -151,7 +153,6 @@ class CouponController extends Controller
     public function destroy($id)
     {
         $cart_detail = Cart::where('user_id',auth('api')->id())->first();
-        //dd($cart_detail);
         if(!($cart_detail->coupon_code == $id)){
             return Response()->json(["error" => "Coupon Not Exist"]);   
         }else{
