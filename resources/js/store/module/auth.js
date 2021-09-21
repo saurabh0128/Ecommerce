@@ -64,6 +64,9 @@ const actions = {
 		localStorage.removeItem('user_details');
 		localStorage.removeItem('access_token');
 		commit('removeToken');
+		commit('removeDiscount');
+		commit('removeCoupon');
+
 		router.push('/').catch(()=>{});
 	},
 	async userRegister({commit},userRegisterData){

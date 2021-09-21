@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const state ={
-	discount:null,
+	discount:0,
 	coupon:null
 }
 
@@ -12,21 +12,27 @@ getCoupon : state =>state.coupon
 
 const actions ={
 	async addCoupon({commit},coupon){
-		await axios.post('/api/v1/coupon',{'coupon_code':coupon},{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
+		return await axios.post('/api/v1/coupon',{'coupon_code':coupon},{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
 			if(res.data.status)
 			{
 				commit('setDiscount',res.data.discount);
 				commit('setCoupon',coupon);
+				return res.data.success;
 			}
 			else{
-				console.log(res.data.error)
+				return res.data.error;
 			}	
 		});
 	},
 	async rmvCoupan({commit}){
-		await axios.delete('/api/v1/coupon/'+ state.coupon,{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}})
-		commit('removeDiscount');
-		commit('removeCoupon');
+		return await axios.delete('/api/v1/coupon/'+ state.coupon,{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
+			if(res.data.status)
+			{
+				commit('removeDiscount');
+				commit('removeCoupon');
+				return res.data.success;
+			}
+		});
 	},
 	async getAllCouponData({commit})
 	{
@@ -36,7 +42,20 @@ const actions ={
 				commit('setDiscount',res.data.coupon_data.discount);
 				commit('setCoupon',res.data.coupon_data.coupon_code);
 			}
+			else
+			{
+				commit('removeDiscount');
+				commit('removeCoupon');
+			}
 		});
+	},
+	removeCartProductCoupon({commit},id,price1,qty)
+	{
+
+		if(state.coupon)
+		{
+			axios.put('/api/v1/coupon/'+id,{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')},params:{price:price1}});
+		}
 	}
 
 } 

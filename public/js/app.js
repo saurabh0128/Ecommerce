@@ -3050,7 +3050,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'product_id': productId,
         'qty': this.qty
       });
-      this.$toastr.s('Cart Updated Successfully');
+      this.$toastr.s('Product Added  Successfully');
       this.getCart();
     },
     productModalClose: function productModalClose() {
@@ -3643,9 +3643,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Cart',
+  filters: {
+    finalTotal: function finalTotal(val1, val2) {
+      return val1 - val2;
+    }
+  },
   data: function data() {
     return {
       allProduct: null,
@@ -3662,9 +3672,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return total;
     }
   }),
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['getCart', 'getAllCouponData', 'updateCartProduct', 'removeCartProduct', 'clearCartProduct', 'addCoupon', 'rmvCoupan'])), {}, {
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapActions)(['getCart', 'getAllCouponData', 'updateCartProduct', 'removeCartProduct', 'clearCartProduct', 'addCoupon', 'rmvCoupan', 'rmvCoupan', 'removeCartProductCoupon'])), {}, {
     DisplayCart: function DisplayCart() {
-      if (this.$store.getters.allCart.length) {
+      if (this.allCart.length) {
         this.allProduct = this.allCart;
         this.allProductTotal = this.tPrice;
       } else {
@@ -3690,36 +3700,178 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     updateCart: function updateCart() {
-      if (this.loggedIn) {
-        // console.log('Logged In');
-        this.updateCartProduct(this.allProduct);
-      } else {
-        var updatedProduct = this.allProduct;
-        this.updateCartProduct(updatedProduct);
-        this.DisplayCart();
-      }
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var response, updatedProduct;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!_this.allProduct) {
+                  _context.next = 13;
+                  break;
+                }
+
+                if (!_this.loggedIn) {
+                  _context.next = 7;
+                  break;
+                }
+
+                _context.next = 4;
+                return _this.updateCartProduct(_this.allProduct);
+
+              case 4:
+                response = _context.sent;
+                _context.next = 12;
+                break;
+
+              case 7:
+                updatedProduct = _this.allProduct;
+                _context.next = 10;
+                return _this.updateCartProduct(updatedProduct);
+
+              case 10:
+                response = _context.sent;
+
+                _this.DisplayCart();
+
+              case 12:
+                _this.$toastr.s(response);
+
+              case 13:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     },
-    removeCart: function removeCart(id) {
-      this.removeCartProduct(id);
-      this.getCart();
-      this.DisplayCart();
+    removeCart: function removeCart(id, product_id, price, qty) {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return _this2.removeCartProduct(id);
+
+              case 2:
+                result = _context2.sent;
+
+                _this2.removeCartProductCoupon(product_id, price, qty);
+
+                _this2.getCart();
+
+                _this2.DisplayCart();
+
+                _this2.getAllCouponData();
+
+                _this2.$toastr.s(result);
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     },
     clearCart: function clearCart() {
-      this.clearCartProduct();
-      this.getCart();
-      this.DisplayCart();
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var clearCartRes;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return _this3.clearCartProduct();
+
+              case 2:
+                clearCartRes = _context3.sent;
+
+                _this3.getCart();
+
+                _this3.DisplayCart();
+
+                _this3.rmvCoupan();
+
+                _this3.$toastr.s(clearCartRes);
+
+              case 7:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     },
     applyCoupon: function applyCoupon() {
-      if (!this.loggedIn) {
-        $('#ApplyCoupanButton').addClass('sign-in');
-      } else {
-        this.addCoupon(this.coupon);
-        $('#txtcoupon').val('');
-        this.coupon = null;
-      }
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var applyCouponRes;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                if (_this4.loggedIn) {
+                  _context4.next = 4;
+                  break;
+                }
+
+                $('#ApplyCoupanButton').addClass('sign-in');
+                _context4.next = 10;
+                break;
+
+              case 4:
+                _context4.next = 6;
+                return _this4.addCoupon(_this4.coupon);
+
+              case 6:
+                applyCouponRes = _context4.sent;
+                $('#txtcoupon').val('');
+                _this4.coupon = null;
+
+                _this4.$toastr.s(applyCouponRes);
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     },
     removeCoupon: function removeCoupon() {
-      this.rmvCoupan();
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+        var rmvCouponRes;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return _this5.rmvCoupan();
+
+              case 2:
+                rmvCouponRes = _context5.sent;
+
+                _this5.$toastr.s(rmvCouponRes);
+
+              case 4:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
     }
   }),
   mounted: function mounted() {
@@ -3728,31 +3880,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     document.head.appendChild(StickyScript);
   },
   created: function created() {
-    var _this = this;
+    var _this6 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context6.prev = _context6.next) {
             case 0:
-              _context.next = 2;
-              return _this.getCart();
+              _context6.next = 2;
+              return _this6.getCart();
 
             case 2:
-              if (!_this.loggedIn) {
-                _context.next = 5;
+              if (!_this6.loggedIn) {
+                _context6.next = 5;
                 break;
               }
 
-              _context.next = 5;
-              return _this.getAllCouponData();
+              _context6.next = 5;
+              return _this6.getAllCouponData();
 
             case 5:
             case "end":
-              return _context.stop();
+              return _context6.stop();
           }
         }
-      }, _callee);
+      }, _callee6);
     }))();
   }
 });
@@ -10027,6 +10179,8 @@ var actions = {
     localStorage.removeItem('user_details');
     localStorage.removeItem('access_token');
     commit('removeToken');
+    commit('removeDiscount');
+    commit('removeCoupon');
     _router_index_js__WEBPACK_IMPORTED_MODULE_1__.default.push('/')["catch"](function () {});
   },
   userRegister: function userRegister(_ref3, userRegisterData) {
@@ -10313,50 +10467,76 @@ var actions = {
   },
   //remove cart product
   removeCartProduct: function removeCartProduct(_ref4, id) {
-    var commit = _ref4.commit,
-        getters = _ref4.getters;
-
-    if (getters.logedingetter) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/cart/' + id, {
-        headers: {
-          'Authorization': "Bearer" + localStorage.getItem('access_token')
-        }
-      });
-    } else {
-      var AllCartProduct = localStorage.getItem('cartProductData').split('|');
-      var ProductSubTotal = 0;
-      AllCartProduct.forEach(function (product, index) {
-        this[index] = JSON.parse(product);
-      }, AllCartProduct);
-      AllCartProduct.forEach(function (product, index) {
-        if (product.id == id) {
-          AllCartProduct.splice(AllCartProduct.indexOf(product), 1);
-          ProductSubTotal = product.price * product.quantity;
-        }
-      });
-      AllCartProduct.forEach(function (product, index) {
-        this[index] = JSON.stringify(product);
-      }, AllCartProduct);
-      ProductSubTotal = localStorage.getItem('cartTotal') - ProductSubTotal;
-      localStorage.setItem('cartTotal', ProductSubTotal);
-      localStorage.setItem('cartProductData', AllCartProduct.join('|'));
-    }
-  },
-  updateCartProduct: function updateCartProduct(_ref5, allUpdateProduct) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-      var commit, CartSubTotal, newUpdatedProduct;
+      var commit, getters, AllCartProduct, ProductSubTotal;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref5.commit;
+              commit = _ref4.commit, getters = _ref4.getters;
 
               if (!getters.logedingetter) {
-                _context2.next = 6;
+                _context2.next = 7;
                 break;
               }
 
               _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/cart/' + id, {
+                headers: {
+                  'Authorization': "Bearer" + localStorage.getItem('access_token')
+                }
+              }).then(function (res) {
+                if (res.data.status) {
+                  return res.data.success;
+                }
+              });
+
+            case 4:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 7:
+              AllCartProduct = localStorage.getItem('cartProductData').split('|');
+              ProductSubTotal = 0;
+              AllCartProduct.forEach(function (product, index) {
+                this[index] = JSON.parse(product);
+              }, AllCartProduct);
+              AllCartProduct.forEach(function (product, index) {
+                if (product.id == id) {
+                  AllCartProduct.splice(AllCartProduct.indexOf(product), 1);
+                  ProductSubTotal = product.price * product.quantity;
+                }
+              });
+              AllCartProduct.forEach(function (product, index) {
+                this[index] = JSON.stringify(product);
+              }, AllCartProduct);
+              ProductSubTotal = localStorage.getItem('cartTotal') - ProductSubTotal;
+              localStorage.setItem('cartTotal', ProductSubTotal);
+              localStorage.setItem('cartProductData', AllCartProduct.join('|'));
+              return _context2.abrupt("return", 'Product Removed Successfully');
+
+            case 16:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
+  },
+  updateCartProduct: function updateCartProduct(_ref5, allUpdateProduct) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit, getters, result, CartSubTotal, newUpdatedProduct;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref5.commit, getters = _ref5.getters;
+
+              if (!getters.logedingetter) {
+                _context3.next = 8;
+                break;
+              }
+
+              _context3.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/v1/cart', {
                 'productData': allUpdateProduct
               }, {
@@ -10364,14 +10544,14 @@ var actions = {
                   'Authorization': "Bearer " + localStorage.getItem('access_token')
                 }
               }).then(function (res) {
-                console.log(res.data);
+                return 'Cart Updated Successfully';
               });
 
             case 4:
-              _context2.next = 12;
-              break;
+              result = _context3.sent;
+              return _context3.abrupt("return", result);
 
-            case 6:
+            case 8:
               CartSubTotal = 0;
               newUpdatedProduct = [];
               commit('setCart', allUpdateProduct);
@@ -10381,33 +10561,32 @@ var actions = {
               }, newUpdatedProduct);
               localStorage.setItem('cartProductData', newUpdatedProduct.join('|'));
               localStorage.setItem('cartTotal', CartSubTotal);
-
-            case 12:
               commit('setTotalPrice', CartSubTotal);
+              return _context3.abrupt("return", 'Cart Updated Successfully');
 
-            case 13:
+            case 16:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2);
+      }, _callee3);
     }))();
   },
   clearCartProduct: function clearCartProduct(_ref6) {
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
       var commit, getters;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               commit = _ref6.commit, getters = _ref6.getters;
 
               if (!(getters.logedingetter && getters.allCart.length)) {
-                _context3.next = 6;
+                _context4.next = 7;
                 break;
               }
 
-              _context3.next = 4;
+              _context4.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().delete('/api/v1/cart/' + getters.allCart[0].cart_id, {
                 headers: {
                   'Authorization': "Bearer" + localStorage.getItem('access_token')
@@ -10415,22 +10594,26 @@ var actions = {
                 params: {
                   type: 'cart'
                 }
+              }).then(function (res) {
+                if (res.data.status) {
+                  return res.data.success;
+                }
               });
 
             case 4:
-              _context3.next = 8;
-              break;
+              return _context4.abrupt("return", _context4.sent);
 
-            case 6:
+            case 7:
               localStorage.removeItem('cartProductData');
               localStorage.removeItem('cartTotal');
+              return _context4.abrupt("return", 'Cart Clear Successfully');
 
-            case 8:
+            case 10:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3);
+      }, _callee4);
     }))();
   }
 };
@@ -10549,7 +10732,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var state = {
-  discount: null,
+  discount: 0,
   coupon: null
 };
 var getters = {
@@ -10580,12 +10763,16 @@ var actions = {
                 if (res.data.status) {
                   commit('setDiscount', res.data.discount);
                   commit('setCoupon', coupon);
+                  return res.data.success;
                 } else {
-                  console.log(res.data.error);
+                  return res.data.error;
                 }
               });
 
             case 3:
+              return _context.abrupt("return", _context.sent);
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -10606,13 +10793,18 @@ var actions = {
                 headers: {
                   'Authorization': "Bearer " + localStorage.getItem('access_token')
                 }
+              }).then(function (res) {
+                if (res.data.status) {
+                  commit('removeDiscount');
+                  commit('removeCoupon');
+                  return res.data.success;
+                }
               });
 
             case 3:
-              commit('removeDiscount');
-              commit('removeCoupon');
+              return _context2.abrupt("return", _context2.sent);
 
-            case 5:
+            case 4:
             case "end":
               return _context2.stop();
           }
@@ -10637,6 +10829,9 @@ var actions = {
                 if (res.data.status) {
                   commit('setDiscount', res.data.coupon_data.discount);
                   commit('setCoupon', res.data.coupon_data.coupon_code);
+                } else {
+                  commit('removeDiscount');
+                  commit('removeCoupon');
                 }
               });
 
@@ -10647,6 +10842,20 @@ var actions = {
         }
       }, _callee3);
     }))();
+  },
+  removeCartProductCoupon: function removeCartProductCoupon(_ref4, id, price1, qty) {
+    var commit = _ref4.commit;
+
+    if (state.coupon) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().put('/api/v1/coupon/' + id, {
+        headers: {
+          'Authorization': "Bearer " + localStorage.getItem('access_token')
+        },
+        params: {
+          price: price1
+        }
+      });
+    }
   }
 };
 var mutations = {
@@ -55633,7 +55842,12 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.removeCart(product.id)
+                                    return _vm.removeCart(
+                                      product.id,
+                                      product.product_id,
+                                      product.price,
+                                      product.quantity
+                                    )
                                   }
                                 }
                               },
@@ -55673,6 +55887,7 @@ var render = function() {
                               staticClass: "productQty form-control",
                               attrs: {
                                 id: index + "ProductQty",
+                                required: "",
                                 type: "number",
                                 min: "1",
                                 max: "100000"
@@ -55898,9 +56113,49 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr", { staticClass: "divider mb-6" }),
                 _vm._v(" "),
-                _vm._m(4),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "order-total d-flex justify-content-between align-items-center"
+                  },
+                  [
+                    _c("label", [_vm._v("Discount")]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ls-50" }, [
+                      _vm._v("₹" + _vm._s(_vm.totalDiscount))
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
-                _vm._m(5)
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "order-total d-flex justify-content-between align-items-center"
+                  },
+                  [
+                    _c("label", [_vm._v("Total")]),
+                    _vm._v(" "),
+                    this.loggedIn
+                      ? _c("span", { staticClass: "ls-50" }, [
+                          _vm._v(
+                            "₹" +
+                              _vm._s(
+                                _vm._f("finalTotal")(
+                                  _vm.subTotal,
+                                  parseInt(_vm.totalDiscount)
+                                )
+                              )
+                          )
+                        ])
+                      : _c("span", { staticClass: "ls-50" }, [
+                          _vm._v("₹" + _vm._s(_vm.allProductTotal) + " ")
+                        ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(4)
               ])
             ])
           ])
@@ -56142,23 +56397,6 @@ var staticRenderFns = [
         )
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "order-total d-flex justify-content-between align-items-center"
-      },
-      [
-        _c("label", [_vm._v("Total")]),
-        _vm._v(" "),
-        _c("span", { staticClass: "ls-50" }, [_vm._v("$100.00")])
-      ]
-    )
   },
   function() {
     var _vm = this

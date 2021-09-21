@@ -45,7 +45,7 @@
                                                             width="300" height="338">
                                                     </figure>
                                                 </a>
-                                                <button type="button" @click.prevent="removeCart(product.id)"  class="btn btn-close"><i class="fas fa-times"></i></button>
+                                                <button type="button" @click.prevent="removeCart(product.id ,product.product_id ,product.price,product.quantity)"  class="btn btn-close"><i class="fas fa-times"></i></button>
                                             </div>
                                         </td>
                                         <td class="product-name">
@@ -57,7 +57,7 @@
                                         <td class="product-quantity">
                                             <div class="input-group">
 
-                                                <input v-model.number="allProduct[index].quantity" :id="index + 'ProductQty'" @input="productQtyChange(index)"  class="productQty form-control" type="number" min="1" max="100000">
+                                                <input v-model.number="allProduct[index].quantity" :id="index + 'ProductQty'" @input="productQtyChange(index)" required  class="productQty form-control" type="number" min="1" max="100000">
 
                                                 <button @click.prevent="ProductPlus(index)" class="quantity-plus w-icon-plus"></button>
 
@@ -175,8 +175,13 @@
 
                                     <hr class="divider mb-6">
                                     <div class="order-total d-flex justify-content-between align-items-center">
+                                        <label>Discount</label>
+                                        <span class="ls-50">₹{{ totalDiscount }}</span>
+                                    </div>
+                                    <div class="order-total d-flex justify-content-between align-items-center">
                                         <label>Total</label>
-                                        <span class="ls-50">$100.00</span>
+                                        <span v-if="this.loggedIn"  class="ls-50">₹{{ subTotal | finalTotal(parseInt(totalDiscount)) }}</span>
+                                        <span v-else class="ls-50">₹{{ allProductTotal }} </span>
                                     </div>
                                     <a href="#" class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">
                                         Proceed to checkout<i class="w-icon-long-arrow-right"></i></a>
@@ -199,6 +204,12 @@
 import {mapActions, mapGetters} from 'vuex'
 export default {
     name:'Cart',
+    filters:{
+        finalTotal:function(val1,val2)
+        {
+           return val1 - val2;
+        }
+    },
     data(){
         return{
             allProduct:null,
@@ -215,10 +226,10 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan']),
+        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan','rmvCoupan','removeCartProductCoupon']),
         DisplayCart()
         {
-            if(this.$store.getters.allCart.length){
+            if(this.allCart.length){
                 this.allProduct = this.allCart;
                 this.allProductTotal = this.tPrice;
             }   
@@ -249,31 +260,38 @@ export default {
                 this.allProduct[index].subTotal  = this.allProduct[index].price * this.allProduct[index].quantity;
             }
         },
-        updateCart()
+        async updateCart()
         {
-            if(this.loggedIn){
-                // console.log('Logged In');
-                this.updateCartProduct(this.allProduct);
-            }
-            else{
-                var updatedProduct=this.allProduct;
-                this.updateCartProduct(updatedProduct);
-                this.DisplayCart();
+            if(this.allProduct){
+                if(this.loggedIn){
+                    var response = await this.updateCartProduct(this.allProduct);
+                }
+                else{
+                    var updatedProduct=this.allProduct;
+                    var response = await this.updateCartProduct(updatedProduct);
+                    this.DisplayCart();
+                }
+                this.$toastr.s(response);
             }
         },
-        removeCart(id)
+        async removeCart(id,product_id,price,qty)
         {   
-            this.removeCartProduct(id);
+            var result = await this.removeCartProduct(id);
+            this.removeCartProductCoupon(product_id,price,qty);
             this.getCart();
             this.DisplayCart();
+            this.getAllCouponData();
+            this.$toastr.s(result); 
         },
-        clearCart()
+        async clearCart()
         {
-            this.clearCartProduct();
+            var clearCartRes = await this.clearCartProduct();
             this.getCart();
             this.DisplayCart();
+            this.rmvCoupan();
+            this.$toastr.s(clearCartRes);
         },
-        applyCoupon()
+        async applyCoupon()
         {
             if(!this.loggedIn)
             {
@@ -281,13 +299,15 @@ export default {
             }
             else
             {
-                this.addCoupon(this.coupon);
+                var applyCouponRes = await this.addCoupon(this.coupon);
                 $('#txtcoupon').val('');
-                this.coupon = null
+                this.coupon = null;
+                this.$toastr.s(applyCouponRes);
             }
         },
-        removeCoupon(){
-            this.rmvCoupan();
+        async removeCoupon(){
+            var rmvCouponRes = await this.rmvCoupan();
+            this.$toastr.s(rmvCouponRes);
         }
     },
     mounted() {

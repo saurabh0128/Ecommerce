@@ -138,7 +138,7 @@ aria-labelledby="ProductModal"  >
             },
             addcart(productId){
                this.addCartProduct({'product_id':productId,'qty':this.qty});
-               this.$toastr.s('Cart Updated Successfully');
+               this.$toastr.s('Product Added  Successfully');
                this.getCart(); 
             },
             productModalClose()

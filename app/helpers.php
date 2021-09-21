@@ -52,7 +52,7 @@ use App\Models\CartItem;
             $cart_item->save();
             //if add coupan discount write
             $cart->discount = 0;
-            $cart->coupon_code = 0;
+            $cart->coupon_code = null;
             $cart->save();
 
             return Response()->json(['status'=>true,"success" => "Product Add SuccessFully"]);

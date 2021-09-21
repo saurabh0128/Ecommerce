@@ -163,10 +163,15 @@ const actions ={
 
 	},
 	//remove cart product
-	 removeCartProduct({commit , getters},id){
+	async removeCartProduct({commit , getters},id){
 	 	if(getters.logedingetter)
 	 	{
-		 	axios.delete('/api/v1/cart/'+id,{headers:{'Authorization': `Bearer`+ localStorage.getItem('access_token')}});
+		 	return await axios.delete('/api/v1/cart/'+id,{headers:{'Authorization': `Bearer`+ localStorage.getItem('access_token')}}).then((res)=>{
+		 			if(res.data.status)
+		 			{
+		 					return res.data.success;
+		 			}
+		 	});
 	 	}
 	 	else{
 	 		var AllCartProduct = localStorage.getItem('cartProductData').split('|');
@@ -186,20 +191,21 @@ const actions ={
 	 		AllCartProduct.forEach(function(product,index){	
 	 			this[index] =  JSON.stringify(product); 
 	 		},AllCartProduct);
-
 	 		ProductSubTotal = localStorage.getItem('cartTotal') - ProductSubTotal;
-
 	 		localStorage.setItem('cartTotal',ProductSubTotal);
 	 		localStorage.setItem('cartProductData',AllCartProduct.join('|'));
+
+	 		return 'Product Removed Successfully';
 	 	}
 	},
-	async updateCartProduct({commit},allUpdateProduct){
+	async updateCartProduct({commit,getters},allUpdateProduct){
 		if(getters.logedingetter)
 		{
-			await axios.post('/api/v1/cart',{'productData':allUpdateProduct},
+			var result =  await axios.post('/api/v1/cart',{'productData':allUpdateProduct},
 	        {headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
-	        	console.log(res.data);
+	        	return 'Cart Updated Successfully';
 	        });
+	      return result;  
 		}	
 		else
 		{
@@ -212,17 +218,24 @@ const actions ={
 		 	},newUpdatedProduct);
 			localStorage.setItem('cartProductData',newUpdatedProduct.join('|'));
 			localStorage.setItem('cartTotal',CartSubTotal);
-		}	
 			commit('setTotalPrice',CartSubTotal);
+			return 'Cart Updated Successfully';
+		}	
 	},
 	async clearCartProduct({commit,getters}){
 	 	if(getters.logedingetter && getters.allCart.length)
 	 	{
-	 		await axios.delete('/api/v1/cart/'+getters.allCart[0].cart_id,{headers:{'Authorization': `Bearer`+ localStorage.getItem('access_token')},params:{type:'cart'}});
+	 		return await axios.delete('/api/v1/cart/'+getters.allCart[0].cart_id,{headers:{'Authorization': `Bearer`+ localStorage.getItem('access_token')},params:{type:'cart'}}).then((res)=>{
+	 				if(res.data.status)
+	 				{
+	 						return res.data.success;
+	 				}
+	 		});
 	 	}
 	 	else{
 	 		localStorage.removeItem('cartProductData');
 	 		localStorage.removeItem('cartTotal');
+	 		return 'Cart Clear Successfully';
 	 	}
 	}
 }
