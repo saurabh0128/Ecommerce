@@ -96,7 +96,7 @@
                                                     width="94" />
                                             </a>
                                         </figure>
-                                        <button @click="rmCartProduct(cart.id)" class="btn btn-link btn-close">
+                                        <button @click="rmCartProduct(cart.id,cart.product_id)" class="btn btn-link btn-close">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </div>
@@ -523,7 +523,7 @@
                             </div>
                             <nav class="main-nav">
                                 <ul class="menu active-underline">
-                                    <li class="active">
+                                    <li >
                                         <router-link :to="{name:'home'}" >Home</router-link>
                                     </li>
             
@@ -577,12 +577,14 @@ export default{
         }
     },
     methods:{
-        ...mapActions(['logout','getCart','removeCartProduct']),
+        ...mapActions(['logout','getCart','removeCartProduct','removeCartProductCoupon','getAllCouponData']),
         // function for remove cart Product
-        rmCartProduct(id){
-            this.removeCartProduct(id);
+        async rmCartProduct(id,product_id){
+            this.removeCartProductCoupon(product_id);
+            var result = await this.removeCartProduct(id);
             this.getCart();
-            this.$toastr.s('Product Removed from cart')
+            this.getAllCouponData();
+            this.$toastr.s(result);
         },
         userLogout(){
             this.logout();

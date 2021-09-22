@@ -86,9 +86,8 @@ mode: 'history',
 			name:'not found',
 			component:page404
 		}
-
-	]
-
+	],
+	linkExactActiveClass: "active"
 });
 
 

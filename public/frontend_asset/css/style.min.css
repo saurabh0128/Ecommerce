@@ -13286,11 +13286,11 @@ body .product-popup {
   font-size: 0.9rem;
   transform: translateY(-50%);
 }
-.menu li {
+.menu  {
   position: relative;
   line-height: 1;
 }
-.menu li a {
+.menu  a {
   padding: 0.7rem 0 0.8rem 0;
 }
 .menu li ul,

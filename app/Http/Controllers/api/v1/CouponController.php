@@ -155,12 +155,8 @@ class CouponController extends Controller
     {
         $cart_data = Cart::where('user_id',auth('api')->id())->select('id','discount','coupon_code')->first();
         $coupon_data = Coupone::where('coupon_code',$cart_data->coupon_code)->first();
-        $cart_item = CartItem::where('cart_id',$cart_data->id)->get();
-
-        // echo $cart_data;
-        // echo $coupon_data;
-        // dd($cart_item);
-
+        $cart_items = CartItem::with('product')->where('cart_id',$cart_data->id)->get();
+        $cartProductCount = 0;
 
         if($coupon_data->coupon_type == "product")
         {
@@ -170,16 +166,41 @@ class CouponController extends Controller
                 $cart_data->coupon_code = null;
             }
         }
+        elseif($coupon_data->coupon_type == "category"){
+            foreach($cart_items as $cart_item)
+            {
+                    if($cart_item->product->category_id == $coupon_data->coupon_type_value)
+                    {
+                        $cartProductCount ++;
+                    }
+            }
 
+            if($coupon_data->discount_type == 'fixed')
+            {
+                
+                if($cartProductCount == 1)
+                {
+                    $cart_data->discount = 0;
+                    $cart_data->coupon_code = null;
+                }
+            }
+            elseif($coupon_data->discount_type == 'percentage'){
+                foreach($cart_items as $cart_item)
+                {
+                    if($cart_item->product->id == $id)
+                    {
+                        $productSubTotal = $cart_item->price * $cart_item->quantity;
+                        $singleProductDiscount = ($productSubTotal * $coupon_data->coupon_discount) / 100;
+                    }
+                } 
+                $cart_data->discount -= $singleProductDiscount; 
+                if($cartProductCount == 1)
+                {
+                    $cart_data->coupon_code = null;
+                }
+            } 
+        }
         $cart_data->save();
-        // elseif($coupon->coupon_type == "category"){
-        //     $product = Product::where('category_id',$coupon_data->coupon_type_value)->get();
-        //     // $ar_length = max(count($cart_item),count($product));
-        //     if($coupon->discount_type == 'fixed')
-        //     {
-
-        //     } 
-        // }
     }
 
     /**
@@ -200,4 +221,6 @@ class CouponController extends Controller
         $cart_detail->save();
         return Response()->json(["status"=>true,"success" => "Coupon Removed Successfully"]);
     }
+
+    
 }

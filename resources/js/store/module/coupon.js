@@ -49,14 +49,15 @@ const actions ={
 			}
 		});
 	},
-	removeCartProductCoupon({commit},id,price1,qty)
+	removeCartProductCoupon({commit},id)
 	{
 
 		if(state.coupon)
 		{
-			axios.put('/api/v1/coupon/'+id,{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')},params:{price:price1}});
+			axios.put('/api/v1/coupon/'+id,{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}});
 		}
 	}
+	
 
 } 
 

@@ -139,12 +139,13 @@ aria-labelledby="ProductModal"  >
             addcart(productId){
                this.addCartProduct({'product_id':productId,'qty':this.qty});
                this.$toastr.s('Product Added  Successfully');
-               this.getCart(); 
+               this.getCart();  
             },
             productModalClose()
             {
                 $('.header-bottom').addClass('fixed');
                 $('body').css("overflow-y",'auto');
+                this.qty = 1;
             },
             ProductPlus()
             {

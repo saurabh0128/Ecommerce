@@ -226,7 +226,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan','rmvCoupan','removeCartProductCoupon']),
+        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan','rmvCoupan','removeCartProductCoupon','updateCoupon']),
         DisplayCart()
         {
             if(this.allCart.length){
@@ -265,6 +265,7 @@ export default {
             if(this.allProduct){
                 if(this.loggedIn){
                     var response = await this.updateCartProduct(this.allProduct);
+                    this.getAllCouponData();
                 }
                 else{
                     var updatedProduct=this.allProduct;
@@ -274,10 +275,10 @@ export default {
                 this.$toastr.s(response);
             }
         },
-        async removeCart(id,product_id,price,qty)
+        async removeCart(id,product_id)
         {   
+            this.removeCartProductCoupon(product_id);
             var result = await this.removeCartProduct(id);
-            this.removeCartProductCoupon(product_id,price,qty);
             this.getCart();
             this.DisplayCart();
             this.getAllCouponData();

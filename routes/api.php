@@ -43,6 +43,7 @@ use App\Http\Controllers\api\v1\SellerController;
          Route::resource('/order',OrderController::class);
          Route::post('/rating',[RatingController::class,'userRating'])->name('rating.userRating');
          Route::resource('/coupon',CouponController::class);
+         Route::get('/couponUpdate',[CouponController::class,'updateCoupon']);
          Route::resource('/wishlist',WishlistController::class);
          Route::get('/authenticated',function(){
             return false;
