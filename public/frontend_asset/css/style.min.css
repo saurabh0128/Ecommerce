@@ -3180,25 +3180,35 @@ blockquote {
 .accordion {
   overflow: hidden;
 }
+
+.accordion > .card {
+  border: none!important;
+}
+
+.accordion > .card > .card-header {
+  border: none;
+  padding: 0;
+} 
+
 .accordion .collapsed,
 .accordion .expanding {
   display: none;
 }
 
 .card-header {
-  color: #333;
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.5;
+  color: #333 !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.5 !important;
 }
 .card-header a {
-  display: flex;
-  position: relative;
-  align-items: center;
-  color: inherit;
-  padding: 1.4rem 5rem 1.4rem 2rem;
-  transition: background-color 0.4s;
+  display: flex !important;
+  position: relative !important;
+  align-items: center !important;
+  color: inherit !important;
+  padding: 1.4rem 5rem 1.4rem 2rem !important;
+  transition: background-color 0.4s !important;
 }
 .card-header a.collapse {
   color: #336699;
@@ -13251,6 +13261,7 @@ body .product-popup {
         - Vertical Menu
         - Category Menu
 -----------------------------------------*/
+
 .menu {
   display: flex;
   align-items: center;
@@ -19036,4 +19047,27 @@ aside .sp-sidebar-banner span {
 .tag a .glyphicon-white {
   color: #fff;
   margin-bottom: 2px;
+}
+
+
+
+.menu li a.active{
+    content: "";
+    left: 0;
+    bottom: 6px;
+    padding-bottom: 2px;
+    width: 100%;
+    border-bottom: 3px solid;
+    border-color: #336699;
+    transform-origin: left center;
+    transform: scale(1, 1)!important;
+    transition: transform 0.3s ease!important;
+    color: #336699;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

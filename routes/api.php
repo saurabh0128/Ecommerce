@@ -12,6 +12,8 @@ use App\Http\Controllers\api\v1\CartController;
 use App\Http\Controllers\api\v1\CouponController;
 use App\Http\Controllers\api\v1\WishlistController;
 use App\Http\Controllers\api\v1\SellerController;
+use App\Http\Controllers\api\v1\CityController;
+use App\Http\Controllers\api\v1\StateController;
  
 
 /*
@@ -38,6 +40,8 @@ use App\Http\Controllers\api\v1\SellerController;
          Route::get('category',[CategoryController::class,'categoryDetails'])->name('category.categoryDetails');
          Route::get('seller',[SellerController::class,'index'])->name('seller.sellerDeatils');
          Route::resource('/cart',CartController::class);
+         Route::resource('/city', CityController::class);
+         Route::resource('/state', StateController::class);
          
          Route::group(['middleware' => 'auth:api'],function(){
          Route::resource('/order',OrderController::class);

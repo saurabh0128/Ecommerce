@@ -101,79 +101,51 @@
 
                                     <hr class="divider">
 
-                                    <ul class="shipping-methods mb-2">
+                                    <!-- <ul class="shipping-methods mb-2">
                                         <li>
                                             <label
                                                 class="shipping-title text-dark font-weight-bold">Shipping</label>
                                         </li>
-                                        <li>
-                                            <div class="custom-radio">
-                                                <input type="radio" id="free-shipping" class="custom-control-input"
-                                                    name="shipping">
-                                                <label for="free-shipping"
-                                                    class="custom-control-label color-dark">Free
-                                                    Shipping</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-radio">
-                                                <input type="radio" id="local-pickup" class="custom-control-input"
-                                                    name="shipping">
-                                                <label for="local-pickup"
-                                                    class="custom-control-label color-dark">Local
-                                                    Pickup</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="custom-radio">
-                                                <input type="radio" id="flat-rate" class="custom-control-input"
-                                                    name="shipping">
-                                                <label for="flat-rate" class="custom-control-label color-dark">Flat
-                                                    rate:
-                                                    $5.00</label>
-                                            </div>
-                                        </li>
-                                    </ul>
 
-                                    <div class="shipping-calculator">
+                                    </ul> -->
+
+                                    <!-- <div class="shipping-calculator">
                                         <p class="shipping-destination lh-1">Shipping to <strong>CA</strong>.</p>
 
-                                        <form class="shipping-calculator-form">
+                                        <form class="shipping-calculator-form" @submit.prevent="updateCart">
                                             <div class="form-group">
                                                 <div class="">
-                                                    <select name="country" class="form-control form-control-md">
-                                                        <option value="default" selected="selected">United States
-                                                            (US)
+                                                    <select @change="StateWiseCity()"  name="state" v-model="stateId" class="form-control form-control-md">
+                                                        <option value="" >Select the State</option>
+                                                        <option v-for="singleState in allStates" :key="singleState.id" :value="singleState.id"  >
+                                                            {{ singleState.StateName }}
                                                         </option>
-                                                        <option value="us">United States</option>
-                                                        <option value="uk">United Kingdom</option>
-                                                        <option value="fr">France</option>
-                                                        <option value="aus">Australia</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="">
-                                                    <select name="state" class="form-control form-control-md">
-                                                        <option value="default" selected="selected">California
+                                                    <select name="city" class="form-control form-control-md" v-model="cityId" >
+                                                        <option value="">Select the City</option>
+                                                        <option v-for="singlecitys in allCitys" :value="singlecitys.id" >{{singlecitys.city_name}}
                                                         </option>
-                                                        <option value="ohaio">Ohaio</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control form-control-md" type="text"
-                                                    name="town-city" placeholder="Town / City">
+                                                <input class="form-control form-control-md" type="text" v-model="address"
+                                                    name="address" placeholder="Address">
                                             </div>
                                             <div class="form-group">
-                                                <input class="form-control form-control-md" type="text"
-                                                    name="zipcode" placeholder="ZIP">
+                                                <input class="form-control form-control-md" type="number" v-model="pincode"
+                                                    name="pincode" placeholder="PINCODE">
                                             </div>
                                             <button type="submit" class="btn btn-dark btn-outline btn-rounded">Update Totals</button>
                                         </form>
-                                    </div>
+                                    </div> -->
 
                                     <hr class="divider mb-6">
+                                   
                                     <div class="order-total d-flex justify-content-between align-items-center">
                                         <label>Discount</label>
                                         <span class="ls-50">₹{{ totalDiscount }}</span>
@@ -214,11 +186,15 @@ export default {
         return{
             allProduct:null,
             allProductTotal:0,
-            coupon:null
+            coupon:null,
+            stateId:"",
+            cityId:"",
+            address:null,
+            pincode:null
         }
     },
     computed:{
-        ...mapGetters(['allCart','loggedIn','tPrice','totalDiscount','getCoupon']),
+        ...mapGetters(['allCart','loggedIn','tPrice','totalDiscount','getCoupon','allStates','allCitys']),
         subTotal:function(){
             let total = 0;
             this.allCart.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
@@ -226,7 +202,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan','rmvCoupan','removeCartProductCoupon','updateCoupon']),
+        ...mapActions(['getCart','getAllCouponData','updateCartProduct','removeCartProduct','clearCartProduct','addCoupon','rmvCoupan','rmvCoupan','removeCartProductCoupon','updateCoupon','getLocation','selectCity']),
         DisplayCart()
         {
             if(this.allCart.length){
@@ -309,6 +285,11 @@ export default {
         async removeCoupon(){
             var rmvCouponRes = await this.rmvCoupan();
             this.$toastr.s(rmvCouponRes);
+        },
+        StateWiseCity(){
+            // console.log(this.stateId);
+            this.selectCity(this.stateId);
+            this.cityId ="";
         }
     },
     mounted() {
@@ -317,11 +298,13 @@ export default {
         document.head.appendChild(StickyScript)
     },
     async created(){
+
         await this.getCart();
         if(this.loggedIn)
         {
             await this.getAllCouponData();
         }
+        this.getLocation();
     }
 };
 </script> 

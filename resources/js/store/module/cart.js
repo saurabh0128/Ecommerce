@@ -3,7 +3,8 @@ import axios from  'axios';
 
 const state = {
 	cart:[],
-	totalPrice:0
+	totalPrice:0,
+	Shippingcharge:0
 }
 
 const getters ={
@@ -14,7 +15,8 @@ const getters ={
 	//get a details of user logged in or not
 	logedingetter(state, getters, rootGetters){
 	 return getters.loggedIn;
-	}
+	},
+	shippingCharges : state => state.Shippingcharge
 }
 
 const actions ={
@@ -132,9 +134,11 @@ const actions ={
 		});
 	},
 	getCart({commit ,getters }){
+
 		// get all cart data from database and commit into vuex store
 		if(getters.logedingetter)
 		{			
+			// console.log('ss');
 			axios.get('/api/v1/cart',{headers:{'Authorization': `Bearer `+ localStorage.getItem('access_token')}}).then((res)=>{
 				if(res.data.status)
 				{
@@ -143,6 +147,7 @@ const actions ={
 			  		dbproduct['subTotal'] = dbproduct.price * dbproduct.quantity;
 					}, dbCartProduct);
 					commit('setCart',dbCartProduct);
+					commit('setShippingCharge',res.data.cart.shipping_charges);
 				}
 			});
 		}
@@ -156,9 +161,11 @@ const actions ={
 			}, productres);
 			commit('setCart',productres);	
 			commit('setTotalPrice',productTotal);
+			commit('setShippingCharge',0);
 		}
 		else{
 			commit('setCart',[]);
+			commit('setShippingCharge',0);
 		}
 
 	},
@@ -243,7 +250,8 @@ const actions ={
 
 const mutations = {
 	setCart: (state,cart) => state.cart = cart,
-	setTotalPrice:(state,tprice) => state.totalPrice = tprice
+	setTotalPrice:(state,tprice) => state.totalPrice = tprice,
+	setShippingCharge : (state , shipcharge) =>state.Shippingcharge = shipcharge
 }
 
 
