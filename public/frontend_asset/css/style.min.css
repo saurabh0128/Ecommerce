@@ -7798,6 +7798,27 @@ body .product-popup {
   padding-top: 3.3rem;
   padding-bottom: 2.6rem;
 }
+
+.modal-body .tab-pane{
+  padding-top: 3.3rem;
+  padding-bottom: 2.6rem;
+}
+
+.modal-body .form-group{
+  margin-bottom: 2.6rem;
+}
+
+.modal-body .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.modal-body .form-checkbox {
+    margin-top: 2.2rem;
+    margin-bottom: 2.3rem;
+}
+
+
 .login-popup .tab-pane a:not(.btn):hover {
   text-decoration: underline;
 }
@@ -10391,6 +10412,18 @@ body .product-popup {
 .nav-tabs .nav-item .nav-link.active,
 .nav-tabs .nav-item:hover .nav-link {
   color: #336699;
+}
+
+.nav-tabs .nav-item .nav-link{
+  border: none;
+}
+
+.modal-content{
+  top: 20px;
+}
+
+.modal-body{
+  padding: 30px;
 }
 
 .nav-link {

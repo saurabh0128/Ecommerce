@@ -13,7 +13,7 @@
                         <a href="#" class="d-lg-show">Blog</a>
                         <router-link :to="{name:'contactus'}" class="d-lg-show">Contact Us</router-link>
                         <router-link :to="{name:'my_account'}" class="d-lg-show" v-if="loggedIn" >My Account</router-link>
-                        <a href="#sign-in" v-if="!loggedIn"  class="d-lg-show login sign-in"><i class="w-icon-account"></i>Sign In</a>
+                        <a href="#sign-in" v-if="!loggedIn"  class="d-lg-show login sign-in" ref="sign_in_btn" ><i class="w-icon-account"></i>Sign In</a>
                         <span class="delimiter d-lg-show" v-if="!loggedIn" >/</span>
                         <a href="#sign-up" v-if="!loggedIn" class="ml-0 d-lg-show login register">Register</a>
                     </div>

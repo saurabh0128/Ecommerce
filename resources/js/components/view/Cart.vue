@@ -7,8 +7,8 @@
             <nav class="breadcrumb-nav">
                 <div class="container">
                     <ul class="breadcrumb shop-breadcrumb bb-no">
-                        <li class="active"><a href="cart.html">Shopping Cart</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
+                        <li class="active"><router-link :to="{name:'cart'}">Shopping Cart</router-link></li>
+                        <li><router-link :to="{name:'checkout'}">Checkout</router-link></li>
                         <li><a href="order.html">Order Complete</a></li>
                     </ul>
                 </div>
@@ -155,8 +155,8 @@
                                         <span v-if="this.loggedIn"  class="ls-50">₹{{ subTotal | finalTotal(parseInt(totalDiscount)) }}</span>
                                         <span v-else class="ls-50">₹{{ allProductTotal }} </span>
                                     </div>
-                                    <a href="#" class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">
-                                        Proceed to checkout<i class="w-icon-long-arrow-right"></i></a>
+                                    <router-link :to="{name:'checkout'}" class="btn btn-block btn-dark btn-icon-right btn-rounded  btn-checkout">
+                                        Proceed to checkout<i class="w-icon-long-arrow-right"></i></router-link>
                                 </div>
                             </div>
                         </div>

@@ -85,10 +85,7 @@ mode: 'history',
 		{
 			path:'/checkout',
 			name:'checkout',
-			component:checkout,
-			meta:{
-				requiresAuth:true
-			}
+			component:checkout
 		},
 		{
 			path:'*',

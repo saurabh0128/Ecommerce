@@ -5,8 +5,8 @@
             <nav class="breadcrumb-nav">
                 <div class="container">
                     <ul class="breadcrumb shop-breadcrumb bb-no">
-                        <li class="passed"><a href="cart.html">Shopping Cart</a></li>
-                        <li class="active"><a href="checkout.html">Checkout</a></li>
+                        <li class="passed"><router-link :to="{name:'cart'}">Shopping Cart</router-link></li>
+                        <li class="active"><router-link :to="{name:'checkout'}">Checkout</router-link></li>
                         <li><a href="order.html">Order Complete</a></li>
                     </ul>
                 </div>
@@ -17,36 +17,11 @@
             <!-- Start of PageContent -->
             <div class="page-content">
                 <div class="container">
-                    <div class="login-toggle">
-                        Returning customer? <a href="#"
-                            class="show-login font-weight-bold text-uppercase text-dark">Login</a>
+                    <div class="">
+                        Returning customer? <a href="#sign-in"
+                            class="show-login sign-in font-weight-bold text-uppercase text-dark" >Login</a>
                     </div>
-                    <form class="login-content">
-                        <p>If you have shopped with us before, please enter your details below. 
-                            If you are a new customer, please proceed to the Billing section.</p>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label>Username or email *</label>
-                                    <input type="text" class="form-control form-control-md" name="name"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="col-xs-6">
-                                <div class="form-group">
-                                    <label>Password *</label>
-                                    <input type="text" class="form-control form-control-md" name="password"
-                                        required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group checkbox">
-                            <input type="checkbox" class="custom-checkbox" id="remember" name="remember">
-                            <label for="remember" class="mb-0 lh-2">Remember me</label>
-                            <a href="#" class="ml-3">Last your password?</a>
-                        </div>
-                        <button class="btn btn-rounded btn-login">Login</button>
-                    </form>
+                    
                     <div class="coupon-toggle">
                         Have a coupon? <a href="#"
                             class="show-coupon font-weight-bold text-uppercase text-dark">Enter your
@@ -55,8 +30,8 @@
                     <div class="coupon-content mb-4">
                         <p>If you have a coupon code, please apply it below.</p>
                         <div class="input-wrapper-inline">
-                            <input type="text" name="coupon_code" class="form-control form-control-md mr-1 mb-2" placeholder="Coupon code" id="coupon_code">
-                            <button type="submit" class="btn button btn-rounded btn-coupon mb-2" name="apply_coupon" value="Apply coupon">Apply Coupon</button>
+                            <input type="text" name="coupon_code" v-model="coupon" class="form-control form-control-md mr-1 mb-2" placeholder="Coupon code" id="coupon_code">
+                            <button type="button" @click="applyCoupon" class="btn button btn-rounded btn-coupon mb-2" name="apply_coupon" value="Apply coupon">Apply Coupon</button>
                         </div>
                     </div>
                     <form class="form checkout-form" action="#" method="post">
@@ -69,55 +44,55 @@
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>First name *</label>
-                                            <input type="text" class="form-control form-control-md" name="firstname"
+                                            <input type="text" v-model="BillingAddress.FirstName" class="form-control form-control-md" name="firstname"
                                                 required>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>Last name *</label>
-                                            <input type="text" class="form-control form-control-md" name="lastname"
+                                            <input type="text" v-model="BillingAddress.LastName" class="form-control form-control-md" name="lastname"
                                                 required>
                                         </div>
                                     </div>
                                 </div>
                               	<div class="form-group mb-7">
                                     <label>Email address *</label>
-                                    <input type="email" class="form-control form-control-md" name="email" required>
+                                    <input type="email" class="form-control form-control-md"  v-model="BillingAddress.Email" name="email" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Street address *</label>
                                     <input type="text" placeholder="House number and street name"
-                                        class="form-control form-control-md mb-2" name="street-address-1" required>
+                                        class="form-control form-control-md mb-2" v-model="BillingAddress.Address_1" name="street-address-1" required>
                                     <input type="text" placeholder="Apartment, suite, unit, etc. (optional)"
-                                        class="form-control form-control-md" name="street-address-2" required>
+                                        class="form-control form-control-md" v-model="BillingAddress.Address_2" name="street-address-2" required>
                                 </div>
                                 <div class="row gutter-sm">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Town / City *</label>
-                                            <input type="text" class="form-control form-control-md" name="town" required>
+                                                <select name="city" v-model="BillingAddress.city" class="form-control form-control-md">
+                                                    <option value="" >Select the City</option>
+                                                    <option :value="city.id" v-for="city in allCitys " >{{ city.city_name }}</option>
+                                                </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>ZIP *</label>
-                                            <input type="text" class="form-control form-control-md" name="zip" required>
+                                            <label>PINCODE *</label>
+                                            <input type="number" class="form-control form-control-md" v-model="BillingAddress.pincode"  name="pincode" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>State *</label>
-                                                <select name="country" class="form-control form-control-md">
-                                                    <option value="default" selected="selected">California</option>
-                                                    <option value="uk">United Kingdom (UK)</option>
-                                                    <option value="us">United States</option>
-                                                    <option value="fr">France</option>
-                                                    <option value="aus">Australia</option>
+                                                <select name="state" @change="StateWiseCity()" v-model="BillingAddress.state" class="form-control form-control-md">
+                                                    <option value="" >Select the State</option>
+                                                    <option :value="state.id" v-for="state in allStates " >{{ state.StateName }}</option>
                                                 </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone *</label>
-                                            <input type="text" class="form-control form-control-md" name="phone" required>
+                                            <input type="number" v-model="BillingAddress.phone" class="form-control form-control-md" name="phone" required>
                                         </div>
                                     </div>
                                 </div>
@@ -132,14 +107,14 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label>First name *</label>
-                                                <input type="text" class="form-control form-control-md" name="firstname"
+                                                <input type="text" v-model="ShippingAddress.FirstName" class="form-control form-control-md" name="firstname"
                                                     required>
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 <label>Last name *</label>
-                                                <input type="text" class="form-control form-control-md" name="lastname"
+                                                <input type="text" v-model="ShippingAddress.LastName" class="form-control form-control-md" name="lastname"
                                                     required>
                                             </div>
                                         </div>
@@ -148,26 +123,34 @@
                                     
                                     <div class="form-group">
                                         <label>Street address *</label>
-                                        <input type="text" placeholder="House number and street name"
-                                            class="form-control form-control-md mb-2" name="street-address-1" required>
-                                        <input type="text" placeholder="Apartment, suite, unit, etc. (optional)"
-                                            class="form-control form-control-md" name="street-address-2" required>
+                                        <input type="text" v-model="ShippingAddress.address_1" placeholder="House number and street name" class="form-control form-control-md mb-2" name="street-address-1" required>
+                                        <input type="text" v-model="ShippingAddress.address_2" placeholder="Apartment, suite, unit, etc. (optional)" class="form-control form-control-md" name="street-address-2" required>
                                     </div>
                                     <div class="row gutter-sm">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Town / City *</label>
-                                                <input type="text" class="form-control form-control-md" name="town" required>
+                                                <select name="city" v-model="ShippingAddress.city" class="form-control form-control-md">
+                                                    <option value="" >Select the City</option>
+                                                    <option :value="city.id" v-for="city in allCitys " >{{ city.city_name }}</option>
+                                                </select>
                                             </div>
                                             <div class="form-group">
-                                                <label>Postcode *</label>
-                                                <input type="text" class="form-control form-control-md" name="postcode" required>
+                                                <label>Pincode *</label>
+                                                <input type="number" v-model="ShippingAddress.pincode" class="form-control form-control-md" name="postcode" required>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Country (optional)</label>
-                                                <input type="text" class="form-control form-control-md" name="zip" required>
+                                                <label>State *</label>
+                                                <select name="state" @change="StateWiseCity2()" v-model="ShippingAddress.state" class="form-control form-control-md">
+                                                    <option value="" >Select the State</option>
+                                                    <option :value="state.id" v-for="state in allStates " >{{ state.StateName }}</option>
+                                                </select>    
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Phone *</label>
+                                                <input type="number" v-model="ShippingAddress.phone" class="form-control form-control-md" name="phone" required>
                                             </div>
                                         </div>
                                     </div>
@@ -175,9 +158,8 @@
 
                                 <div class="form-group mt-3">
                                     <label for="order-notes">Order notes (optional)</label>
-                                    <textarea class="form-control mb-0" id="order-notes" name="order-notes" cols="30"
-                                        rows="4"
-                                        placeholder="Notes about your order, e.g special notes for delivery"></textarea>
+                                    <textarea  v-model="OrederNotes" class="form-control mb-0" id="order-notes"  name="order-notes" cols="30"
+                                        rows="4" placeholder="Notes about your order, e.g special notes for delivery"></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-5 mb-4 sticky-sidebar-wrapper">
@@ -193,23 +175,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="bb-no">
-                                                    <td class="product-name">Palm Print Jacket <i
-                                                            class="fas fa-times"></i> <span
-                                                            class="product-quantity">1</span></td>
-                                                    <td class="product-total">$40.00</td>
-                                                </tr>
-                                                <tr class="bb-no">
-                                                    <td class="product-name">Brown Backpack <i class="fas fa-times"></i>
-                                                        <span class="product-quantity">1</span></td>
-                                                    <td class="product-total">$60.00</td>
+                                                <tr v-for="cart_item in allCart" class="bb-no">
+                                                    <td class="product-name">{{ cart_item.name}} <i class="fas fa-times"></i>
+                                                        <span class="product-quantity">{{ cart_item.quantity }}</span></td>
+                                                    <td class="product-total">₹{{ cart_item.subTotal }}</td>
                                                 </tr>
                                                 <tr class="cart-subtotal bb-no">
                                                     <td>
                                                         <b>Subtotal</b>
                                                     </td>
                                                     <td>
-                                                        <b>$100.00</b>
+                                                        <b>{{ subTotal}}</b>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -330,16 +306,79 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
+
 	export default{
 		name:'checkout',
 		data(){
 			return{
-				ShippingAddress:{
+				BillingAddress:{
 					FirstName:'',
 					LastName:'',
-					CompanyName:'',
-				}	
+					Email:'',
+                    Address_1:'',
+                    Address_2:'',
+                    city:'',
+                    state:'',
+                    pincode:'',
+                    phone:''
+				},
+                ShippingAddress:{
+                    FirstName:'',
+                    LastName:'',
+                    Address_1:'',
+                    Address_2:'',
+                    city:'',
+                    state:'',
+                    pincode:'',
+                    phone:''
+                },
+                OrederNotes:'',
+                coupon:''	
 			}
-		}
+		},
+        computed:{
+            ...mapGetters(['allCart','allStates','allCitys','loggedIn']),
+            subTotal:function(){
+            let total = 0;
+            this.allCart.forEach((a)=> total += Math.floor(a.price * a.quantity ) );
+            return total;
+        }
+        },
+        methods:{
+            ...mapActions(['getLocation','selectCity','addCoupon']),
+            StateWiseCity(){
+                this.selectCity(this.BillingAddress.state);
+                this.BillingAddress.city ="";
+            },
+            StateWiseCity2()
+            {
+                this.selectCity(this.ShippingAddress.state);
+                this.ShippingAddress.city ="";
+            },
+            async applyCoupon()
+            {
+                if(!this.loggedIn)
+                {
+                   $('#ApplyCoupanButton').addClass('sign-in');
+                }
+                else
+                {
+                    var applyCouponRes = await this.addCoupon(this.coupon);
+                    $('#txtcoupon').val('');
+                    this.coupon = null;
+                    this.$toastr.s(applyCouponRes);
+                }
+            },
+        },
+        mounted(){
+            if(!this.loggedIn)
+            {
+                $('#authModal').modal('show');
+            }    
+        },
+        async created(){
+            this.getLocation();
+        }
 	};
 </script>			
